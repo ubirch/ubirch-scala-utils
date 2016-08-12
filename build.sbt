@@ -14,7 +14,7 @@ lazy val crypto = project
   .settings(
 
     name := "util-crypto",
-    version := "0.1-SNAPSHOT",
+    version := "0.1",
 
     resolvers ++= Seq("RoundEights" at "http://maven.spikemark.net/roundeights"),
 
