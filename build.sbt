@@ -14,7 +14,7 @@ lazy val crypto = project
   .settings(commonSettings: _*)
   .settings(
 
-    name := "crypto-util",
+    name := "crypto",
     description := "ubirch util with crypto related code",
     version := "0.2-SNAPSHOT",
 
