@@ -16,7 +16,7 @@ lazy val crypto = project
 
     name := "crypto-util",
     description := "ubirch util with crypto related code",
-    version := "0.1",
+    version := "0.2-SNAPSHOT",
 
     libraryDependencies ++= depCrypto,
 
