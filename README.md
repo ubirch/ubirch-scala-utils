@@ -6,5 +6,5 @@
 
     resolvers += Resolver.sonatypeRepo("snapshots")
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.2-SNAPSHOT"
+      "com.ubirch.util" %% "crypto" % "0.2-SNAPSHOT"
     )
