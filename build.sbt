@@ -14,13 +14,12 @@ lazy val crypto = project
   .settings(commonSettings: _*)
   .settings(
 
-    name := "crypto",
     description := "ubirch util with crypto related code",
     version := "0.2-SNAPSHOT",
 
     libraryDependencies ++= depCrypto,
 
-    homepage := Some(url("https://github.com/ubirch/ubirch-scala-utils")),
+    homepage := Some(url("http://ubirch.com")),
     scmInfo := Some(ScmInfo(
       url("https://github.com/ubirch/ubirch-scala-utils"),
       "https://github.com/ubirch/ubirch-scala-utils.git"
