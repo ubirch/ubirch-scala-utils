@@ -20,7 +20,7 @@ class HashUtilSpec extends FeatureSpec
 
   }
 
-  feature("HashUtil.hashAsHex && HashUtil.hashAsBytes") {
+  feature("HashUtil.hashToHex && HashUtil.hashToBytes") {
 
     scenario("calculate hexString, convert to byte array and convert byte array back to hexString") {
 
@@ -28,12 +28,12 @@ class HashUtilSpec extends FeatureSpec
       val expected = HashUtil.sha256HexString(input)
       println(s"expected: $expected")
 
-      // test part 1: hashAsBytes
-      val expectedBytes = HashUtil.hashAsBytes(expected)
+      // test part 1: hashToBytes
+      val expectedBytes = HashUtil.hashToBytes(expected)
       expectedBytes.length should be(32)
 
-      // test part 2: hashAsHex
-      val actual = HashUtil.hashAsHex(expectedBytes)
+      // test part 2: hashToHex
+      val actual = HashUtil.hashToHex(expectedBytes)
       println(s"actual: $actual")
       actual should be(expected)
 
@@ -41,7 +41,7 @@ class HashUtilSpec extends FeatureSpec
 
   }
 
-  feature("HashUtil.hashAsHex && HashUtil.sha256ByteArray") {
+  feature("HashUtil.hashToHex && HashUtil.sha256ByteArray") {
 
     scenario("calculate hash as byte array and convert back to hexString") {
 
@@ -53,8 +53,8 @@ class HashUtilSpec extends FeatureSpec
       val expectedBytes = HashUtil.sha256ByteArray(input)
       expectedBytes.length should be(32)
 
-      // test part 2: hashAsHex
-      val actual = HashUtil.hashAsHex(expectedBytes)
+      // test part 2: hashToHex
+      val actual = HashUtil.hashToHex(expectedBytes)
       println(s"actual: $actual")
       actual should be(expected)
 
