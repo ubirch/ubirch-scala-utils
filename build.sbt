@@ -17,7 +17,15 @@ lazy val commonSettings = Seq(
 
 lazy val root = (project in file("."))
   .settings(commonSettings: _*)
-  .aggregate(crypto, jsonAutoConvert)
+  .aggregate(config, crypto, jsonAutoConvert)
+
+lazy val config = project
+  .settings(commonSettings: _*)
+    .settings(
+      description := "common config related code",
+      version := "0.1-SNAPSHOT",
+      libraryDependencies += typesafeConfig
+    )
 
 lazy val crypto = project
   .settings(commonSettings: _*)
@@ -62,6 +70,8 @@ lazy val json4sJackson = "org.json4s" %% "json4s-jackson" % json4sV
 lazy val json4sCore = "org.json4s" %% "json4s-core" % json4sV
 lazy val json4sExt = "org.json4s" %% "json4s-ext" % json4sV
 lazy val seebergerJson4s = "de.heikoseeberger" %% "akka-http-json4s" % "1.8.0"
+
+lazy val typesafeConfig = "com.typesafe" % "config" % "1.3.0"
 
 lazy val roundeightsHasher = "com.roundeights" %% "hasher" % "1.2.0"
 

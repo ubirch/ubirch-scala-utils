@@ -4,6 +4,15 @@
 
 ### Scala Dependency
 
+#### `config`
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("snapshots")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "config" % "0.1-SNAPSHOT"
+    )
+
 #### `crypto`
 
     resolvers ++= Seq(
