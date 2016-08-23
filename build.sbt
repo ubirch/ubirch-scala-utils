@@ -1,42 +1,70 @@
 packagedArtifacts in file(".") := Map.empty // disable publishing of root project
 
 lazy val commonSettings = Seq(
+
   scalaVersion := "2.11.8",
   scalacOptions ++= Seq("-feature"),
-  organization := "com.ubirch.util"
+
+  organization := "com.ubirch.util",
+
+  homepage := Some(url("http://ubirch.com")),
+  scmInfo := Some(ScmInfo(
+    url("https://github.com/ubirch/ubirch-scala-utils"),
+    "https://github.com/ubirch/ubirch-scala-utils.git"
+  ))
+
 )
 
 lazy val root = (project in file("."))
   .settings(commonSettings: _*)
-  .aggregate(crypto)
+  .aggregate(crypto, jsonAutoConvert)
 
 lazy val crypto = project
   .settings(commonSettings: _*)
   .settings(
-
     description := "ubirch util with crypto related code",
     version := "0.2-SNAPSHOT",
-
-    libraryDependencies ++= depCrypto,
-
-    homepage := Some(url("http://ubirch.com")),
-    scmInfo := Some(ScmInfo(
-      url("https://github.com/ubirch/ubirch-scala-utils"),
-      "https://github.com/ubirch/ubirch-scala-utils.git"
-    ))
-
+    resolvers ++= Seq(
+      "RoundEights" at "http://maven.spikemark.net/roundeights"
+    ),
+    libraryDependencies ++= depCrypto
   )
 
-val scalaTestV = "3.0.0"
-
-resolvers ++= Seq("RoundEights" at "http://maven.spikemark.net/roundeights")
+lazy val jsonAutoConvert = (project in file("json-auto-convert"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "json-auto-convert",
+    description := "used mostly for converting requests/responses to/from JSON",
+    version := "0.1-SNAPSHOT",
+    resolvers ++= Seq(
+      Resolver.bintrayRepo("hseeberger", "maven")
+    ),
+    libraryDependencies ++= json4s
+  )
 
 lazy val depCrypto = Seq(
-
-  "com.roundeights" %% "hasher" % "1.2.0",
-
-  // test
-  "org.scalatest" %% "scalatest" % scalaTestV % "test",
-  "joda-time" % "joda-time" % "2.9.4" % "test"
+  roundeightsHasher,
+  scalaTest % "test",
+  jodaTime % "test"
 
 )
+
+val json4sV = "3.4.0"
+val scalaTestV = "3.0.0"
+
+lazy val json4s = Seq(
+  json4sCore,
+  json4sJackson,
+  json4sExt,
+  seebergerJson4s
+)
+lazy val json4sJackson = "org.json4s" %% "json4s-jackson" % json4sV
+lazy val json4sCore = "org.json4s" %% "json4s-core" % json4sV
+lazy val json4sExt = "org.json4s" %% "json4s-ext" % json4sV
+lazy val seebergerJson4s = "de.heikoseeberger" %% "akka-http-json4s" % "1.8.0"
+
+lazy val roundeightsHasher = "com.roundeights" %% "hasher" % "1.2.0"
+
+lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestV
+
+lazy val jodaTime = "joda-time" % "joda-time" % "2.9.4"
