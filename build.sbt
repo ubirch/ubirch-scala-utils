@@ -42,7 +42,7 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
   .settings(commonSettings: _*)
   .settings(
     name := "json-auto-convert",
-    description := "used mostly for converting requests/responses to/from JSON",
+    description := "convert requests/responses to/from JSON",
     version := "0.1-SNAPSHOT",
     resolvers ++= Seq(
       Resolver.bintrayRepo("hseeberger", "maven")
