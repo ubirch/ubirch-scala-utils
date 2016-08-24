@@ -22,6 +22,15 @@
       "com.ubirch.util" %% "crypto" % "0.2-SNAPSHOT"
     )
 
+#### `json`
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("snapshots")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "json" % "0.1-SNAPSHOT"
+    )
+
 #### `json-auto-convert`
 
     resolvers ++= Seq(
@@ -30,4 +39,13 @@
     )
     libraryDependencies ++= Seq(
       "com.ubirch.util" %% "json-auto-convert" % "0.1-SNAPSHOT"
+    )
+
+#### `uuid`
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("snapshots")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "uuid" % "0.1-SNAPSHOT"
     )

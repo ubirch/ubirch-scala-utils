@@ -38,6 +38,14 @@ lazy val crypto = project
     libraryDependencies ++= depCrypto
   )
 
+lazy val json = project
+  .settings(commonSettings: _*)
+  .settings(
+    description := "util to convert from/to JValue objects",
+    version := "0.1-SNAPSHOT",
+    libraryDependencies ++= json4sWitNative
+  )
+
 lazy val jsonAutoConvert = (project in file("json-auto-convert"))
   .settings(commonSettings: _*)
   .settings(
@@ -49,6 +57,9 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
     ),
     libraryDependencies ++= json4sWithSeeberger
   )
+
+lazy val uuid = project
+  .settings(commonSettings: _*)
 
 lazy val depCrypto = Seq(
   roundeightsHasher,
@@ -64,7 +75,7 @@ lazy val json4sBase = Seq(
   json4sJackson,
   json4sExt
 )
-
+lazy val json4sWitNative = json4sBase :+ json4sNative
 lazy val json4sWithSeeberger = json4sBase :+ seebergerJson4s
 
 lazy val json4sJackson = "org.json4s" %% "json4s-jackson" % json4sV
