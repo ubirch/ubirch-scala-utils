@@ -43,7 +43,7 @@ lazy val json = project
   .settings(
     description := "util to convert from/to JValue objects",
     version := "0.1-SNAPSHOT",
-    libraryDependencies ++= json4sWitNative
+    libraryDependencies ++= depJson
   )
 
 lazy val jsonAutoConvert = (project in file("json-auto-convert"))
@@ -64,8 +64,14 @@ lazy val uuid = project
 lazy val depCrypto = Seq(
   roundeightsHasher,
   scalaTest % "test",
-  jodaTime % "test"
+  jodaTime % "test",
+  jodaConvert % "test"
 )
+
+lazy val depJson = Seq(
+  scalaTest % "test",
+  jodaTime % "test"
+) ++ json4sWitNative
 
 val json4sV = "3.4.0"
 val scalaTestV = "3.0.0"
@@ -91,3 +97,4 @@ lazy val roundeightsHasher = "com.roundeights" %% "hasher" % "1.2.0"
 lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestV
 
 lazy val jodaTime = "joda-time" % "joda-time" % "2.9.4"
+lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8"
