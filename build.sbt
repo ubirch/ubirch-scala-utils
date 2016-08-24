@@ -54,7 +54,6 @@ lazy val depCrypto = Seq(
   roundeightsHasher,
   scalaTest % "test",
   jodaTime % "test"
-
 )
 
 val json4sV = "3.4.0"
