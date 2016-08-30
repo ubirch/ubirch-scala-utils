@@ -20,6 +20,14 @@ class HashUtilSpec extends FeatureSpec
 
   }
 
+  feature("HashUtil.sha512HexString") {
+
+    scenario("ensure that SHA-512 is configured") {
+      HashUtil.sha512HexString("ubirchChainService") should be("167154b1038c90a065b0ef738341a7dcee7d69928a633a8af1e501f758b541a5a2eb08d87eef1037ebf9f408a22e6bfdbecdf495fb114b3b320bb6056e149f46")
+    }
+
+  }
+
   feature("HashUtil.hashToHex && HashUtil.hashToBytes") {
 
     scenario("calculate hexString, convert to byte array and convert byte array back to hexString") {

@@ -37,6 +37,31 @@ object HashUtil {
   def sha256ByteArray(data: String): Array[Byte] = sha256Digest(data).bytes
 
   /**
+    * Gives us the Digest of a hash based on which call all sorts of methods (including conversion to hexString or
+    * byteArray).
+    *
+    * @param data data to hash
+    * @return digest with hash of input data
+    */
+  def sha512Digest(data: String): Digest = data.sha512
+
+  /**
+    * Convenience method that gives us the hash of the input as hexString.
+    *
+    * @param data data to hash
+    * @return hex string representation: SHA-512 hash of input data
+    */
+  def sha512HexString(data: String): String = sha512Digest(data).hex
+
+  /**
+    * Convenience method that gives us the hash of the input as byte array.
+    *
+    * @param data data to hash
+    * @return byte array representation: SHA-512 hash of input data
+    */
+  def sha512ByteArray(data: String): Array[Byte] = sha512Digest(data).bytes
+
+  /**
     * Convenience method correctly converting a hash from hex string to byte array.
     *
     * @param hexString hash represented as hex string
