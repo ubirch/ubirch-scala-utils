@@ -53,15 +53,14 @@ object HashUtil {
   def hashToHex(byteArray: Array[Byte]): String = Hash(byteArray).hex
 
   /**
-    * Convenience method generating n many random hashes (useful for tests).
+    * Convenience method generating random hashes (useful for creating a genesis block or in tests).
     *
-    * @param maxElementCount maximum number of randomly generated hashes
+    * @param elementCount number of randomly generated hashes
     * @return sequence of random hashes
     */
-  def randomSha256Hashes(maxElementCount: Int = Random.nextInt(30000)): Seq[String] = {
+  def randomSha256Hashes(elementCount: Int = Random.nextInt(30000)): Seq[String] = {
 
-    val randomSeq: Seq[String] = for (i <- 1 to maxElementCount) yield Random.nextLong.toString
-
+    val randomSeq: Seq[String] = for (i <- 1 to elementCount) yield Random.nextLong.toString
     randomSeq.map(HashUtil.sha256HexString)
 
   }
