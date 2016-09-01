@@ -33,7 +33,7 @@ lazy val crypto = project
     description := "ubirch util with crypto related code",
     version := "0.2-SNAPSHOT",
     resolvers ++= Seq(
-      "RoundEights" at "http://maven.spikemark.net/roundeights"
+      resolverHasher
     ),
     libraryDependencies ++= depCrypto
   )
@@ -53,7 +53,7 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
     description := "convert requests/responses to/from JSON",
     version := "0.1-SNAPSHOT",
     resolvers ++= Seq(
-      Resolver.bintrayRepo("hseeberger", "maven")
+      resolverSeebergerJson
     ),
     libraryDependencies ++= json4sWithSeeberger
   )
@@ -98,3 +98,6 @@ lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestV
 
 lazy val jodaTime = "joda-time" % "joda-time" % "2.9.4"
 lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8"
+
+lazy val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
+lazy val resolverHasher = "RoundEights" at "http://maven.spikemark.net/roundeights"
