@@ -23,6 +23,15 @@
       "com.ubirch.util" %% "crypto" % "0.2-SNAPSHOT"
     )
 
+#### `date`
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("snapshots")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "date" % "0.1-SNAPSHOT"
+    )
+
 #### `json`
 
     resolvers ++= Seq(

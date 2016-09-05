@@ -17,7 +17,7 @@ lazy val commonSettings = Seq(
 
 lazy val root = (project in file("."))
   .settings(commonSettings: _*)
-  .aggregate(config, crypto, json, jsonAutoConvert, uuid)
+  .aggregate(config, crypto, date, json, jsonAutoConvert, uuid)
 
 lazy val config = project
   .settings(commonSettings: _*)
@@ -36,6 +36,15 @@ lazy val crypto = project
       resolverHasher
     ),
     libraryDependencies ++= depCrypto
+  )
+
+lazy val date = project
+  .settings(commonSettings: _*)
+  .settings(
+    version := "0.1-SNAPSHOT",
+    libraryDependencies ++= Seq(
+      jodaTime
+    )
   )
 
 lazy val json = project
