@@ -15,9 +15,13 @@ lazy val commonSettings = Seq(
 
 )
 
-lazy val root = (project in file("."))
+/*
+ * MODULES
+ ********************************************************/
+
+lazy val scalaUtils = (project in file("."))
   .settings(commonSettings: _*)
-  .aggregate(config, crypto, date, json, jsonAutoConvert, uuid)
+  .aggregate(config, crypto, date, json, jsonAutoConvert, restAkkaHttp, uuid)
 
 lazy val config = project
   .settings(commonSettings: _*)
@@ -67,8 +71,21 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
     libraryDependencies ++= json4sWithSeeberger
   )
 
+lazy val restAkkaHttp = (project in file("rest-akka-http"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "akka-http-http",
+    description := "",
+    version := "0.1-SNAPSHOT",
+    libraryDependencies ++= depRestAkkaHttp
+  )
+
 lazy val uuid = project
   .settings(commonSettings: _*)
+
+/*
+ * MODULE DEPENDENCIES
+ ********************************************************/
 
 lazy val depCrypto = Seq(
   roundeightsHasher,
@@ -82,7 +99,16 @@ lazy val depJson = Seq(
   jodaTime % "test"
 ) ++ json4sWitNative
 
+lazy val depRestAkkaHttp = Seq(
+  akkaHttp
+)
+
+/*
+ * DEPENDENCIES
+ ********************************************************/
+
 val json4sV = "3.4.0"
+val akkaV = "2.4.9-RC2"
 val scalaTestV = "3.0.0"
 
 lazy val json4sBase = Seq(
@@ -103,10 +129,16 @@ lazy val typesafeConfig = "com.typesafe" % "config" % "1.3.0"
 
 lazy val roundeightsHasher = "com.roundeights" %% "hasher" % "1.2.0"
 
+lazy val akkaHttp = "com.typesafe.akka" %% "akka-http-experimental" % akkaV
+
 lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestV
 
 lazy val jodaTime = "joda-time" % "joda-time" % "2.9.4"
 lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8"
+
+/*
+ * RESOLVER
+ ********************************************************/
 
 lazy val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
 lazy val resolverHasher = "RoundEights" at "http://maven.spikemark.net/roundeights"
