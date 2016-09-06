@@ -74,7 +74,7 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
 lazy val restAkkaHttp = (project in file("rest-akka-http"))
   .settings(commonSettings: _*)
   .settings(
-    name := "akka-http-http",
+    name := "rest-akka-http",
     description := "",
     version := "0.1-SNAPSHOT",
     libraryDependencies ++= depRestAkkaHttp
