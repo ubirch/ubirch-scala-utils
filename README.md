@@ -57,7 +57,7 @@
       Resolver.sonatypeRepo("snapshots")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "akka-http-http" % "0.1-SNAPSHOT"
+      "com.ubirch.util" %% "akka-http-http" % "0.1" // for Akka 2.4.9-RC2
     )
 
 #### `uuid`
