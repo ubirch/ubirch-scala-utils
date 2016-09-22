@@ -7,48 +7,48 @@
 #### `config`
 
     resolvers ++= Seq(
-      Resolver.sonatypeRepo("snapshots")
+      Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "config" % "0.1-SNAPSHOT"
+      "com.ubirch.util" %% "config" % "0.1"
     )
 
 #### `crypto`
 
     resolvers ++= Seq(
-      Resolver.sonatypeRepo("snapshots"),
+      Resolver.sonatypeRepo("releases"),
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "crypto" % "0.2-SNAPSHOT"
+      "com.ubirch.util" %% "crypto" % "0.2"
     )
 
 #### `date`
 
     resolvers ++= Seq(
-      Resolver.sonatypeRepo("snapshots")
+      Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "date" % "0.1-SNAPSHOT"
+      "com.ubirch.util" %% "date" % "0.1"
     )
 
 #### `json`
 
     resolvers ++= Seq(
-      Resolver.sonatypeRepo("snapshots")
+      Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.1-SNAPSHOT"
+      "com.ubirch.util" %% "json" % "0.1"
     )
 
 #### `json-auto-convert`
 
     resolvers ++= Seq(
-      Resolver.sonatypeRepo("snapshots"),
+      Resolver.sonatypeRepo("releases"),
       Resolver.bintrayRepo("hseeberger", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json-auto-convert" % "0.1-SNAPSHOT"
+      "com.ubirch.util" %% "json-auto-convert" % "0.1"
     )
 
 #### `rest-akka-http`
@@ -64,8 +64,8 @@
 #### `uuid`
 
     resolvers ++= Seq(
-      Resolver.sonatypeRepo("snapshots")
+      Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "uuid" % "0.1-SNAPSHOT"
+      "com.ubirch.util" %% "uuid" % "0.1"
     )

@@ -27,7 +27,7 @@ lazy val config = project
   .settings(commonSettings: _*)
     .settings(
       description := "common config related code",
-      version := "0.1-SNAPSHOT",
+      version := "0.1",
       libraryDependencies += typesafeConfig
     )
 
@@ -35,7 +35,7 @@ lazy val crypto = project
   .settings(commonSettings: _*)
   .settings(
     description := "ubirch util with crypto related code",
-    version := "0.2-SNAPSHOT",
+    version := "0.2",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -46,7 +46,7 @@ lazy val date = project
   .settings(commonSettings: _*)
   .settings(
     description := "a collection of date related utils",
-    version := "0.1-SNAPSHOT",
+    version := "0.1",
     libraryDependencies ++= Seq(
       jodaTime
     )
@@ -56,7 +56,7 @@ lazy val json = project
   .settings(commonSettings: _*)
   .settings(
     description := "util to convert from/to JValue objects",
-    version := "0.1-SNAPSHOT",
+    version := "0.1",
     libraryDependencies ++= depJson
   )
 
@@ -65,7 +65,7 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
   .settings(
     name := "json-auto-convert",
     description := "convert requests/responses to/from JSON",
-    version := "0.1-SNAPSHOT",
+    version := "0.1",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
