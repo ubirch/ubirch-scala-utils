@@ -76,8 +76,8 @@ lazy val restAkkaHttp = (project in file("rest-akka-http"))
   .settings(
     name := "rest-akka-http",
     description := "",
-    version := "0.1",
-    libraryDependencies += akkaHttp_2_4_9
+    version := "0.2",
+    libraryDependencies += akkaHttp_2_4_10
   )
 
 lazy val uuid = project

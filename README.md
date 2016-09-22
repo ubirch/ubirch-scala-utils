@@ -58,6 +58,7 @@
     )
     libraryDependencies ++= Seq(
       "com.ubirch.util" %% "rest-akka-http" % "0.1" // for Akka 2.4.9-RC2
+      "com.ubirch.util" %% "rest-akka-http" % "0.2" // for Akka 2.4.10
     )
 
 #### `uuid`
