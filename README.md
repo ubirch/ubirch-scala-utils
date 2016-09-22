@@ -54,7 +54,7 @@
 #### `rest-akka-http`
 
     resolvers ++= Seq(
-      Resolver.sonatypeRepo("snapshots")
+      Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
       "com.ubirch.util" %% "rest-akka-http" % "0.1" // for Akka 2.4.9-RC2
