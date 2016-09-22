@@ -83,6 +83,10 @@ lazy val restAkkaHttp = (project in file("rest-akka-http"))
 
 lazy val uuid = project
   .settings(commonSettings: _*)
+  .settings(
+    description := "UUID related utils",
+    version := "0.1"
+  )
 
 /*
  * MODULE DEPENDENCIES
