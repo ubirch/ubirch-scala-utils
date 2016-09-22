@@ -45,6 +45,7 @@ lazy val crypto = project
 lazy val date = project
   .settings(commonSettings: _*)
   .settings(
+    description := "a collection of date related utils",
     version := "0.1-SNAPSHOT",
     libraryDependencies ++= Seq(
       jodaTime
@@ -75,7 +76,7 @@ lazy val restAkkaHttp = (project in file("rest-akka-http"))
   .settings(commonSettings: _*)
   .settings(
     name := "rest-akka-http",
-    description := "",
+    description := "shared custom classes related to akka-http-experimental (for example certain directives)",
     version := "0.2",
     libraryDependencies += akkaHttp_2_4_10
   )
