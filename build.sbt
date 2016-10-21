@@ -56,6 +56,7 @@ lazy val date = project
 lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-binary"))
   .settings(commonSettings: _*)
   .settings(
+    name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
     version := "0.1",
     libraryDependencies ++= depElasticsearchClientBinary
