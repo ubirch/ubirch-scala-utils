@@ -77,8 +77,8 @@ lazy val restAkkaHttp = (project in file("rest-akka-http"))
   .settings(
     name := "rest-akka-http",
     description := "shared custom classes related to akka-http-experimental (for example certain directives)",
-    version := "0.2",
-    libraryDependencies += akkaHttp_2_4_10
+    version := "0.3",
+    libraryDependencies += akkaHttp
   )
 
 lazy val uuid = project
@@ -109,8 +109,7 @@ lazy val depJson = Seq(
  ********************************************************/
 
 val json4sV = "3.4.0"
-val akkaV_2_4_9 = "2.4.9-RC2"
-val akkaV_2_4_10 = "2.4.10"
+val akkaV = "2.4.11"
 val scalaTestV = "3.0.0"
 
 lazy val json4sBase = Seq(
@@ -131,8 +130,7 @@ lazy val typesafeConfig = "com.typesafe" % "config" % "1.3.0"
 
 lazy val roundeightsHasher = "com.roundeights" %% "hasher" % "1.2.0"
 
-lazy val akkaHttp_2_4_9 = "com.typesafe.akka" %% "akka-http-experimental" % akkaV_2_4_9
-lazy val akkaHttp_2_4_10 = "com.typesafe.akka" %% "akka-http-experimental" % akkaV_2_4_10
+lazy val akkaHttp = "com.typesafe.akka" %% "akka-http-experimental" % akkaV
 
 lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestV
 
