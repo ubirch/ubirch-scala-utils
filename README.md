@@ -48,7 +48,7 @@
       Resolver.bintrayRepo("hseeberger", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json-auto-convert" % "0.1"
+      "com.ubirch.util" %% "json-auto-convert" % "0.2"
     )
 
 #### `rest-akka-http`
