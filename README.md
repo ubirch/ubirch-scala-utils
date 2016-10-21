@@ -32,6 +32,18 @@
       "com.ubirch.util" %% "date" % "0.1"
     )
 
+#### `elasticsearch-client-binary`
+
+A client for Elasticsearch 2.4 using the binary protocol through
+[TransportClient](https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html).
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.1"
+    )
+
 #### `json`
 
     resolvers ++= Seq(

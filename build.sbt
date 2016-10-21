@@ -1,11 +1,12 @@
 packagedArtifacts in file(".") := Map.empty // disable publishing of root project
 
+lazy val ubirchUtilGroup = "com.ubirch.util"
 lazy val commonSettings = Seq(
 
   scalaVersion := "2.11.8",
   scalacOptions ++= Seq("-feature"),
 
-  organization := "com.ubirch.util",
+  organization := ubirchUtilGroup,
 
   homepage := Some(url("http://ubirch.com")),
   scmInfo := Some(ScmInfo(
@@ -21,7 +22,7 @@ lazy val commonSettings = Seq(
 
 lazy val scalaUtils = (project in file("."))
   .settings(commonSettings: _*)
-  .aggregate(config, crypto, date, json, jsonAutoConvert, restAkkaHttp, uuid)
+  .aggregate(config, crypto, date, elasticsearchClientBinary, json, jsonAutoConvert, restAkkaHttp, uuid)
 
 lazy val config = project
   .settings(commonSettings: _*)
@@ -50,6 +51,14 @@ lazy val date = project
     libraryDependencies ++= Seq(
       jodaTime
     )
+  )
+
+lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-binary"))
+  .settings(commonSettings: _*)
+  .settings(
+    description := "Elasticsearch client using the binary TransportClient",
+    version := "0.1",
+    libraryDependencies ++= depElasticsearchClientBinary
   )
 
 lazy val json = project
@@ -99,6 +108,14 @@ lazy val depCrypto = Seq(
   jodaConvert % "test"
 )
 
+lazy val depElasticsearchClientBinary = Seq(
+  elasticSearch,
+  ubirchUtilJson,
+  scalaLoggingSlf4j,
+  slf4j,
+  scalaTest % "test"
+) ++ json4sBase
+
 lazy val depJson = Seq(
   scalaTest % "test",
   jodaTime % "test"
@@ -110,6 +127,7 @@ lazy val depJson = Seq(
 
 val json4sV = "3.4.0"
 val akkaV = "2.4.11"
+val elasticsearchV = "2.4.0"
 val scalaTestV = "3.0.0"
 
 lazy val json4sBase = Seq(
@@ -136,6 +154,12 @@ lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestV
 
 lazy val jodaTime = "joda-time" % "joda-time" % "2.9.4"
 lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8"
+
+lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
+lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
+lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
+
+lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.1"
 
 /*
  * RESOLVER
