@@ -39,7 +39,7 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
     scenario("store") {
       val jval = Json4sUtil.any2jvalue(testDoc).get
 
-      DeviceStorage.storeDoc(docIndex, docType, testDoc.id, jval).map { rjval =>
+      DeviceStorage.storeDoc(docIndex, docType, Some(testDoc.id), jval).map { rjval =>
         val rTestDoc = rjval.extract[TestDoc]
         rTestDoc.hello shouldBe testDoc.hello
       }
@@ -63,7 +63,7 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
 
     scenario("update") {
       val jval = Json4sUtil.any2jvalue(testDoc2).get
-      Await.ready(DeviceStorage.storeDoc(docIndex, docType, testDoc2.id, jval), 2 seconds)
+      Await.ready(DeviceStorage.storeDoc(docIndex, docType, Some(testDoc2.id), jval), 2 seconds)
       DeviceStorage.getDoc(docIndex, docType, testDoc2.id).map {
         case Some(jValue) =>
           val rTestDoc = jValue.extract[TestDoc]
@@ -74,7 +74,7 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
     }
 
     scenario("getAll") {
-      Thread.sleep(500)
+      Thread.sleep(1000)
       DeviceStorage.getDocs(docIndex, docType).map {
         case jvals: List[JValue] =>
           jvals.size shouldBe 1

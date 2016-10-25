@@ -31,24 +31,42 @@ trait ElasticsearchStorage extends LazyLogging {
     *
     * @param docIndex name of the index into which the current document should be stored
     * @param docType  name of the current documents type
-    * @param docId    unique id which identifies current document uniquely inside the index
+    * @param docIdOpt unique id which identifies current document uniquely inside the index
     * @param doc      document as a JValue which should be stored
     * @return
     */
-  def storeDoc(docIndex: String, docType: String, docId: String, doc: JValue): Future[JValue] = storeDoc(docIndex, docType, docId, 0l, doc)
+  def storeDoc(docIndex: String,
+               docType: String,
+               docIdOpt: Option[String] = None,
+               doc: JValue
+              ): Future[JValue] = {
+
+    storeDoc(docIndex, docType, docIdOpt, 0l, doc)
+
+  }
 
   /**
     *
     * @param docIndex name of the index into which the current document should be stored
     * @param docType  name of the current documents type
-    * @param docId    unique id which identifies current document uniquely inside the index
+    * @param docIdOpt unique id which identifies current document uniquely inside the index
     * @param ttl      sets the relative ttl value in milliseconds, a value of 0 means no ttl
     * @param doc      document as a JValue which should be stored
     * @return
     */
-  def storeDoc(docIndex: String, docType: String, docId: String, ttl: Long, doc: JValue): Future[JValue] = Future {
+  def storeDoc(docIndex: String,
+               docType: String,
+               docIdOpt: Option[String],
+               ttl: Long,
+               doc: JValue
+              ): Future[JValue] = Future {
 
-    require(docIndex.nonEmpty && docType.nonEmpty && docId.nonEmpty, "json invalid arguments")
+    require(docIndex.nonEmpty && docType.nonEmpty && (docIdOpt.isEmpty || docIdOpt.get.nonEmpty), "json invalid arguments")
+
+    val docId = docIdOpt match {
+      case Some(id) => id
+      case _ => null
+    }
 
     Json4sUtil.jvalue2String(doc) match {
       case docStr if docStr.nonEmpty =>

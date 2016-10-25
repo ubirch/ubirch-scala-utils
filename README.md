@@ -44,6 +44,16 @@ A client for Elasticsearch 2.4 using the binary protocol through
       "com.ubirch.util" %% "elasticsearch-client-binary" % "0.1"
     )
 
+##### Release History
+
+###### Version 0.2 (2016-10-25)
+
+docId in `ElasticsearchStorage.storeDoc` is now optional. 
+
+###### Version 0.1
+
+first release
+
 #### `json`
 
     resolvers ++= Seq(
