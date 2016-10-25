@@ -69,7 +69,7 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
           val rTestDoc = jValue.extract[TestDoc]
           rTestDoc.id shouldBe testDoc2.id
           rTestDoc.hello shouldBe testDoc2.hello
-        case None => fail("could not reag stored document")
+        case None => fail("could not read stored document")
       }
     }
 
@@ -78,7 +78,7 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
       DeviceStorage.getDocs(docIndex, docType).map {
         case jvals: List[JValue] =>
           jvals.size shouldBe 1
-        case _ => fail("could not reag stored document")
+        case _ => fail("could not read stored document")
       }
     }
 
