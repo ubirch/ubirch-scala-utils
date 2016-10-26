@@ -9,6 +9,7 @@ import com.ubirch.util.json.Json4sUtil
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.index.IndexNotFoundException
 import org.elasticsearch.index.query.QueryBuilder
+import org.elasticsearch.search.sort.SortBuilder
 import org.json4s._
 
 import scala.Predef._
@@ -112,13 +113,15 @@ trait ElasticsearchStorage extends LazyLogging {
     * @param query    search query as created with [[org.elasticsearch.index.query.QueryBuilders]]
     * @param from     pagination from
     * @param size     maximum number of results
+    * @param sort     optional result sort
     * @return
     */
   def getDocs(docIndex: String,
               docType: String,
               query: Option[QueryBuilder] = None,
               from: Option[Int] = None,
-              size: Option[Int] = None
+              size: Option[Int] = None,
+              sort: Option[SortBuilder] = None
              ): Future[List[JValue]] = {
 
     require(docIndex.nonEmpty && docType.nonEmpty, "json invalid arguments")
@@ -141,6 +144,9 @@ trait ElasticsearchStorage extends LazyLogging {
         requestBuilder = requestBuilder.setSize(size.get)
       }
 
+      if (sort.isDefined) {
+        requestBuilder = requestBuilder.addSort(sort.get)
+      }
       try {
 
         requestBuilder.execute()
