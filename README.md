@@ -46,6 +46,10 @@ A client for Elasticsearch 2.4 using the binary protocol through
 
 ##### Release History
 
+###### Version 0.2.1 (2016-10-26)
+
+additional check: `from` and `size` parameters in `ElasticsearchStorage.getDocs` may not be negative. 
+
 ###### Version 0.2 (2016-10-25)
 
 docId in `ElasticsearchStorage.storeDoc` is now optional. 
