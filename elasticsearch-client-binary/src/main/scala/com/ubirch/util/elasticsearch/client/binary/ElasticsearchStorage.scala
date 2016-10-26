@@ -132,10 +132,12 @@ trait ElasticsearchStorage extends LazyLogging {
       }
 
       if (from.isDefined) {
+        require(from.get >= 0, "from may be zero or larger")
         requestBuilder = requestBuilder.setFrom(from.get)
       }
 
       if (size.isDefined) {
+        require(size.get >= 0, "size may be zero or larger")
         requestBuilder = requestBuilder.setSize(size.get)
       }
 
