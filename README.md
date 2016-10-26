@@ -41,7 +41,7 @@ A client for Elasticsearch 2.4 using the binary protocol through
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.1"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.2.1"
     )
 
 ##### Release History
