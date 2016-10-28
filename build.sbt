@@ -36,7 +36,7 @@ lazy val crypto = project
   .settings(commonSettings: _*)
   .settings(
     description := "ubirch util with crypto related code",
-    version := "0.2",
+    version := "0.3",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -66,7 +66,7 @@ lazy val json = project
   .settings(commonSettings: _*)
   .settings(
     description := "util to convert from/to JValue objects",
-    version := "0.1",
+    version := "0.2",
     libraryDependencies ++= depJson
   )
 
@@ -75,7 +75,7 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
   .settings(
     name := "json-auto-convert",
     description := "convert requests/responses to/from JSON",
-    version := "0.2",
+    version := "0.3",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
@@ -104,6 +104,7 @@ lazy val uuid = project
 
 lazy val depCrypto = Seq(
   roundeightsHasher,
+  netI2pCryptoEddsa,
   scalaTest % "test",
   jodaTime % "test",
   jodaConvert % "test"
@@ -148,6 +149,8 @@ lazy val seebergerJson4s = "de.heikoseeberger" %% "akka-http-json4s" % "1.8.0"
 lazy val typesafeConfig = "com.typesafe" % "config" % "1.3.0"
 
 lazy val roundeightsHasher = "com.roundeights" %% "hasher" % "1.2.0"
+
+lazy val netI2pCryptoEddsa = "net.i2p.crypto" % "eddsa" % "0.1.0"
 
 lazy val akkaHttp = "com.typesafe.akka" %% "akka-http-experimental" % akkaV
 

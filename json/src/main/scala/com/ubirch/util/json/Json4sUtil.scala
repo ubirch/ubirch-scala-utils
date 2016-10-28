@@ -1,6 +1,7 @@
 package com.ubirch.util.json
 
-import org.json4s.JsonAST.JValue
+import java.io.InputStream
+
 import org.json4s._
 import org.json4s.native.JsonMethods._
 import org.json4s.native.Serialization.{read, write}
@@ -34,6 +35,16 @@ object Json4sUtil {
     }
   }
 
+  def inputstream2jvalue(is: InputStream): Option[JValue] = {
+    try {
+      Some(read[JValue](write[InputStream](is)))
+    }
+    catch {
+      case t: Throwable =>
+        None
+    }
+  }
+
   def any2jobject(obj: AnyRef): Option[JObject] = {
     try {
       Some(read[JObject](write[AnyRef](obj)))
@@ -42,11 +53,5 @@ object Json4sUtil {
       case t: Throwable =>
         None
     }
-  }
-
-
-  //  TODO fix this methodt
-  def string2Any[T: Manifest](value: String): Option[T] = {
-    parse(value).extractOpt[T]
   }
 }
