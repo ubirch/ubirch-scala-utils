@@ -74,8 +74,8 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
   .settings(commonSettings: _*)
   .settings(
     name := "json-auto-convert",
-    description := "convert requests/responses to/from JSON",
-    version := "0.3",
+    description := "convert objects to/from JSON",
+    version := "0.2",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
