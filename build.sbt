@@ -58,7 +58,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "0.2.3",
+    version := "0.2.4",
     libraryDependencies ++= depElasticsearchClientBinary
   )
 
@@ -163,7 +163,7 @@ lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
 lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 
-lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.1"
+lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.2"
 
 /*
  * RESOLVER

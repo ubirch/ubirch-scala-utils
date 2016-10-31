@@ -13,6 +13,7 @@
       "com.ubirch.util" %% "config" % "0.1"
     )
 
+
 #### `crypto`
 
     resolvers ++= Seq(
@@ -20,8 +21,15 @@
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "crypto" % "0.2"
+      "com.ubirch.util" %% "crypto" % "0.3"
     )
+
+##### Release History
+
+###### Version 0.3 (2016-10-28)
+
+migrated crypto code from old ubirch project to this util module.
+
 
 #### `date`
 
@@ -32,6 +40,7 @@
       "com.ubirch.util" %% "date" % "0.1"
     )
 
+
 #### `elasticsearch-client-binary`
 
 A client for Elasticsearch 2.4 using the binary protocol through
@@ -41,10 +50,14 @@ A client for Elasticsearch 2.4 using the binary protocol through
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.2.3"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.2.4"
     )
 
 ##### Release History
+
+###### Version 0.2.4 (2016-10-31)
+
+update dependency com.ubirch.util:json from version 0.1 to 0.2.
 
 ###### Version 0.2.3 (2016-10-27)
 
@@ -66,14 +79,23 @@ docId in `ElasticsearchStorage.storeDoc` is now optional.
 
 first release
 
+
 #### `json`
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.1"
+      "com.ubirch.util" %% "json" % "0.2"
     )
+
+##### Release History
+
+###### Version 0.2 (2016-10-28)
+
+* deleted method Json4sUtil.string2Any
+* added method Json4sUtil.inputstream2jvalue
+
 
 #### `json-auto-convert`
 
@@ -82,8 +104,13 @@ first release
       Resolver.bintrayRepo("hseeberger", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json-auto-convert" % "0.2"
+      "com.ubirch.util" %% "json-auto-convert" % "0.3"
     )
+
+###### Version 0.3 (2016-10-28)
+
+???
+
 
 #### `rest-akka-http`
 
@@ -95,6 +122,7 @@ first release
       "com.ubirch.util" %% "rest-akka-http" % "0.2" // for Akka 2.4.10
       "com.ubirch.util" %% "rest-akka-http" % "0.3" // for Akka 2.4.11
     )
+
 
 #### `uuid`
 
