@@ -75,7 +75,7 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
   .settings(
     name := "json-auto-convert",
     description := "convert objects to/from JSON",
-    version := "0.2",
+    version := "0.3",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
@@ -127,7 +127,7 @@ lazy val depJson = Seq(
  * DEPENDENCIES
  ********************************************************/
 
-val json4sV = "3.4.0"
+val json4sV = "3.4.2"
 val akkaV = "2.4.11"
 val elasticsearchV = "2.4.0"
 val scalaTestV = "3.0.0"
