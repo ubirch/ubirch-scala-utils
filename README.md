@@ -50,10 +50,14 @@ A client for Elasticsearch 2.4 using the binary protocol through
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.2.4"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.2.6"
     )
 
 ##### Release History
+
+###### Version 0.2.6 (2016-11-01)
+
+update dependency com.ubirch.util:json from version 0.3 to 0.3.1.
 
 ###### Version 0.2.5 (2016-11-01)
 
@@ -90,10 +94,14 @@ first release
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.3"
+      "com.ubirch.util" %% "json" % "0.3.1"
     )
 
 ##### Release History
+
+###### Version 0.3.1 (2016-11-01)
+
+* fixed Json4sUtil.inputstream2jvalue()
 
 ###### Version 0.3 (2016-11-01)
 
