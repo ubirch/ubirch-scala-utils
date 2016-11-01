@@ -66,7 +66,7 @@ lazy val json = project
   .settings(commonSettings: _*)
   .settings(
     description := "util to convert from/to JValue objects",
-    version := "0.3",
+    version := "0.3.1",
     libraryDependencies ++= depJson
   )
 
@@ -129,7 +129,7 @@ lazy val depJson = Seq(
 
 val json4sV = "3.4.2"
 val akkaV = "2.4.11"
-val elasticsearchV = "2.4.0"
+val elasticsearchV = "2.4.1"
 val scalaTestV = "3.0.0"
 
 lazy val json4sBase = Seq(
@@ -144,7 +144,7 @@ lazy val json4sJackson = "org.json4s" %% "json4s-jackson" % json4sV
 lazy val json4sCore = "org.json4s" %% "json4s-core" % json4sV
 lazy val json4sExt = "org.json4s" %% "json4s-ext" % json4sV
 lazy val json4sNative = "org.json4s" %% "json4s-native" % json4sV
-lazy val seebergerJson4s = "de.heikoseeberger" %% "akka-http-json4s" % "1.8.0"
+lazy val seebergerJson4s = "de.heikoseeberger" %% "akka-http-json4s" % "1.8.0" exclude("org.json4s", "json4s-core")
 
 lazy val typesafeConfig = "com.typesafe" % "config" % "1.3.0"
 
@@ -157,13 +157,13 @@ lazy val akkaHttp = "com.typesafe.akka" %% "akka-http-experimental" % akkaV
 lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestV
 
 lazy val jodaTime = "joda-time" % "joda-time" % "2.9.4"
-lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8"
+lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8.1"
 
 lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
 lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 
-lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3"
+lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.1"
 
 /*
  * RESOLVER

@@ -37,7 +37,7 @@ object Json4sUtil {
 
   def inputstream2jvalue(is: InputStream): Option[JValue] = {
     try {
-      Some(read[JValue](write[InputStream](is)))
+      Some(read[JValue](is))
     }
     catch {
       case t: Throwable =>

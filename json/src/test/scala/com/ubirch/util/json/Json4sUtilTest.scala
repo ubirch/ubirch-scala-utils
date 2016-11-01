@@ -1,8 +1,11 @@
 package com.ubirch.util.json
 
+import java.io.ByteArrayInputStream
+
 import org.joda.time._
 import org.json4s.DefaultFormats
 import org.json4s.ext.JodaTimeSerializers
+
 import org.scalatest.{FeatureSpec, Matchers}
 
 /**
@@ -12,6 +15,8 @@ class Json4sUtilTest extends FeatureSpec
   with Matchers {
 
   case class TestWumms(name: String, age: Int, created: DateTime)
+
+  case class Simple(a: String)
 
   implicit val formats = DefaultFormats.lossless ++ JodaTimeSerializers.all
 
@@ -46,6 +51,20 @@ class Json4sUtilTest extends FeatureSpec
       val createdVal = createdOpt.get.withZone(DateTimeZone.UTC)
 
       createdVal shouldBe created
+    }
+
+    scenario("test inputstream") {
+
+      val doc = Simple(a = "B")
+      val jval = Json4sUtil.any2jvalue(doc).get
+      val str = Json4sUtil.jvalue2String(jval)
+      val is = new ByteArrayInputStream(str.getBytes())
+
+      val jval2 = Json4sUtil.inputstream2jvalue(is).get
+      val doc2 = jval2.extractOpt[Simple]
+      doc2.isDefined shouldBe true
+      doc2.get.a shouldBe doc.a
+      doc2.get.a shouldBe "B"
     }
   }
 }
