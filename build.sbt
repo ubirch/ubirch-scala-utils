@@ -163,7 +163,7 @@ lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
 lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 
-lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.1"
+lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3"
 
 /*
  * RESOLVER
