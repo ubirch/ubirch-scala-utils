@@ -86,10 +86,14 @@ first release
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.2"
+      "com.ubirch.util" %% "json" % "0.3"
     )
 
 ##### Release History
+
+###### Version 0.3 (2016-11-01)
+
+* updated json4s dependencies to verion 3.4.2
 
 ###### Version 0.2 (2016-10-28)
 
