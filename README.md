@@ -107,9 +107,9 @@ first release
       "com.ubirch.util" %% "json-auto-convert" % "0.3"
     )
 
-###### Version 0.3 (2016-10-28)
+###### Version 0.3 (2016-11-01)
 
-???
+* update json4s dependency from version 3.4.0 to 3.4.2
 
 
 #### `rest-akka-http`
