@@ -120,8 +120,14 @@ first release
       Resolver.bintrayRepo("hseeberger", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json-auto-convert" % "0.3"
+      "com.ubirch.util" %% "json-auto-convert" % "0.3.1"
     )
+
+##### Release History
+
+###### Version 0.3.1 (2016-11-02)
+
+* update dependency "de.heikoseeberger":"akka-http-json4s" from version 1.8.0 to 1.10.1
 
 ###### Version 0.3 (2016-11-01)
 

@@ -75,7 +75,7 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
   .settings(
     name := "json-auto-convert",
     description := "convert objects to/from JSON",
-    version := "0.3",
+    version := "0.3.1",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
@@ -144,7 +144,7 @@ lazy val json4sJackson = "org.json4s" %% "json4s-jackson" % json4sV
 lazy val json4sCore = "org.json4s" %% "json4s-core" % json4sV
 lazy val json4sExt = "org.json4s" %% "json4s-ext" % json4sV
 lazy val json4sNative = "org.json4s" %% "json4s-native" % json4sV
-lazy val seebergerJson4s = "de.heikoseeberger" %% "akka-http-json4s" % "1.8.0" exclude("org.json4s", "json4s-core")
+lazy val seebergerJson4s = "de.heikoseeberger" %% "akka-http-json4s" % "1.10.1"
 
 lazy val typesafeConfig = "com.typesafe" % "config" % "1.3.0"
 
