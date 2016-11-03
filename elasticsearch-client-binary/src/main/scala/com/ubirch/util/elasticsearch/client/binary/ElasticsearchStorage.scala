@@ -66,7 +66,7 @@ trait ElasticsearchStorage extends LazyLogging {
 
     val docId = docIdOpt match {
       case Some(id) => id
-      case _ => null
+      case _ => null // TODO fix bug: this leads Exception("store failed") in line 84
     }
 
     Json4sUtil.jvalue2String(doc) match {
