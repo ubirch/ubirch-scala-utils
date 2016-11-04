@@ -11,6 +11,7 @@ trait MyJsonProtocol {
 
   implicit val serialization = jackson.Serialization // or native.Serialization
 
+  // TODO refactor to reference JsonFormats.default
   implicit def json4sJacksonFormats: Formats = DefaultFormats.lossless ++ JavaTypesSerializers.all ++ JodaTimeSerializers.all
 
 }
