@@ -78,11 +78,11 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
   .settings(
     name := "json-auto-convert",
     description := "convert objects to/from JSON",
-    version := "0.3.1",
+    version := "0.3.2",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
-    libraryDependencies ++= json4sWithSeeberger
+    libraryDependencies ++= depJsonAutoConvert
   )
 
 lazy val restAkkaHttp = (project in file("rest-akka-http"))
@@ -125,6 +125,11 @@ lazy val depJson = Seq(
   scalaTest % "test",
   jodaTime % "test"
 ) ++ json4sWitNative
+
+lazy val depJsonAutoConvert = Seq(
+  seebergerJson4s,
+  ubirchUtilJson
+)
 
 /*
  * DEPENDENCIES

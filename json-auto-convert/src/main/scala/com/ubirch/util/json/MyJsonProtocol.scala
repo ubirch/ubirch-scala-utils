@@ -1,7 +1,6 @@
 package com.ubirch.util.json
 
-import org.json4s.ext.{JavaTypesSerializers, JodaTimeSerializers}
-import org.json4s.{DefaultFormats, Formats, jackson}
+import org.json4s.{Formats, jackson}
 
 /**
   * author: cvandrei
@@ -11,7 +10,6 @@ trait MyJsonProtocol {
 
   implicit val serialization = jackson.Serialization // or native.Serialization
 
-  // TODO refactor to reference JsonFormats.default
-  implicit def json4sJacksonFormats: Formats = DefaultFormats.lossless ++ JavaTypesSerializers.all ++ JodaTimeSerializers.all
+  implicit def json4sJacksonFormats: Formats = JsonFormats.default
 
 }

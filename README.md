@@ -133,6 +133,10 @@ first release
 
 ##### Release History
 
+###### Version 0.3.2 (2016-11-04)
+
+* add com.ubirch.util:json:0.3.2 dependency for it's default formats
+
 ###### Version 0.3.1 (2016-11-02)
 
 * update dependency "de.heikoseeberger":"akka-http-json4s" from version 1.8.0 to 1.10.1
