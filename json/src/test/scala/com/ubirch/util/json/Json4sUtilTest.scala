@@ -18,7 +18,7 @@ class Json4sUtilTest extends FeatureSpec
 
   case class Simple(a: String)
 
-  implicit val formats = DefaultFormats.lossless ++ JodaTimeSerializers.all
+  implicit val formats = JsonFormats.default
 
   feature("JsonUtil") {
 

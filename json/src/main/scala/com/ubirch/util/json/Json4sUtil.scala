@@ -11,7 +11,7 @@ import org.json4s.native.Serialization.{read, write}
   */
 object Json4sUtil {
 
-  implicit val formats = DefaultFormats.lossless ++ org.json4s.ext.JodaTimeSerializers.all
+  implicit val formats = JsonFormats.default
 
   def jvalue2String(jval: JValue) = compact(render(jval))
 

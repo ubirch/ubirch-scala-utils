@@ -94,10 +94,14 @@ first release
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.3.1"
+      "com.ubirch.util" %% "json" % "0.3.2"
     )
 
 ##### Release History
+
+###### Version 0.3.2 (2016-11-04)
+
+* introduced JsonFormats.default to have one fixed list of default formats
 
 ###### Version 0.3.1 (2016-11-01)
 
