@@ -55,6 +55,10 @@ A client for Elasticsearch 2.4 using the binary protocol through
 
 ##### Release History
 
+###### Version 0.2.7 (2016-11-04)
+
+update dependency com.ubirch.util:json from version 0.3.1 to 0.3.2.
+
 ###### Version 0.2.6 (2016-11-01)
 
 update dependency com.ubirch.util:json from version 0.3 to 0.3.1.
