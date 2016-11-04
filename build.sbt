@@ -59,6 +59,9 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
     version := "0.2.7",
+    resolvers ++= Seq(
+      sonatypeReleases
+    ),
     libraryDependencies ++= depElasticsearchClientBinary
   )
 
@@ -169,5 +172,6 @@ lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.2"
  * RESOLVER
  ********************************************************/
 
+lazy val sonatypeReleases = Resolver.sonatypeRepo("releases")
 lazy val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
 lazy val resolverHasher = "RoundEights" at "http://maven.spikemark.net/roundeights"
