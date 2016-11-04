@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutionException
 
 import com.typesafe.scalalogging.slf4j.LazyLogging
 
-import com.ubirch.util.json.Json4sUtil
+import com.ubirch.util.json.{Json4sUtil, JsonFormats}
 
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.index.IndexNotFoundException
@@ -23,7 +23,7 @@ import scala.concurrent.Future
   */
 trait ElasticsearchStorage extends LazyLogging {
 
-  implicit val formats = DefaultFormats.lossless ++ org.json4s.ext.JodaTimeSerializers.all
+  implicit val formats = JsonFormats.default
   implicit val ec = scala.concurrent.ExecutionContext.global
 
   protected val esClient: TransportClient

@@ -50,10 +50,14 @@ A client for Elasticsearch 2.4 using the binary protocol through
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.2.6"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.2.8"
     )
 
 ##### Release History
+
+###### Version 0.2.8 (2016-11-04)
+
+* `ElasticsearchStorage` references JsonFormats.default now
 
 ###### Version 0.2.7 (2016-11-04)
 
