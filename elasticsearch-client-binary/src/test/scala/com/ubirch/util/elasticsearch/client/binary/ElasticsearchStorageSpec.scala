@@ -4,6 +4,7 @@ import java.net.InetAddress
 
 import com.typesafe.scalalogging.slf4j.LazyLogging
 import com.ubirch.util.json.Json4sUtil
+import com.ubirch.util.uuid.UUIDUtil
 import org.json4s._
 import org.scalatest.{AsyncFeatureSpec, BeforeAndAfterAll, Matchers}
 import org.elasticsearch.client.transport.TransportClient
@@ -50,8 +51,8 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
     }
 
     scenario("failed get") {
-      val f = Await.result(DeviceStorage.getDoc("", "", ""), 5 seconds)
-      f.isDefined shouldBe true
+      val f = Await.result(DeviceStorage.getDoc(docIndex, docType, UUIDUtil.uuidStr), 5 seconds)
+      f.isDefined shouldBe false
     }
 
     scenario("get") {
