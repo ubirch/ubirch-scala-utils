@@ -21,10 +21,16 @@
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "crypto" % "0.3"
+      "com.ubirch.util" %% "crypto" % "0.3.1"
     )
 
 ##### Release History
+
+###### Version 0.3.1 (2016-11-09)
+
+* added new methods to HashUtil:
+  * sha256Base64(Array[Byte]
+  * sha512Base64(Array[Byte]
 
 ###### Version 0.3 (2016-10-28)
 
