@@ -65,10 +65,19 @@ A client for Elasticsearch 2.4 using the binary protocol through
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.2.8"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.2.10"
     )
 
 ##### Release History
+
+###### Version 0.2.10 (2016-11-09)
+
+* `ttl` in `ElasticsearchStorage.storeDoc()` is now zero by default
+* `timestamp` in `ElasticsearchStorage.storeDoc()` is now None by default
+
+###### Version 0.2.9 (2016-11-06)
+
+* `ElasticsearchStorage.storeDoc()` now supports timestamp functionality
 
 ###### Version 0.2.8 (2016-11-04)
 

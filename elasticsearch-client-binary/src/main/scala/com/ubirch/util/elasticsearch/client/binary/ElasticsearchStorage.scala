@@ -29,33 +29,10 @@ trait ElasticsearchStorage extends LazyLogging {
 
   /**
     *
-    * @param docIndex name of the index into which the current document should be stored
-    * @param docType  name of the current documents type
-    * @param docIdOpt unique id which identifies current document uniquely inside the index
-    * @param doc      document as a JValue which should be stored
-    * @return
-    */
-  def storeDoc(docIndex: String,
-               docType: String,
-               doc: JValue,
-               docIdOpt: Option[String] = None
-              ): Future[JValue] = {
-
-    storeDoc(
-      docIndex = docIndex,
-      docType = docType,
-      docIdOpt = docIdOpt,
-      timestamp = None,
-      ttl = 0l,
-      doc = doc)
-  }
-
-  /**
-    *
     * @param docIndex  name of the index into which the current document should be stored
     * @param docType   name of the current documents type
     * @param docIdOpt  unique id which identifies current document uniquely inside the index
-    * @param timestamp name of timestmap attribute
+    * @param timestamp name of timestamp attribute
     * @param ttl       sets the relative ttl value in milliseconds, a value of 0 means no ttl
     * @param doc       document as a JValue which should be stored
     * @return
@@ -63,9 +40,9 @@ trait ElasticsearchStorage extends LazyLogging {
   def storeDoc(docIndex: String,
                docType: String,
                doc: JValue,
-               ttl: Long,
-               docIdOpt: Option[String],
-               timestamp: Option[String]
+               ttl: Long = 0l,
+               docIdOpt: Option[String] = None,
+               timestamp: Option[String] = None
               ): Future[JValue] = Future {
 
     require(docIndex.nonEmpty && docType.nonEmpty && (docIdOpt.isEmpty || docIdOpt.get.nonEmpty), "json invalid arguments")
