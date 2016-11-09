@@ -39,13 +39,17 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
     scenario("store") {
       val jval = Json4sUtil.any2jvalue(testDoc).get
 
-      DeviceStorage.storeDoc(docIndex, docType, Some(testDoc.id), jval).map { rjval =>
+      DeviceStorage.storeDoc(
+        docIndex = docIndex,
+        docType = docType,
+        docIdOpt = Some(testDoc.id),
+        doc = jval).map { rjval =>
         val rTestDoc = rjval.extract[TestDoc]
         rTestDoc.hello shouldBe testDoc.hello
       }
     }
 
-    ignore("failed get") {
+    scenario("failed get") {
       val f = Await.result(DeviceStorage.getDoc("", "", ""), 5 seconds)
       f.isDefined shouldBe true
     }
@@ -63,7 +67,11 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
 
     scenario("update") {
       val jval = Json4sUtil.any2jvalue(testDoc2).get
-      Await.ready(DeviceStorage.storeDoc(docIndex, docType, Some(testDoc2.id), jval), 2 seconds)
+      Await.ready(DeviceStorage.storeDoc(
+        docIndex = docIndex,
+        docType = docType,
+        docIdOpt = Some(testDoc2.id),
+        doc = jval), 2 seconds)
       DeviceStorage.getDoc(docIndex, docType, testDoc2.id).map {
         case Some(jValue) =>
           val rTestDoc = jValue.extract[TestDoc]

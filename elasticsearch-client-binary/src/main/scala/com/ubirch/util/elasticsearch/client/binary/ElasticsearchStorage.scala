@@ -3,9 +3,8 @@ package com.ubirch.util.elasticsearch.client.binary
 import java.util.concurrent.ExecutionException
 
 import com.typesafe.scalalogging.slf4j.LazyLogging
-
 import com.ubirch.util.json.{Json4sUtil, JsonFormats}
-
+import com.ubirch.util.uuid.UUIDUtil
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.index.IndexNotFoundException
 import org.elasticsearch.index.query.QueryBuilder
@@ -38,43 +37,56 @@ trait ElasticsearchStorage extends LazyLogging {
     */
   def storeDoc(docIndex: String,
                docType: String,
-               docIdOpt: Option[String] = None,
-               doc: JValue
+               doc: JValue,
+               docIdOpt: Option[String] = None
               ): Future[JValue] = {
 
-    storeDoc(docIndex, docType, docIdOpt, 0l, doc)
-
+    storeDoc(
+      docIndex = docIndex,
+      docType = docType,
+      docIdOpt = docIdOpt,
+      timestamp = None,
+      ttl = 0l,
+      doc = doc)
   }
 
   /**
     *
-    * @param docIndex name of the index into which the current document should be stored
-    * @param docType  name of the current documents type
-    * @param docIdOpt unique id which identifies current document uniquely inside the index
-    * @param ttl      sets the relative ttl value in milliseconds, a value of 0 means no ttl
-    * @param doc      document as a JValue which should be stored
+    * @param docIndex  name of the index into which the current document should be stored
+    * @param docType   name of the current documents type
+    * @param docIdOpt  unique id which identifies current document uniquely inside the index
+    * @param timestamp name of timestmap attribute
+    * @param ttl       sets the relative ttl value in milliseconds, a value of 0 means no ttl
+    * @param doc       document as a JValue which should be stored
     * @return
     */
   def storeDoc(docIndex: String,
                docType: String,
-               docIdOpt: Option[String],
+               doc: JValue,
                ttl: Long,
-               doc: JValue
+               docIdOpt: Option[String],
+               timestamp: Option[String]
               ): Future[JValue] = Future {
 
     require(docIndex.nonEmpty && docType.nonEmpty && (docIdOpt.isEmpty || docIdOpt.get.nonEmpty), "json invalid arguments")
 
     val docId = docIdOpt match {
-      case Some(id) => id
-      case _ => null // TODO fix bug: this leads Exception("store failed") in line 84
+      case Some(id) =>
+        id
+      case None =>
+        UUIDUtil.uuidStr
     }
 
     Json4sUtil.jvalue2String(doc) match {
       case docStr if docStr.nonEmpty =>
-        val pIdx = esClient.prepareIndex(docIndex, docType, docId)
+        val pIdx = esClient
+          .prepareIndex(docIndex, docType, docId)
           .setSource(docStr)
         if (ttl > 0) {
           pIdx.setTTL(ttl)
+        }
+        if (timestamp.isDefined) {
+          pIdx.setTimestamp(timestamp.get)
         }
 
         val res = pIdx.get()

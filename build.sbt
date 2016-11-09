@@ -58,7 +58,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "0.2.8",
+    version := "0.2.9",
     resolvers ++= Seq(
       sonatypeReleases
     ),
@@ -116,6 +116,7 @@ lazy val depCrypto = Seq(
 lazy val depElasticsearchClientBinary = Seq(
   elasticSearch,
   ubirchUtilJson,
+  ubirchUtilUuid,
   scalaLoggingSlf4j,
   slf4j,
   scalaTest % "test"
@@ -172,6 +173,8 @@ lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.2"
+
+lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1"
 
 /*
  * RESOLVER
