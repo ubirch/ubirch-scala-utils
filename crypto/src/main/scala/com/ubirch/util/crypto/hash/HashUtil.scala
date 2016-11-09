@@ -1,5 +1,7 @@
 package com.ubirch.util.crypto.hash
 
+import java.util.Base64
+
 import com.roundeights.hasher.Implicits._
 import com.roundeights.hasher.{Digest, Hash}
 
@@ -37,6 +39,17 @@ object HashUtil {
   def sha256ByteArray(data: String): Array[Byte] = sha256Digest(data).bytes
 
   /**
+    * Convenience method that gives us the hash of the input as Base64 encoded string.
+    *
+    * @param data data to hash
+    * @return Base64 encoded string representation: SHA-256 hash of input data
+    */
+  def sha256Base64(data: String): String = {
+    val bytes = sha256Digest(data).bytes
+    hashToBase64(bytes)
+  }
+
+  /**
     * Gives us the Digest of a hash based on which call all sorts of methods (including conversion to hexString or
     * byteArray).
     *
@@ -62,6 +75,17 @@ object HashUtil {
   def sha512ByteArray(data: String): Array[Byte] = sha512Digest(data).bytes
 
   /**
+    * Convenience method that gives us the hash of the input as Base64 encoded string.
+    *
+    * @param data data to hash
+    * @return Base64 encoded string representation: SHA-512 hash of input data
+    */
+  def sha512Base64(data: String): String = {
+    val bytes = sha512Digest(data).bytes
+    hashToBase64(bytes)
+  }
+
+  /**
     * Convenience method correctly converting a hash from hex string to byte array.
     *
     * @param hexString hash represented as hex string
@@ -76,6 +100,15 @@ object HashUtil {
     * @return input converted to hex string
     */
   def hashToHex(byteArray: Array[Byte]): String = Hash(byteArray).hex
+
+
+  /**
+    * Convenience method correctly converting a hash from byte array to a Base64 encoded string.
+    *
+    * @param byteArray hash represented as byte array
+    * @return input converted to Base64 encoded string
+    */
+  def hashToBase64(byteArray: Array[Byte]): String = new String(Base64.getEncoder.encode(byteArray))
 
   /**
     * Convenience method generating random hashes (useful for creating a genesis block or in tests).
