@@ -21,10 +21,19 @@
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "crypto" % "0.3.1"
+      "com.ubirch.util" %% "crypto" % "0.3.2"
     )
 
 ##### Release History
+
+###### Version 0.3.3 (2016-11-09)
+
+* fixed refactoring bug
+
+###### Version 0.3.2 (2016-11-09)
+
+* removed external dependency net.i2p.crypto" % "eddsa" % "0.1.0"
+ * we use a local copy of that project
 
 ###### Version 0.3.1 (2016-11-09)
 
