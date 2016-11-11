@@ -21,7 +21,7 @@
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "crypto" % "0.3.2"
+      "com.ubirch.util" %% "crypto" % "0.3.3"
     )
 
 ##### Release History
