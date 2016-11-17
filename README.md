@@ -186,6 +186,22 @@ first release
     )
 
 
+#### `rest-akka-http-test`
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http" % "0.3" // for Akka 2.4.11
+    )
+
+##### Release History
+
+###### Version 0.3 (2016-11-17)
+
+* initial release for Akka 2.4.11
+
+
 #### `uuid`
 
     resolvers ++= Seq(
