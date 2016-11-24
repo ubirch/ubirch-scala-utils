@@ -23,7 +23,7 @@ trait ElasticsearchBulkStorage extends LazyLogging {
 
   protected val esClient: TransportClient
 
-  private val bulkProcessor = BulkProcessor.builder(esClient, new BulkProcessor.Listener() {
+  lazy private val bulkProcessor = BulkProcessor.builder(esClient, new BulkProcessor.Listener() {
 
     @Override
     def beforeBulk(executionId: Long, request: BulkRequest): Unit = {

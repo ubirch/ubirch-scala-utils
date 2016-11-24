@@ -65,10 +65,14 @@ A client for Elasticsearch 2.4 using the binary protocol through
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.3.0"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.3.1"
     )
 
 ##### Release History
+
+###### Version 0.3.1 (2016-11-24)
+
+* bugfix: `ElasticsearchBulkStorage.bulkProcessor` must be lazy 
 
 ###### Version 0.3.0 (2016-11-23)
 
