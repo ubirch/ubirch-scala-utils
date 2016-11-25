@@ -3,8 +3,10 @@ package com.ubirch.util.elasticsearch.client.binary
 import java.util.concurrent.ExecutionException
 
 import com.typesafe.scalalogging.slf4j.LazyLogging
+
 import com.ubirch.util.json.{Json4sUtil, JsonFormats}
 import com.ubirch.util.uuid.UUIDUtil
+
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.index.IndexNotFoundException
 import org.elasticsearch.index.query.QueryBuilder
@@ -12,7 +14,7 @@ import org.elasticsearch.search.sort.SortBuilder
 import org.json4s._
 
 import scala.Predef._
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * Using the Elasticsearch TransportClient to access the database: https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html
@@ -22,8 +24,8 @@ import scala.concurrent.Future
   */
 trait ElasticsearchStorage extends LazyLogging {
 
-  implicit val formats = JsonFormats.default
-  implicit val ec = scala.concurrent.ExecutionContext.global
+  implicit val formats: Formats = JsonFormats.default
+  implicit val ec: ExecutionContext = scala.concurrent.ExecutionContext.global
 
   protected val esClient: TransportClient
 
@@ -47,12 +49,7 @@ trait ElasticsearchStorage extends LazyLogging {
 
     require(docIndex.nonEmpty && docType.nonEmpty && (docIdOpt.isEmpty || docIdOpt.get.nonEmpty), "json invalid arguments")
 
-    val docId = docIdOpt match {
-      case Some(id) =>
-        id
-      case None =>
-        UUIDUtil.uuidStr
-    }
+    val docId = docIdOpt.getOrElse(UUIDUtil.uuidStr)
 
     Json4sUtil.jvalue2String(doc) match {
       case docStr if docStr.nonEmpty =>

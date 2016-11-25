@@ -22,7 +22,7 @@ lazy val commonSettings = Seq(
 
 lazy val scalaUtils = (project in file("."))
   .settings(commonSettings: _*)
-  .aggregate(config, crypto, date, elasticsearchClientBinary, json, jsonAutoConvert, restAkkaHttp, uuid)
+  .aggregate(config, crypto, date, elasticsearchClientBinary, json, jsonAutoConvert, restAkkaHttp, restAkkaHttpTest, uuid)
 
 lazy val config = project
   .settings(commonSettings: _*)
@@ -58,7 +58,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "0.2.10",
+    version := "0.3.1",
     resolvers ++= Seq(
       sonatypeReleases
     ),
@@ -90,8 +90,17 @@ lazy val restAkkaHttp = (project in file("rest-akka-http"))
   .settings(
     name := "rest-akka-http",
     description := "shared custom classes related to akka-http-experimental (for example certain directives)",
-    version := "0.3",
+    version := "0.3", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
     libraryDependencies += akkaHttp
+  )
+
+lazy val restAkkaHttpTest = (project in file("rest-akka-http-test"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "rest-akka-http-test",
+    description := "akka-http-experimental related test utils",
+    version := "0.3", // NOTE: please keep major.minor version synchronized with restAkkaHttp
+    libraryDependencies ++= depRestAkkaHttpTest
   )
 
 lazy val uuid = project
@@ -131,14 +140,24 @@ lazy val depJsonAutoConvert = Seq(
   ubirchUtilJson
 )
 
+lazy val depRestAkkaHttpTest = Seq(
+  akkaHttp,
+  akkaHttpTestkit,
+  scalaTest
+)
+
 /*
  * DEPENDENCIES
  ********************************************************/
 
+// Versions
 val json4sV = "3.4.2"
 val akkaV = "2.4.11"
 val elasticsearchV = "2.4.2"
 val scalaTestV = "3.0.0"
+
+// Groups
+val akkaG = "com.typesafe.akka"
 
 lazy val json4sBase = Seq(
   json4sCore,
@@ -160,7 +179,8 @@ lazy val roundeightsHasher = "com.roundeights" %% "hasher" % "1.2.0"
 
 lazy val netI2pCryptoEddsa = "net.i2p.crypto" % "eddsa" % "0.1.0"
 
-lazy val akkaHttp = "com.typesafe.akka" %% "akka-http-experimental" % akkaV
+lazy val akkaHttp = akkaG %% "akka-http-experimental" % akkaV
+lazy val akkaHttpTestkit = akkaG %% "akka-http-testkit" % akkaV
 
 lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestV
 

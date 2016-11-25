@@ -10,6 +10,9 @@ import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.common.unit.{ByteSizeUnit, ByteSizeValue, TimeValue}
 import org.json4s.JValue
 
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+
 /**
   * Using the Elasticsearch TransportClient to access the database: https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html
   *
@@ -20,7 +23,7 @@ trait ElasticsearchBulkStorage extends LazyLogging {
 
   protected val esClient: TransportClient
 
-  private val bulkProcessor = BulkProcessor.builder(esClient, new BulkProcessor.Listener() {
+  lazy private val bulkProcessor = BulkProcessor.builder(esClient, new BulkProcessor.Listener() {
 
     @Override
     def beforeBulk(executionId: Long, request: BulkRequest): Unit = {
@@ -46,14 +49,22 @@ trait ElasticsearchBulkStorage extends LazyLogging {
       BackoffPolicy.exponentialBackoff(TimeValue.timeValueMillis(100), 3))
     .build()
 
-  def storeBulkData(index: String, datatype: String, primaryKey: String, data: JValue, timestamp: Long): JValue = {
+  def storeDocBulk(docIndex: String,
+                   docType: String,
+                   docId: String,
+                   doc: JValue,
+                   timestamp: Long
+                  ): Future[JValue] = {
+
 
     bulkProcessor.add(
-      new IndexRequest(index, datatype, primaryKey)
-        .source(Json4sUtil.jvalue2String(data))
+      new IndexRequest(docIndex, docType, docId)
+        .source(Json4sUtil.jvalue2String(doc))
         .timestamp(timestamp.toString)
     )
-    data
+
+    Future(doc)
+
   }
 
   def closeConnection(): Unit = {

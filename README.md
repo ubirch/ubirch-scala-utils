@@ -21,7 +21,7 @@
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "crypto" % "0.3.2"
+      "com.ubirch.util" %% "crypto" % "0.3.3"
     )
 
 ##### Release History
@@ -65,10 +65,19 @@ A client for Elasticsearch 2.4 using the binary protocol through
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.2.10"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.3.1"
     )
 
 ##### Release History
+
+###### Version 0.3.1 (2016-11-24)
+
+* bugfix: `ElasticsearchBulkStorage.bulkProcessor` must be lazy 
+
+###### Version 0.3.0 (2016-11-23)
+
+* refactored `ElasticsearchBulkStorage.storeBulkData()` method to be functionally equivalent to `ElasticsearchStorage.storeDoc()`
+* minor refactoring in ElasticsearchStorage
 
 ###### Version 0.2.10 (2016-11-09)
 
@@ -184,6 +193,22 @@ first release
       "com.ubirch.util" %% "rest-akka-http" % "0.2" // for Akka 2.4.10
       "com.ubirch.util" %% "rest-akka-http" % "0.3" // for Akka 2.4.11
     )
+
+
+#### `rest-akka-http-test`
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http" % "0.3" // for Akka 2.4.11
+    )
+
+##### Release History
+
+###### Version 0.3 (2016-11-17)
+
+* initial release for Akka 2.4.11
 
 
 #### `uuid`
