@@ -65,14 +65,18 @@ A client for Elasticsearch 2.4 using the binary protocol through
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.3.1"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.3.2"
     )
 
 ##### Release History
 
+###### Version 0.3.2 (2016-11-25)
+
+* update dependencies to use Elasticsearch 2.4.2
+
 ###### Version 0.3.1 (2016-11-24)
 
-* bugfix: `ElasticsearchBulkStorage.bulkProcessor` must be lazy 
+* bugfix: `ElasticsearchBulkStorage.bulkProcessor` must be lazy
 
 ###### Version 0.3.0 (2016-11-23)
 
@@ -118,11 +122,11 @@ added sort parameter to `ElasticsearchStorage.getDocs`.
 
 ###### Version 0.2.1 (2016-10-26)
 
-additional check: `from` and `size` parameters in `ElasticsearchStorage.getDocs` may not be negative. 
+additional check: `from` and `size` parameters in `ElasticsearchStorage.getDocs` may not be negative.
 
 ###### Version 0.2 (2016-10-25)
 
-docId in `ElasticsearchStorage.storeDoc` is now optional. 
+docId in `ElasticsearchStorage.storeDoc` is now optional.
 
 ###### Version 0.1
 
