@@ -137,7 +137,7 @@ lazy val depJsonAutoConvert = Seq(
 
 val json4sV = "3.4.2"
 val akkaV = "2.4.11"
-val elasticsearchV = "2.4.1"
+val elasticsearchV = "2.4.2"
 val scalaTestV = "3.0.0"
 
 lazy val json4sBase = Seq(
