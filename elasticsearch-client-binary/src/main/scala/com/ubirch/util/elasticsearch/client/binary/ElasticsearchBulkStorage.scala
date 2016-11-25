@@ -1,6 +1,6 @@
 package com.ubirch.util.elasticsearch.client.binary
 
-import com.typesafe.scalalogging.slf4j.LazyLogging
+import com.typesafe.scalalogging.slf4j.StrictLogging
 
 import com.ubirch.util.json.Json4sUtil
 
@@ -19,7 +19,7 @@ import scala.concurrent.Future
   * author: derMicha
   * since: 2016-10-02
   */
-trait ElasticsearchBulkStorage extends LazyLogging {
+trait ElasticsearchBulkStorage extends StrictLogging {
 
   protected val esClient: TransportClient
 

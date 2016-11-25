@@ -2,7 +2,7 @@ package com.ubirch.util.elasticsearch.client.binary
 
 import java.net.InetAddress
 
-import com.typesafe.scalalogging.slf4j.LazyLogging
+import com.typesafe.scalalogging.slf4j.StrictLogging
 import com.ubirch.util.json.Json4sUtil
 import com.ubirch.util.uuid.UUIDUtil
 import org.json4s._
@@ -21,7 +21,7 @@ import scala.language.postfixOps
 class ElasticsearchStorageSpec extends AsyncFeatureSpec
   with Matchers
   with BeforeAndAfterAll
-  with LazyLogging {
+  with StrictLogging {
 
   implicit val formats = DefaultFormats.lossless ++ org.json4s.ext.JodaTimeSerializers.all
 

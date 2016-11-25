@@ -2,7 +2,7 @@ package com.ubirch.util.elasticsearch.client.binary
 
 import java.util.concurrent.ExecutionException
 
-import com.typesafe.scalalogging.slf4j.LazyLogging
+import com.typesafe.scalalogging.slf4j.StrictLogging
 
 import com.ubirch.util.json.{Json4sUtil, JsonFormats}
 import com.ubirch.util.uuid.UUIDUtil
@@ -22,7 +22,7 @@ import scala.concurrent.{ExecutionContext, Future}
   * author: derMicha
   * since: 2016-10-06
   */
-trait ElasticsearchStorage extends LazyLogging {
+trait ElasticsearchStorage extends StrictLogging {
 
   implicit val formats: Formats = JsonFormats.default
   implicit val ec: ExecutionContext = scala.concurrent.ExecutionContext.global
