@@ -70,6 +70,10 @@ A client for Elasticsearch 2.4 using the binary protocol through
 
 ##### Release History
 
+###### Version 0.3.3 (2016-11-25)
+
+* changed LazyLogging to StrictLogging
+
 ###### Version 0.3.2 (2016-11-25)
 
 * update dependencies to use Elasticsearch 2.4.2
