@@ -1,6 +1,5 @@
 package com.ubirch.crypto.hash
 
-import com.ubirch.crypto.hash.HashUtil
 import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, Matchers}
 
