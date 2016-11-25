@@ -65,14 +65,14 @@ A client for Elasticsearch 2.4 using the binary protocol through
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.3.2"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.3.3"
     )
 
 ##### Release History
 
 ###### Version 0.3.3 (2016-11-25)
 
-* changed LazyLogging to StrictLogging
+* switch to com.typesafe.scalalogging.slf4j.StrictLogging
 
 ###### Version 0.3.2 (2016-11-25)
 
