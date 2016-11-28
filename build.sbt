@@ -107,7 +107,7 @@ lazy val uuid = project
   .settings(commonSettings: _*)
   .settings(
     description := "UUID related utils",
-    version := "0.1"
+    version := "0.1.1"
   )
 
 /*

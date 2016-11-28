@@ -225,5 +225,11 @@ first release
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "uuid" % "0.1"
+      "com.ubirch.util" %% "uuid" % "0.1.1"
     )
+
+##### Release History
+
+###### Version 0.1.1 (2016-11-28)
+
+* add method `UUIDUtil.fromString`
