@@ -1,3 +1,5 @@
+import sbt.Keys.libraryDependencies
+
 packagedArtifacts in file(".") := Map.empty // disable publishing of root project
 
 lazy val ubirchUtilGroup = "com.ubirch.util"
@@ -26,11 +28,11 @@ lazy val scalaUtils = (project in file("."))
 
 lazy val config = project
   .settings(commonSettings: _*)
-    .settings(
-      description := "common config related code",
-      version := "0.1",
-      libraryDependencies += typesafeConfig
-    )
+  .settings(
+    description := "common config related code",
+    version := "0.1",
+    libraryDependencies += typesafeConfig
+  )
 
 lazy val crypto = project
   .settings(commonSettings: _*)
@@ -110,6 +112,14 @@ lazy val uuid = project
     version := "0.1.1"
   )
 
+lazy val responseUtil = project
+  .settings(commonSettings: _*)
+  .settings(
+    description := "HTTP Response Utils",
+    version := "0.1",
+    libraryDependencies ++= depResponseUtil
+  )
+
 /*
  * MODULE DEPENDENCIES
  ********************************************************/
@@ -145,6 +155,14 @@ lazy val depRestAkkaHttpTest = Seq(
   akkaHttpTestkit,
   scalaTest
 )
+
+lazy val depResponseUtil = Seq(
+  akkaHttp,
+  akkaHttpTestkit % "test",
+  scalaTest % "test"
+)
+
+
 
 /*
  * DEPENDENCIES
