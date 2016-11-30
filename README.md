@@ -65,10 +65,15 @@ A client for Elasticsearch 2.4 using the binary protocol through
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.3.4"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.3.5"
     )
 
 ##### Release History
+
+###### Version 0.3.5 (2016-11-30)
+
+* `ElasticsearchStorage` now catches `SearchParseException`, too
+* improved logging
 
 ###### Version 0.3.4 (2016-11-28)
 

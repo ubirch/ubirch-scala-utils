@@ -10,6 +10,7 @@ import com.ubirch.util.uuid.UUIDUtil
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.index.IndexNotFoundException
 import org.elasticsearch.index.query.QueryBuilder
+import org.elasticsearch.search.SearchParseException
 import org.elasticsearch.search.sort.SortBuilder
 import org.json4s._
 
@@ -147,7 +148,15 @@ trait ElasticsearchStorage extends StrictLogging {
         }
 
       } catch {
-        case execExc: ExecutionException if execExc.getCause.getCause.isInstanceOf[IndexNotFoundException] => List()
+
+        case execExc: ExecutionException if execExc.getCause.getCause.isInstanceOf[IndexNotFoundException] =>
+          logger.error("IndexNotFoundException", execExc)
+          List()
+
+        case execExc: ExecutionException if execExc.getCause.getCause.getCause.isInstanceOf[SearchParseException] =>
+          logger.error("SearchParseException", execExc)
+          List()
+
       }
     }
 
