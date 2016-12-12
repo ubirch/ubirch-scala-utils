@@ -9,11 +9,11 @@ import scala.concurrent.Future
   */
 object FutureUtil {
 
-  def unfoldInnerFutures[T](listOfFutures: List[Future[T]]): Future[Seq[T]] = {
+  def unfoldInnerFutures[T](seqOfFutures: Seq[Future[T]]): Future[Seq[T]] = {
 
-    listOfFutures.foldLeft(Future(Nil: Seq[T])) { (listFuture, elementFuture) =>
+    seqOfFutures.foldLeft(Future(Nil: Seq[T])) { (seqFuture, elementFuture) =>
       for {
-        list <- listFuture
+        list <- seqFuture
         element <- elementFuture
       } yield list :+ element
     }

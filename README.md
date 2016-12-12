@@ -159,9 +159,13 @@ Utils related to Scala Futures.
 
 ##### Release History
 
+###### Version 0.1.1 (2016-12-12)
+
+  * switch input to type `Seq`
+
 ###### Version 0.1.0 (2016-12-12)
 
-* initial release
+  * initial release
 
 
 #### `json`

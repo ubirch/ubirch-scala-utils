@@ -71,7 +71,7 @@ lazy val futures = project
   .settings(commonSettings: _*)
   .settings(
     description := "utils related to Scala Futures",
-    version := "0.1.0"
+    version := "0.1.1"
   )
 
 lazy val json = project
