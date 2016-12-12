@@ -146,6 +146,24 @@ docId in `ElasticsearchStorage.storeDoc` is now optional.
 first release
 
 
+#### `futures`
+
+Utils related to Scala Futures.
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "futures" % "0.1.0"
+    )
+
+##### Release History
+
+###### Version 0.1.0 (2016-12-12)
+
+* initial release
+
+
 #### `json`
 
     resolvers ++= Seq(

@@ -24,7 +24,7 @@ lazy val commonSettings = Seq(
 
 lazy val scalaUtils = (project in file("."))
   .settings(commonSettings: _*)
-  .aggregate(config, crypto, date, elasticsearchClientBinary, json, jsonAutoConvert, restAkkaHttp, restAkkaHttpTest, uuid)
+  .aggregate(config, crypto, date, elasticsearchClientBinary, futures, json, jsonAutoConvert, restAkkaHttp, restAkkaHttpTest, uuid)
 
 lazy val config = project
   .settings(commonSettings: _*)
@@ -65,6 +65,13 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
       sonatypeReleases
     ),
     libraryDependencies ++= depElasticsearchClientBinary
+  )
+
+lazy val futures = project
+  .settings(commonSettings: _*)
+  .settings(
+    description := "utils related to Scala Futures",
+    version := "0.1.0"
   )
 
 lazy val json = project
