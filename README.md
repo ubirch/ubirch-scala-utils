@@ -65,10 +65,32 @@ A client for Elasticsearch 2.4 using the binary protocol through
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.3.5"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.4.0"
     )
 
 ##### Release History
+
+###### Version 0.4.0 (2016-12-13)
+
+* `ElasticsearchBulkStorage` parameters are read from a config now (**NOTE: there's no default config!!!**))
+
+| Config Item                            | Category        | Description                                             |
+|:---------------------------------------|:----------------|:--------------------------------------------------------|
+| esBinaryClient.bulk.bulkActions        | Flush           | max number of items                                     | 
+| esBinaryClient.bulk.bulkSize           | Flush           | max size of documents of all documents (in mega bytes)) |
+| esBinaryClient.bulk.flushInterval      | Flush           | maximum number of seconds                               |
+| esBinaryClient.bulk.concurrentRequests | Connection Pool | maximum number of concurrent requests                   |
+
+Example Config:
+
+    esBinaryClient {
+      bulk {
+        bulkActions = 2000 # flush: max number of changes
+        bulkSize = 10 # flush: bulkSize in mega bytes
+        flushInterval = 5 # flush: flush every x seconds
+        concurrentRequests = 2 # connection pool: max concurrent requests
+      }
+    }
 
 ###### Version 0.3.5 (2016-11-30)
 

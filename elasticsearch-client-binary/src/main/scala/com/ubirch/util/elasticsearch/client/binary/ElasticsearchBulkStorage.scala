@@ -2,6 +2,7 @@ package com.ubirch.util.elasticsearch.client.binary
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
 
+import com.ubirch.util.elasticsearch.client.binary.config.ESBulkConfig
 import com.ubirch.util.json.Json4sUtil
 
 import org.elasticsearch.action.bulk.{BackoffPolicy, BulkProcessor, BulkRequest, BulkResponse}
@@ -41,10 +42,10 @@ trait ElasticsearchBulkStorage extends StrictLogging {
     }
   }
   )
-    .setBulkActions(2000)
-    .setBulkSize(new ByteSizeValue(10, ByteSizeUnit.MB))
-    .setFlushInterval(TimeValue.timeValueSeconds(5))
-    .setConcurrentRequests(2)
+    .setBulkActions(ESBulkConfig.bulkActions)
+    .setBulkSize(new ByteSizeValue(ESBulkConfig.bulkSize, ByteSizeUnit.MB))
+    .setFlushInterval(TimeValue.timeValueSeconds(ESBulkConfig.flushInterval))
+    .setConcurrentRequests(ESBulkConfig.concurrentRequests)
     .setBackoffPolicy(
       BackoffPolicy.exponentialBackoff(TimeValue.timeValueMillis(100), 3))
     .build()
