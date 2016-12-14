@@ -70,6 +70,12 @@ A client for Elasticsearch 2.4 using the binary protocol through
 
 ##### Release History
 
+###### Version 0.4.1 (2016-12-14)
+
+* added access to current ElasticSearch Client 
+    * ElasticsearchStorage.getCurrentEsClient
+    * ElasticsearchBulkStoragegetCurrentEsClient
+
 ###### Version 0.4.0 (2016-12-13)
 
 * `ElasticsearchBulkStorage` parameters are read from a config now (**NOTE: there's no default config!!!**))

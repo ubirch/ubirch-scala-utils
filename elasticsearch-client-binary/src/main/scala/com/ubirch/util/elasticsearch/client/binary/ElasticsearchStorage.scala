@@ -31,6 +31,13 @@ trait ElasticsearchStorage extends StrictLogging {
   protected val esClient: TransportClient
 
   /**
+    * returns current ElasticSearch Transport Client instance
+    *
+    * @return esClient as TransportClient
+    */
+  def getCurrentEsClient: TransportClient = esClient
+
+  /**
     *
     * @param docIndex  name of the index into which the current document should be stored
     * @param docType   name of the current documents type

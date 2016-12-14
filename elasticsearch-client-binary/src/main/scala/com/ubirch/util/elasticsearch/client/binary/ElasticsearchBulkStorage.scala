@@ -26,6 +26,14 @@ trait ElasticsearchBulkStorage extends StrictLogging {
 
   lazy private val bulkProcessor = BulkProcessor.builder(esClient, new BulkProcessor.Listener() {
 
+    /**
+      * returns current ElasticSearch Transport Client instance
+      *
+      * @return esClient as TransportClient
+      */
+    def getCurrentEsClient: TransportClient = esClient
+
+
     @Override
     def beforeBulk(executionId: Long, request: BulkRequest): Unit = {
       logger.info("beforeBulk")
