@@ -74,7 +74,7 @@ A client for Elasticsearch 2.4 using the binary protocol through
 
 * added access to current ElasticSearch Client 
     * ElasticsearchStorage.getCurrentEsClient
-    * ElasticsearchBulkStoragegetCurrentEsClient
+    * ElasticsearchBulkStorage.getCurrentEsClient
 
 ###### Version 0.4.0 (2016-12-13)
 
