@@ -24,7 +24,7 @@ lazy val commonSettings = Seq(
 
 lazy val scalaUtils = (project in file("."))
   .settings(commonSettings: _*)
-  .aggregate(config, crypto, date, elasticsearchClientBinary, futures, json, jsonAutoConvert, restAkkaHttp, restAkkaHttpTest, uuid)
+  .aggregate(config, crypto, date, elasticsearchClientBinary, elasticsearchUtil, futures, json, jsonAutoConvert, restAkkaHttp, restAkkaHttpTest, uuid)
 
 lazy val config = project
   .settings(commonSettings: _*)
@@ -66,6 +66,18 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
       sonatypeReleases
     ),
     libraryDependencies ++= depElasticsearchClientBinary
+  )
+
+lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "elasticsearch-util",
+    description := "Elasticsearch related utils",
+    version := "0.1.0",
+    resolvers ++= Seq(
+      resolverBeeClient
+    ),
+    libraryDependencies ++= depElasticsearchUtil
   )
 
 lazy val futures = project
@@ -148,6 +160,11 @@ lazy val depElasticsearchClientBinary = Seq(
   scalaTest % "test"
 ) ++ json4sBase
 
+lazy val depElasticsearchUtil = Seq(
+  beeClient,
+  scalaLoggingSlf4j
+)
+
 lazy val depJson = Seq(
   scalaTest % "test",
   jodaTime % "test"
@@ -217,6 +234,8 @@ lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
 lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 
+lazy val beeClient = "uk.co.bigbeeconsultants" %% "bee-client" % "0.29.1"
+
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.2"
 
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"
@@ -228,3 +247,4 @@ lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"
 lazy val sonatypeReleases = Resolver.sonatypeRepo("releases")
 lazy val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
 lazy val resolverHasher = "RoundEights" at "http://maven.spikemark.net/roundeights"
+lazy val resolverBeeClient = Resolver.bintrayRepo("rick-beton", "maven")
