@@ -280,6 +280,7 @@ Utils related to Scala Futures.
 
 ###### Version 0.1.1 (2017-02-10)
 
+* changed artifact name from `responseutil` to `response-util`
 * refactor `ResponseUtil` to allow passing in http status codes (only for errors))
 
 
