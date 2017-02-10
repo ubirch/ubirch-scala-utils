@@ -135,8 +135,9 @@ lazy val uuid = project
 lazy val responseUtil = project
   .settings(commonSettings: _*)
   .settings(
+    name := "response-util",
     description := "HTTP Response Utils",
-    version := "0.1",
+    version := "0.1.1",
     libraryDependencies ++= depResponseUtil
   )
 

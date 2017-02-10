@@ -267,15 +267,31 @@ Utils related to Scala Futures.
 * update json4s dependency from version 3.4.0 to 3.4.2
 
 
+#### `response-util`
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "response-util" % "0.1.1"
+    )
+
+##### Release History
+
+###### Version 0.1.1 (2017-02-10)
+
+* refactor `ResponseUtil` to allow passing in http status codes (only for errors))
+
+
 #### `rest-akka-http`
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "rest-akka-http" % "0.1" // for Akka 2.4.9-RC2
-      "com.ubirch.util" %% "rest-akka-http" % "0.2" // for Akka 2.4.10
       "com.ubirch.util" %% "rest-akka-http" % "0.3" // for Akka 2.4.11
+      "com.ubirch.util" %% "rest-akka-http" % "0.2" // for Akka 2.4.10
+      "com.ubirch.util" %% "rest-akka-http" % "0.1" // for Akka 2.4.9-RC2
     )
 
 
