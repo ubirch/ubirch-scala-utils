@@ -273,10 +273,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "response-util" % "0.1.1"
+      "com.ubirch.util" %% "response-util" % "0.1.2"
     )
 
 ##### Release History
+
+###### Version 0.1.2 (2017-02-16)
+
+* update to Akka HTTP 10.0.3
 
 ###### Version 0.1.1 (2017-02-10)
 
