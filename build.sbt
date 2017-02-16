@@ -112,7 +112,7 @@ lazy val restAkkaHttp = (project in file("rest-akka-http"))
   .settings(
     name := "rest-akka-http",
     description := "shared custom classes related to akka-http-experimental (for example certain directives)",
-    version := "0.3.1", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
+    version := "0.3.2", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
     libraryDependencies += akkaHttp
   )
 
@@ -121,7 +121,7 @@ lazy val restAkkaHttpTest = (project in file("rest-akka-http-test"))
   .settings(
     name := "rest-akka-http-test",
     description := "akka-http-experimental related test utils",
-    version := "0.3.1", // NOTE: please keep major.minor version synchronized with restAkkaHttp
+    version := "0.3.2", // NOTE: please keep major.minor version synchronized with restAkkaHttp
     libraryDependencies ++= depRestAkkaHttpTest
   )
 
@@ -197,7 +197,7 @@ lazy val depResponseUtil = Seq(
 // Versions
 val json4sV = "3.4.2"
 val akkaV = "2.4.17"
-val akkaHttpV = "2.4.11.1"
+val akkaHttpV = "10.0.3"
 val elasticsearchV = "2.4.2"
 val scalaTestV = "3.0.0"
 
@@ -224,7 +224,7 @@ lazy val roundeightsHasher = "com.roundeights" %% "hasher" % "1.2.0"
 
 lazy val netI2pCryptoEddsa = "net.i2p.crypto" % "eddsa" % "0.1.0"
 
-lazy val akkaHttp = akkaG %% "akka-http-experimental" % akkaHttpV
+lazy val akkaHttp = akkaG %% "akka-http" % akkaHttpV
 lazy val akkaHttpTestkit = akkaG %% "akka-http-testkit" % akkaHttpV
 
 lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestV

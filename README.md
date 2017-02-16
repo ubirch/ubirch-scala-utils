@@ -290,6 +290,7 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http" % "0.3.2" // for Akka HTTP 10.0.3
       "com.ubirch.util" %% "rest-akka-http" % "0.3.1" // for Akka HTTP 2.4.11.1
       "com.ubirch.util" %% "rest-akka-http" % "0.3" // for Akka HTTP 2.4.11
       "com.ubirch.util" %% "rest-akka-http" % "0.2" // for Akka HTTP 2.4.10
@@ -297,6 +298,10 @@ Utils related to Scala Futures.
     )
 
 ##### Release History
+
+###### Version 0.3.2 (2017-02-16)
+
+* update to Akka HTTP 10.0.3
 
 ###### Version 0.3.1 (2017-02-16)
 
@@ -309,11 +314,16 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "rest-akka-http" % "0.3.1" // for Akka HTTP 2.4.11.1
-      "com.ubirch.util" %% "rest-akka-http" % "0.3" // for Akka HTTP 2.4.11
+      "com.ubirch.util" %% "rest-akka-http-test" % "0.3.2" // for Akka HTTP 10.0.3
+      "com.ubirch.util" %% "rest-akka-http-test" % "0.3.1" // for Akka HTTP 2.4.11.1
+      "com.ubirch.util" %% "rest-akka-http-test" % "0.3" // for Akka HTTP 2.4.11
     )
 
 ##### Release History
+
+###### Version 0.3.2 (2017-02-16)
+
+* update to Akka HTTP 10.0.3
 
 ###### Version 0.3.1 (2017-02-16)
 
