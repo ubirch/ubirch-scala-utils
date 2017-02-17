@@ -112,7 +112,7 @@ lazy val restAkkaHttp = (project in file("rest-akka-http"))
   .settings(
     name := "rest-akka-http",
     description := "shared custom classes related to akka-http-experimental (for example certain directives)",
-    version := "0.3.2", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
+    version := "0.3.3", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
     libraryDependencies += akkaHttp
   )
 
@@ -121,7 +121,7 @@ lazy val restAkkaHttpTest = (project in file("rest-akka-http-test"))
   .settings(
     name := "rest-akka-http-test",
     description := "akka-http-experimental related test utils",
-    version := "0.3.2", // NOTE: please keep major.minor version synchronized with restAkkaHttp
+    version := "0.3.3", // NOTE: please keep major.minor version synchronized with restAkkaHttp
     libraryDependencies ++= depRestAkkaHttpTest
   )
 

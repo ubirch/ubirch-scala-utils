@@ -13,7 +13,7 @@ trait CORSDirective extends Directives {
 
   private val CORSHeaders = List(
     `Access-Control-Allow-Methods`(GET, POST, PUT, DELETE, OPTIONS),
-    `Access-Control-Allow-Headers`("Origin, X-Requested-With, Content-Type, Accept, Accept-Encoding, Accept-Language, Host, Referer, User-Agent"),
+    `Access-Control-Allow-Headers`("Authorization, Origin, X-Requested-With, Content-Type, Accept, Accept-Encoding, Accept-Language, Host, Referer, User-Agent"),
     `Access-Control-Allow-Credentials`(true)
   )
 
