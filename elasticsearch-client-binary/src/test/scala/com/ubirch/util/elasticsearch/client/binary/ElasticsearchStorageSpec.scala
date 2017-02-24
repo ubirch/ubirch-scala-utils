@@ -3,8 +3,11 @@ package com.ubirch.util.elasticsearch.client.binary
 import java.net.InetAddress
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
+
+import com.ubirch.util.elasticsearch.client.binary.storage.base.ESStorageBase
 import com.ubirch.util.json.Json4sUtil
 import com.ubirch.util.uuid.UUIDUtil
+
 import org.json4s._
 import org.scalatest.{AsyncFeatureSpec, BeforeAndAfterAll, Matchers}
 import org.elasticsearch.client.transport.TransportClient
@@ -100,7 +103,7 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
 
 }
 
-object DeviceStorage extends ElasticsearchStorage {
+object DeviceStorage extends ESStorageBase {
 
   private val address = new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300)
 

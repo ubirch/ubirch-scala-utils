@@ -87,6 +87,12 @@
 
 A client for Elasticsearch 2.4 using the binary protocol through
 [TransportClient](https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html).
+To use it mixin the trait `ESSimpleStorage` or `ESBulkStorage` and add the configuration documented below to your
+project.
+
+In addition to this there's some other utils as well:
+
+* `SortUtil`
 
 ### Scala Dependency
 
@@ -94,7 +100,7 @@ A client for Elasticsearch 2.4 using the binary protocol through
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.4.0"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.5.0"
     )
 
 
@@ -105,15 +111,23 @@ The following config is required to use the Elasticsearch binary client (**NOTE:
 
 | Config Item                            | Category        | Description                                             |
 |:---------------------------------------|:----------------|:--------------------------------------------------------|
-| esBinaryClient.bulk.bulkActions        | Flush           | max number of items                                     | 
-| esBinaryClient.bulk.bulkSize           | Flush           | max size of documents of all documents (in mega bytes)) |
-| esBinaryClient.bulk.flushInterval      | Flush           | maximum number of seconds                               |
+| esBinaryClient.connection.host         | Connection      | host ES is running on                                   | 
+| esBinaryClient.connection.port         | Connection      | port ES is running on                                   | 
+| esBinaryClient.connection.cluster      | Connection      | (optional) ES cluster to connect to                     | 
+| esBinaryClient.bulk.bulkActions        | Flush           | max number of items to trigger flush                    | 
+| esBinaryClient.bulk.bulkSize           | Flush           | max size of of all documents (in mega bytes)) to trigger flush |
+| esBinaryClient.bulk.flushInterval      | Flush           | maximum number of seconds between flushes               |
 | esBinaryClient.bulk.concurrentRequests | Connection Pool | maximum number of concurrent requests                   |
 
 Example Config:
 
     esBinaryClient {
-      bulk {
+      connection {
+        host = localhost
+        port = 9300 // 9300 is the default port for the binary client
+        cluster = elasticsearch // (optional) connect to an Elasticsearch cluster
+      }
+      bulk { // only needed if you mixin `ESBulkStorage`
         bulkActions = 10000
         bulkSize = 10 # bulkSize in mega bytes
         flushInterval = 1 # flush every x seconds
@@ -122,6 +136,13 @@ Example Config:
     }
 
 ### Release History
+
+#### Version 0.5.0 (2017-02-24)
+
+**This version is not compatible with 0.4.x releases**
+
+* enabled cluster support
+* simplified usage in projects by adding host, port and cluster
 
 #### Version 0.4.1 (2016-12-14)
 

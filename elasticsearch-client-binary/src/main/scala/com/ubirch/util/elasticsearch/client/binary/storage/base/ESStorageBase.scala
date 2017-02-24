@@ -1,4 +1,4 @@
-package com.ubirch.util.elasticsearch.client.binary
+package com.ubirch.util.elasticsearch.client.binary.storage.base
 
 import java.util.concurrent.ExecutionException
 
@@ -23,7 +23,7 @@ import scala.concurrent.{ExecutionContext, Future}
   * author: derMicha
   * since: 2016-10-06
   */
-trait ElasticsearchStorage extends StrictLogging {
+trait ESStorageBase extends StrictLogging {
 
   implicit val formats: Formats = JsonFormats.default
   implicit val ec: ExecutionContext = scala.concurrent.ExecutionContext.global

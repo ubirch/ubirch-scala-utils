@@ -1,8 +1,8 @@
-package com.ubirch.util.elasticsearch.client.binary
+package com.ubirch.util.elasticsearch.client.binary.storage.base
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
 
-import com.ubirch.util.elasticsearch.client.binary.config.ESBulkConfig
+import com.ubirch.util.elasticsearch.client.binary.config.ESConfig
 import com.ubirch.util.json.Json4sUtil
 
 import org.elasticsearch.action.bulk.{BackoffPolicy, BulkProcessor, BulkRequest, BulkResponse}
@@ -20,7 +20,7 @@ import scala.concurrent.Future
   * author: derMicha
   * since: 2016-10-02
   */
-trait ElasticsearchBulkStorage extends StrictLogging {
+trait ESBulkStorageBase extends StrictLogging {
 
   protected val esClient: TransportClient
 
@@ -50,10 +50,10 @@ trait ElasticsearchBulkStorage extends StrictLogging {
     }
   }
   )
-    .setBulkActions(ESBulkConfig.bulkActions)
-    .setBulkSize(new ByteSizeValue(ESBulkConfig.bulkSize, ByteSizeUnit.MB))
-    .setFlushInterval(TimeValue.timeValueSeconds(ESBulkConfig.flushInterval))
-    .setConcurrentRequests(ESBulkConfig.concurrentRequests)
+    .setBulkActions(ESConfig.bulkActions)
+    .setBulkSize(new ByteSizeValue(ESConfig.bulkSize, ByteSizeUnit.MB))
+    .setFlushInterval(TimeValue.timeValueSeconds(ESConfig.flushInterval))
+    .setConcurrentRequests(ESConfig.concurrentRequests)
     .setBackoffPolicy(
       BackoffPolicy.exponentialBackoff(TimeValue.timeValueMillis(100), 3))
     .build()
