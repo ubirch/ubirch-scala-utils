@@ -1,6 +1,6 @@
 package com.ubirch.util.elasticsearch.client.util
 
-import org.elasticsearch.search.sort.{SortBuilder, SortBuilders, SortOrder}
+import org.elasticsearch.search.sort.{FieldSortBuilder, SortBuilder, SortBuilders, SortOrder}
 
 /**
   * author: cvandrei
@@ -8,7 +8,7 @@ import org.elasticsearch.search.sort.{SortBuilder, SortBuilders, SortOrder}
   */
 object SortUtil {
 
-  def sortBuilder(field: String, asc: Boolean = true): SortBuilder = {
+  def sortBuilder(field: String, asc: Boolean = true): SortBuilder[FieldSortBuilder] = {
 
     val fieldSort = SortBuilders.fieldSort(field)
 
