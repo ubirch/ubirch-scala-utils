@@ -1,10 +1,23 @@
 # ubirch Utils
 
-## crypto
+## List of Modules in this Repository
+
+* config
+* crypto
+* date
+* elasticsearch-client-binary
+* elasticsearch-util
+* futures
+* json
+* json-auto-convert
+* response-util
+* rest-akka-http
+* rest-akka-http-test
+* uuid
+
+## `config`
 
 ### Scala Dependency
-
-#### `config`
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases")
@@ -14,7 +27,9 @@
     )
 
 
-#### `crypto`
+## `crypto`
+
+### Scala Dependency
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases"),
@@ -24,29 +39,33 @@
       "com.ubirch.util" %% "crypto" % "0.3.3"
     )
 
-##### Release History
+### Release History
 
-###### Version 0.3.3 (2016-11-09)
+#### Version 0.3.3 (2016-11-09)
 
 * fixed refactoring bug
 
-###### Version 0.3.2 (2016-11-09)
+#### Version 0.3.2 (2016-11-09)
 
 * removed external dependency net.i2p.crypto" % "eddsa" % "0.1.0"
- * we use a local copy of that project
+* we use a local copy of that project
 
-###### Version 0.3.1 (2016-11-09)
+#### Version 0.3.1 (2016-11-09)
 
 * added new methods to HashUtil:
   * sha256Base64(Array[Byte]
   * sha512Base64(Array[Byte]
 
-###### Version 0.3 (2016-10-28)
+#### Version 0.3 (2016-10-28)
 
-migrated crypto code from old ubirch project to this util module.
+* migrated crypto code from old ubirch project to this util module.
 
 
-#### `date`
+-----------------------
+
+## `date`
+
+### Scala Dependency
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases")
@@ -55,11 +74,21 @@ migrated crypto code from old ubirch project to this util module.
       "com.ubirch.util" %% "date" % "0.1"
     )
 
+### Release History
 
-#### `elasticsearch-client-binary`
+#### Version 0.1 (2016-09-22)
+
+* initial release
+
+
+-----------------------
+
+## `elasticsearch-client-binary`
 
 A client for Elasticsearch 2.4 using the binary protocol through
 [TransportClient](https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html).
+
+### Scala Dependency
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases")
@@ -68,17 +97,41 @@ A client for Elasticsearch 2.4 using the binary protocol through
       "com.ubirch.util" %% "elasticsearch-client-binary" % "0.4.0"
     )
 
-##### Release History
 
-###### Version 0.4.1 (2016-12-14)
+
+### Config
+
+The following config is required to use the Elasticsearch binary client (**NOTE: there's no default config!!!**).
+
+| Config Item                            | Category        | Description                                             |
+|:---------------------------------------|:----------------|:--------------------------------------------------------|
+| esBinaryClient.bulk.bulkActions        | Flush           | max number of items                                     | 
+| esBinaryClient.bulk.bulkSize           | Flush           | max size of documents of all documents (in mega bytes)) |
+| esBinaryClient.bulk.flushInterval      | Flush           | maximum number of seconds                               |
+| esBinaryClient.bulk.concurrentRequests | Connection Pool | maximum number of concurrent requests                   |
+
+Example Config:
+
+    esBinaryClient {
+      bulk {
+        bulkActions = 10000
+        bulkSize = 10 # bulkSize in mega bytes
+        flushInterval = 1 # flush every x seconds
+        concurrentRequests = 2 # connection pooling: max concurrent requests
+      }
+    }
+
+### Release History
+
+#### Version 0.4.1 (2016-12-14)
 
 * added access to current ElasticSearch Client 
     * ElasticsearchStorage.getCurrentEsClient
     * ElasticsearchBulkStorage.getCurrentEsClient
 
-###### Version 0.4.0 (2016-12-13)
+#### Version 0.4.0 (2016-12-13)
 
-* `ElasticsearchBulkStorage` parameters are read from a config now (**NOTE: there's no default config!!!**))
+* `ElasticsearchBulkStorage` parameters are read from a config now (**NOTE: there's no default config!!!**)
 
 | Config Item                            | Category        | Description                                             |
 |:---------------------------------------|:----------------|:--------------------------------------------------------|
@@ -98,83 +151,87 @@ Example Config:
       }
     }
 
-###### Version 0.3.5 (2016-11-30)
+#### Version 0.3.5 (2016-11-30)
 
 * `ElasticsearchStorage` now catches `SearchParseException`, too
 * improved logging
 
-###### Version 0.3.4 (2016-11-28)
+#### Version 0.3.4 (2016-11-28)
 
 * upgrade `uuid` dependency to version 0.1.1
 
-###### Version 0.3.3 (2016-11-25)
+#### Version 0.3.3 (2016-11-25)
 
 * switch to com.typesafe.scalalogging.slf4j.StrictLogging
 
-###### Version 0.3.2 (2016-11-25)
+#### Version 0.3.2 (2016-11-25)
 
 * update dependencies to use Elasticsearch 2.4.2
 
-###### Version 0.3.1 (2016-11-24)
+#### Version 0.3.1 (2016-11-24)
 
 * bugfix: `ElasticsearchBulkStorage.bulkProcessor` must be lazy
 
-###### Version 0.3.0 (2016-11-23)
+#### Version 0.3.0 (2016-11-23)
 
 * refactored `ElasticsearchBulkStorage.storeBulkData()` method to be functionally equivalent to `ElasticsearchStorage.storeDoc()`
 * minor refactoring in ElasticsearchStorage
 
-###### Version 0.2.10 (2016-11-09)
+#### Version 0.2.10 (2016-11-09)
 
 * `ttl` in `ElasticsearchStorage.storeDoc()` is now zero by default
 * `timestamp` in `ElasticsearchStorage.storeDoc()` is now None by default
 
-###### Version 0.2.9 (2016-11-06)
+#### Version 0.2.9 (2016-11-06)
 
 * `ElasticsearchStorage.storeDoc()` now supports timestamp functionality
 
-###### Version 0.2.8 (2016-11-04)
+#### Version 0.2.8 (2016-11-04)
 
 * `ElasticsearchStorage` references JsonFormats.default now
 
-###### Version 0.2.7 (2016-11-04)
+#### Version 0.2.7 (2016-11-04)
 
-update dependency com.ubirch.util:json from version 0.3.1 to 0.3.2.
+* update dependency com.ubirch.util:json from version 0.3.1 to 0.3.2.
 
-###### Version 0.2.6 (2016-11-01)
+#### Version 0.2.6 (2016-11-01)
 
-update dependency com.ubirch.util:json from version 0.3 to 0.3.1.
+* update dependency com.ubirch.util:json from version 0.3 to 0.3.1.
 
-###### Version 0.2.5 (2016-11-01)
+#### Version 0.2.5 (2016-11-01)
 
-update dependency com.ubirch.util:json from version 0.2 to 0.3.
+* update dependency com.ubirch.util:json from version 0.2 to 0.3.
 
-###### Version 0.2.4 (2016-10-31)
+#### Version 0.2.4 (2016-10-31)
 
-update dependency com.ubirch.util:json from version 0.1 to 0.2.
+* update dependency com.ubirch.util:json from version 0.1 to 0.2.
 
-###### Version 0.2.3 (2016-10-27)
+#### Version 0.2.3 (2016-10-27)
 
-added `SortUtil`.
+* added `SortUtil`.
 
-###### Version 0.2.2 (2016-10-26)
+#### Version 0.2.2 (2016-10-26)
 
-added sort parameter to `ElasticsearchStorage.getDocs`.
+* added sort parameter to `ElasticsearchStorage.getDocs`.
 
-###### Version 0.2.1 (2016-10-26)
+#### Version 0.2.1 (2016-10-26)
 
-additional check: `from` and `size` parameters in `ElasticsearchStorage.getDocs` may not be negative.
+* additional check: `from` and `size` parameters in `ElasticsearchStorage.getDocs` may not be negative.
 
-###### Version 0.2 (2016-10-25)
+#### Version 0.2 (2016-10-25)
 
-docId in `ElasticsearchStorage.storeDoc` is now optional.
+* docId in `ElasticsearchStorage.storeDoc` is now optional.
 
-###### Version 0.1
+#### Version 0.1
 
-first release
+* first release
 
 
-#### `elasticsearch-util`
+-----------------------
+
+## `elasticsearch-util`
+
+### Scala Dependency
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases"),
@@ -184,16 +241,20 @@ first release
       "com.ubirch.util" %% "elasticsearch-util" % "0.1.0"
     )
 
-##### Release History
+### Release History
 
-###### Version 0.1.0
+#### Version 0.1.0
      
-     first release
+* first release
 
 
-#### `futures`
+-----------------------
+
+## `futures`
 
 Utils related to Scala Futures.
+
+### Scala Dependency
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases")
@@ -202,18 +263,22 @@ Utils related to Scala Futures.
       "com.ubirch.util" %% "futures" % "0.1.0"
     )
 
-##### Release History
+### Release History
 
-###### Version 0.1.1 (2016-12-12)
+#### Version 0.1.1 (2016-12-12)
 
-  * switch input to type `Seq`
+* switch input to type `Seq`
 
-###### Version 0.1.0 (2016-12-12)
+#### Version 0.1.0 (2016-12-12)
 
-  * initial release
+* initial release
 
 
-#### `json`
+-----------------------
+
+## `json`
+
+### Scala Dependency
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases")
@@ -222,27 +287,31 @@ Utils related to Scala Futures.
       "com.ubirch.util" %% "json" % "0.3.2"
     )
 
-##### Release History
+### Release History
 
-###### Version 0.3.2 (2016-11-04)
+#### Version 0.3.2 (2016-11-04)
 
 * introduced JsonFormats.default to have one fixed list of default formats
 
-###### Version 0.3.1 (2016-11-01)
+#### Version 0.3.1 (2016-11-01)
 
 * fixed Json4sUtil.inputstream2jvalue()
 
-###### Version 0.3 (2016-11-01)
+#### Version 0.3 (2016-11-01)
 
 * updated json4s dependencies to verion 3.4.2
 
-###### Version 0.2 (2016-10-28)
+#### Version 0.2 (2016-10-28)
 
 * deleted method Json4sUtil.string2Any
 * added method Json4sUtil.inputstream2jvalue
 
 
-#### `json-auto-convert`
+-----------------------
+
+## `json-auto-convert`
+
+### Scala Dependency
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases"),
@@ -252,22 +321,26 @@ Utils related to Scala Futures.
       "com.ubirch.util" %% "json-auto-convert" % "0.3.1"
     )
 
-##### Release History
+### Release History
 
-###### Version 0.3.2 (2016-11-04)
+#### Version 0.3.2 (2016-11-04)
 
 * add com.ubirch.util:json:0.3.2 dependency for it's default formats
 
-###### Version 0.3.1 (2016-11-02)
+#### Version 0.3.1 (2016-11-02)
 
 * update dependency "de.heikoseeberger":"akka-http-json4s" from version 1.8.0 to 1.10.1
 
-###### Version 0.3 (2016-11-01)
+#### Version 0.3 (2016-11-01)
 
 * update json4s dependency from version 3.4.0 to 3.4.2
 
 
-#### `response-util`
+-----------------------
+
+## `response-util`
+
+### Scala Dependency
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases")
@@ -276,19 +349,23 @@ Utils related to Scala Futures.
       "com.ubirch.util" %% "response-util" % "0.1.2"
     )
 
-##### Release History
+### Release History
 
-###### Version 0.1.2 (2017-02-16)
+#### Version 0.1.2 (2017-02-16)
 
 * update to Akka HTTP 10.0.3
 
-###### Version 0.1.1 (2017-02-10)
+#### Version 0.1.1 (2017-02-10)
 
 * changed artifact name from `responseutil` to `response-util`
 * refactor `ResponseUtil` to allow passing in http status codes (only for errors))
 
 
-#### `rest-akka-http`
+-----------------------
+
+## `rest-akka-http`
+
+### Scala Dependency
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases")
@@ -301,22 +378,26 @@ Utils related to Scala Futures.
       "com.ubirch.util" %% "rest-akka-http" % "0.1" // for Akka HTTP 2.4.9-RC2
     )
 
-##### Release History
+### Release History
 
-###### Version 0.3.3 (2017-02-16)
+#### Version 0.3.3 (2017-02-16)
 
 * add `Authorization` to `Access-Control-Allow-Headers`
 
-###### Version 0.3.2 (2017-02-16)
+#### Version 0.3.2 (2017-02-16)
 
 * update to Akka HTTP 10.0.3
 
-###### Version 0.3.1 (2017-02-16)
+#### Version 0.3.1 (2017-02-16)
 
 * update to Akka HTTP 2.4.11.1
 
 
-#### `rest-akka-http-test`
+-----------------------
+
+## `rest-akka-http-test`
+
+### Scala Dependency
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases")
@@ -327,27 +408,31 @@ Utils related to Scala Futures.
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3" // for Akka HTTP 2.4.11
     )
 
-##### Release History
+### Release History
 
-###### Version 0.3.3 (2017-02-17)
+#### Version 0.3.3 (2017-02-17)
 
 * no changes
 * incremented version to remain the as for module `rest-akka-http`
 
-###### Version 0.3.2 (2017-02-16)
+#### Version 0.3.2 (2017-02-16)
 
 * update to Akka HTTP 10.0.3
 
-###### Version 0.3.1 (2017-02-16)
+#### Version 0.3.1 (2017-02-16)
 
 * update to Akka HTTP 2.4.11.1
 
-###### Version 0.3 (2016-11-17)
+#### Version 0.3 (2016-11-17)
 
 * initial release for Akka 2.4.11
 
 
-#### `uuid`
+-----------------------
+
+## `uuid`
+
+### Scala Dependency
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases")
@@ -356,8 +441,8 @@ Utils related to Scala Futures.
       "com.ubirch.util" %% "uuid" % "0.1.1"
     )
 
-##### Release History
+### Release History
 
-###### Version 0.1.1 (2016-11-28)
+#### Version 0.1.1 (2016-11-28)
 
 * add method `UUIDUtil.fromString`
