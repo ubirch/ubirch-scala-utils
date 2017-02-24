@@ -13,3 +13,5 @@ trait ESBulkStorage extends ESBulkStorageBase {
   override protected val esClient: TransportClient = ESClient.esClient
 
 }
+
+object ESBulkStorage extends ESBulkStorage {}

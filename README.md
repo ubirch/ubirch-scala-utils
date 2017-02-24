@@ -88,7 +88,7 @@
 A client for Elasticsearch 2.4 using the binary protocol through
 [TransportClient](https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html).
 To use it mixin the trait `ESSimpleStorage` or `ESBulkStorage` and add the configuration documented below to your
-project.
+project. If you prefer working with objects they exists as well under the same names.
 
 In addition to this there's some other utils as well:
 
@@ -100,7 +100,7 @@ In addition to this there's some other utils as well:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.5.0"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.5.1"
     )
 
 
@@ -137,12 +137,22 @@ Example Config:
 
 ### Release History
 
+#### Version 0.5.1 (2017-02-24)
+
+* added objects `ESSimpleStorage` and `ESBulkStorage`
+
 #### Version 0.5.0 (2017-02-24)
 
 **This version is not compatible with 0.4.x releases**
 
 * enabled cluster support
 * simplified usage in projects by adding host, port and cluster
+* added connection config
+    | Config Item                            | Category        | Description                                             |
+    |:---------------------------------------|:----------------|:--------------------------------------------------------|
+    | esBinaryClient.connection.host         | Connection      | host ES is running on                                   | 
+    | esBinaryClient.connection.port         | Connection      | port ES is running on                                   | 
+    | esBinaryClient.connection.cluster      | Connection      | (optional) ES cluster to connect to                     | 
 
 #### Version 0.4.1 (2016-12-14)
 

@@ -13,3 +13,5 @@ trait ESSimpleStorage extends ESStorageBase {
   override protected val esClient: TransportClient = ESClient.esClient
 
 }
+
+object ESSimpleStorage extends ESSimpleStorage {}
