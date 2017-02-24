@@ -100,7 +100,7 @@ In addition to this there's some other utils as well:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.5.1"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.5.2"
     )
 
 
@@ -136,6 +136,10 @@ Example Config:
     }
 
 ### Release History
+
+#### Version 0.5.2 (2017-02-24)
+
+* parameter `imestamp` in ESBulkStorageBase.storeDocBulk() now has a default value: now.getMillis   
 
 #### Version 0.5.1 (2017-02-24)
 

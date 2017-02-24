@@ -9,6 +9,7 @@ import org.elasticsearch.action.bulk.{BackoffPolicy, BulkProcessor, BulkRequest,
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.common.unit.{ByteSizeUnit, ByteSizeValue, TimeValue}
+import org.joda.time.DateTime
 import org.json4s.JValue
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -62,7 +63,7 @@ trait ESBulkStorageBase extends StrictLogging {
                    docType: String,
                    docId: String,
                    doc: JValue,
-                   timestamp: Long
+                   timestamp: Long = DateTime.now.getMillis
                   ): Future[JValue] = {
 
 
