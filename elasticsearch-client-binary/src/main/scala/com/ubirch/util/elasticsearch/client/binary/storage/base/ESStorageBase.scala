@@ -94,9 +94,23 @@ trait ESStorageBase extends StrictLogging {
 
     require(docIndex.nonEmpty && docType.nonEmpty && docId.nonEmpty, "json invalid arguments")
 
-    esClient.prepareGet(docIndex, docType, docId).get() match {
-      case rs if rs.isExists => Json4sUtil.string2JValue(rs.getSourceAsString)
-      case _ => None
+    try {
+
+      esClient.prepareGet(docIndex, docType, docId).get() match {
+        case rs if rs.isExists => Json4sUtil.string2JValue(rs.getSourceAsString)
+        case _ => None
+      }
+
+    } catch {
+
+      case execExc: ExecutionException if execExc.getCause.getCause.isInstanceOf[IndexNotFoundException] =>
+        logger.error("IndexNotFoundException", execExc)
+        None
+
+      case execExc: ExecutionException if execExc.getCause.getCause.getCause.isInstanceOf[SearchParseException] =>
+        logger.error("SearchParseException", execExc)
+        None
+
     }
 
   }

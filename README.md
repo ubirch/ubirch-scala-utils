@@ -100,7 +100,7 @@ In addition to this there's some other utils as well:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.5.2"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.6.0"
     )
 
 
@@ -136,6 +136,11 @@ Example Config:
     }
 
 ### Release History
+
+#### Version 0.6.0 (2017-02-27)
+
+* `ESStorageBase.getDoc` catches exceptions related to missing indexes and search parse errors (usually a cause of no
+mappings existing yet) and returns None instead of an exception
 
 #### Version 0.5.2 (2017-02-24)
 

@@ -61,7 +61,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "0.5.2",
+    version := "0.6.0",
     resolvers ++= Seq(
       sonatypeReleases
     ),
