@@ -103,12 +103,12 @@ trait ESStorageBase extends StrictLogging {
 
     } catch {
 
-      case execExc: ExecutionException if execExc.getCause.getCause.isInstanceOf[IndexNotFoundException] =>
-        logger.error("IndexNotFoundException", execExc)
+      case infExc: IndexNotFoundException =>
+        logger.error(s"IndexNotFoundException: index=$docIndex", infExc)
         None
 
       case execExc: ExecutionException if execExc.getCause.getCause.getCause.isInstanceOf[SearchParseException] =>
-        logger.error("SearchParseException", execExc)
+        logger.error(s"SearchParseException: index=$docIndex", execExc)
         None
 
     }
@@ -171,11 +171,11 @@ trait ESStorageBase extends StrictLogging {
       } catch {
 
         case execExc: ExecutionException if execExc.getCause.getCause.isInstanceOf[IndexNotFoundException] =>
-          logger.error("IndexNotFoundException", execExc)
+          logger.error(s"IndexNotFoundException: index=$docIndex", execExc)
           List()
 
         case execExc: ExecutionException if execExc.getCause.getCause.getCause.isInstanceOf[SearchParseException] =>
-          logger.error("SearchParseException", execExc)
+          logger.error(s"SearchParseException: index=$docIndex", execExc)
           List()
 
       }

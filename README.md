@@ -141,6 +141,7 @@ Example Config:
 
 * `ESStorageBase.getDoc` catches exceptions related to missing indexes and search parse errors (usually a cause of no
 mappings existing yet) and returns None instead of an exception
+* improved logging in `ESStorageBase.getDocs`
 
 #### Version 0.5.2 (2017-02-24)
 
