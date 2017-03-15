@@ -404,6 +404,53 @@ Utils related to Scala Futures.
 
 -----------------------
 
+## `redis-util`
+
+### Scala Dependency
+
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "redis-util" % "0.1.0"
+    )
+
+### Config
+
+You can place the below config keys where you want in the config. When calling `RedisClientUtil.newInstance())` you need
+to provide a config prefix and the software will look for them under it.
+
+| Config Item                            | Mandatory  | Description            |
+|:---------------------------------------|:-----------|:-----------------------|
+| $PREFIX_OF_YOUR_CHOICE.redis.host      | yes        | host ES is running on  |
+| $PREFIX_OF_YOUR_CHOICE.redis.port      | yes        | host ES is running on  |
+| $PREFIX_OF_YOUR_CHOICE.redis.password  | no         | host ES is running on  |
+
+Here's an example config with the config prefix `myService`:
+
+    myService {
+      redis {
+        host = localhost
+        port = 6379
+        password = not-a-secure-password
+      }
+    }
+
+And this how you get a redis client:
+
+    ```scala
+    implicit val system = ActorSystem()
+    implicit val timeout = Timeout(15 seconds)
+    val configPrefix = "myService"
+    val redis = RedisClientUtil.newInstance(configPrefix)(system)
+    ```
+
+### Release History
+
+#### Version 0.1.0 (2017-03-15)
+
+* initial release
+
+
+-----------------------
+
 ## `rest-akka-http`
 
 ### Scala Dependency

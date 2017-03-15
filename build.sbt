@@ -24,7 +24,20 @@ lazy val commonSettings = Seq(
 
 lazy val scalaUtils = (project in file("."))
   .settings(commonSettings: _*)
-  .aggregate(config, crypto, date, elasticsearchClientBinary, elasticsearchUtil, futures, json, jsonAutoConvert, restAkkaHttp, restAkkaHttpTest, uuid)
+  .aggregate(
+    config,
+    crypto,
+    date,
+    elasticsearchClientBinary,
+    elasticsearchUtil,
+    futures,
+    json,
+    jsonAutoConvert,
+    redisUtil,
+    restAkkaHttp,
+    restAkkaHttpTest,
+    uuid
+  )
 
 lazy val config = project
   .settings(commonSettings: _*)
@@ -107,6 +120,15 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
     libraryDependencies ++= depJsonAutoConvert
   )
 
+lazy val redisUtil = (project in file("redis-util"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "redis-util",
+    description := "Redis related utils",
+    version := "0.1.0",
+    libraryDependencies ++= depRedisUtil
+  )
+
 lazy val restAkkaHttp = (project in file("rest-akka-http"))
   .settings(commonSettings: _*)
   .settings(
@@ -176,6 +198,14 @@ lazy val depJsonAutoConvert = Seq(
   ubirchUtilJson
 )
 
+lazy val depRedisUtil = Seq(
+  akkaActor,
+  akkaSlf4j,
+  rediscala,
+  scalaLoggingSlf4j,
+  ubirchUtilConfig
+)
+
 lazy val depRestAkkaHttpTest = Seq(
   akkaHttp,
   akkaHttpTestkit,
@@ -224,6 +254,8 @@ lazy val roundeightsHasher = "com.roundeights" %% "hasher" % "1.2.0"
 
 lazy val netI2pCryptoEddsa = "net.i2p.crypto" % "eddsa" % "0.1.0"
 
+lazy val akkaActor = "com.typesafe.akka" %% "akka-actor" % akkaV
+lazy val akkaSlf4j = "com.typesafe.akka" %% "akka-slf4j" % akkaV
 lazy val akkaHttp = akkaG %% "akka-http" % akkaHttpV
 lazy val akkaHttpTestkit = akkaG %% "akka-http-testkit" % akkaHttpV
 
@@ -237,6 +269,12 @@ lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 
 lazy val beeClient = "uk.co.bigbeeconsultants" %% "bee-client" % "0.29.1"
+
+lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll(
+  ExclusionRule(organization = "com.typesafe.akka")
+)
+
+lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.2"
 
