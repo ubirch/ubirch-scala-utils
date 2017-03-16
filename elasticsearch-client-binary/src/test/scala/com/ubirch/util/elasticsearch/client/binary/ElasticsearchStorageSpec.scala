@@ -3,14 +3,15 @@ package com.ubirch.util.elasticsearch.client.binary
 import java.net.InetAddress
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
+
+import com.ubirch.util.elasticsearch.client.binary.storage.base.ESStorageBase
 import com.ubirch.util.json.Json4sUtil
 import com.ubirch.util.uuid.UUIDUtil
-import org.elasticsearch.client.transport.TransportClient
-import org.elasticsearch.common.settings.Settings
-import org.elasticsearch.common.transport.InetSocketTransportAddress
-import org.elasticsearch.transport.client.PreBuiltTransportClient
+
 import org.json4s._
 import org.scalatest.{AsyncFeatureSpec, BeforeAndAfterAll, Matchers}
+import org.elasticsearch.client.transport.TransportClient
+import org.elasticsearch.common.transport.InetSocketTransportAddress
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
@@ -102,10 +103,12 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
 
 }
 
-object DeviceStorage extends ElasticsearchStorage {
+object DeviceStorage extends ESStorageBase {
 
-  private val address = InetAddress.getByName("localhost")
+  private val address = new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300)
 
-  override protected val esClient: TransportClient = new PreBuiltTransportClient(Settings.EMPTY)
-    .addTransportAddress(new InetSocketTransportAddress(address, 9300))
+  override protected val esClient: TransportClient = TransportClient.builder()
+    .build()
+    .addTransportAddress(address)
+
 }

@@ -24,7 +24,7 @@ lazy val commonSettings = Seq(
 
 lazy val scalaUtils = (project in file("."))
   .settings(commonSettings: _*)
-  .aggregate(config, crypto, date, elasticsearchClientBinary, futures, json, jsonAutoConvert, restAkkaHttp, restAkkaHttpTest, uuid)
+  .aggregate(config, crypto, date, elasticsearchClientBinary, elasticsearchUtil, futures, json, jsonAutoConvert, restAkkaHttp, restAkkaHttpTest, uuid)
 
 lazy val config = project
   .settings(commonSettings: _*)
@@ -61,11 +61,23 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "0.5.0",
+    version := "0.5.2",
     resolvers ++= Seq(
       sonatypeReleases
     ),
     libraryDependencies ++= depElasticsearchClientBinary
+  )
+
+lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "elasticsearch-util",
+    description := "Elasticsearch related utils",
+    version := "0.1.0",
+    resolvers ++= Seq(
+      resolverBeeClient
+    ),
+    libraryDependencies ++= depElasticsearchUtil
   )
 
 lazy val futures = project
@@ -100,7 +112,7 @@ lazy val restAkkaHttp = (project in file("rest-akka-http"))
   .settings(
     name := "rest-akka-http",
     description := "shared custom classes related to akka-http-experimental (for example certain directives)",
-    version := "0.3", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
+    version := "0.3.3", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
     libraryDependencies += akkaHttp
   )
 
@@ -109,7 +121,7 @@ lazy val restAkkaHttpTest = (project in file("rest-akka-http-test"))
   .settings(
     name := "rest-akka-http-test",
     description := "akka-http-experimental related test utils",
-    version := "0.3", // NOTE: please keep major.minor version synchronized with restAkkaHttp
+    version := "0.3.3", // NOTE: please keep major.minor version synchronized with restAkkaHttp
     libraryDependencies ++= depRestAkkaHttpTest
   )
 
@@ -123,8 +135,9 @@ lazy val uuid = project
 lazy val responseUtil = project
   .settings(commonSettings: _*)
   .settings(
+    name := "response-util",
     description := "HTTP Response Utils",
-    version := "0.1",
+    version := "0.1.2",
     libraryDependencies ++= depResponseUtil
   )
 
@@ -147,6 +160,11 @@ lazy val depElasticsearchClientBinary = Seq(
   slf4j,
   scalaTest % "test"
 ) ++ json4sBase
+
+lazy val depElasticsearchUtil = Seq(
+  beeClient,
+  scalaLoggingSlf4j
+)
 
 lazy val depJson = Seq(
   scalaTest % "test",
@@ -178,10 +196,10 @@ lazy val depResponseUtil = Seq(
 
 // Versions
 val json4sV = "3.4.2"
-val akkaV = "2.4.11"
-//val elasticsearchV = "2.4.2"
-val elasticsearchV = "5.1.2"
-val scalaTestV = "3.0.0"
+val akkaV = "2.4.17"
+val akkaHttpV = "10.0.3"
+val elasticsearchV = "2.4.2"
+val scalaTestV = "3.0.1"
 
 // Groups
 val akkaG = "com.typesafe.akka"
@@ -206,18 +224,19 @@ lazy val roundeightsHasher = "com.roundeights" %% "hasher" % "1.2.0"
 
 lazy val netI2pCryptoEddsa = "net.i2p.crypto" % "eddsa" % "0.1.0"
 
-lazy val akkaHttp = akkaG %% "akka-http-experimental" % akkaV
-lazy val akkaHttpTestkit = akkaG %% "akka-http-testkit" % akkaV
+lazy val akkaHttp = akkaG %% "akka-http" % akkaHttpV
+lazy val akkaHttpTestkit = akkaG %% "akka-http-testkit" % akkaHttpV
 
 lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestV
 
 lazy val jodaTime = "joda-time" % "joda-time" % "2.9.4"
 lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8.1"
 
-//lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
-lazy val elasticSearch =  "org.elasticsearch.client" % "transport" % elasticsearchV
+lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
 lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
+
+lazy val beeClient = "uk.co.bigbeeconsultants" %% "bee-client" % "0.29.1"
 
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.2"
 
@@ -227,6 +246,7 @@ lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"
  * RESOLVER
  ********************************************************/
 
-lazy val sonatypeReleases = Resolver.sonatypeRepo("releases")
-lazy val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
-lazy val resolverHasher = "RoundEights" at "http://maven.spikemark.net/roundeights"
+val sonatypeReleases = Resolver.sonatypeRepo("releases")
+val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
+val resolverHasher = "RoundEights" at "http://maven.spikemark.net/roundeights"
+val resolverBeeClient = Resolver.bintrayRepo("rick-beton", "maven")
