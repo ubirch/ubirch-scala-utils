@@ -93,9 +93,23 @@ trait ESStorageBase extends StrictLogging {
 
     require(docIndex.nonEmpty && docType.nonEmpty && docId.nonEmpty, "json invalid arguments")
 
-    esClient.prepareGet(docIndex, docType, docId).get() match {
-      case rs if rs.isExists => Json4sUtil.string2JValue(rs.getSourceAsString)
-      case _ => None
+    try {
+
+      esClient.prepareGet(docIndex, docType, docId).get() match {
+        case rs if rs.isExists => Json4sUtil.string2JValue(rs.getSourceAsString)
+        case _ => None
+      }
+
+    } catch {
+
+      case infExc: IndexNotFoundException =>
+        logger.error(s"IndexNotFoundException: index=$docIndex", infExc)
+        None
+
+      case execExc: ExecutionException if execExc.getCause.getCause.getCause.isInstanceOf[SearchParseException] =>
+        logger.error(s"SearchParseException: index=$docIndex", execExc)
+        None
+
     }
 
   }
@@ -156,11 +170,11 @@ trait ESStorageBase extends StrictLogging {
       } catch {
 
         case execExc: ExecutionException if execExc.getCause.getCause.isInstanceOf[IndexNotFoundException] =>
-          logger.error("IndexNotFoundException", execExc)
+          logger.error(s"IndexNotFoundException: index=$docIndex", execExc)
           List()
 
         case execExc: ExecutionException if execExc.getCause.getCause.getCause.isInstanceOf[SearchParseException] =>
-          logger.error("SearchParseException", execExc)
+          logger.error(s"SearchParseException: index=$docIndex", execExc)
           List()
 
       }

@@ -100,7 +100,7 @@ In addition to this there's some other utils as well:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.5.2"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.6.0"
     )
 
 
@@ -136,6 +136,12 @@ Example Config:
     }
 
 ### Release History
+
+#### Version 0.6.0 (2017-02-27)
+
+* `ESStorageBase.getDoc` catches exceptions related to missing indexes and search parse errors (usually a cause of no
+mappings existing yet) and returns None instead of an exception
+* improved logging in `ESStorageBase.getDocs`
 
 #### Version 0.5.2 (2017-02-24)
 
@@ -394,6 +400,53 @@ Utils related to Scala Futures.
 
 * changed artifact name from `responseutil` to `response-util`
 * refactor `ResponseUtil` to allow passing in http status codes (only for errors))
+
+
+-----------------------
+
+## `redis-util`
+
+### Scala Dependency
+
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "redis-util" % "0.1.0"
+    )
+
+### Config
+
+You can place the below config keys where you want in the config. When calling `RedisClientUtil.newInstance())` you need
+to provide a config prefix and the software will look for them under it.
+
+| Config Item                            | Mandatory  | Description            |
+|:---------------------------------------|:-----------|:-----------------------|
+| $PREFIX_OF_YOUR_CHOICE.redis.host      | yes        | host ES is running on  |
+| $PREFIX_OF_YOUR_CHOICE.redis.port      | yes        | host ES is running on  |
+| $PREFIX_OF_YOUR_CHOICE.redis.password  | no         | host ES is running on  |
+
+Here's an example config with the config prefix `myService`:
+
+    myService {
+      redis {
+        host = localhost
+        port = 6379
+        password = not-a-secure-password
+      }
+    }
+
+And this how you get a redis client:
+
+    ```scala
+    implicit val system = ActorSystem()
+    implicit val timeout = Timeout(15 seconds)
+    val configPrefix = "myService"
+    val redis = RedisClientUtil.newInstance(configPrefix)(system)
+    ```
+
+### Release History
+
+#### Version 0.1.0 (2017-03-15)
+
+* initial release
 
 
 -----------------------
