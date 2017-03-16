@@ -195,7 +195,7 @@ trait ESStorageBase extends StrictLogging {
     require(docIndex.nonEmpty && docType.nonEmpty && docId.nonEmpty, "json invalid arguments")
 
     val res = esClient.prepareDelete(docIndex, docType, docId).get()
-    (res status()).getStatus.equals(RestStatus.OK)
+    res.isFound
 
   }
 
