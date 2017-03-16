@@ -128,7 +128,7 @@ trait ESStorageBase extends StrictLogging {
               query: Option[QueryBuilder] = None,
               from: Option[Int] = None,
               size: Option[Int] = None,
-              sort: Option[SortBuilder[FieldSortBuilder]] = None
+              sort: Option[SortBuilder] = None
              ): Future[List[JValue]] = {
 
     require(docIndex.nonEmpty && docType.nonEmpty, "json invalid arguments")

@@ -8,7 +8,7 @@ import org.elasticsearch.search.sort.{FieldSortBuilder, SortBuilder, SortBuilder
   */
 object SortUtil {
 
-  def sortBuilder(field: String, asc: Boolean = true): SortBuilder[FieldSortBuilder] = {
+  def sortBuilder(field: String, asc: Boolean = true): SortBuilder = {
 
     val fieldSort = SortBuilders.fieldSort(field)
 
