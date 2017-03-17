@@ -388,6 +388,14 @@ Utils related to Scala Futures.
       "com.ubirch.util" %% "oidc-auth" % "0.0.1-SNAPSHOT"
     )
 
+### Config
+
+TODO
+
+| Config Item                            | Description                                             |
+|:---------------------------------------|:--------------------------------------------------------|
+| tbd                                    | tbd                                                     |
+
 ### Release History
 
 #### Version 0.1.0 (tbd)
