@@ -54,11 +54,10 @@ trait OidcDirective extends Directives
 
       case Some(userId) =>
 
-        val refreshInterval = 1800L // 30 minutes TODO read from config
-        redis.expire(tokenKey, seconds = refreshInterval) map {
+        updateExpiry(redis, tokenKey) map {
 
           case true =>
-            logger.debug(s"update token expiry by another $refreshInterval seconds")
+            logger.debug(s"updated token expiry")
             Some(userId)
 
           case false =>
@@ -68,6 +67,13 @@ trait OidcDirective extends Directives
         }
 
     }
+
+  }
+
+  private def updateExpiry(redis: RedisClient, tokenKey: String): Future[Boolean] = {
+
+    val refreshInterval = 1800L // 30 minutes TODO read from config
+    redis.expire(tokenKey, seconds = refreshInterval)
 
   }
 
