@@ -20,26 +20,32 @@ import scala.concurrent.Future
 trait OidcDirective extends Directives
   with StrictLogging {
 
-  def verifyToken(routes: => Route)(implicit system: ActorSystem): Route = {
+  def verifyToken(routes: => Route, configPrefix: String)(implicit system: ActorSystem): Route = {
 
     val provider: String = "" // TODO extract from header (needed to check existence of token in Redis)
     val token: String = "" // TODO extract from "Authorization" header (use authenticateOAuth2Async directive?)
 
     // TODO extract context header?
 
-    val userId = checkTokenExists(provider = provider, token = token, system = system)
+    val userId = checkTokenExists(
+      configPrefix = configPrefix,
+      provider = provider,
+      token = token,
+      system = system
+    )
 
     complete(OK)
 
   }
 
-  private def checkTokenExists(provider: String,
+  private def checkTokenExists(configPrefix: String,
+                               provider: String,
                                token: String,
                                system: ActorSystem
                               ): Future[Option[String]] = {
 
     val tokenKey = OidcUtil.tokenToHashedKey(provider, token)
-    val redis: RedisClient = RedisClientUtil.newInstance("")(system) // TODO get configPrefix from config?
+    val redis: RedisClient = RedisClientUtil.newInstance(configPrefix)(system)
     redis.get[String](tokenKey) flatMap {
 
       case None =>
