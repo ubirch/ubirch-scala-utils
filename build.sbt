@@ -214,7 +214,8 @@ lazy val depJsonAutoConvert = Seq(
 lazy val depOidcUtils = Seq(
   ubirchUtilCrypto,
   akkaHttp,
-  ubirchUtilRedisUtil
+  ubirchUtilRedisUtil,
+  scalaTest % "test"
 )
 
 lazy val depRedisUtil = Seq(
@@ -289,9 +290,7 @@ lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 
 lazy val beeClient = "uk.co.bigbeeconsultants" %% "bee-client" % "0.29.1"
 
-lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll(
-  ExclusionRule(organization = "com.typesafe.akka")
-)
+lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = "com.typesafe.akka")
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
