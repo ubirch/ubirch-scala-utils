@@ -39,7 +39,7 @@ trait OidcDirective extends Directives
                               ): Future[Option[String]] = {
 
     val tokenKey = OidcUtil.tokenToHashedKey(provider, token)
-    val redis: RedisClient = RedisClientUtil.newInstance("")(system)
+    val redis: RedisClient = RedisClientUtil.newInstance("")(system) // TODO get configPrefix from config?
     redis.get[String](tokenKey) flatMap {
 
       case None =>
