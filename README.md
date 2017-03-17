@@ -10,6 +10,7 @@
 * futures
 * json
 * json-auto-convert
+* oidc-auth
 * response-util
 * rest-akka-http
 * rest-akka-http-test
@@ -375,6 +376,23 @@ Utils related to Scala Futures.
 #### Version 0.3 (2016-11-01)
 
 * update json4s dependency from version 3.4.0 to 3.4.2
+
+
+-----------------------
+
+## `oidc-auth`
+
+### Scala Dependency
+
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "oidc-auth" % "0.0.1-SNAPSHOT"
+    )
+
+### Release History
+
+#### Version 0.1.0 (tbd)
+
+* initial relase
 
 
 -----------------------
