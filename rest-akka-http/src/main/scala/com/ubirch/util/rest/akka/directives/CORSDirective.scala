@@ -17,7 +17,7 @@ trait CORSDirective extends Directives {
     `Access-Control-Allow-Credentials`(true)
   )
 
-  def respondWithCORS(routes: => Route) = {
+  def respondWithCORS(routes: => Route): Route = {
     val originHeader = `Access-Control-Allow-Origin`(HttpOriginRange.*)
     respondWithHeaders(originHeader :: CORSHeaders) {
       routes ~ options {
