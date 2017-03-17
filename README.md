@@ -10,7 +10,7 @@
 * futures
 * json
 * json-auto-convert
-* oidc-auth
+* oidc-utils
 * response-util
 * rest-akka-http
 * rest-akka-http-test
@@ -380,17 +380,21 @@ Utils related to Scala Futures.
 
 -----------------------
 
-## `oidc-auth`
+## `oidc-utils`
 
 ### Scala Dependency
 
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases"),
+	  "RoundEights" at "http://maven.spikemark.net/roundeights"
+    )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-auth" % "0.0.1-SNAPSHOT"
+      "com.ubirch.util" %% "oidc-utils" % "0.0.1-SNAPSHOT"
     )
 
 ### Config
 
-TODO
+To use the `OidcDirective` the following configuration is needed:
 
 | Config Item                            | Description                                             |
 |:---------------------------------------|:--------------------------------------------------------|

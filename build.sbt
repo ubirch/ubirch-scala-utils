@@ -33,7 +33,7 @@ lazy val scalaUtils = (project in file("."))
     futures,
     json,
     jsonAutoConvert,
-    oidcAuth,
+    oidcUtils,
     redisUtil,
     restAkkaHttp,
     restAkkaHttpTest,
@@ -121,13 +121,16 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
     libraryDependencies ++= depJsonAutoConvert
   )
 
-lazy val oidcAuth = (project in file("oidc-auth"))
+lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(commonSettings: _*)
   .settings(
-    name := "oidc-auth",
+    name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
     version := "0.0.1-SNAPSHOT",
-    libraryDependencies ++= depOidcAuth
+    resolvers ++= Seq(
+      resolverHasher
+    ),
+    libraryDependencies ++= depOidcUtils
   )
 
 lazy val redisUtil = (project in file("redis-util"))
@@ -208,7 +211,8 @@ lazy val depJsonAutoConvert = Seq(
   ubirchUtilJson
 )
 
-lazy val depOidcAuth = Seq(
+lazy val depOidcUtils = Seq(
+  ubirchUtilCrypto,
   akkaHttp,
   ubirchUtilRedisUtil
 )
@@ -290,11 +294,9 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll(
 )
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
-
+lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.2"
-
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.1.0"
-
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"
 
 /*
