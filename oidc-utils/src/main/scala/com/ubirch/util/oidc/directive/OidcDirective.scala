@@ -6,8 +6,8 @@ import com.ubirch.util.oidc.util.OidcUtil
 import com.ubirch.util.redis.RedisClientUtil
 
 import akka.actor.ActorSystem
-import akka.http.scaladsl.model.StatusCodes._
-import akka.http.scaladsl.server.{Directives, Route}
+import akka.http.scaladsl.model.StatusCodes
+import akka.http.scaladsl.server.{Directive1, Directives, Route}
 import redis.RedisClient
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -20,21 +20,25 @@ import scala.concurrent.Future
 trait OidcDirective extends Directives
   with StrictLogging {
 
-  def verifyToken(routes: => Route, configPrefix: String)(implicit system: ActorSystem): Route = {
+  def verifyToken(routes: => Route, configPrefix: String)(implicit system: ActorSystem): Directive1[String] = {
 
-    val provider: String = "" // TODO extract from header (needed to check existence of token in Redis)
-    val token: String = "" // TODO extract from "Authorization" header (use authenticateOAuth2Async directive?)
+    ubirchContextFromHeader { context =>
+      ubirchProviderFromHeader { provider =>
 
-    // TODO extract context header?
+        val token: String = "" // TODO extract from "Authorization" header (use authenticateOAuth2Async directive?)
 
-    val userId = checkTokenExists(
-      configPrefix = configPrefix,
-      provider = provider,
-      token = token,
-      system = system
-    )
+        checkTokenExists(
+          configPrefix = configPrefix,
+          provider = provider,
+          token = token,
+          system = system
+        ) map {
+          case Some(userId) => (context, userId)
+          case None => complete(StatusCodes.OK) // TODO complete w/ errorb
+        }
 
-    complete(OK)
+      }
+    }
 
   }
 
@@ -76,5 +80,9 @@ trait OidcDirective extends Directives
     redis.expire(tokenKey, seconds = refreshInterval)
 
   }
+
+  val ubirchContextFromHeader: Directive1[String] = headerValueByName("X-UBIRCH-CONTEXT")
+
+  val ubirchProviderFromHeader: Directive1[String] = headerValueByName("X-UBIRCH-PROVIDER")
 
 }
