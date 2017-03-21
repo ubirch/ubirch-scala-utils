@@ -7,7 +7,8 @@ import com.ubirch.util.redis.RedisClientUtil
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
-import akka.http.scaladsl.server.{AuthorizationFailedRejection, Directive1, Directives, Route}
+import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.{AuthorizationFailedRejection, Directive1, Route}
 import redis.RedisClient
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -17,8 +18,7 @@ import scala.concurrent.Future
   * author: cvandrei
   * since: 2017-03-17
   */
-trait OidcDirective extends Directives
-  with StrictLogging {
+trait OidcDirective extends StrictLogging {
 
   def oidcToken2UserContext(routes: => Route, configPrefix: String)(implicit system: ActorSystem): Directive1[UserContext] = {
 
