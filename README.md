@@ -495,7 +495,7 @@ The required config is documented in the `redis-util` section.
 
 ### Release History
 
-#### Version 0.1.0 (tbd)
+#### Version 0.1.0 (2017-03-21)
 
 * initial release
 
