@@ -34,7 +34,7 @@ lazy val scalaUtils = (project in file("."))
     json,
     jsonAutoConvert,
     oidcUtils,
-    redisTestUtils,
+    redisTestUtil,
     redisUtil,
     restAkkaHttp,
     restAkkaHttpTest,
@@ -134,7 +134,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
     libraryDependencies ++= depOidcUtils
   )
 
-lazy val redisTestUtils = (project in file("redis-test-utils"))
+lazy val redisTestUtil = (project in file("redis-test-util"))
   .settings(commonSettings: _*)
   .settings(
     name := "redis-test-util",

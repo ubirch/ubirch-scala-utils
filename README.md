@@ -481,12 +481,12 @@ And this how you get a redis client:
 
 -----------------------
 
-## `redis-test-utils`
+## `redis-test-util`
 
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-test-utils" % "0.1.0"
+      "com.ubirch.util" %% "redis-test-util" % "0.1.0"
     )
 
 ### Config
