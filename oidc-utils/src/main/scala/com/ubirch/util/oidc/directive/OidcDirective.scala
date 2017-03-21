@@ -6,9 +6,8 @@ import com.ubirch.util.oidc.util.OidcUtil
 import com.ubirch.util.redis.RedisClientUtil
 
 import akka.actor.ActorSystem
-import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
-import akka.http.scaladsl.server.{Directive1, Directives, Route}
+import akka.http.scaladsl.server.{AuthorizationFailedRejection, Directive1, Directives, Route}
 import redis.RedisClient
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -21,21 +20,37 @@ import scala.concurrent.Future
 trait OidcDirective extends Directives
   with StrictLogging {
 
-  def verifyToken(routes: => Route, configPrefix: String)(implicit system: ActorSystem): Directive1[String] = {
+  def oidcToken2UserContext(routes: => Route, configPrefix: String)(implicit system: ActorSystem): Directive1[UserContext] = {
 
-    ubirchContextFromHeader { context =>
-      ubirchProviderFromHeader { provider =>
-        bearerToken { token =>
+    ubirchContextFromHeader.flatMap { context =>
+      ubirchProviderFromHeader.flatMap { provider =>
+        bearerToken.flatMap {
 
-          checkTokenExists(
-            configPrefix = configPrefix,
-            provider = provider,
-            tokenOpt = token,
-            system = system
-          ) map {
-            case Some(userId) => (context, userId)
-            case None => complete(StatusCodes.OK) // TODO complete w/ errorb
-          }
+          case None => reject(AuthorizationFailedRejection)
+
+          case Some(token) =>
+
+            onComplete(
+              tokenToUserId(
+                configPrefix = configPrefix,
+                provider = provider,
+                context = context,
+                token = token,
+                system = system
+              )
+            ).flatMap {
+
+              _.map { userContext =>
+
+                provide(userContext)
+
+              }.recover {
+                case e: VerificationException =>
+                  logger.error("Unable to log in with provided token", e)
+                  reject(AuthorizationFailedRejection).toDirective[Tuple1[UserContext]]
+              }.get
+
+            }
 
         }
       }
@@ -43,47 +58,34 @@ trait OidcDirective extends Directives
 
   }
 
-  private def checkTokenExists(configPrefix: String,
-                               provider: String,
-                               tokenOpt: Option[String],
-                               system: ActorSystem
-                              ): Future[Option[String]] = {
+  private def tokenToUserId(configPrefix: String,
+                            provider: String,
+                            context: String,
+                            token: String,
+                            system: ActorSystem
+                           ): Future[UserContext] = {
 
-    tokenOpt match {
+    val tokenKey = OidcUtil.tokenToHashedKey(provider, token)
+    val redis: RedisClient = RedisClientUtil.newInstance(configPrefix)(system)
+    redis.get[String](tokenKey) map {
 
-      case None => Future(None)
+      case None =>
+        logger.debug(s"token does not exist: $provider:$token")
+        throw new VerificationException()
 
-      case Some(token) =>
-
-        val tokenKey = OidcUtil.tokenToHashedKey(provider, token)
-        val redis: RedisClient = RedisClientUtil.newInstance(configPrefix)(system)
-        redis.get[String](tokenKey) flatMap {
-
-          case None =>
-            logger.debug(s"token does not exist: $provider:$token")
-            Future(None)
-
-          case Some(userId) =>
-
-            updateExpiry(redis, tokenKey) map {
-
-              case true =>
-                logger.debug(s"updated token expiry")
-                Some(userId)
-
-              case false =>
-                logger.error(s"failed to update token expiry")
-                Some(userId)
-
-            }
-
-        }
+      case Some(userId) =>
+        updateExpiry(configPrefix, redis, tokenKey)
+        UserContext(context = context, userId = userId)
 
     }
 
   }
 
-  private def updateExpiry(redis: RedisClient, tokenKey: String): Future[Boolean] = {
+
+  private def updateExpiry(configPrefix: String,
+                           redis: RedisClient,
+                           tokenKey: String
+                          ): Future[Boolean] = {
 
     val refreshInterval = 1800L // 30 minutes TODO read from config
     redis.expire(tokenKey, seconds = refreshInterval)
@@ -102,5 +104,8 @@ trait OidcDirective extends Directives
       case Authorization(OAuth2BearerToken(token)) => token
     }
 
-
 }
+
+case class UserContext(context: String, userId: String)
+
+class VerificationException() extends Exception
