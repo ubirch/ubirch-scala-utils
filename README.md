@@ -481,6 +481,27 @@ And this how you get a redis client:
 
 -----------------------
 
+## `redis-test-utils`
+
+### Scala Dependency
+
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "redis-test-utils" % "0.1.0"
+    )
+
+### Config
+
+The required config is documented in the `redis-util` section.
+
+### Release History
+
+#### Version 0.1.0 (tbd)
+
+* initial release
+
+
+-----------------------
+
 ## `rest-akka-http`
 
 ### Scala Dependency

@@ -34,6 +34,7 @@ lazy val scalaUtils = (project in file("."))
     json,
     jsonAutoConvert,
     oidcUtils,
+    redisTestUtils,
     redisUtil,
     restAkkaHttp,
     restAkkaHttpTest,
@@ -133,6 +134,15 @@ lazy val oidcUtils = (project in file("oidc-utils"))
     libraryDependencies ++= depOidcUtils
   )
 
+lazy val redisTestUtils = (project in file("redis-test-utils"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "redis-test-util",
+    description := "Redis related test utils",
+    version := "0.0.1-SNAPSHOT",
+    libraryDependencies ++= depRedisTestUtils
+  )
+
 lazy val redisUtil = (project in file("redis-util"))
   .settings(commonSettings: _*)
   .settings(
@@ -215,7 +225,12 @@ lazy val depOidcUtils = Seq(
   ubirchUtilCrypto,
   akkaHttp,
   ubirchUtilRedisUtil,
-  scalaTest % "test"
+  scalaTest % "test",
+  akkaHttpTestkit % "test"
+)
+
+lazy val depRedisTestUtils = Seq(
+  ubirchUtilRedisUtil
 )
 
 lazy val depRedisUtil = Seq(
