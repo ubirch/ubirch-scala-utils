@@ -78,7 +78,6 @@ class OidcDirective(configPrefix: String = OidcUtilsConfigKeys.PREFIX)(implicit 
 
   }
 
-
   private def updateExpiry(redis: RedisClient, tokenKey: String): Future[Boolean] = {
 
     val refreshInterval = OidcUtilsConfig.redisUpdateExpiry(configPrefix)
