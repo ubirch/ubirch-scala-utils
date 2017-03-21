@@ -7,6 +7,7 @@ import com.ubirch.util.redis.RedisClientUtil
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.StatusCodes
+import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
 import akka.http.scaladsl.server.{Directive1, Directives, Route}
 import redis.RedisClient
 
@@ -24,19 +25,19 @@ trait OidcDirective extends Directives
 
     ubirchContextFromHeader { context =>
       ubirchProviderFromHeader { provider =>
+        bearerToken { token =>
 
-        val token: String = "" // TODO extract from "Authorization" header (use authenticateOAuth2Async directive?)
+          checkTokenExists(
+            configPrefix = configPrefix,
+            provider = provider,
+            tokenOpt = token,
+            system = system
+          ) map {
+            case Some(userId) => (context, userId)
+            case None => complete(StatusCodes.OK) // TODO complete w/ errorb
+          }
 
-        checkTokenExists(
-          configPrefix = configPrefix,
-          provider = provider,
-          token = token,
-          system = system
-        ) map {
-          case Some(userId) => (context, userId)
-          case None => complete(StatusCodes.OK) // TODO complete w/ errorb
         }
-
       }
     }
 
@@ -44,29 +45,37 @@ trait OidcDirective extends Directives
 
   private def checkTokenExists(configPrefix: String,
                                provider: String,
-                               token: String,
+                               tokenOpt: Option[String],
                                system: ActorSystem
                               ): Future[Option[String]] = {
 
-    val tokenKey = OidcUtil.tokenToHashedKey(provider, token)
-    val redis: RedisClient = RedisClientUtil.newInstance(configPrefix)(system)
-    redis.get[String](tokenKey) flatMap {
+    tokenOpt match {
 
-      case None =>
-        logger.debug(s"token does not exist: $provider:$token")
-        Future(None)
+      case None => Future(None)
 
-      case Some(userId) =>
+      case Some(token) =>
 
-        updateExpiry(redis, tokenKey) map {
+        val tokenKey = OidcUtil.tokenToHashedKey(provider, token)
+        val redis: RedisClient = RedisClientUtil.newInstance(configPrefix)(system)
+        redis.get[String](tokenKey) flatMap {
 
-          case true =>
-            logger.debug(s"updated token expiry")
-            Some(userId)
+          case None =>
+            logger.debug(s"token does not exist: $provider:$token")
+            Future(None)
 
-          case false =>
-            logger.error(s"failed to update token expiry")
-            Some(userId)
+          case Some(userId) =>
+
+            updateExpiry(redis, tokenKey) map {
+
+              case true =>
+                logger.debug(s"updated token expiry")
+                Some(userId)
+
+              case false =>
+                logger.error(s"failed to update token expiry")
+                Some(userId)
+
+            }
 
         }
 
@@ -84,5 +93,14 @@ trait OidcDirective extends Directives
   val ubirchContextFromHeader: Directive1[String] = headerValueByName("X-UBIRCH-CONTEXT")
 
   val ubirchProviderFromHeader: Directive1[String] = headerValueByName("X-UBIRCH-PROVIDER")
+
+  val bearerToken: Directive1[Option[String]] =
+    optionalHeaderValueByType(classOf[Authorization]).map(extractBearerToken)
+
+  private def extractBearerToken(authHeader: Option[Authorization]): Option[String] =
+    authHeader.collect {
+      case Authorization(OAuth2BearerToken(token)) => token
+    }
+
 
 }
