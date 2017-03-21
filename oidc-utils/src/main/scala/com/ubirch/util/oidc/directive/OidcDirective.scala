@@ -2,7 +2,7 @@ package com.ubirch.util.oidc.directive
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
 
-import com.ubirch.util.oidc.config.{OidcUtilsConfigKeys, OidcUtilsConfig}
+import com.ubirch.util.oidc.config.{OidcUtilsConfig, OidcUtilsConfigKeys}
 import com.ubirch.util.oidc.util.OidcUtil
 import com.ubirch.util.redis.RedisClientUtil
 
@@ -21,7 +21,14 @@ import scala.concurrent.Future
   */
 class OidcDirective(configPrefix: String = OidcUtilsConfigKeys.PREFIX)(implicit system: ActorSystem) extends StrictLogging {
 
-  def oidcToken2UserContext: Directive1[UserContext] = {
+  private val ubirchContextFromHeader: Directive1[String] = headerValueByName("X-UBIRCH-CONTEXT")
+
+  private val ubirchProviderFromHeader: Directive1[String] = headerValueByName("X-UBIRCH-PROVIDER")
+
+  private val bearerToken: Directive1[Option[String]] =
+    optionalHeaderValueByType(classOf[Authorization]).map(extractBearerToken)
+
+  val oidcToken2UserContext: Directive1[UserContext] = {
 
     ubirchContextFromHeader.flatMap { context =>
       ubirchProviderFromHeader.flatMap { provider =>
@@ -84,13 +91,6 @@ class OidcDirective(configPrefix: String = OidcUtilsConfigKeys.PREFIX)(implicit 
     redis.expire(tokenKey, seconds = refreshInterval)
 
   }
-
-  val ubirchContextFromHeader: Directive1[String] = headerValueByName("X-UBIRCH-CONTEXT")
-
-  val ubirchProviderFromHeader: Directive1[String] = headerValueByName("X-UBIRCH-PROVIDER")
-
-  val bearerToken: Directive1[Option[String]] =
-    optionalHeaderValueByType(classOf[Authorization]).map(extractBearerToken)
 
   private def extractBearerToken(authHeader: Option[Authorization]): Option[String] =
     authHeader.collect {
