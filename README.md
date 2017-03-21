@@ -394,42 +394,26 @@ Utils related to Scala Futures.
 
 ### Config
 
-To use the `OidcDirective` the following configuration is needed:
+To use the `OidcDirective` the following configuration is needed (`application.conf` is included in this module):
 
-| Config Item                            | Description                                             |
-|:---------------------------------------|:--------------------------------------------------------|
-| tbd                                    | tbd                                                     |
+| Config Item           | Mandatory | Description     |
+|:----------------------|:----------|:----------------|
+| $PREFIX.host          | yes       | Redis host      |
+| $PREFIX.port          | yes       | Redis port      |
+| $PREFIX.password      | no        | Redis password  |
+| $PREFIX.updateExpiry  | yes       | number of seconds by a token's expiry date is extended after successfully validating it |
+
+`$PREFIX` defaults to `ubirch.oidc-utils.redis` (see `OidcUtilsConfigKeys.PREFIX`) but can be overwritten with any value
+of your choice when instantiating `OidcDirective`.
+
+If one of your dependecies is `com.ubirch.util:redis-util` then you already had to define the first three config keys in
+your config. Adding the fourth one and instantiating `OidcDirective` with the related config prefix is recommended.
 
 ### Release History
 
 #### Version 0.1.0 (tbd)
 
-* initial relase
-
-
------------------------
-
-## `response-util`
-
-### Scala Dependency
-
-    resolvers ++= Seq(
-      Resolver.sonatypeRepo("releases")
-    )
-    libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "response-util" % "0.1.2"
-    )
-
-### Release History
-
-#### Version 0.1.2 (2017-02-16)
-
-* update to Akka HTTP 10.0.3
-
-#### Version 0.1.1 (2017-02-10)
-
-* changed artifact name from `responseutil` to `response-util`
-* refactor `ResponseUtil` to allow passing in http status codes (only for errors))
+* initial release
 
 
 -----------------------
@@ -477,6 +461,31 @@ And this how you get a redis client:
 #### Version 0.1.0 (2017-03-15)
 
 * initial release
+
+
+-----------------------
+
+## `response-util`
+
+### Scala Dependency
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "response-util" % "0.1.2"
+    )
+
+### Release History
+
+#### Version 0.1.2 (2017-02-16)
+
+* update to Akka HTTP 10.0.3
+
+#### Version 0.1.1 (2017-02-10)
+
+* changed artifact name from `responseutil` to `response-util`
+* refactor `ResponseUtil` to allow passing in http status codes (only for errors))
 
 
 -----------------------

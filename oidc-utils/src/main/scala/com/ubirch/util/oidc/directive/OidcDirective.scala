@@ -2,13 +2,14 @@ package com.ubirch.util.oidc.directive
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
 
+import com.ubirch.util.oidc.config.{OidcUtilsConfigKeys, OidcUtilsConfig}
 import com.ubirch.util.oidc.util.OidcUtil
 import com.ubirch.util.redis.RedisClientUtil
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.{AuthorizationFailedRejection, Directive1, Route}
+import akka.http.scaladsl.server.{AuthorizationFailedRejection, Directive1}
 import redis.RedisClient
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -18,9 +19,9 @@ import scala.concurrent.Future
   * author: cvandrei
   * since: 2017-03-17
   */
-trait OidcDirective extends StrictLogging {
+class OidcDirective(configPrefix: String = OidcUtilsConfigKeys.PREFIX)(implicit system: ActorSystem) extends StrictLogging {
 
-  def oidcToken2UserContext(routes: => Route, configPrefix: String)(implicit system: ActorSystem): Directive1[UserContext] = {
+  def oidcToken2UserContext: Directive1[UserContext] = {
 
     ubirchContextFromHeader.flatMap { context =>
       ubirchProviderFromHeader.flatMap { provider =>
@@ -32,11 +33,9 @@ trait OidcDirective extends StrictLogging {
 
             onComplete(
               tokenToUserId(
-                configPrefix = configPrefix,
                 provider = provider,
                 context = context,
-                token = token,
-                system = system
+                token = token
               )
             ).flatMap {
 
@@ -58,11 +57,9 @@ trait OidcDirective extends StrictLogging {
 
   }
 
-  private def tokenToUserId(configPrefix: String,
-                            provider: String,
+  private def tokenToUserId(provider: String,
                             context: String,
-                            token: String,
-                            system: ActorSystem
+                            token: String
                            ): Future[UserContext] = {
 
     val tokenKey = OidcUtil.tokenToHashedKey(provider, token)
@@ -74,7 +71,7 @@ trait OidcDirective extends StrictLogging {
         throw new VerificationException()
 
       case Some(userId) =>
-        updateExpiry(configPrefix, redis, tokenKey)
+        updateExpiry(redis, tokenKey)
         UserContext(context = context, userId = userId)
 
     }
@@ -82,12 +79,9 @@ trait OidcDirective extends StrictLogging {
   }
 
 
-  private def updateExpiry(configPrefix: String,
-                           redis: RedisClient,
-                           tokenKey: String
-                          ): Future[Boolean] = {
+  private def updateExpiry(redis: RedisClient, tokenKey: String): Future[Boolean] = {
 
-    val refreshInterval = 1800L // 30 minutes TODO read from config
+    val refreshInterval = OidcUtilsConfig.redisUpdateExpiry(configPrefix)
     redis.expire(tokenKey, seconds = refreshInterval)
 
   }
