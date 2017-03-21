@@ -14,7 +14,12 @@ lazy val commonSettings = Seq(
   scmInfo := Some(ScmInfo(
     url("https://github.com/ubirch/ubirch-scala-utils"),
     "https://github.com/ubirch/ubirch-scala-utils.git"
-  ))
+  )),
+
+  resolvers ++= Seq(
+    sonatypeReleases,
+    sonatypeSnapshots
+  )
 
 )
 
@@ -77,9 +82,6 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
     version := "0.6.0",
-    resolvers ++= Seq(
-      sonatypeReleases
-    ),
     libraryDependencies ++= depElasticsearchClientBinary
   )
 
@@ -226,7 +228,8 @@ lazy val depOidcUtils = Seq(
   akkaHttp,
   ubirchUtilRedisUtil,
   scalaTest % "test",
-  akkaHttpTestkit % "test"
+  akkaHttpTestkit % "test",
+  ubirchUtilRedisTestUtil % "test"
 )
 
 lazy val depRedisTestUtils = Seq(
@@ -310,6 +313,7 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll Excl
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.2"
+lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.1.0-SNAPSHOT"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.1.0"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"
 
@@ -318,6 +322,7 @@ lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"
  ********************************************************/
 
 val sonatypeReleases = Resolver.sonatypeRepo("releases")
+val sonatypeSnapshots = Resolver.sonatypeRepo("snapshots")
 val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
 val resolverHasher = "RoundEights" at "http://maven.spikemark.net/roundeights"
 val resolverBeeClient = Resolver.bintrayRepo("rick-beton", "maven")
