@@ -74,7 +74,26 @@ class OidcDirectiveSpec extends FeatureSpec
     }
 
     ignore("with all headers and token exists") {
-      // TODO implement test
+
+      val context = "some-context"
+      val provider = "some-provider"
+      val token = "some-token"
+      val userId = "some-user-id"
+
+      // TODO persist: sha256(provider:token) = userId
+
+      val contextHeader: HttpHeader = RawHeader(OidcHeaders.CONTEXT, context)
+      val providerHeader: HttpHeader = RawHeader(OidcHeaders.PROVIDER, provider)
+      val authorizationHeader: HttpHeader = Authorization(OAuth2BearerToken(token))
+
+      Get().withHeaders(contextHeader, providerHeader, authorizationHeader) ~>
+        Route.seal(testRoute) ~> check {
+
+        status === StatusCodes.OK
+        responseAs[String] shouldEqual s"context=$context; userId=$userId"
+
+      }
+
     }
 
     scenario(s"test case: with all headers (except ${OidcHeaders.CONTEXT})") {
