@@ -409,6 +409,16 @@ of your choice when instantiating `OidcDirective`.
 If one of your dependecies is `com.ubirch.util:redis-util` then you already had to define the first three config keys in
 your config. Adding the fourth one and instantiating `OidcDirective` with the related config prefix is recommended.
 
+### Usage of `OidcDirective`
+
+Three headers are required by the directive:
+
+* X-UBIRCH-CONTEXT
+* X-UBIRCH-PROVIDER
+* Authorization: Bearer $TOKEN (same as with OAuth2 tokens)
+
+If the provided token is valid a `UserContext` will be returned.
+
 ### Release History
 
 #### Version 0.1.0 (tbd)
