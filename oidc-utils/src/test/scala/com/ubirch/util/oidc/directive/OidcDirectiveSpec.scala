@@ -38,6 +38,18 @@ class OidcDirectiveSpec extends FeatureSpec
       }
     }
 
-  // TODO write tests (see http://doc.akka.io/docs/akka-http/current/scala/http/routing-dsl/testkit.html)
+  // NOTE http://doc.akka.io/docs/akka-http/current/scala/http/routing-dsl/testkit.html
+
+  // TODO test case: without headers
+
+  // TODO test case: with all headers but token does not exist
+
+  // TODO test case: with all headers and token exists
+
+  // TODO test case: with all headers (except X-UBIRCH-CONTEXT) and token exists
+
+  // TODO test case: with all headers (except X-UBIRCH-PROVIDER) and token exists
+
+  // TODO test case: with all headers (except Authorization) and token exists
 
 }
