@@ -406,7 +406,7 @@ To use the `OidcDirective` the following configuration is needed (`application.c
 `$PREFIX` defaults to `ubirch.oidc-utils.redis` (see `OidcUtilsConfigKeys.PREFIX`) but can be overwritten with any value
 of your choice when instantiating `OidcDirective`.
 
-If one of your dependecies is `com.ubirch.util:redis-util` then you already had to define the first three config keys in
+If one of your dependencies is `com.ubirch.util:redis-util` then you already had to define the first three config keys in
 your config. Adding the fourth one and instantiating `OidcDirective` with the related config prefix is recommended.
 
 ### Usage of `OidcDirective`
@@ -418,6 +418,8 @@ Three headers are required by the directive:
 * Authorization: Bearer $TOKEN (same as with OAuth2 tokens)
 
 If the provided token is valid a `UserContext` will be returned.
+
+An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
