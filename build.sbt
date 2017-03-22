@@ -230,7 +230,7 @@ lazy val depOidcUtils = Seq(
   scalaTest % "test",
   akkaHttpTestkit % "test",
   ubirchUtilRedisTestUtil % "test"
-)
+) ++ depSlf4jLogging
 
 lazy val depRedisTestUtils = Seq(
   ubirchUtilRedisUtil
@@ -303,8 +303,15 @@ lazy val jodaTime = "joda-time" % "joda-time" % "2.9.4"
 lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8.1"
 
 lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
+
 lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
+lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.7"
+lazy val depSlf4jLogging = Seq(
+  scalaLoggingSlf4j,
+  slf4j,
+  logbackClassic
+)
 
 lazy val beeClient = "uk.co.bigbeeconsultants" %% "bee-client" % "0.29.1"
 
