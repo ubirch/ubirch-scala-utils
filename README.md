@@ -396,12 +396,12 @@ Utils related to Scala Futures.
 
 To use the `OidcDirective` the following configuration is needed (`application.conf` is included in this module):
 
-| Config Item           | Mandatory | Description     |
-|:----------------------|:----------|:----------------|
-| $PREFIX.host          | yes       | Redis host      |
-| $PREFIX.port          | yes       | Redis port      |
-| $PREFIX.password      | no        | Redis password  |
-| $PREFIX.updateExpiry  | yes       | number of seconds by a token's expiry date is extended after successfully validating it |
+| Config Item                 | Mandatory | Description     |
+|:----------------------------|:----------|:----------------|
+| $PREFIX.redis.host          | yes       | Redis host      |
+| $PREFIX.redis.port          | yes       | Redis port      |
+| $PREFIX.redis.password      | no        | Redis password  |
+| $PREFIX.redis.updateExpiry  | yes       | number of seconds by a token's expiry date is extended after successfully validating it |
 
 `$PREFIX` defaults to `ubirch.oidc-utils.redis` (see `OidcUtilsConfigKeys.PREFIX`) but can be overwritten with any value
 of your choice when instantiating `OidcDirective`.

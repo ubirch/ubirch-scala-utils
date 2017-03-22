@@ -6,8 +6,10 @@ package com.ubirch.util.oidc.config
   */
 object OidcUtilsConfigKeys {
 
-  final val PREFIX = "ubirch.oidc-utils.redis"
+  final val PREFIX = "ubirch.oidc-utils"
 
-  final def updateExpiry(prefix: String) = s"$prefix.updateExpiry"
+  private val redis = "redis"
+
+  final def updateExpiry(prefix: String) = s"$prefix.$redis.updateExpiry"
 
 }
