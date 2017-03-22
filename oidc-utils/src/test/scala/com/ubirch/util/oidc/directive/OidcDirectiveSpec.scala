@@ -1,7 +1,7 @@
 package com.ubirch.util.oidc.directive
 
-import com.ubirch.util.oidc.config.OidcUtilsConfigKeys
-import com.ubirch.util.oidc.util.OidcHeaders
+import com.ubirch.util.oidc.config.{OidcUtilsConfig, OidcUtilsConfigKeys}
+import com.ubirch.util.oidc.util.{OidcHeaders, OidcUtil}
 import com.ubirch.util.redis.RedisClientUtil
 import com.ubirch.util.redis.test.RedisCleanup
 
@@ -14,6 +14,8 @@ import akka.http.scaladsl.server.{AuthorizationFailedRejection, Route}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import redis.RedisClient
 
+import scala.concurrent.Await
+import scala.concurrent.duration._
 import scala.language.postfixOps
 
 /**
@@ -47,8 +49,6 @@ class OidcDirectiveSpec extends FeatureSpec
       }
     }
 
-  // NOTE http://doc.akka.io/docs/akka-http/current/scala/http/routing-dsl/testkit.html
-
   feature("oidcToken2UserContext") {
 
     scenario("without any headers") {
@@ -76,14 +76,18 @@ class OidcDirectiveSpec extends FeatureSpec
 
     }
 
-    ignore("with all headers and token exists") {
+    scenario("with all headers and token exists") {
 
       val context = "some-context"
       val provider = "some-provider"
       val token = "some-token"
       val userId = "some-user-id"
 
-      // TODO persist: sha256(provider:token) = userId
+      val initialTtl = 10L
+      val refreshTtl = OidcUtilsConfig.redisUpdateExpiry(configPrefix)
+
+      val redisKey = OidcUtil.tokenToHashedKey(provider, token)
+      Await.result(redis.set(redisKey, userId, exSeconds = Some(initialTtl)), 2 seconds) shouldBe true
 
       val contextHeader: HttpHeader = RawHeader(OidcHeaders.CONTEXT, context)
       val providerHeader: HttpHeader = RawHeader(OidcHeaders.PROVIDER, provider)
@@ -94,6 +98,9 @@ class OidcDirectiveSpec extends FeatureSpec
 
         status === StatusCodes.OK
         responseAs[String] shouldEqual s"context=$context; userId=$userId"
+
+        Thread.sleep(2000)
+        Await.result(redis.ttl(redisKey), 2 seconds) should be < refreshTtl
 
       }
 
