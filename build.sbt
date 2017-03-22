@@ -129,7 +129,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.0.1-SNAPSHOT",
+    version := "0.1.0",
     resolvers ++= Seq(
       resolverHasher
     ),

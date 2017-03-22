@@ -389,7 +389,7 @@ Utils related to Scala Futures.
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.0.1-SNAPSHOT"
+      "com.ubirch.util" %% "oidc-utils" % "0.1.0"
     )
 
 ### Config
@@ -423,7 +423,7 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
-#### Version 0.1.0 (tbd)
+#### Version 0.1.0 (2017-03-22)
 
 * initial release
 
