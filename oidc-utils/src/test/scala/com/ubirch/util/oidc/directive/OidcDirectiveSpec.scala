@@ -2,6 +2,7 @@ package com.ubirch.util.oidc.directive
 
 import com.ubirch.util.oidc.config.OidcUtilsConfigKeys
 import com.ubirch.util.oidc.util.OidcHeaders
+import com.ubirch.util.redis.RedisClientUtil
 import com.ubirch.util.redis.test.RedisCleanup
 
 import org.scalatest.{BeforeAndAfterEach, FeatureSpec, Matchers}
@@ -11,6 +12,7 @@ import akka.http.scaladsl.model.{HttpHeader, StatusCodes}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{AuthorizationFailedRejection, Route}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
+import redis.RedisClient
 
 import scala.language.postfixOps
 
@@ -31,7 +33,8 @@ class OidcDirectiveSpec extends FeatureSpec
     Thread.sleep(100)
   }
 
-  private val oidcDirective = new OidcDirective(configPrefix = configPrefix)
+  private val redis: RedisClient = RedisClientUtil.newInstance(configPrefix)(system)
+  private val oidcDirective = new OidcDirective(configPrefix = configPrefix, redis = redis)
 
   import oidcDirective._
 

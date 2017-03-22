@@ -4,7 +4,6 @@ import com.typesafe.scalalogging.slf4j.StrictLogging
 
 import com.ubirch.util.oidc.config.{OidcUtilsConfig, OidcUtilsConfigKeys}
 import com.ubirch.util.oidc.util.{OidcHeaders, OidcUtil}
-import com.ubirch.util.redis.RedisClientUtil
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
@@ -19,7 +18,11 @@ import scala.concurrent.Future
   * author: cvandrei
   * since: 2017-03-17
   */
-class OidcDirective(configPrefix: String = OidcUtilsConfigKeys.PREFIX)(implicit system: ActorSystem) extends StrictLogging {
+class OidcDirective(configPrefix: String = OidcUtilsConfigKeys.PREFIX,
+                    redis: RedisClient
+                   )
+                   (implicit system: ActorSystem)
+  extends StrictLogging {
 
   private val ubirchContextFromHeader: Directive1[String] = headerValueByName(OidcHeaders.CONTEXT)
 
@@ -70,7 +73,6 @@ class OidcDirective(configPrefix: String = OidcUtilsConfigKeys.PREFIX)(implicit 
                            ): Future[UserContext] = {
 
     val tokenKey = OidcUtil.tokenToHashedKey(provider, token)
-    val redis: RedisClient = RedisClientUtil.newInstance(configPrefix)(system)
     redis.get[String](tokenKey) map {
 
       case None =>
