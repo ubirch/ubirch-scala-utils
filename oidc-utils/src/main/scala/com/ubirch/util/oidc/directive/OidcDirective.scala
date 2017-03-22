@@ -3,7 +3,7 @@ package com.ubirch.util.oidc.directive
 import com.typesafe.scalalogging.slf4j.StrictLogging
 
 import com.ubirch.util.oidc.config.{OidcUtilsConfig, OidcUtilsConfigKeys}
-import com.ubirch.util.oidc.util.OidcUtil
+import com.ubirch.util.oidc.util.{OidcHeaders, OidcUtil}
 import com.ubirch.util.redis.RedisClientUtil
 
 import akka.actor.ActorSystem
@@ -21,9 +21,9 @@ import scala.concurrent.Future
   */
 class OidcDirective(configPrefix: String = OidcUtilsConfigKeys.PREFIX)(implicit system: ActorSystem) extends StrictLogging {
 
-  private val ubirchContextFromHeader: Directive1[String] = headerValueByName("X-UBIRCH-CONTEXT")
+  private val ubirchContextFromHeader: Directive1[String] = headerValueByName(OidcHeaders.CONTEXT)
 
-  private val ubirchProviderFromHeader: Directive1[String] = headerValueByName("X-UBIRCH-PROVIDER")
+  private val ubirchProviderFromHeader: Directive1[String] = headerValueByName(OidcHeaders.PROVIDER)
 
   private val bearerToken: Directive1[Option[String]] =
     optionalHeaderValueByType(classOf[Authorization]).map(extractBearerToken)
