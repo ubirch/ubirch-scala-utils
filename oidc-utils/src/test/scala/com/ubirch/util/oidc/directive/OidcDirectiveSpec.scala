@@ -9,7 +9,7 @@ import org.scalatest.{BeforeAndAfterEach, FeatureSpec, Matchers}
 import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken, RawHeader}
 import akka.http.scaladsl.model.{HttpHeader, StatusCodes}
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.Route
+import akka.http.scaladsl.server.{AuthorizationFailedRejection, Route}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 
 import scala.language.postfixOps
@@ -57,8 +57,20 @@ class OidcDirectiveSpec extends FeatureSpec
 
     }
 
-    ignore("with all headers but token does not exist") {
-      // TODO implement test
+    scenario("with all headers but token does not exist") {
+
+      val contextHeader: HttpHeader = RawHeader(OidcHeaders.CONTEXT, "some-context")
+      val providerHeader: HttpHeader = RawHeader(OidcHeaders.PROVIDER, "some-provider")
+      val authorizationHeader: HttpHeader = Authorization(OAuth2BearerToken("some-token"))
+
+      Get().withHeaders(contextHeader, providerHeader, authorizationHeader) ~>
+        testRoute ~> check {
+
+        handled shouldBe false
+        rejection shouldEqual AuthorizationFailedRejection
+
+      }
+
     }
 
     ignore("with all headers and token exists") {
