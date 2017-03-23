@@ -129,7 +129,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.1.0",
+    version := "0.2.0",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -224,8 +224,10 @@ lazy val depJsonAutoConvert = Seq(
 )
 
 lazy val depOidcUtils = Seq(
-  ubirchUtilCrypto,
   akkaHttp,
+  json4sNative,
+  ubirchUtilJson,
+  ubirchUtilCrypto,
   ubirchUtilRedisUtil,
   scalaTest % "test",
   akkaHttpTestkit % "test",

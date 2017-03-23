@@ -389,7 +389,7 @@ Utils related to Scala Futures.
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.1.0"
+      "com.ubirch.util" %% "oidc-utils" % "0.2.0"
     )
 
 ### Config
@@ -411,17 +411,20 @@ your config. Adding the fourth one and instantiating `OidcDirective` with the re
 
 ### Usage of `OidcDirective`
 
-Three headers are required by the directive:
+One header is required by the directive:
 
-* X-UBIRCH-CONTEXT
-* X-UBIRCH-PROVIDER
 * Authorization: Bearer $TOKEN (same as with OAuth2 tokens)
 
-If the provided token is valid a `UserContext` will be returned.
+If the provided token is valid a `UserContext` object will be returned.
 
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.2.0 (2017-03-23)
+
+* removed reading headers `X-UBIRCH-CONTEXT` and `X-UBIRCH-PROVIDER` from `OidcDirective`
+* `OidcUtil.tokenToHashedKey` accepts only a token (removed parameter `provider`)
 
 #### Version 0.1.0 (2017-03-22)
 

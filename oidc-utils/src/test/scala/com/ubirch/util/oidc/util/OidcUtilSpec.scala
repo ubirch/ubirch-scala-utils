@@ -33,20 +33,12 @@ class OidcUtilSpec extends FeatureSpec
 
   feature("tokenToHashedKey()") {
 
-    scenario("all strings empty") {
-      runTokenTest("", "")
-    }
-
-    scenario("provider string empty") {
-      runTokenTest("", "12341234")
-    }
-
     scenario("token string empty") {
-      runTokenTest("google", "")
+      runTokenTest("")
     }
 
-    scenario("none of the strings empty") {
-      runTokenTest("google", "12341234")
+    scenario("token not empty") {
+      runTokenTest("12341234")
     }
 
   }
@@ -62,14 +54,13 @@ class OidcUtilSpec extends FeatureSpec
 
   }
 
-  private def runTokenTest(provider: String, token: String) = {
+  private def runTokenTest(token: String) = {
 
     // test
-    val result = OidcUtil.tokenToHashedKey(provider, token)
+    val result = OidcUtil.tokenToHashedKey(token)
 
     // verify
-    val expected = HashUtil.sha256HexString(s"token:$provider:$token")
-    result shouldBe expected
+    result shouldBe HashUtil.sha256HexString(token)
 
   }
 

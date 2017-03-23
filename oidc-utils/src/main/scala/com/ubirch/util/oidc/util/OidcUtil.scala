@@ -13,9 +13,6 @@ object OidcUtil {
     HashUtil.sha256HexString(key)
   }
 
-  def tokenToHashedKey(provider: String, token: String): String = {
-    val key = s"token:$provider:$token"
-    HashUtil.sha256HexString(key)
-  }
+  def tokenToHashedKey(token: String): String = HashUtil.sha256HexString(token)
 
 }

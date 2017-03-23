@@ -1,13 +1,16 @@
 package com.ubirch.util.oidc.directive
 
+import com.ubirch.util.json.JsonFormats
 import com.ubirch.util.oidc.config.{OidcUtilsConfig, OidcUtilsConfigKeys}
-import com.ubirch.util.oidc.util.{OidcHeaders, OidcUtil}
+import com.ubirch.util.oidc.model.UserContext
+import com.ubirch.util.oidc.util.OidcUtil
 import com.ubirch.util.redis.RedisClientUtil
 import com.ubirch.util.redis.test.RedisCleanup
 
+import org.json4s.native.Serialization.write
 import org.scalatest.{BeforeAndAfterEach, FeatureSpec, Matchers}
 
-import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken, RawHeader}
+import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
 import akka.http.scaladsl.model.{HttpHeader, StatusCodes}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{AuthorizationFailedRejection, Route}
@@ -27,6 +30,8 @@ class OidcDirectiveSpec extends FeatureSpec
   with Matchers
   with BeforeAndAfterEach
   with RedisCleanup {
+
+  implicit private val formatter = JsonFormats.default
 
   private val configPrefix = OidcUtilsConfigKeys.PREFIX
 
@@ -51,24 +56,15 @@ class OidcDirectiveSpec extends FeatureSpec
 
   feature("oidcToken2UserContext") {
 
-    scenario("without any headers") {
-
-      Get() ~> Route.seal(testRoute) ~> check {
-        status === StatusCodes.BadRequest
-        responseAs[String] shouldEqual "Request is missing required HTTP header 'X-UBIRCH-CONTEXT'"
-      }
-
-    }
-
     scenario("with all headers but token does not exist") {
 
-      val contextHeader: HttpHeader = RawHeader(OidcHeaders.CONTEXT, "some-context")
-      val providerHeader: HttpHeader = RawHeader(OidcHeaders.PROVIDER, "some-provider")
+      // prepare
       val authorizationHeader: HttpHeader = Authorization(OAuth2BearerToken("some-token"))
 
-      Get().withHeaders(contextHeader, providerHeader, authorizationHeader) ~>
-        testRoute ~> check {
+      // test
+      Get().withHeaders(authorizationHeader) ~> testRoute ~> check {
 
+        // verify
         handled shouldBe false
         rejection shouldEqual AuthorizationFailedRejection
 
@@ -76,26 +72,26 @@ class OidcDirectiveSpec extends FeatureSpec
 
     }
 
-    scenario("with all headers and token exists") {
+    scenario("with Authorization header and token exists") {
 
+      // prepare
       val context = "some-context"
-      val provider = "some-provider"
       val token = "some-token"
       val userId = "some-user-id"
 
       val initialTtl = 10L
       val refreshTtl = OidcUtilsConfig.redisUpdateExpiry(configPrefix)
 
-      val redisKey = OidcUtil.tokenToHashedKey(provider, token)
-      Await.result(redis.set(redisKey, userId, exSeconds = Some(initialTtl)), 2 seconds) shouldBe true
+      val redisKey = OidcUtil.tokenToHashedKey(token)
+      val redisValue = write(UserContext(context = context, userId = userId))
+      Await.result(redis.set(redisKey, redisValue, exSeconds = Some(initialTtl)), 2 seconds) shouldBe true
 
-      val contextHeader: HttpHeader = RawHeader(OidcHeaders.CONTEXT, context)
-      val providerHeader: HttpHeader = RawHeader(OidcHeaders.PROVIDER, provider)
       val authorizationHeader: HttpHeader = Authorization(OAuth2BearerToken(token))
 
-      Get().withHeaders(contextHeader, providerHeader, authorizationHeader) ~>
-        Route.seal(testRoute) ~> check {
+      // test
+      Get().withHeaders(authorizationHeader) ~> Route.seal(testRoute) ~> check {
 
+        // verify
         status === StatusCodes.OK
         responseAs[String] shouldEqual s"context=$context; userId=$userId"
 
@@ -106,44 +102,12 @@ class OidcDirectiveSpec extends FeatureSpec
 
     }
 
-    scenario(s"test case: with all headers (except ${OidcHeaders.CONTEXT})") {
+    scenario("test case: without Authorization header") {
 
-      val providerHeader: HttpHeader = RawHeader(OidcHeaders.PROVIDER, "some-provider")
-      val authorizationHeader: HttpHeader = Authorization(OAuth2BearerToken("some-token"))
+      // test
+      Get() ~> Route.seal(testRoute) ~> check {
 
-      Get().withHeaders(providerHeader, authorizationHeader) ~>
-        Route.seal(testRoute) ~> check {
-
-        status === StatusCodes.BadRequest
-        responseAs[String] shouldEqual s"Request is missing required HTTP header '${OidcHeaders.CONTEXT}'"
-
-      }
-
-    }
-
-    scenario(s"test case: with all headers (except ${OidcHeaders.PROVIDER})") {
-
-      val contextHeader: HttpHeader = RawHeader(OidcHeaders.CONTEXT, "some-context")
-      val authorizationHeader: HttpHeader = Authorization(OAuth2BearerToken("some-token"))
-
-      Get().withHeaders(contextHeader, authorizationHeader) ~>
-        Route.seal(testRoute) ~> check {
-
-        status === StatusCodes.BadRequest
-        responseAs[String] shouldEqual s"Request is missing required HTTP header '${OidcHeaders.PROVIDER}'"
-
-      }
-
-    }
-
-    scenario("test case: with all headers (except Authorization)") {
-
-      val contextHeader: HttpHeader = RawHeader(OidcHeaders.CONTEXT, "some-context")
-      val providerHeader: HttpHeader = RawHeader(OidcHeaders.PROVIDER, "some-provider")
-
-      Get().withHeaders(contextHeader, providerHeader) ~>
-        Route.seal(testRoute) ~> check {
-
+        // verify
         status === StatusCodes.BadRequest
         responseAs[String] shouldEqual "The supplied authentication is not authorized to access this resource"
 
