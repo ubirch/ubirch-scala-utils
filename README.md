@@ -389,7 +389,7 @@ Utils related to Scala Futures.
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.2.0"
+      "com.ubirch.util" %% "oidc-utils" % "0.2.1"
     )
 
 ### Config
@@ -420,6 +420,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.2.1 (2017-03-28)
+
+* improved logging
 
 #### Version 0.2.0 (2017-03-23)
 

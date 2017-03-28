@@ -35,18 +35,18 @@ class OidcDirective(configPrefix: String = OidcUtilsConfigKeys.PREFIX,
 
   val oidcToken2UserContext: Directive1[UserContext] = {
 
-    bearerToken.flatMap {
+    bearerToken flatMap {
 
       case None => reject(AuthorizationFailedRejection)
 
       case Some(token) =>
 
-        onComplete(tokenToUserContext(token = token)).flatMap {
+        onComplete(tokenToUserContext(token = token)) flatMap {
 
-          _.map {provide}.recover {
+          _.map(provide).recover {
 
-            case e: VerificationException =>
-              logger.error("Unable to log in with provided token", e)
+            case _: VerificationException =>
+              logger.error("Unable to log in with provided token")
               reject(AuthorizationFailedRejection).toDirective[Tuple1[UserContext]]
 
           }.get
@@ -63,10 +63,11 @@ class OidcDirective(configPrefix: String = OidcUtilsConfigKeys.PREFIX,
     redis.get[String](tokenKey) map {
 
       case None =>
-        logger.debug(s"token does not exist: $token")
+        logger.debug(s"token does not exist: redisKey=$token")
         throw new VerificationException()
 
       case Some(json) =>
+        logger.debug(s"token is valid...will update it's TTL now")
         updateExpiry(redis, tokenKey)
         read[UserContext](json)
 
