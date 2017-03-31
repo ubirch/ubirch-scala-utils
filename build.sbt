@@ -81,7 +81,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "0.6.0",
+    version := "0.6.1",
     libraryDependencies ++= depElasticsearchClientBinary
   )
 
@@ -117,7 +117,7 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
   .settings(
     name := "json-auto-convert",
     description := "convert objects to/from JSON",
-    version := "0.3.2",
+    version := "0.3.3",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
@@ -129,7 +129,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.2.1",
+    version := "0.2.2",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -321,7 +321,7 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll Excl
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
-lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.2"
+lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.3"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.1.0"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.1.0"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"

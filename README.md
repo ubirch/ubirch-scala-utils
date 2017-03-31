@@ -138,6 +138,10 @@ Example Config:
 
 ### Release History
 
+#### Version 0.6.1 (2017-03-31)
+
+* update to com.ubirch.util:json:0.3.3
+
 #### Version 0.6.0 (2017-02-27)
 
 * `ESStorageBase.getDoc` catches exceptions related to missing indexes and search parse errors (usually a cause of no
@@ -364,10 +368,14 @@ Utils related to Scala Futures.
       Resolver.bintrayRepo("hseeberger", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json-auto-convert" % "0.3.1"
+      "com.ubirch.util" %% "json-auto-convert" % "0.3.3"
     )
 
 ### Release History
+
+#### Version 0.3.3 (2017-03-31)
+
+* update to com.ubirch.util:json:0.3.3
 
 #### Version 0.3.2 (2016-11-04)
 
@@ -393,7 +401,7 @@ Utils related to Scala Futures.
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.2.1"
+      "com.ubirch.util" %% "oidc-utils" % "0.2.2"
     )
 
 ### Config
@@ -424,6 +432,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.2.2 (2017-03-31)
+
+* update to com.ubirch.util:json:0.3.3
 
 #### Version 0.2.1 (2017-03-28)
 
