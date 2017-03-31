@@ -108,7 +108,7 @@ lazy val json = project
   .settings(commonSettings: _*)
   .settings(
     description := "util to convert from/to JValue objects",
-    version := "0.3.2",
+    version := "0.3.3",
     libraryDependencies ++= depJson
   )
 

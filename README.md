@@ -326,10 +326,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.3.2"
+      "com.ubirch.util" %% "json" % "0.3.3"
     )
 
 ### Release History
+
+#### Version 0.3.3 (2017-03-31)
+
+* added method com.ubirch.util.json.Json4sUtil#any2any
 
 #### Version 0.3.2 (2016-11-04)
 
