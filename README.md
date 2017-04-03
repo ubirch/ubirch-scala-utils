@@ -10,6 +10,7 @@
 * futures
 * json
 * json-auto-convert
+* mongo-utils
 * oidc-utils
 * response-util
 * rest-akka-http
@@ -388,6 +389,34 @@ Utils related to Scala Futures.
 #### Version 0.3 (2016-11-01)
 
 * update json4s dependency from version 3.4.0 to 3.4.2
+
+
+-----------------------
+
+## `mongo-utils`
+
+### Scala Dependency
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "mongo-utils" % "0.1.0"
+    )
+
+### Config
+
+To use `MongoClientBuilder` the following configuration is needed (`$PREFIX` defaults to `ubirch.mongo-utils` and a default; a default configuration connecting to localhost:27017 is included):
+
+| Config Item          | Mandatory | Description                                                                       |
+|:---------------------|:----------|:----------------------------------------------------------------------------------|
+| $PREFIX.mongo.hosts  | yes       | string of cluster hosts (see https://docs.mongodb.com/manual/reference/connection-string/) |
+
+### Release History
+
+#### Version 0.1.0 (2017-04-03)
+
+* initial release
 
 
 -----------------------

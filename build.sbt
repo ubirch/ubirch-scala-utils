@@ -38,6 +38,7 @@ lazy val scalaUtils = (project in file("."))
     futures,
     json,
     jsonAutoConvert,
+    mongoUtils,
     oidcUtils,
     redisTestUtil,
     redisUtil,
@@ -122,6 +123,15 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
       resolverSeebergerJson
     ),
     libraryDependencies ++= depJsonAutoConvert
+  )
+
+lazy val mongoUtils = (project in file("mongo-utils"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "mongo-utils",
+    description := "MongoDB related utils",
+    version := "0.1.0",
+    libraryDependencies ++= depMongoUtils
   )
 
 lazy val oidcUtils = (project in file("oidc-utils"))
@@ -223,6 +233,12 @@ lazy val depJsonAutoConvert = Seq(
   ubirchUtilJson
 )
 
+lazy val depMongoUtils = Seq(
+  reactiveMongo,
+  ubirchUtilConfig,
+  akkaSlf4j
+) ++ depSlf4jLogging
+
 lazy val depOidcUtils = Seq(
   akkaHttp,
   json4sNative,
@@ -305,6 +321,8 @@ lazy val jodaTime = "joda-time" % "joda-time" % "2.9.4"
 lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8.1"
 
 lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
+
+lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.12.1"
 
 lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
