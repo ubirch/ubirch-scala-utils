@@ -125,15 +125,16 @@ class OidcDirectiveSpec extends FeatureSpec
       }
 
     }
-    scenario("handle options request") {
-      Options() ~> testRoute ~> check {
 
-        // verify
-        handled shouldBe false
-        rejection shouldEqual AuthorizationFailedRejection
-
-      }
-    }
+    //    scenario("handle options request") {
+    //      Options() ~> testRoute ~> check {
+    //
+    //        // verify
+    //        handled shouldBe false
+    //        rejection shouldEqual AuthorizationFailedRejection
+    //
+    //      }
+    //    }
 
   }
 
