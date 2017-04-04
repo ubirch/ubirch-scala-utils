@@ -13,7 +13,7 @@ import scala.concurrent.Future
   * author: cvandrei
   * since: 2017-03-31
   */
-class MongoUtil extends StrictLogging {
+class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLogging {
 
   private val driver = MongoDriver()
 
@@ -22,10 +22,9 @@ class MongoUtil extends StrictLogging {
     *
     * MongoConnectionDebug demonstrates how to use it and can server as a starting point for debug tests.
     *
-    * @param configPrefix under which config path to look for the Mongo connection
     * @return database connection
     */
-  def db(configPrefix: String = MongoConfigKeys.PREFIX): Future[DefaultDB] = {
+  def db(): Future[DefaultDB] = {
 
     val hostUris = MongoConfig.hosts(configPrefix)
 
