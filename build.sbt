@@ -236,7 +236,9 @@ lazy val depJsonAutoConvert = Seq(
 lazy val depMongoUtils = Seq(
   reactiveMongo,
   ubirchUtilConfig,
-  akkaSlf4j
+  akkaSlf4j,
+  jodaTime,
+  jodaConvert
 ) ++ depSlf4jLogging
 
 lazy val depOidcUtils = Seq(
