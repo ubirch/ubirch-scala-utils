@@ -414,7 +414,7 @@ To use `MongoClientBuilder` the following configuration is needed (`$PREFIX` def
 
 ### Release History
 
-#### Version 0.1.0 (2017-04-03)
+#### Version 0.1.0 (2017-04-04)
 
 * initial release
 
