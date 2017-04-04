@@ -4,6 +4,7 @@ import com.typesafe.scalalogging.slf4j.StrictLogging
 
 import com.ubirch.util.mongo.config.{MongoConfig, MongoConfigKeys}
 
+import reactivemongo.api.collections.bson.BSONCollection
 import reactivemongo.api.{DefaultDB, MongoConnection, MongoDriver}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -34,6 +35,20 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
       dn <- Future(uri.db.get)
       db <- con.database(dn)
     } yield db
+
+  }
+
+  /**
+    * Connects us to a collection.
+    *
+    * @param name collection names
+    * @return collection connection
+    */
+  def collection(name: String): Future[BSONCollection] = {
+
+    db().map { db =>
+      db.collection[BSONCollection](name)
+    }
 
   }
 
