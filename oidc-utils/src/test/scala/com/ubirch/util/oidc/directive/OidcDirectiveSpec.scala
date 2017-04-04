@@ -40,8 +40,9 @@ class OidcDirectiveSpec extends FeatureSpec
     Thread.sleep(100)
   }
 
-  private val redis: RedisClient = RedisClientUtil.getRedisClient
-  private val oidcDirective = new OidcDirective(configPrefix = configPrefix, redis = redis)
+  private val redis = RedisClientUtil.getRedisClient()
+
+  private val oidcDirective = new OidcDirective()
 
   import oidcDirective._
 
@@ -91,7 +92,7 @@ class OidcDirectiveSpec extends FeatureSpec
       val userId = "some-user-id"
 
       val initialTtl = 10L
-      val refreshTtl = OidcUtilsConfig.redisUpdateExpiry(configPrefix)
+      val refreshTtl = OidcUtilsConfig.redisUpdateExpiry
 
       val redisKey = OidcUtil.tokenToHashedKey(token)
       val redisValue = write(UserContext(context = context, userId = userId))
