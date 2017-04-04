@@ -6,12 +6,12 @@ package com.ubirch.util.redis.config
   */
 object ConfigKeys {
 
-  private val redis = s"redis"
+  private val redisUtilPrefix = s"ubirch.redisUtil"
 
-  final val HOST = s"$redis.host"
+  final val REDIS_HOST = s"$redisUtilPrefix.host"
 
-  final val PORT = s"$redis.port"
+  final val REDIS_PORT = s"$redisUtilPrefix.port"
 
-  final val PASSWORD = s"$redis.password"
+  final val REDIS_PASSWORD = s"$redisUtilPrefix.password"
 
 }

@@ -32,7 +32,7 @@ trait RedisCleanup extends StrictLogging {
     }
 
     logger.info(s"====== delete: prefix=$finalPrefix")
-    val redis = RedisClientUtil.newInstance(configPrefix)(system)
+    val redis = RedisClientUtil.getRedisClient()
     redis.keys(finalPrefix) map { keysList =>
       keysList foreach { key =>
         logger.info(s"delete: key=$key")

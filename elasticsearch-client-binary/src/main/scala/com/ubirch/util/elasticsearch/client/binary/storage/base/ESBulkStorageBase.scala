@@ -37,12 +37,12 @@ trait ESBulkStorageBase extends StrictLogging {
 
     @Override
     def beforeBulk(executionId: Long, request: BulkRequest): Unit = {
-      logger.info("beforeBulk")
+      logger.debug("beforeBulk")
     }
 
     @Override
     def afterBulk(executionId: Long, request: BulkRequest, response: BulkResponse): Unit = {
-      logger.info("afterBulk")
+      logger.debug("afterBulk")
     }
 
     @Override

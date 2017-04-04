@@ -1,8 +1,7 @@
 package com.ubirch.util.redis
 
-import com.ubirch.util.redis.config.Config
-
 import akka.actor.ActorSystem
+import com.ubirch.util.redis.config.Config
 import redis.RedisClient
 
 /**
@@ -11,33 +10,17 @@ import redis.RedisClient
   */
 object RedisClientUtil {
 
-  /**
-    * Gives us an open Redis connection based on the configured host, port and password.
-    *
-    * This is how you should call it:
-    *
-    * <pre><code>
-    * implicit val system = ActorSystem()
-    * implicit val timeout = Timeout(15 seconds)
-    * val configPrefix = "myService"
-    * val redis = RedisClientUtil.newInstance(configPrefix)(system)
-    * </code></pre>
-    *
-    * @param configPrefix prefix under which redis config keys will be looked for
-    * @param system       Akka's Actor System since it's required by the Redis client
-    * @return an open Redis connection
-    */
-  def newInstance(configPrefix: String)(implicit system: ActorSystem): RedisClient = {
+  private val redisConfig = Config.redisConfig
 
-    val hostPort = Config.hostAndPort(configPrefix)
-    val password = Config.password(configPrefix)
+  private var redisClient: Option[RedisClient] = None
 
-    RedisClient(
-      host = hostPort._1,
-      port = hostPort._2,
-      password = password
-    )
-
+  def getRedisClient()(implicit _system: ActorSystem) = {
+    if (redisClient.isEmpty)
+      redisClient = Some(RedisClient(
+        host = redisConfig.host,
+        port = redisConfig.port,
+        password = redisConfig.password
+      ))
+    redisClient.get
   }
-
 }

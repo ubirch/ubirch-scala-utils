@@ -473,27 +473,25 @@ to provide a config prefix and the software will look for them under it.
 
 | Config Item                            | Mandatory  | Description            |
 |:---------------------------------------|:-----------|:-----------------------|
-| $PREFIX_OF_YOUR_CHOICE.redis.host      | yes        | host ES is running on  |
-| $PREFIX_OF_YOUR_CHOICE.redis.port      | yes        | host ES is running on  |
-| $PREFIX_OF_YOUR_CHOICE.redis.password  | no         | host ES is running on  |
+| ubirchRedisUtil.host      | yes        | host redis is running on  |
+| ubirchRedisUtil.port      | yes        | redis TCP port  |
+| ubirchRedisUtil.password  | no         | redis password  |
 
-Here's an example config with the config prefix `myService`:
+Here's an example config:
 
-    myService {
-      redis {
+    ubirchRedisUtil {
         host = localhost
         port = 6379
         password = not-a-secure-password
-      }
     }
+    
 
 And this how you get a redis client:
 
     ```scala
     implicit val system = ActorSystem()
     implicit val timeout = Timeout(15 seconds)
-    val configPrefix = "myService"
-    val redis = RedisClientUtil.newInstance(configPrefix)(system)
+    val redis = RedisClientUtil.redisClient
     ```
 
 ### Release History
