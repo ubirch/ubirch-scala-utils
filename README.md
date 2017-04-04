@@ -408,9 +408,9 @@ Utils related to Scala Futures.
 
 To use `MongoClientBuilder` the following configuration is needed (`$PREFIX` defaults to `ubirch.mongo-utils` and a default; a default configuration connecting to localhost:27017 is included):
 
-| Config Item          | Mandatory | Description                                                                       |
-|:---------------------|:----------|:----------------------------------------------------------------------------------|
-| $PREFIX.mongo.hosts  | yes       | string of cluster hosts (see https://docs.mongodb.com/manual/reference/connection-string/) |
+| Config Item    | Mandatory | Description                                                                             |
+|:---------------|:----------|:----------------------------------------------------------------------------------------|
+| $PREFIX.hosts  | yes       | string of cluster hosts (see https://docs.mongodb.com/manual/reference/connection-string/) |
 
 ### Release History
 
