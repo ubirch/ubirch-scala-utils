@@ -8,12 +8,18 @@ import redis.RedisClient
   * author: cvandrei
   * since: 2017-03-15
   */
+
 object RedisClientUtil {
 
   private val redisConfig = Config.redisConfig
 
   private var redisClient: Option[RedisClient] = None
 
+  /**
+    *
+    * @param _system
+    * @return
+    */
   def getRedisClient()(implicit _system: ActorSystem) = {
     if (redisClient.isEmpty)
       redisClient = Some(RedisClient(

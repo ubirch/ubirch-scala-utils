@@ -11,11 +11,8 @@ import com.ubirch.util.oidc.model.UserContext
 import com.ubirch.util.oidc.util.OidcUtil
 import com.ubirch.util.redis.RedisClientUtil
 import com.ubirch.util.redis.test.RedisCleanup
-import com.ubirch.util.rest.akka.directives.CORSDirective
-
 import org.json4s.native.Serialization.write
 import org.scalatest.{BeforeAndAfterEach, FeatureSpec, Matchers}
-import redis.RedisClient
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
@@ -46,7 +43,7 @@ class OidcDirectiveSpec extends FeatureSpec
 
   import oidcDirective._
 
-  private val testRoute: Route =
+  val testRoute: Route =
     get {
       pathSingleSlash {
         oidcToken2UserContext { userContext =>
@@ -54,17 +51,6 @@ class OidcDirectiveSpec extends FeatureSpec
         }
       }
     }
-
-  //  private val testCorsRoute: Route with CORSDirective =
-  //    respondWithCORS {
-  //      oidcToken2UserContext { userContext =>
-  //        get {
-  //          pathSingleSlash {
-  //            complete(s"context=${userContext.context}; userId=${userContext.userId}")
-  //          }
-  //        }
-  //      }
-  //    }
 
   feature("oidcToken2UserContext") {
 
@@ -126,16 +112,6 @@ class OidcDirectiveSpec extends FeatureSpec
       }
 
     }
-
-    //    scenario("handle options request") {
-    //      Options() ~> testRoute ~> check {
-    //
-    //        // verify
-    //        handled shouldBe false
-    //        rejection shouldEqual AuthorizationFailedRejection
-    //
-    //      }
-    //    }
 
   }
 
