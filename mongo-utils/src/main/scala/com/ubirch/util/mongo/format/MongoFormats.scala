@@ -20,7 +20,7 @@ trait MongoFormats {
         val da: DataOutputStream = new DataOutputStream(ba)
         da.writeLong(uuid.getMostSignificantBits)
         da.writeLong(uuid.getLeastSignificantBits)
-        BSONBinary(ba.toByteArray, Subtype.OldUuidSubtype)
+        BSONBinary(ba.toByteArray, Subtype.UuidSubtype)
       }
     }
 
