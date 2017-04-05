@@ -238,7 +238,8 @@ lazy val depMongoUtils = Seq(
   ubirchUtilConfig,
   akkaSlf4j,
   jodaTime,
-  jodaConvert
+  jodaConvert,
+  scalaTest % "test"
 ) ++ depSlf4jLogging
 
 lazy val depOidcUtils = Seq(
