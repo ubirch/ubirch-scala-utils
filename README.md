@@ -412,6 +412,25 @@ To use `MongoClientBuilder` the following configuration is needed (`$PREFIX` def
 |:---------------|:----------|:----------------------------------------------------------------------------------------|
 | $PREFIX.hosts  | yes       | string of cluster hosts (see https://docs.mongodb.com/manual/reference/connection-string/) |
 
+Here's an example of a config with more than one host:
+
+    YOUR_PREFIX {
+
+      // for uri formats see: https://docs.mongodb.com/manual/reference/connection-string/
+
+      user = ${MONGO_USER}
+      password = ${MONGO_PASSWORD}
+      port = 10250
+      options = "sslEnabled=true&sslAllowsInvalidCert=true&connectTimeoutMS=10000&maxIdleTimeMS=60000"
+
+      host1 = "mongodb://"${ubirch.mongo-utils.user}":"${ubirch.mongo-utils.password}"@ubirch001.documents.azure.com:"${ubirch.mongo-utils.port}"?"${ubirch.mongo-utils.options}
+      host2 = "mongodb://"${ubirch.mongo-utils.user}":"${ubirch.mongo-utils.password}"@ubirch002.documents.azure.com:"${ubirch.mongo-utils.port}"?"${ubirch.mongo-utils.options}
+
+      // the only mandatory configPath (all the others only serve the purpose to make constructing host uris easier)
+      hosts = ${ubirch.mongo-utils.host1}","${ubirch.mongo-utils.host2}
+
+    }
+
 ### Release History
 
 #### Version 0.1.0 (2017-04-04)
