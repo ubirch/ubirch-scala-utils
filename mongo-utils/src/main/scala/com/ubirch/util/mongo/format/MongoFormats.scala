@@ -5,7 +5,7 @@ import java.util.UUID
 
 import org.joda.time.DateTime
 
-import reactivemongo.bson.{BSONBinary, BSONDateTime, BSONHandler, BSONReader, BSONString, BSONWriter, Subtype}
+import reactivemongo.bson.{BSONBinary, BSONDateTime, BSONHandler, BSONReader, BSONWriter, Subtype}
 
 /**
   * author: cvandrei
