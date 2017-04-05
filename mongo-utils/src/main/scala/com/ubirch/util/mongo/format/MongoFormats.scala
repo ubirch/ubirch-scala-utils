@@ -12,12 +12,12 @@ import reactivemongo.bson.{BSONDateTime, BSONHandler, BSONString}
   */
 trait MongoFormats {
 
-  implicit object UUIDWriter extends BSONHandler[BSONString, UUID] {
+  implicit protected object UUIDWriter extends BSONHandler[BSONString, UUID] {
     def read(uuid: BSONString): UUID = UUID.fromString(uuid.toString)
     def write(id: UUID): BSONString = BSONString(id.toString)
   }
 
-  implicit object BSONDateTimeHandler extends BSONHandler[BSONDateTime, DateTime] {
+  implicit protected object BSONDateTimeHandler extends BSONHandler[BSONDateTime, DateTime] {
     def read(jodaTime: BSONDateTime): DateTime = new DateTime(jodaTime.value)
     def write(jodaTime: DateTime) = BSONDateTime(jodaTime.getMillis)
   }
