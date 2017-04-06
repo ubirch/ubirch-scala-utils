@@ -10,6 +10,7 @@
 * futures
 * json
 * json-auto-convert
+* mongo-test-utils
 * mongo-utils
 * oidc-utils
 * response-util
@@ -403,6 +404,26 @@ Utils related to Scala Futures.
     libraryDependencies ++= Seq(
       "com.ubirch.util" %% "mongo-utils" % "0.1.0"
     )
+
+
+-----------------------
+
+## `mongo-test-utils`
+
+### Scala Dependency
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "mongo-test-utils" % "0.1.0"
+    )
+
+### Release History
+
+#### Version 0.1.0 (2017-04-06)
+
+* initial release
 
 ### Config
 

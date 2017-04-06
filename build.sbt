@@ -38,6 +38,7 @@ lazy val scalaUtils = (project in file("."))
     futures,
     json,
     jsonAutoConvert,
+    mongoTestUtils,
     mongoUtils,
     oidcUtils,
     redisTestUtil,
@@ -123,6 +124,15 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
       resolverSeebergerJson
     ),
     libraryDependencies ++= depJsonAutoConvert
+  )
+
+lazy val mongoTestUtils = (project in file("mongo-test-utils"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "mongo-test-utils",
+    description := "MongoDB related test utils",
+    version := "0.1.0",
+    libraryDependencies ++= depMongoTestUtils
   )
 
 lazy val mongoUtils = (project in file("mongo-utils"))
@@ -231,6 +241,10 @@ lazy val depJson = Seq(
 lazy val depJsonAutoConvert = Seq(
   seebergerJson4s,
   ubirchUtilJson
+)
+
+lazy val depMongoTestUtils = Seq(
+  ubirchUtilMongoUtils
 )
 
 lazy val depMongoUtils = Seq(
@@ -343,6 +357,7 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll Excl
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.3"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.1.0"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.1.0"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.1.0"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"
