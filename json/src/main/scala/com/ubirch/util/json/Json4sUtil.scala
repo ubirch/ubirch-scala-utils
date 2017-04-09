@@ -11,9 +11,9 @@ import org.json4s.native.Serialization.{read, write}
   */
 object Json4sUtil {
 
-  implicit val formats = JsonFormats.default
+  implicit val formats: Formats = JsonFormats.default
 
-  def jvalue2String(jval: JValue) = compact(render(jval))
+  def jvalue2String(jval: JValue): String = compact(render(jval))
 
   def string2JValue(value: String): Option[JValue] = {
     try {
@@ -54,4 +54,13 @@ object Json4sUtil {
         None
     }
   }
+
+  def any2any[T<:Any](modelA: AnyRef)(implicit mf:Manifest[T]): T = {
+
+    // TODO unit tests
+    val json = write(modelA)
+    read[T](json)
+
+  }
+
 }

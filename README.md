@@ -10,6 +10,8 @@
 * futures
 * json
 * json-auto-convert
+* mongo-test-utils
+* mongo-utils
 * oidc-utils
 * response-util
 * rest-akka-http
@@ -137,6 +139,10 @@ Example Config:
     }
 
 ### Release History
+
+#### Version 0.6.1 (2017-03-31)
+
+* update to com.ubirch.util:json:0.3.3
 
 #### Version 0.6.0 (2017-02-27)
 
@@ -326,10 +332,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.3.2"
+      "com.ubirch.util" %% "json" % "0.3.3"
     )
 
 ### Release History
+
+#### Version 0.3.3 (2017-03-31)
+
+* added method com.ubirch.util.json.Json4sUtil#any2any
 
 #### Version 0.3.2 (2016-11-04)
 
@@ -360,10 +370,14 @@ Utils related to Scala Futures.
       Resolver.bintrayRepo("hseeberger", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json-auto-convert" % "0.3.1"
+      "com.ubirch.util" %% "json-auto-convert" % "0.3.3"
     )
 
 ### Release History
+
+#### Version 0.3.3 (2017-03-31)
+
+* update to com.ubirch.util:json:0.3.3
 
 #### Version 0.3.2 (2016-11-04)
 
@@ -380,6 +394,73 @@ Utils related to Scala Futures.
 
 -----------------------
 
+## `mongo-utils`
+
+### Scala Dependency
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "mongo-utils" % "0.1.0"
+    )
+
+
+-----------------------
+
+## `mongo-test-utils`
+
+### Scala Dependency
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "mongo-test-utils" % "0.1.0"
+    )
+
+### Release History
+
+#### Version 0.1.0 (2017-04-06)
+
+* initial release
+
+### Config
+
+To use `MongoClientBuilder` the following configuration is needed (`$PREFIX` defaults to `ubirch.mongo-utils` and a default; a default configuration connecting to localhost:27017 is included):
+
+| Config Item    | Mandatory | Description                                                                             |
+|:---------------|:----------|:----------------------------------------------------------------------------------------|
+| $PREFIX.hosts  | yes       | string of cluster hosts (see https://docs.mongodb.com/manual/reference/connection-string/) |
+
+Here's an example of a config with more than one host:
+
+    YOUR_PREFIX {
+
+      // for uri formats see: https://docs.mongodb.com/manual/reference/connection-string/
+
+      user = ${MONGO_USER}
+      password = ${MONGO_PASSWORD}
+      port = 10250
+      options = "sslEnabled=true&sslAllowsInvalidCert=true&connectTimeoutMS=10000&maxIdleTimeMS=60000"
+
+      host1 = "mongodb://"${ubirch.mongo-utils.user}":"${ubirch.mongo-utils.password}"@ubirch001.documents.azure.com:"${ubirch.mongo-utils.port}"?"${ubirch.mongo-utils.options}
+      host2 = "mongodb://"${ubirch.mongo-utils.user}":"${ubirch.mongo-utils.password}"@ubirch002.documents.azure.com:"${ubirch.mongo-utils.port}"?"${ubirch.mongo-utils.options}
+
+      // the only mandatory configPath (all the others only serve the purpose to make constructing host uris easier)
+      hosts = ${ubirch.mongo-utils.host1}","${ubirch.mongo-utils.host2}
+
+    }
+
+### Release History
+
+#### Version 0.1.0 (2017-04-04)
+
+* initial release
+
+
+-----------------------
+
 ## `oidc-utils`
 
 ### Scala Dependency
@@ -389,7 +470,7 @@ Utils related to Scala Futures.
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.2.1"
+      "com.ubirch.util" %% "oidc-utils" % "0.2.2"
     )
 
 ### Config
@@ -420,6 +501,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.2.2 (2017-03-31)
+
+* update to com.ubirch.util:json:0.3.3
 
 #### Version 0.2.1 (2017-03-28)
 
