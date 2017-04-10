@@ -8,7 +8,6 @@ import com.ubirch.util.config.ConfigBase
   */
 object OidcUtilsConfig extends ConfigBase {
 
-  final def redisUpdateExpiry(prefix: String = OidcUtilsConfigKeys.PREFIX): Long =
-    config.getLong(OidcUtilsConfigKeys.updateExpiry(prefix))
+  final val redisUpdateExpiry = config.getLong(OidcUtilsConfigKeys.updateExpiry)
 
 }

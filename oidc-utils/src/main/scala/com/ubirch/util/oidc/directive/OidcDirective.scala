@@ -1,18 +1,16 @@
 package com.ubirch.util.oidc.directive
 
-import com.typesafe.scalalogging.slf4j.StrictLogging
-
-import com.ubirch.util.json.JsonFormats
-import com.ubirch.util.oidc.config.{OidcUtilsConfig, OidcUtilsConfigKeys}
-import com.ubirch.util.oidc.model.UserContext
-import com.ubirch.util.oidc.util.OidcUtil
-
-import org.json4s.native.Serialization.read
-
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{AuthorizationFailedRejection, Directive1}
+import com.typesafe.scalalogging.slf4j.StrictLogging
+import com.ubirch.util.json.JsonFormats
+import com.ubirch.util.oidc.config.OidcUtilsConfig
+import com.ubirch.util.oidc.model.UserContext
+import com.ubirch.util.oidc.util.OidcUtil
+import com.ubirch.util.redis.RedisClientUtil
+import org.json4s.native.Serialization.read
 import redis.RedisClient
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -22,10 +20,7 @@ import scala.concurrent.Future
   * author: cvandrei
   * since: 2017-03-17
   */
-class OidcDirective(configPrefix: String = OidcUtilsConfigKeys.PREFIX,
-                    redis: RedisClient
-                   )
-                   (implicit system: ActorSystem)
+class OidcDirective()(implicit system: ActorSystem)
   extends StrictLogging {
 
   implicit private val formatter = JsonFormats.default
@@ -52,13 +47,12 @@ class OidcDirective(configPrefix: String = OidcUtilsConfigKeys.PREFIX,
           }.get
 
         }
-
     }
 
   }
 
   private def tokenToUserContext(token: String): Future[UserContext] = {
-
+    val redis = RedisClientUtil.getRedisClient
     val tokenKey = OidcUtil.tokenToHashedKey(token)
     redis.get[String](tokenKey) map {
 
@@ -77,7 +71,7 @@ class OidcDirective(configPrefix: String = OidcUtilsConfigKeys.PREFIX,
 
   private def updateExpiry(redis: RedisClient, tokenKey: String): Future[Boolean] = {
 
-    val refreshInterval = OidcUtilsConfig.redisUpdateExpiry(configPrefix)
+    val refreshInterval = OidcUtilsConfig.redisUpdateExpiry
     redis.expire(tokenKey, seconds = refreshInterval)
 
   }

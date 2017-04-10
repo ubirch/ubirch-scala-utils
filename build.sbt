@@ -92,7 +92,7 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
-    version := "0.1.0",
+    version := "0.2.1",
     resolvers ++= Seq(
       resolverBeeClient
     ),
@@ -146,10 +146,11 @@ lazy val mongoUtils = (project in file("mongo-utils"))
 
 lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(commonSettings: _*)
+  .dependsOn(restAkkaHttp)
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.2.4",
+    version := "0.2.3",
     resolvers ++= Seq(
       resolverHasher
     ),

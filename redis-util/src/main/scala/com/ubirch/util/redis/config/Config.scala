@@ -6,40 +6,26 @@ import com.ubirch.util.config.ConfigBase
   * author: cvandrei
   * since: 2017-03-15
   */
+
+case class RedisConfig(host: String, port: Int, password: Option[String])
+
 object Config extends ConfigBase {
 
-  def hostAndPort(configPrefix: String): (String, Int) = {
+  def redisConfig = RedisConfig(
+    host = config.getString(ConfigKeys.REDIS_HOST),
+    port = config.getInt(ConfigKeys.REDIS_PORT),
+    password = getPassword
+  )
 
-    val finalPrefix = getFinalPrefix(configPrefix)
+  private def getPassword: Option[String] = {
 
-    val host = config.getString(s"$finalPrefix${ConfigKeys.HOST}")
-    val port = config.getInt(s"$finalPrefix${ConfigKeys.PORT}")
-
-    (host, port)
-
-  }
-
-  def password(configPrefix: String): Option[String] = {
-
-    val finalPrefix = getFinalPrefix(configPrefix)
-    val key = s"$finalPrefix${ConfigKeys.PASSWORD}"
+    val key = ConfigKeys.REDIS_PASSWORD
 
     if (config.hasPath(key)) {
-      Some(key)
+      Some(config.getString(key))
     } else {
       None
     }
 
   }
-
-  private def getFinalPrefix(prefix: String): String = {
-
-    if (prefix == "") {
-      ""
-    } else {
-      s"$prefix."
-    }
-
-  }
-
 }

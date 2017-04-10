@@ -1,21 +1,18 @@
 package com.ubirch.util.oidc.directive
 
+import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
+import akka.http.scaladsl.model.{HttpHeader, StatusCodes}
+import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.{AuthorizationFailedRejection, Route}
+import akka.http.scaladsl.testkit.ScalatestRouteTest
 import com.ubirch.util.json.JsonFormats
 import com.ubirch.util.oidc.config.{OidcUtilsConfig, OidcUtilsConfigKeys}
 import com.ubirch.util.oidc.model.UserContext
 import com.ubirch.util.oidc.util.OidcUtil
 import com.ubirch.util.redis.RedisClientUtil
 import com.ubirch.util.redis.test.RedisCleanup
-
 import org.json4s.native.Serialization.write
 import org.scalatest.{BeforeAndAfterEach, FeatureSpec, Matchers}
-
-import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
-import akka.http.scaladsl.model.{HttpHeader, StatusCodes}
-import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.{AuthorizationFailedRejection, Route}
-import akka.http.scaladsl.testkit.ScalatestRouteTest
-import redis.RedisClient
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
@@ -40,12 +37,13 @@ class OidcDirectiveSpec extends FeatureSpec
     Thread.sleep(100)
   }
 
-  private val redis: RedisClient = RedisClientUtil.newInstance(configPrefix)(system)
-  private val oidcDirective = new OidcDirective(configPrefix = configPrefix, redis = redis)
+  private val redis = RedisClientUtil.getRedisClient()
+
+  private val oidcDirective = new OidcDirective()
 
   import oidcDirective._
 
-  private val testRoute: Route =
+  val testRoute: Route =
     get {
       pathSingleSlash {
         oidcToken2UserContext { userContext =>
@@ -80,7 +78,7 @@ class OidcDirectiveSpec extends FeatureSpec
       val userId = "some-user-id"
 
       val initialTtl = 10L
-      val refreshTtl = OidcUtilsConfig.redisUpdateExpiry(configPrefix)
+      val refreshTtl = OidcUtilsConfig.redisUpdateExpiry
 
       val redisKey = OidcUtil.tokenToHashedKey(token)
       val redisValue = write(UserContext(context = context, userId = userId))

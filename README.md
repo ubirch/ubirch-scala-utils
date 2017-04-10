@@ -470,25 +470,21 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.2.4"
+      "com.ubirch.util" %% "oidc-utils" % "0.2.3"
     )
 
 ### Config
 
-To use the `OidcDirective` the following configuration is needed (`application.conf` is included in this module):
+To use the `OidcDirective` the following configuration is needed:
 
-| Config Item                 | Mandatory | Description     |
-|:----------------------------|:----------|:----------------|
-| $PREFIX.redis.host          | yes       | Redis host      |
-| $PREFIX.redis.port          | yes       | Redis port      |
-| $PREFIX.redis.password      | no        | Redis password  |
-| $PREFIX.redis.updateExpiry  | yes       | number of seconds by a token's expiry date is extended after successfully validating it |
+| Config Item                          | Mandatory | Description     |
+|:-------------------------------------|:----------|:----------------|
+| ubirch.oidcUtils.redis.updateExpiry  | yes       | number of seconds by a token's expiry date is extended after successfully validating it |
+| ubirch.redisUtil.redis.host          | yes       | Redis host      |
+| ubirch.redisUtil.redis.port          | yes       | Redis port      |
+| ubirch.redisUtil.redis.password      | no        | Redis password  |
 
-`$PREFIX` defaults to `ubirch.oidc-utils.redis` (see `OidcUtilsConfigKeys.PREFIX`) but can be overwritten with any value
-of your choice when instantiating `OidcDirective`.
-
-If one of your dependencies is `com.ubirch.util:redis-util` then you already had to define the first three config keys in
-your config. Adding the fourth one and instantiating `OidcDirective` with the related config prefix is recommended.
+A default `application.conf` (connecting to localhost:6379) is included in this module.
 
 ### Usage of `OidcDirective`
 
@@ -502,13 +498,10 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
-#### Version 0.2.4 (2017-04-10)
-
-* update to `redis-util` 0.2.0
-
 #### Version 0.2.3 (2017-04-09)
 
-* ???
+* config is now under a fixed prefix
+* `OidcDirective` creates `RedisClient` instance itself
 
 #### Version 0.2.2 (2017-03-31)
 
@@ -568,28 +561,27 @@ The required config is documented in the `redis-util` section.
 You can place the below config keys where you want in the config. When calling `RedisClientUtil.newInstance())` you need
 to provide a config prefix and the software will look for them under it.
 
-| Config Item                | Mandatory  | Description               |
-|:---------------------------|:-----------|:--------------------------|
-| ubirch.redisUtil.host      | yes        | host Redis is running on  |
-| ubirch.redisUtil.port      | yes        | port Redis is running on  |
-| ubirch.redisUtil.password  | no         | password for Redis        |
+| Config Item                            | Mandatory  | Description            |
+|:---------------------------------------|:-----------|:-----------------------|
+| ubirchRedisUtil.host      | yes        | host redis is running on  |
+| ubirchRedisUtil.port      | yes        | redis TCP port  |
+| ubirchRedisUtil.password  | no         | redis password  |
 
-Here's an example config with the config prefix `myService`:
+Here's an example config:
 
-    ubirch {
-      redisUtil {
+    ubirchRedisUtil {
         host = localhost
         port = 6379
-        password = "some-password"
-      }
+        password = not-a-secure-password
     }
+    
 
 And this how you get a redis client:
 
     ```scala
     implicit val system = ActorSystem()
     implicit val timeout = Timeout(15 seconds)
-    val redis = RedisClientUtil.newInstance()
+    val redis = RedisClientUtil.redisClient
     ```
 
 ### Release History

@@ -3,11 +3,10 @@ package com.ubirch.util.elasticsearch.util
 import java.net.URL
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
-
-import uk.co.bigbeeconsultants.http.HttpClient
 import uk.co.bigbeeconsultants.http.header.MediaType._
 import uk.co.bigbeeconsultants.http.request.RequestBody
 import uk.co.bigbeeconsultants.http.response.Status._
+import uk.co.bigbeeconsultants.http.{Config, HttpClient}
 
 /**
   * This a util helping us to created Elasticsearch indexes and mappings. To use it overwrite only the fields marked
@@ -35,7 +34,14 @@ trait ElasticsearchMappingsBase extends StrictLogging {
 
   private def create(mapping: Mapping) = {
 
-    val httpClient = new HttpClient
+    val config = Config(
+      connectTimeout = 10000,
+      readTimeout = 10000,
+      followRedirects = false
+    )
+
+    val httpClient = new HttpClient(config)
+
     val body = Some(RequestBody(mapping.mappings, APPLICATION_JSON))
     val res = httpClient.post(mapping.url, body)
 
