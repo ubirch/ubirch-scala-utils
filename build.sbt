@@ -146,7 +146,6 @@ lazy val mongoUtils = (project in file("mongo-utils"))
 
 lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(commonSettings: _*)
-  .dependsOn(restAkkaHttp)
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
