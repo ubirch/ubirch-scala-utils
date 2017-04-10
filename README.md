@@ -470,7 +470,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.2.2"
+      "com.ubirch.util" %% "oidc-utils" % "0.2.4"
     )
 
 ### Config
@@ -502,6 +502,14 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
+#### Version 0.2.4 (2017-04-10)
+
+* update to `redis-util` 0.2.0
+
+#### Version 0.2.3 (2017-04-09)
+
+* ???
+
 #### Version 0.2.2 (2017-03-31)
 
 * update to com.ubirch.util:json:0.3.3
@@ -527,7 +535,7 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-test-util" % "0.1.0"
+      "com.ubirch.util" %% "redis-test-util" % "0.2.0"
     )
 
 ### Config
@@ -535,6 +543,10 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 The required config is documented in the `redis-util` section.
 
 ### Release History
+
+#### Version 0.2.0 (2017-04-09)
+
+* updated to `redis-util` version 0.2.0
 
 #### Version 0.1.0 (2017-03-21)
 
@@ -548,7 +560,7 @@ The required config is documented in the `redis-util` section.
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-util" % "0.1.0"
+      "com.ubirch.util" %% "redis-util" % "0.2.0"
     )
 
 ### Config
@@ -556,19 +568,19 @@ The required config is documented in the `redis-util` section.
 You can place the below config keys where you want in the config. When calling `RedisClientUtil.newInstance())` you need
 to provide a config prefix and the software will look for them under it.
 
-| Config Item                            | Mandatory  | Description            |
-|:---------------------------------------|:-----------|:-----------------------|
-| $PREFIX_OF_YOUR_CHOICE.redis.host      | yes        | host ES is running on  |
-| $PREFIX_OF_YOUR_CHOICE.redis.port      | yes        | host ES is running on  |
-| $PREFIX_OF_YOUR_CHOICE.redis.password  | no         | host ES is running on  |
+| Config Item                | Mandatory  | Description               |
+|:---------------------------|:-----------|:--------------------------|
+| ubirch.redisUtil.host      | yes        | host Redis is running on  |
+| ubirch.redisUtil.port      | yes        | port Redis is running on  |
+| ubirch.redisUtil.password  | no         | password for Redis        |
 
 Here's an example config with the config prefix `myService`:
 
-    myService {
-      redis {
+    ubirch {
+      redisUtil {
         host = localhost
         port = 6379
-        password = not-a-secure-password
+        password = "some-password"
       }
     }
 
@@ -577,11 +589,14 @@ And this how you get a redis client:
     ```scala
     implicit val system = ActorSystem()
     implicit val timeout = Timeout(15 seconds)
-    val configPrefix = "myService"
-    val redis = RedisClientUtil.newInstance(configPrefix)(system)
+    val redis = RedisClientUtil.newInstance()
     ```
 
 ### Release History
+
+#### Version 0.2.0 (2017-04-09)
+
+* `RedisClientUtil` reads config from a fixed prefix now
 
 #### Version 0.1.0 (2017-03-15)
 
