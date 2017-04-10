@@ -103,7 +103,7 @@ In addition to this there's some other utils as well:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.6.0"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.6.2"
     )
 
 
@@ -484,7 +484,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.2.4"
+      "com.ubirch.util" %% "oidc-utils" % "0.2.5"
     )
 
 ### Config
@@ -511,6 +511,11 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.2.5 (2017-04-10)
+
+* update json4s to version 3.5.1
+* update Akka Http to 10.0.5
 
 #### Version 0.2.4 (2017-04-10)
 
