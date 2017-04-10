@@ -2,14 +2,9 @@ package com.ubirch.util.redis.test
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
 
-import com.ubirch.util.redis.RedisClientUtil
-
-import akka.actor.ActorSystem
-import akka.util.Timeout
+import redis.RedisClient
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
-import scala.language.postfixOps
 
 /**
   * author: cvandrei
@@ -20,10 +15,8 @@ trait RedisCleanup extends StrictLogging {
   final def deleteAll(redisPrefix: String = "",
                       configPrefix: String,
                       sleepAfter: Long = 500
-                     ): Unit = {
-
-    implicit val system = ActorSystem()
-    implicit val timeout = Timeout(15 seconds)
+                     )
+                     (implicit redis: RedisClient): Unit = {
 
     val finalPrefix = if (redisPrefix == "") {
       "*"
@@ -32,7 +25,6 @@ trait RedisCleanup extends StrictLogging {
     }
 
     logger.info(s"====== delete: prefix=$finalPrefix")
-    val redis = RedisClientUtil.getRedisClient()
     redis.keys(finalPrefix) map { keysList =>
       keysList foreach { key =>
         logger.info(s"delete: key=$key")
@@ -40,8 +32,6 @@ trait RedisCleanup extends StrictLogging {
       }
     }
     Thread.sleep(sleepAfter)
-
-    system.terminate()
 
   }
 

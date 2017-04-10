@@ -161,7 +161,7 @@ lazy val redisTestUtil = (project in file("redis-test-util"))
   .settings(
     name := "redis-test-util",
     description := "Redis related test utils",
-    version := "0.2.0",
+    version := "0.2.1",
     libraryDependencies ++= depRedisTestUtils
   )
 

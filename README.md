@@ -528,7 +528,7 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-test-util" % "0.2.0"
+      "com.ubirch.util" %% "redis-test-util" % "0.2.1"
     )
 
 ### Config
@@ -536,6 +536,11 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 The required config is documented in the `redis-util` section.
 
 ### Release History
+
+#### Version 0.2.1 (2017-04-10)
+
+* refactor `com.ubirch.util.redis.test.RedisCleanup.deleteAll` to depends on implict `RedisClient` (instead of creating
+the whole environment itself)
 
 #### Version 0.2.0 (2017-04-09)
 
