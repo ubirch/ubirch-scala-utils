@@ -83,7 +83,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "0.6.1",
+    version := "0.6.2",
     libraryDependencies ++= depElasticsearchClientBinary
   )
 
@@ -110,7 +110,7 @@ lazy val json = project
   .settings(commonSettings: _*)
   .settings(
     description := "util to convert from/to JValue objects",
-    version := "0.3.3",
+    version := "0.3.4",
     libraryDependencies ++= depJson
   )
 
@@ -119,7 +119,7 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
   .settings(
     name := "json-auto-convert",
     description := "convert objects to/from JSON",
-    version := "0.3.3",
+    version := "0.3.4",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
@@ -149,7 +149,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.2.4",
+    version := "0.2.5",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -179,7 +179,7 @@ lazy val restAkkaHttp = (project in file("rest-akka-http"))
   .settings(
     name := "rest-akka-http",
     description := "shared custom classes related to akka-http-experimental (for example certain directives)",
-    version := "0.3.3", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
+    version := "0.3.4", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
     libraryDependencies += akkaHttp
   )
 
@@ -188,7 +188,7 @@ lazy val restAkkaHttpTest = (project in file("rest-akka-http-test"))
   .settings(
     name := "rest-akka-http-test",
     description := "akka-http-experimental related test utils",
-    version := "0.3.3", // NOTE: please keep major.minor version synchronized with restAkkaHttp
+    version := "0.3.4", // NOTE: please keep major.minor version synchronized with restAkkaHttp
     libraryDependencies ++= depRestAkkaHttpTest
   )
 
@@ -204,7 +204,7 @@ lazy val responseUtil = project
   .settings(
     name := "response-util",
     description := "HTTP Response Utils",
-    version := "0.1.2",
+    version := "0.1.3",
     libraryDependencies ++= depResponseUtil
   )
 
@@ -298,9 +298,9 @@ lazy val depResponseUtil = Seq(
  ********************************************************/
 
 // Versions
-val json4sV = "3.4.2"
+val json4sV = "3.5.1"
 val akkaV = "2.4.17"
-val akkaHttpV = "10.0.3"
+val akkaHttpV = "10.0.5"
 val elasticsearchV = "2.4.2"
 val scalaTestV = "3.0.1"
 
@@ -319,7 +319,7 @@ lazy val json4sJackson = "org.json4s" %% "json4s-jackson" % json4sV
 lazy val json4sCore = "org.json4s" %% "json4s-core" % json4sV
 lazy val json4sExt = "org.json4s" %% "json4s-ext" % json4sV
 lazy val json4sNative = "org.json4s" %% "json4s-native" % json4sV
-lazy val seebergerJson4s = "de.heikoseeberger" %% "akka-http-json4s" % "1.10.1"
+lazy val seebergerJson4s = "de.heikoseeberger" %% "akka-http-json4s" % "1.14.0"
 
 lazy val typesafeConfig = "com.typesafe" % "config" % "1.3.0"
 
@@ -356,7 +356,7 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll Excl
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
-lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.3"
+lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.4"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.1.0"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.2.1"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.2.0"

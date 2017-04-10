@@ -140,6 +140,11 @@ Example Config:
 
 ### Release History
 
+#### Version 0.6.2 (2017-04-10)
+
+* update json4s to version 3.5.1
+* update Akka Http to 10.0.5
+
 #### Version 0.6.1 (2017-03-31)
 
 * update to com.ubirch.util:json:0.3.3
@@ -332,10 +337,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.3.3"
+      "com.ubirch.util" %% "json" % "0.3.4"
     )
 
 ### Release History
+
+#### Version 0.3.4 (2017-04-10)
+
+* update json4s to version 3.5.1
 
 #### Version 0.3.3 (2017-03-31)
 
@@ -370,10 +379,15 @@ Utils related to Scala Futures.
       Resolver.bintrayRepo("hseeberger", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json-auto-convert" % "0.3.3"
+      "com.ubirch.util" %% "json-auto-convert" % "0.3.4"
     )
 
 ### Release History
+
+#### Version 0.3.4 (2017-04-10)
+
+* update json4s to version 3.5.1
+* de.heikoseeberger:akka-http-json4s to version 1.14.0
 
 #### Version 0.3.3 (2017-03-31)
 
@@ -614,10 +628,14 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "response-util" % "0.1.2"
+      "com.ubirch.util" %% "response-util" % "0.1.3"
     )
 
 ### Release History
+
+#### Version 0.1.3 (2017-04-10)
+
+* update Akka Http to 10.0.5
 
 #### Version 0.1.2 (2017-02-16)
 
@@ -639,6 +657,7 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http" % "0.3.4" // for Akka HTTP 10.0.5
       "com.ubirch.util" %% "rest-akka-http" % "0.3.3" // for Akka HTTP 10.0.3
       "com.ubirch.util" %% "rest-akka-http" % "0.3.1" // for Akka HTTP 2.4.11.1
       "com.ubirch.util" %% "rest-akka-http" % "0.3" // for Akka HTTP 2.4.11
@@ -647,6 +666,10 @@ And this how you get a redis client:
     )
 
 ### Release History
+
+#### Version 0.3.4 (2017-04-10)
+
+* update Akka Http to 10.0.5
 
 #### Version 0.3.3 (2017-02-16)
 
@@ -671,12 +694,17 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http-test" % "0.3.4" // for Akka HTTP 10.0.5
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.3" // for Akka HTTP 10.0.3
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.1" // for Akka HTTP 2.4.11.1
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3" // for Akka HTTP 2.4.11
     )
 
 ### Release History
+
+#### Version 0.3.4 (2017-04-10)
+
+* update Akka Http to 10.0.5
 
 #### Version 0.3.3 (2017-02-17)
 
