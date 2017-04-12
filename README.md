@@ -291,10 +291,14 @@ Example Config:
       Resolver.bintrayRepo("rick-beton", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-util" % "0.1.0"
+      "com.ubirch.util" %% "elasticsearch-util" % "1.0.0"
     )
 
 ### Release History
+
+#### Version 1.0.0 (2017-04-12)
+
+* refactored `ElasticsearchMappingsBase` to use the official ES driver's `IndicesAdminClient` instead of HTTP calls 
 
 #### Version 0.1.0
      

@@ -1,12 +1,9 @@
 package com.ubirch.util.elasticsearch.util
 
-import java.net.URL
-
 import com.typesafe.scalalogging.slf4j.StrictLogging
-import uk.co.bigbeeconsultants.http.header.MediaType._
-import uk.co.bigbeeconsultants.http.request.RequestBody
-import uk.co.bigbeeconsultants.http.response.Status._
-import uk.co.bigbeeconsultants.http.{Config, HttpClient}
+
+import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest
+import org.elasticsearch.client.transport.TransportClient
 
 /**
   * This a util helping us to created Elasticsearch indexes and mappings. To use it overwrite only the fields marked
@@ -18,45 +15,50 @@ import uk.co.bigbeeconsultants.http.{Config, HttpClient}
 trait ElasticsearchMappingsBase extends StrictLogging {
 
   /**
-    * All indexes (OVERWRITE!!!).
+    * All indexes and their mappings (<b>OVERWRITE!!!</b>).
+    *
+    * A Map of indexes and optional mappings. The data is structured as follows:
+    * <code>
+    * Map(
+    *   "INDEX_1_NAME" -> Map(
+    *     "TYPE_1_NAME" -> "MAPPING_TYPE_1",
+    *     "TYPE_2_NAME" -> "MAPPING_TYPE_2"
+    *   ),
+    *   "INDEX_2_NAME" -> Map.empty
+    * )
+    * </code>
     */
-  val indexInfos: Seq[IndexInfo]
+  val indexesAndMappings: Map[String, Map[String, String]]
 
-  /**
-    * All mappings (OVERWRITE!!!).
-    */
-  val mappings: Seq[Mapping]
+  lazy final val indicesToDelete: Set[String] = indexesAndMappings.keys.toSet
 
-  /**
-    * Create all mappings.
-    */
-  final def createElasticsearchMappings(): Unit = mappings foreach create
+  final def createElasticsearchMappings()(implicit esClient: TransportClient): Unit = indexesAndMappings foreach {
+    case (index, indexMappings) => create(index, indexMappings)
+  }
 
-  private def create(mapping: Mapping) = {
+  private def create(index: String, mappings: Map[String, String])(implicit esClient: TransportClient) = {
 
-    val config = Config(
-      connectTimeout = 10000,
-      readTimeout = 10000,
-      followRedirects = false
-    )
+    val indicesClient = esClient.admin.indices()
+    val existsRequest = new IndicesExistsRequest(index)
+    if (indicesClient.exists(existsRequest).get().isExists) {
 
-    val httpClient = new HttpClient(config)
+      logger.info(s"index already exists: '$index'")
 
-    val body = Some(RequestBody(mapping.mappings, APPLICATION_JSON))
-    val res = httpClient.post(mapping.url, body)
+    } else {
 
-    res.status match {
-      case S200_OK => logger.info(s"Elasticsearch index and mapping created: ${mapping.url}")
-      case S400_BadRequest => logger.info(s"Elasticsearch index and mapping already exists: ${mapping.url}")
-      case _ => logger.error(s"failed to create Elasticsearch index and mapping: ${mapping.url} (statusCode=${res.status})")
+      var requestBuilder = indicesClient.prepareCreate(index)
+      mappings foreach {
+        case (typeName, typeMapping) => requestBuilder = requestBuilder.addMapping(typeName, typeMapping)
+      }
+
+      if (requestBuilder.get().isAcknowledged) {
+        logger.info(s"created index: '$index'")
+      } else {
+        logger.error(s"failed to created index: '$index'")
+      }
+
     }
 
   }
 
 }
-
-case class IndexInfo(host: String, port: Int, index: String) {
-  def url: URL = new URL(s"http://$host:$port/$index")
-}
-
-case class Mapping(url: URL, mappings: String)

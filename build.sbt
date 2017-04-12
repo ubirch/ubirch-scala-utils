@@ -92,10 +92,7 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
-    version := "0.2.1",
-    resolvers ++= Seq(
-      resolverBeeClient
-    ),
+    version := "1.0.0",
     libraryDependencies ++= depElasticsearchUtil
   )
 
@@ -229,7 +226,7 @@ lazy val depElasticsearchClientBinary = Seq(
 ) ++ json4sBase
 
 lazy val depElasticsearchUtil = Seq(
-  beeClient,
+  elasticSearch,
   scalaLoggingSlf4j
 )
 
@@ -350,8 +347,6 @@ lazy val depSlf4jLogging = Seq(
   logbackClassic
 )
 
-lazy val beeClient = "uk.co.bigbeeconsultants" %% "bee-client" % "0.29.1"
-
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = "com.typesafe.akka")
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
@@ -370,4 +365,3 @@ val sonatypeReleases = Resolver.sonatypeRepo("releases")
 val sonatypeSnapshots = Resolver.sonatypeRepo("snapshots")
 val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
 val resolverHasher = "RoundEights" at "http://maven.spikemark.net/roundeights"
-val resolverBeeClient = Resolver.bintrayRepo("rick-beton", "maven")
