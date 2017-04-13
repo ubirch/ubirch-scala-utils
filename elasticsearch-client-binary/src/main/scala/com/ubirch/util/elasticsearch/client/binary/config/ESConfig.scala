@@ -1,6 +1,7 @@
 package com.ubirch.util.elasticsearch.client.binary.config
 
 import com.ubirch.util.config.ConfigBase
+import scala.collection.JavaConversions._
 
 /**
   * Bulk storage saves changes with a delay (whenever any of several criteria is fulfilled) and comes with other
@@ -15,9 +16,17 @@ object ESConfig extends ConfigBase {
    * connection
    *****************************************************************************/
 
-  def host: String = config.getString(ESConfigKeys.HOST)
+  def hosts: Set[HostUri] = {
 
-  def port: Int = config.getInt(ESConfigKeys.PORT)
+    val hostUriList = config.getStringList(ESConfigKeys.HOSTS).toList
+    val hostUriSeq = hostUriList map { hostUri =>
+      val split = hostUri.split(":")
+      HostUri(split(0), split(1).toInt)
+    }
+
+    hostUriSeq.toSet
+
+  }
 
   def cluster: Option[String] = {
 
@@ -54,3 +63,5 @@ object ESConfig extends ConfigBase {
   def concurrentRequests: Int = config.getInt(ESConfigKeys.CONCURRENT_REQUESTS)
 
 }
+
+case class HostUri(host: String, port: Int)

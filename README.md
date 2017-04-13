@@ -100,10 +100,11 @@ In addition to this there's some other utils as well:
 ### Scala Dependency
 
     resolvers ++= Seq(
-      Resolver.sonatypeRepo("releases")
+      Resolver.sonatypeRepo("releases"),
+      "elasticsearch-releases" at "https://maven.elasticsearch.org/releases"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.6.2"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.7.0"
     )
 
 
@@ -114,8 +115,7 @@ The following config is required to use the Elasticsearch binary client (**NOTE:
 
 | Config Item                            | Category        | Description                                             |
 |:---------------------------------------|:----------------|:--------------------------------------------------------|
-| esBinaryClient.connection.host         | Connection      | host ES is running on                                   | 
-| esBinaryClient.connection.port         | Connection      | port ES is running on                                   | 
+| esBinaryClient.connection.hosts        | Connection      | list of ES hosts to connect to                                   | 
 | esBinaryClient.connection.cluster      | Connection      | (optional) ES cluster to connect to                     | 
 | esBinaryClient.bulk.bulkActions        | Flush           | max number of items to trigger flush                    | 
 | esBinaryClient.bulk.bulkSize           | Flush           | max size of of all documents (in mega bytes)) to trigger flush |
@@ -126,8 +126,7 @@ Example Config:
 
     esBinaryClient {
       connection {
-        host = localhost
-        port = 9300 // 9300 is the default port for the binary client
+        hosts = ["localhost:9300", "localhost:9301"]
         cluster = elasticsearch // (optional) connect to an Elasticsearch cluster
       }
       bulk { // only needed if you mixin `ESBulkStorage`
@@ -139,6 +138,11 @@ Example Config:
     }
 
 ### Release History
+
+#### Version 0.7.0 (2017-04-13)
+
+* refactored config to allow configuring more than one host (`esBinaryClient.connection.hosts` replaces:
+`esBinaryClient.connection.host` and `esBinaryClient.connection.port`) 
 
 #### Version 0.6.2 (2017-04-10)
 

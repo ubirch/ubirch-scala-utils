@@ -14,9 +14,7 @@ object ESConfigKeys {
 
   private val connectionPrefix = s"$prefix.connection"
 
-  val HOST = s"$connectionPrefix.host"
-
-  val PORT = s"$connectionPrefix.port"
+  val HOSTS = s"$connectionPrefix.hosts"
 
   val CLUSTER = s"$connectionPrefix.cluster"
 

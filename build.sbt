@@ -83,7 +83,10 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "0.6.2",
+    version := "0.7.0-SNAPSHOT",
+    resolvers ++= Seq(
+      resolverElasticsearch
+    ),
     libraryDependencies ++= depElasticsearchClientBinary
   )
 
@@ -218,6 +221,7 @@ lazy val depCrypto = Seq(
 
 lazy val depElasticsearchClientBinary = Seq(
   elasticSearch,
+  elasticsearchShield,
   ubirchUtilJson,
   ubirchUtilUuid,
   scalaLoggingSlf4j,
@@ -335,6 +339,7 @@ lazy val jodaTime = "joda-time" % "joda-time" % "2.9.4"
 lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8.1"
 
 lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
+lazy val elasticsearchShield = "org.elasticsearch.plugin" % "shield" % elasticsearchV
 
 lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.12.1"
 
@@ -365,3 +370,5 @@ val sonatypeReleases = Resolver.sonatypeRepo("releases")
 val sonatypeSnapshots = Resolver.sonatypeRepo("snapshots")
 val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
 val resolverHasher = "RoundEights" at "http://maven.spikemark.net/roundeights"
+val resolverElasticsearch = "elasticsearch-releases" at "https://maven.elasticsearch.org/releases"
+
