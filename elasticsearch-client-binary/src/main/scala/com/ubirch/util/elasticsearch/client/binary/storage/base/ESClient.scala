@@ -21,34 +21,26 @@ trait ESClient {
 
   final val esClient: TransportClient = {
 
-    val clientBuilder = ESConfig.cluster match {
+    var client = TransportClient.builder()
+      .settings(connectionSettings())
 
-      case None => TransportClient.builder()
-
-      case Some(cluster) =>
-
-        val settings: Settings = Settings.builder()
-          .put("cluster.name", cluster) // TODO refactor to read from general settings config
-          /* TODO Shield/X-Pack config: read from general settings section
-          .put("shield.user", "transport_client_user:changeme")
-          .put("shield.ssl.keystore.path", "/path/to/client.jks")
-          .put("shield.ssl.keystore.password", "password")
-          .put("shield.transport.ssl", "true")
-          */
-          .build()
-
-        var client = TransportClient.builder()
-
-        if (ESConfig.xPackEnabled) {
-          client = client.addPlugin(classOf[ShieldPlugin])
-        }
-
-        client.settings(settings)
-
+    if (ESConfig.xPackEnabled) {
+      client = client.addPlugin(classOf[ShieldPlugin])
     }
 
-    clientBuilder.build()
+    client.build()
       .addTransportAddresses(hostAddresses.toSeq: _*)
+
+  }
+
+  private def connectionSettings(): Settings = {
+
+    val settingsBuilder = Settings.builder()
+    ESConfig.settings foreach { setting =>
+      settingsBuilder.put(setting._1, setting._2)
+    }
+
+    settingsBuilder.build()
 
   }
 

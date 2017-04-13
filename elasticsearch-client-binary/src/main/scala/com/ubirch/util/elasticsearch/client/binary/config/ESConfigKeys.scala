@@ -18,7 +18,7 @@ object ESConfigKeys {
 
   val X_PACK_ENABLED = s"$connectionPrefix.xpackEnabled"
 
-  val CLUSTER = s"$connectionPrefix.cluster"
+  val SETTINGS = s"$connectionPrefix.settings"
 
   /*
    * bulk

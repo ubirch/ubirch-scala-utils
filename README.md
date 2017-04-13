@@ -117,18 +117,42 @@ The following config is required to use the Elasticsearch binary client (**NOTE:
 |:----------------------------------------|:----------------|:--------------------------------------------------------|
 | esBinaryClient.connection.hosts         | Connection      | list of ES hosts to connect to                          | 
 | esBinaryClient.connection.xpackEnabled  | Connection      | (optional) set to "true" to activate Shield/X-Pack (default=false) | 
-| esBinaryClient.connection.cluster       | Connection      | (optional) ES cluster to connect to                     | 
+| esBinaryClient.connection.settings      | Connection      | ES connection settings (like cluster, Shield/X-Pack configs, etc | 
 | esBinaryClient.bulk.bulkActions         | Flush           | max number of items to trigger flush                    | 
 | esBinaryClient.bulk.bulkSize            | Flush           | max size of of all documents (in mega bytes)) to trigger flush |
 | esBinaryClient.bulk.flushInterval       | Flush           | maximum number of seconds between flushes               |
 | esBinaryClient.bulk.concurrentRequests  | Connection Pool | maximum number of concurrent requests                   |
 
-Example Config:
+Example Config (clustered and with Shield/X-Pack):
 
     esBinaryClient {
       connection {
         hosts = ["localhost:9300", "localhost:9301"]
-        cluster = elasticsearch // (optional) connect to an Elasticsearch cluster
+        xpackEnabled = true
+        settings = [
+          { "cluster.name": "my-test-cluster" },
+          { "shield.user": "transport_client_user:changeme" },
+          { "shield.ssl.keystore.path": "/path/to/client.jks" },
+          { "shield.ssl.keystore.password": "password" },
+          { "shield.transport.ssl": "true" }
+        ]
+      }
+      bulk { // only needed if you mixin `ESBulkStorage`
+        bulkActions = 10000
+        bulkSize = 10 # bulkSize in mega bytes
+        flushInterval = 1 # flush every x seconds
+        concurrentRequests = 2 # connection pooling: max concurrent requests
+      }
+    }
+
+Example Config (simple cluster without Shield/X-Pack):
+
+    esBinaryClient {
+      connection {
+        hosts = ["localhost:9300", "localhost:9301"]
+        settings = [
+          { "cluster.name": "my-test-cluster" }
+        ]
       }
       bulk { // only needed if you mixin `ESBulkStorage`
         bulkActions = 10000
@@ -144,7 +168,9 @@ Example Config:
 
 * refactored config to allow configuring more than one host (`esBinaryClient.connection.hosts` replaces:
 `esBinaryClient.connection.host` and `esBinaryClient.connection.port`)
-* add Shield/X-Packc config: see config key `esBinaryClient.connection.xpackEnabled`
+* add Shield/X-Pack on/off switch: see config key `esBinaryClient.connection.xpackEnabled`
+* removed config key `esBinaryClsient.connection.cluster`
+* connection settings are now generic: see config key `esBinaryClient.connection.settings`
 
 #### Version 0.6.2 (2017-04-10)
 

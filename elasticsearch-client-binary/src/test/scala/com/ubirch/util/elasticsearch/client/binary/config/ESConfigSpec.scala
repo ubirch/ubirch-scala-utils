@@ -27,4 +27,19 @@ class ESConfigSpec extends FeatureSpec
 
   }
 
+  feature("settings()") {
+
+    scenario("read settings") {
+
+      // test
+      val settings = ESConfig.settings
+
+      // verify
+      settings("cluster.name") shouldBe "my-test-cluster"
+      settings("shield.user") shouldBe "transport_client_user:changeme"
+
+    }
+
+  }
+
 }

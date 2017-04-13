@@ -1,7 +1,13 @@
 package com.ubirch.util.elasticsearch.client.binary.config
 
+import java.util.Map.Entry
+
+import com.typesafe.config.{ConfigObject, ConfigValue}
+
 import com.ubirch.util.config.ConfigBase
+
 import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 /**
   * Bulk storage saves changes with a delay (whenever any of several criteria is fulfilled) and comes with other
@@ -36,13 +42,21 @@ object ESConfig extends ConfigBase {
     }
   }
 
-  def cluster: Option[String] = {
+  def settings: Map[String, String] = {
 
-    if (config.hasPath(ESConfigKeys.CLUSTER)) {
-      Some(config.getString(ESConfigKeys.CLUSTER))
-    } else {
-      None
-    }
+    // code found at: http://deploymentzone.com/2013/07/25/typesafe-config-and-maps-in-scala/
+    val objects : Iterable[ConfigObject] = config.getObjectList(ESConfigKeys.SETTINGS).asScala
+
+    val settingsIterable = for {
+
+      item : ConfigObject <- objects
+      entry : Entry[String, ConfigValue] <- item.entrySet().asScala
+      key = entry.getKey
+      value = entry.getValue.unwrapped().toString
+
+    } yield (key, value)
+
+    settingsIterable.toMap
 
   }
 
@@ -73,3 +87,5 @@ object ESConfig extends ConfigBase {
 }
 
 case class HostUri(host: String, port: Int)
+
+case class ESSetting(key: String, value: String)

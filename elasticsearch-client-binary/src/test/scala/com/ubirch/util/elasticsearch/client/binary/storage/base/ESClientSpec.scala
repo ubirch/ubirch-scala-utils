@@ -32,6 +32,14 @@ class ESClientSpec extends FeatureSpec
 
     }
 
+    scenario("settings") {
+
+      // verify
+      esClient.settings.get("cluster.name") shouldBe "my-test-cluster"
+      esClient.settings.get("shield.transport.ssl") shouldBe "true"
+
+    }
+
   }
 
 }
