@@ -16,6 +16,8 @@ object ESConfigKeys {
 
   val HOSTS = s"$connectionPrefix.hosts"
 
+  val X_PACK_ENABLED = s"$connectionPrefix.xpackEnabled"
+
   val CLUSTER = s"$connectionPrefix.cluster"
 
   /*

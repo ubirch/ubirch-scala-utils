@@ -28,6 +28,14 @@ object ESConfig extends ConfigBase {
 
   }
 
+  def xPackEnabled: Boolean = {
+    if (config.hasPath(ESConfigKeys.X_PACK_ENABLED)) {
+      config.getBoolean(ESConfigKeys.X_PACK_ENABLED)
+    } else {
+      false
+    }
+  }
+
   def cluster: Option[String] = {
 
     if (config.hasPath(ESConfigKeys.CLUSTER)) {

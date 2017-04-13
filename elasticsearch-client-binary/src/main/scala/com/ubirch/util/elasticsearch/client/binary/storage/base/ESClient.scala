@@ -6,7 +6,7 @@ import com.ubirch.util.elasticsearch.client.binary.config.ESConfig
 
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.common.settings.Settings
-import org.elasticsearch.common.transport.InetSocketTransportAddress
+import org.elasticsearch.common.transport.{InetSocketTransportAddress, TransportAddress}
 import org.elasticsearch.shield.ShieldPlugin
 
 /**
@@ -15,13 +15,13 @@ import org.elasticsearch.shield.ShieldPlugin
   */
 trait ESClient {
 
-  private val hostAddresses: Set[InetSocketTransportAddress] = ESConfig.hosts map { host =>
+  private val hostAddresses: Set[TransportAddress] = ESConfig.hosts map { host =>
     new InetSocketTransportAddress(InetAddress.getByName(host.host), host.port)
   }
 
   final val esClient: TransportClient = {
 
-    val builder = ESConfig.cluster match {
+    val clientBuilder = ESConfig.cluster match {
 
       case None => TransportClient.builder()
 
@@ -37,16 +37,18 @@ trait ESClient {
           */
           .build()
 
-        TransportClient.builder()
-          //.addPlugin(classOf[ShieldPlugin]) // TODO set based on new config key: shieldEnabled: Boolean = false
-          .settings(settings)
+        var client = TransportClient.builder()
+
+        if (ESConfig.xPackEnabled) {
+          client = client.addPlugin(classOf[ShieldPlugin])
+        }
+
+        client.settings(settings)
 
     }
 
-    val client = builder.build()
-    hostAddresses foreach client.addTransportAddress
-
-    client
+    clientBuilder.build()
+      .addTransportAddresses(hostAddresses.toSeq: _*)
 
   }
 

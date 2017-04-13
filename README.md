@@ -113,14 +113,15 @@ In addition to this there's some other utils as well:
 
 The following config is required to use the Elasticsearch binary client (**NOTE: there's no default config!!!**).
 
-| Config Item                            | Category        | Description                                             |
-|:---------------------------------------|:----------------|:--------------------------------------------------------|
-| esBinaryClient.connection.hosts        | Connection      | list of ES hosts to connect to                                   | 
-| esBinaryClient.connection.cluster      | Connection      | (optional) ES cluster to connect to                     | 
-| esBinaryClient.bulk.bulkActions        | Flush           | max number of items to trigger flush                    | 
-| esBinaryClient.bulk.bulkSize           | Flush           | max size of of all documents (in mega bytes)) to trigger flush |
-| esBinaryClient.bulk.flushInterval      | Flush           | maximum number of seconds between flushes               |
-| esBinaryClient.bulk.concurrentRequests | Connection Pool | maximum number of concurrent requests                   |
+| Config Item                             | Category        | Description                                             |
+|:----------------------------------------|:----------------|:--------------------------------------------------------|
+| esBinaryClient.connection.hosts         | Connection      | list of ES hosts to connect to                          | 
+| esBinaryClient.connection.xpackEnabled  | Connection      | (optional) set to "true" to activate Shield/X-Pack (default=false) | 
+| esBinaryClient.connection.cluster       | Connection      | (optional) ES cluster to connect to                     | 
+| esBinaryClient.bulk.bulkActions         | Flush           | max number of items to trigger flush                    | 
+| esBinaryClient.bulk.bulkSize            | Flush           | max size of of all documents (in mega bytes)) to trigger flush |
+| esBinaryClient.bulk.flushInterval       | Flush           | maximum number of seconds between flushes               |
+| esBinaryClient.bulk.concurrentRequests  | Connection Pool | maximum number of concurrent requests                   |
 
 Example Config:
 
@@ -142,7 +143,8 @@ Example Config:
 #### Version 0.7.0 (2017-04-13)
 
 * refactored config to allow configuring more than one host (`esBinaryClient.connection.hosts` replaces:
-`esBinaryClient.connection.host` and `esBinaryClient.connection.port`) 
+`esBinaryClient.connection.host` and `esBinaryClient.connection.port`)
+* add Shield/X-Packc config: see config key `esBinaryClient.connection.xpackEnabled`
 
 #### Version 0.6.2 (2017-04-10)
 
