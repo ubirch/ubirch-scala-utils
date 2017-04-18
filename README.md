@@ -333,7 +333,7 @@ Example Config:
 
 ### Release History
 
-#### Version 1.0.0 (2017-04-12)
+#### Version 1.0.1 (2017-04-18)
 
 * update Elasticsearch from version 2.4.2 to 2.4.4
 
