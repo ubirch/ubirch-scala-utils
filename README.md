@@ -123,19 +123,45 @@ The following config is required to use the Elasticsearch binary client (**NOTE:
 | esBinaryClient.bulk.flushInterval       | Flush           | maximum number of seconds between flushes               |
 | esBinaryClient.bulk.concurrentRequests  | Connection Pool | maximum number of concurrent requests                   |
 
-Example Config (clustered and with Shield/X-Pack):
+Example Config (minimum config to connect to elastic.io with Shield/X-Pack):
 
     esBinaryClient {
       connection {
-        hosts = ["localhost:9300", "localhost:9301"]
+        hosts = ["1234asdf.us-east-1.aws.found.io:9343"]
         xpackEnabled = true
         settings = [
-          { "cluster.name": "my-test-cluster" },
-          { "shield.user": "transport_client_user:changeme" },
-          { "shield.ssl.keystore.path": "/path/to/client.jks" },
-          { "shield.ssl.keystore.password": "password" },
+          { "cluster.name": "1234asdf" },
+          { "shield.user": ${ELASTIC_IO_USER}":"${ELASTIC_IO_PASSWORD} },
           { "shield.transport.ssl": "true" },
           { "request.headers.X-Found-Cluster": "${cluster.name}" }
+        ]
+      }
+      bulk { // only needed if you mixin `ESBulkStorage`
+        bulkActions = 10000
+        bulkSize = 10 # bulkSize in mega bytes
+        flushInterval = 1 # flush every x seconds
+        concurrentRequests = 2 # connection pooling: max concurrent requests
+      }
+    }
+
+Example Config (extended config to connect to elastic.io with Shield/X-Pack):
+
+    esBinaryClient {
+      clusterName = "1234asdf"
+      connection {
+        hosts = [${esBinaryClient.clusterName}".us-east-1.aws.found.io:9343"]
+        xpackEnabled = true
+        settings = [
+          { "cluster.name": ${esBinaryClient.clusterName} },
+          { "shield.user": ${ELASTIC_IO_USER}":"${ELASTIC_IO_PASSWORD} },
+          { "shield.transport.ssl": "true" },
+          { "request.headers.X-Found-Cluster": "${cluster.name}" },
+          { "shield.ssl.keystore.path": "/path/to/client.jks" }, // (optional)
+          { "shield.ssl.keystore.password": "password" }, // (optional)
+          { "transport.sniff": "true"}, // (optional)
+          { "transport.ping_schedule": "5s"}, // (optional)
+          { "client.transport.ping_timeout": "10s"}, // (optional) default: 5s
+          { "client.transport.nodes_sampler_interval": "10s"} // (optional) default: 5s
         ]
       }
       bulk { // only needed if you mixin `ESBulkStorage`
