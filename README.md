@@ -101,10 +101,10 @@ In addition to this there's some other utils as well:
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases"),
-      "elasticsearch-releases" at "https://maven.elasticsearch.org/releases"
+      "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.7.1"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.0.0"
     )
 
 
@@ -131,8 +131,8 @@ Example Config (minimum config to connect to elastic.io with Shield/X-Pack):
         xpackEnabled = true
         settings = [
           { "cluster.name": "1234asdf" },
-          { "shield.user": ${ELASTIC_IO_USER}":"${ELASTIC_IO_PASSWORD} },
-          { "shield.transport.ssl": "true" },
+          { "xpack.security.user": ${ELASTIC_IO_USER}":"${ELASTIC_IO_PASSWORD} },
+          { "xpack.security.transport.ssl.enabled": "true" },
           { "request.headers.X-Found-Cluster": "${cluster.name}" }
         ]
       }
@@ -153,11 +153,12 @@ Example Config (extended config to connect to elastic.io with Shield/X-Pack):
         xpackEnabled = true
         settings = [
           { "cluster.name": ${esBinaryClient.clusterName} },
-          { "shield.user": ${ELASTIC_IO_USER}":"${ELASTIC_IO_PASSWORD} },
-          { "shield.transport.ssl": "true" },
+          { "xpack.security.user": ${ELASTIC_IO_USER}":"${ELASTIC_IO_PASSWORD} },
+          { "xpack.security.transport.ssl.enabled": "true" },
           { "request.headers.X-Found-Cluster": "${cluster.name}" },
-          { "shield.ssl.keystore.path": "/path/to/client.jks" }, // (optional)
-          { "shield.ssl.keystore.password": "password" }, // (optional)
+          { "xpack.ssl.key": "/path/to/client.key" }, // (optional)
+          { "xpack.ssl.certificate": "/path/to/client.crt" }, // (optional)
+          { "xpack.ssl.certificate_authorities": "/path/to/ca.crt" }, // (optional)
           { "transport.sniff": "true"}, // (optional)
           { "transport.ping_schedule": "5s"}, // (optional)
           { "client.transport.ping_timeout": "10s"}, // (optional) default: 5s
@@ -190,6 +191,10 @@ Example Config (simple cluster without Shield/X-Pack):
     }
 
 ### Release History
+
+#### Version 2.0.0 (2017-04-18)
+
+* update from Elasticsearch version 2.4.4 to 5.3.0
 
 #### Version 0.7.1 (2017-04-18)
 
@@ -351,13 +356,18 @@ Example Config:
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases"),
-      Resolver.bintrayRepo("rick-beton", "maven")
+      Resolver.bintrayRepo("rick-beton", "maven"),
+      "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-util" % "1.0.1"
+      "com.ubirch.util" %% "elasticsearch-util" % "2.0.0"
     )
 
 ### Release History
+
+#### Version 2.0.0 (2017-04-18)
+
+* update from Elasticsearch version 2.4.4 to 5.3.0
 
 #### Version 1.0.1 (2017-04-18)
 

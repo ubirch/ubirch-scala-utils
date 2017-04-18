@@ -36,7 +36,7 @@ class ESConfigSpec extends FeatureSpec
 
       // verify
       settings("cluster.name") shouldBe "my-test-cluster"
-      settings("shield.user") shouldBe "transport_client_user:changeme"
+      settings("xpack.security.user") shouldBe "transport_client_user:changeme"
 
     }
 

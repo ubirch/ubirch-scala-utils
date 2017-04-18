@@ -83,7 +83,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "0.7.1",
+    version := "2.0.0",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -95,7 +95,7 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
-    version := "1.0.1",
+    version := "2.0.0",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -224,11 +224,13 @@ lazy val depCrypto = Seq(
 
 lazy val depElasticsearchClientBinary = Seq(
   elasticSearch,
-  elasticsearchShield,
+  elasticsearchXPack,
   ubirchUtilJson,
   ubirchUtilUuid,
   scalaLoggingSlf4j,
   slf4j,
+  log4jApi,
+  log4jCore,
   scalaTest % "test"
 ) ++ json4sBase
 
@@ -305,11 +307,13 @@ lazy val depResponseUtil = Seq(
 val json4sV = "3.5.1"
 val akkaV = "2.4.17"
 val akkaHttpV = "10.0.5"
-val elasticsearchV = "2.4.4"
+val elasticsearchV = "5.3.0"
+val log4jV = "2.8.2"
 val scalaTestV = "3.0.1"
 
 // Groups
 val akkaG = "com.typesafe.akka"
+val log4jG = "org.apache.logging.log4j"
 
 lazy val json4sBase = Seq(
   json4sCore,
@@ -342,13 +346,15 @@ lazy val jodaTime = "joda-time" % "joda-time" % "2.9.4"
 lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8.1"
 
 lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
-lazy val elasticsearchShield = "org.elasticsearch.plugin" % "shield" % elasticsearchV
+lazy val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
 
 lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.12.1"
 
 lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.7"
+lazy val log4jApi = log4jG % "log4j-api" % log4jV
+lazy val log4jCore = log4jG % "log4j-core" % log4jV
 lazy val depSlf4jLogging = Seq(
   scalaLoggingSlf4j,
   slf4j,
@@ -373,5 +379,5 @@ val sonatypeReleases = Resolver.sonatypeRepo("releases")
 val sonatypeSnapshots = Resolver.sonatypeRepo("snapshots")
 val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
 val resolverHasher = "RoundEights" at "http://maven.spikemark.net/roundeights"
-val resolverElasticsearch = "elasticsearch-releases" at "https://maven.elasticsearch.org/releases"
+val resolverElasticsearch = "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
 

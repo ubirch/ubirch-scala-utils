@@ -7,7 +7,8 @@ import com.ubirch.util.elasticsearch.client.binary.config.ESConfig
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.common.settings.Settings
 import org.elasticsearch.common.transport.{InetSocketTransportAddress, TransportAddress}
-import org.elasticsearch.shield.ShieldPlugin
+import org.elasticsearch.transport.client.PreBuiltTransportClient
+import org.elasticsearch.xpack.client.PreBuiltXPackTransportClient
 
 /**
   * author: cvandrei
@@ -21,15 +22,15 @@ trait ESClient {
 
   final val esClient: TransportClient = {
 
-    var client = TransportClient.builder()
-      .settings(connectionSettings())
+    val settings = connectionSettings()
 
-    if (ESConfig.xPackEnabled) {
-      client = client.addPlugin(classOf[ShieldPlugin])
+    val client = if (ESConfig.xPackEnabled) {
+      new PreBuiltXPackTransportClient(settings)
+    } else {
+      new PreBuiltTransportClient(settings)
     }
 
-    client.build()
-      .addTransportAddresses(hostAddresses.toSeq: _*)
+    client.addTransportAddresses(hostAddresses.toSeq: _*)
 
   }
 

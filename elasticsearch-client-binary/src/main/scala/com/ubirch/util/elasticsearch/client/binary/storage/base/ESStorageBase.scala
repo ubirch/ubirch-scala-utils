@@ -3,14 +3,17 @@ package com.ubirch.util.elasticsearch.client.binary.storage.base
 import java.util.concurrent.ExecutionException
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
+
 import com.ubirch.util.json.{Json4sUtil, JsonFormats}
 import com.ubirch.util.uuid.UUIDUtil
+
+import org.elasticsearch.action.DocWriteResponse.Result
+import org.elasticsearch.action.delete.DeleteResponse
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.index.IndexNotFoundException
 import org.elasticsearch.index.query.QueryBuilder
-import org.elasticsearch.rest.RestStatus
 import org.elasticsearch.search.SearchParseException
-import org.elasticsearch.search.sort.{FieldSortBuilder, SortBuilder}
+import org.elasticsearch.search.sort.SortBuilder
 import org.json4s._
 
 import scala.Predef._
@@ -128,7 +131,7 @@ trait ESStorageBase extends StrictLogging {
               query: Option[QueryBuilder] = None,
               from: Option[Int] = None,
               size: Option[Int] = None,
-              sort: Option[SortBuilder] = None
+              sort: Option[SortBuilder[_]] = None
              ): Future[List[JValue]] = {
 
     require(docIndex.nonEmpty && docType.nonEmpty, "json invalid arguments")
@@ -194,8 +197,8 @@ trait ESStorageBase extends StrictLogging {
 
     require(docIndex.nonEmpty && docType.nonEmpty && docId.nonEmpty, "json invalid arguments")
 
-    val res = esClient.prepareDelete(docIndex, docType, docId).get()
-    res.isFound
+    val res: DeleteResponse = esClient.prepareDelete(docIndex, docType, docId).get()
+    res.getResult == Result.DELETED
 
   }
 

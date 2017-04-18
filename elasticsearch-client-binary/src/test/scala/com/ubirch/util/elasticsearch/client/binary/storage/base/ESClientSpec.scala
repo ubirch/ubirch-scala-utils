@@ -36,7 +36,7 @@ class ESClientSpec extends FeatureSpec
 
       // verify
       esClient.settings.get("cluster.name") shouldBe "my-test-cluster"
-      esClient.settings.get("shield.transport.ssl") shouldBe "true"
+      esClient.settings.get("xpack.security.transport.ssl.enabled") shouldBe "true"
 
     }
 
