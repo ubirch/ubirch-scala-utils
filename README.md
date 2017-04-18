@@ -104,7 +104,7 @@ In addition to this there's some other utils as well:
       "elasticsearch-releases" at "https://maven.elasticsearch.org/releases"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.7.0"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "0.7.1"
     )
 
 
@@ -134,7 +134,8 @@ Example Config (clustered and with Shield/X-Pack):
           { "shield.user": "transport_client_user:changeme" },
           { "shield.ssl.keystore.path": "/path/to/client.jks" },
           { "shield.ssl.keystore.password": "password" },
-          { "shield.transport.ssl": "true" }
+          { "shield.transport.ssl": "true" },
+          { "request.headers.X-Found-Cluster": "${cluster.name}" }
         ]
       }
       bulk { // only needed if you mixin `ESBulkStorage`
@@ -163,6 +164,10 @@ Example Config (simple cluster without Shield/X-Pack):
     }
 
 ### Release History
+
+#### Version 0.7.1 (2017-04-18)
+
+* update Elasticsearch from version 2.4.2 to 2.4.4
 
 #### Version 0.7.0 (2017-04-13)
 
@@ -323,10 +328,14 @@ Example Config:
       Resolver.bintrayRepo("rick-beton", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-util" % "1.0.0"
+      "com.ubirch.util" %% "elasticsearch-util" % "1.0.1"
     )
 
 ### Release History
+
+#### Version 1.0.0 (2017-04-12)
+
+* update Elasticsearch from version 2.4.2 to 2.4.4
 
 #### Version 1.0.0 (2017-04-12)
 
