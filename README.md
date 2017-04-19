@@ -195,6 +195,7 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 #### Version 2.0.1 (2017-04-19)
 
 * replace log4j dependency with log4f-to-slf4j bridge (see https://www.elastic.co/guide/en/elasticsearch/client/java-api/5.3/_using_another_logger.html)
+* improve exception handling in `ESStorageBase`
 
 #### Version 2.0.0 (2017-04-18)
 

@@ -11,7 +11,7 @@ import org.elasticsearch.action.DocWriteResponse.Result
 import org.elasticsearch.action.delete.DeleteResponse
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.index.IndexNotFoundException
-import org.elasticsearch.index.query.QueryBuilder
+import org.elasticsearch.index.query.{QueryBuilder, QueryShardException}
 import org.elasticsearch.search.SearchParseException
 import org.elasticsearch.search.sort.SortBuilder
 import org.json4s._
@@ -113,6 +113,10 @@ trait ESStorageBase extends StrictLogging {
         logger.error(s"SearchParseException: index=$docIndex", execExc)
         None
 
+      case execExc: ExecutionException if execExc.getCause.getCause.getCause.getCause.isInstanceOf[QueryShardException] =>
+        logger.error(s"QueryShardException: index=$docIndex", execExc)
+        None
+
     }
 
   }
@@ -178,6 +182,10 @@ trait ESStorageBase extends StrictLogging {
 
         case execExc: ExecutionException if execExc.getCause.getCause.getCause.isInstanceOf[SearchParseException] =>
           logger.error(s"SearchParseException: index=$docIndex", execExc)
+          List()
+
+        case execExc: ExecutionException if execExc.getCause.getCause.getCause.getCause.isInstanceOf[QueryShardException] =>
+          logger.error(s"QueryShardException: index=$docIndex", execExc)
           List()
 
       }
