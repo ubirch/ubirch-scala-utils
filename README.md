@@ -104,7 +104,7 @@ In addition to this there's some other utils as well:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.0.0"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.0.1"
     )
 
 
@@ -191,6 +191,10 @@ Example Config (simple cluster without Shield/X-Pack):
     }
 
 ### Release History
+
+#### Version 2.0.1 (2017-04-19)
+
+* replace log4j dependency with log4f-to-slf4j bridge (see https://www.elastic.co/guide/en/elasticsearch/client/java-api/5.3/_using_another_logger.html)
 
 #### Version 2.0.0 (2017-04-18)
 

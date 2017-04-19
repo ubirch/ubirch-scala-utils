@@ -83,7 +83,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.0.0",
+    version := "2.0.1-SNAPSHOT",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -227,12 +227,8 @@ lazy val depElasticsearchClientBinary = Seq(
   elasticsearchXPack,
   ubirchUtilJson,
   ubirchUtilUuid,
-  scalaLoggingSlf4j,
-  slf4j,
-  log4jApi,
-  log4jCore,
   scalaTest % "test"
-) ++ json4sBase
+) ++ json4sBase ++ depSlf4jLogging ++ depSlf4j
 
 lazy val depElasticsearchUtil = Seq(
   elasticSearch,
@@ -354,11 +350,15 @@ lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.7"
 lazy val log4jApi = log4jG % "log4j-api" % log4jV
-lazy val log4jCore = log4jG % "log4j-core" % log4jV
+lazy val log4jToslf4j = "org.apache.logging.log4j" % "log4j-to-slf4j" % "2.7"
 lazy val depSlf4jLogging = Seq(
   scalaLoggingSlf4j,
   slf4j,
   logbackClassic
+)
+lazy val depSlf4j = Seq(
+  log4jApi,
+  log4jToslf4j
 )
 
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = "com.typesafe.akka")
