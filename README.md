@@ -123,7 +123,7 @@ The following config is required to use the Elasticsearch binary client (**NOTE:
 | esBinaryClient.bulk.flushInterval       | Flush           | maximum number of seconds between flushes               |
 | esBinaryClient.bulk.concurrentRequests  | Connection Pool | maximum number of concurrent requests                   |
 
-Example Config (minimum config to connect to elastic.io with Shield/X-Pack):
+Example Config (minimum config to connect to cloud.elastic.co with Shield/X-Pack):
 
     esBinaryClient {
       connection {
@@ -144,7 +144,7 @@ Example Config (minimum config to connect to elastic.io with Shield/X-Pack):
       }
     }
 
-Example Config (extended config to connect to elastic.io with Shield/X-Pack):
+Example Config (extended config to connect to cloud.elastic.co with Shield/X-Pack):
 
     esBinaryClient {
       clusterName = "1234asdf"
@@ -173,7 +173,7 @@ Example Config (extended config to connect to elastic.io with Shield/X-Pack):
       }
     }
 
-Example Config (simple cluster without Shield/X-Pack):
+Example Config (simple localhost cluster without Shield/X-Pack):
 
     esBinaryClient {
       connection {
