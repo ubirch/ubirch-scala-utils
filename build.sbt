@@ -228,7 +228,7 @@ lazy val depElasticsearchClientBinary = Seq(
   ubirchUtilJson,
   ubirchUtilUuid,
   scalaTest % "test"
-) ++ json4sBase ++ depSlf4jLogging ++ depSlf4j
+) ++ json4sBase ++ depSlf4jLogging ++ depLog4jToSlf4j
 
 lazy val depElasticsearchUtil = Seq(
   elasticSearch,
@@ -356,7 +356,7 @@ lazy val depSlf4jLogging = Seq(
   slf4j,
   logbackClassic
 )
-lazy val depSlf4j = Seq(
+lazy val depLog4jToSlf4j = Seq(
   log4jApi,
   log4jToslf4j
 )
