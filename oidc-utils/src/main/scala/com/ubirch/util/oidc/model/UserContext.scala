@@ -5,5 +5,6 @@ package com.ubirch.util.oidc.model
   * since: 2017-03-23
   */
 case class UserContext(context: String,
+                       providerId: String,
                        userId: String
                       )
