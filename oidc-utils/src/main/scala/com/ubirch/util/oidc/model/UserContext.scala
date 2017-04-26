@@ -6,5 +6,7 @@ package com.ubirch.util.oidc.model
   */
 case class UserContext(context: String,
                        providerId: String,
-                       userId: String
+                       userId: String,
+                       userName: String,
+                       locale: String
                       )
