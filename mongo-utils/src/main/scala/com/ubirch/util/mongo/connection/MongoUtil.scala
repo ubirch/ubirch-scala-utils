@@ -25,7 +25,7 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
     *
     * @return database connection
     */
-  def db(): Future[DefaultDB] = {
+  val db: Future[DefaultDB] = {
 
     val hostUris = MongoConfig.hosts(configPrefix)
 
@@ -46,7 +46,7 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
     */
   def collection(name: String): Future[BSONCollection] = {
 
-    db().map { db =>
+    db.map { db =>
       db.collection[BSONCollection](name)
     }
 

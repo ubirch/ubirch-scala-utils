@@ -503,9 +503,18 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.1.0"
+      "com.ubirch.util" %% "mongo-utils" % "0.2.0"
     )
 
+### Release History
+
+#### Version 0.2.0 (2017-04-28)
+
+* method `MongoUtil#db` is now a value to prevent too many open Mongo connections
+
+#### Version 0.1.0 (2017-04-06)
+
+* initial release
 
 -----------------------
 
