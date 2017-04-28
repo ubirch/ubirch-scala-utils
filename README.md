@@ -531,7 +531,7 @@ Utils related to Scala Futures.
 
 ### Release History
 
-#### Version 0.1.0 (2017-04-28)
+#### Version 0.2.0 (2017-04-28)
 
 * upgrade `com.ubirch.util:mongo-utils` to version 0.2.0
 
