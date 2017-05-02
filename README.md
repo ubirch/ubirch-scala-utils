@@ -192,6 +192,10 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 
 ### Release History
 
+#### Version 2.0.2 (2017-05-02)
+
+* updated Elasticsearch to 5.3.2
+
 #### Version 2.0.1 (2017-04-21)
 
 * replace log4j dependency with log4f-to-slf4j bridge (see https://www.elastic.co/guide/en/elasticsearch/client/java-api/5.3/_using_another_logger.html)
@@ -370,6 +374,10 @@ Example Config:
     )
 
 ### Release History
+
+#### Version 2.0.1 (2017-05-02)
+
+* updated Elasticsearch to 5.3.2
 
 #### Version 2.0.0 (2017-04-18)
 
