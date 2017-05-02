@@ -699,11 +699,11 @@ the whole environment itself)
 You can place the below config keys where you want in the config. When calling `RedisClientUtil.newInstance())` you need
 to provide a config prefix and the software will look for them under it.
 
-| Config Item                            | Mandatory  | Description            |
-|:---------------------------------------|:-----------|:-----------------------|
-| ubirchRedisUtil.host      | yes        | host redis is running on  |
-| ubirchRedisUtil.port      | yes        | redis TCP port  |
-| ubirchRedisUtil.password  | no         | redis password  |
+| Config Item                | Mandatory  | Description               |
+|:---------------------------|:-----------|:--------------------------|
+| ubirch.redisUtil.host      | yes        | host redis is running on  |
+| ubirch.redisUtil.port      | yes        | redis TCP port            |
+| ubirch.redisUtil.password  | no         | redis password            |
 
 Here's an example config:
 
