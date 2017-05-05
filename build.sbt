@@ -83,7 +83,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.0.1",
+    version := "2.0.2",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -95,7 +95,7 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
-    version := "2.0.0",
+    version := "2.0.1",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -303,7 +303,7 @@ lazy val depResponseUtil = Seq(
 val json4sV = "3.5.1"
 val akkaV = "2.4.17"
 val akkaHttpV = "10.0.5"
-val elasticsearchV = "5.3.0"
+val elasticsearchV = "5.3.2"
 val log4jV = "2.8.2"
 val scalaTestV = "3.0.1"
 
