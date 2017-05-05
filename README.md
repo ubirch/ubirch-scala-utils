@@ -772,7 +772,7 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "rest-akka-http" % "0.3.4" // for Akka HTTP 10.0.5
+      "com.ubirch.util" %% "rest-akka-http" % "0.3.5" // for Akka HTTP 10.0.5
       "com.ubirch.util" %% "rest-akka-http" % "0.3.3" // for Akka HTTP 10.0.3
       "com.ubirch.util" %% "rest-akka-http" % "0.3.1" // for Akka HTTP 2.4.11.1
       "com.ubirch.util" %% "rest-akka-http" % "0.3" // for Akka HTTP 2.4.11
@@ -781,6 +781,10 @@ And this how you get a redis client:
     )
 
 ### Release History
+
+#### Version 0.3.5 (2017-05-05)
+
+* no changes (updated version number to be the same as `rest-akka-http-test`)
 
 #### Version 0.3.4 (2017-04-10)
 
@@ -809,13 +813,17 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "rest-akka-http-test" % "0.3.4" // for Akka HTTP 10.0.5
+      "com.ubirch.util" %% "rest-akka-http-test" % "0.3.5" // for Akka HTTP 10.0.5
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.3" // for Akka HTTP 10.0.3
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.1" // for Akka HTTP 2.4.11.1
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3" // for Akka HTTP 2.4.11
     )
 
 ### Release History
+
+#### Version 0.3.5 (2017-05-05)
+
+* fixed bug in `CORSUtil`
 
 #### Version 0.3.4 (2017-04-10)
 

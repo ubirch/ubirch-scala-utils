@@ -21,7 +21,7 @@ trait CORSUtil extends FeatureSpec
       case true =>
         header("Access-Control-Allow-Origin") should be(Some(`Access-Control-Allow-Origin`(originRange)))
         header("Access-Control-Allow-Methods") should be(Some(`Access-Control-Allow-Methods`(GET, POST, PUT, DELETE, OPTIONS)))
-        header("Access-Control-Allow-Headers") should be(Some(`Access-Control-Allow-Headers`("Origin, X-Requested-With, Content-Type, Accept, Accept-Encoding, Accept-Language, Host, Referer, User-Agent")))
+        header("Access-Control-Allow-Headers") should be(Some(`Access-Control-Allow-Headers`("Authorization, Origin, X-Requested-With, Content-Type, Accept, Accept-Encoding, Accept-Language, Host, Referer, User-Agent")))
         header("Access-Control-Allow-Credentials") should be(Some(`Access-Control-Allow-Credentials`(true)))
 
       case false =>
