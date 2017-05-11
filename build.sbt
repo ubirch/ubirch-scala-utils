@@ -177,6 +177,15 @@ lazy val redisUtil = (project in file("redis-util"))
     libraryDependencies ++= depRedisUtil
   )
 
+lazy val responseUtil = project
+  .settings(commonSettings: _*)
+  .settings(
+    name := "response-util",
+    description := "HTTP Response Utils",
+    version := "0.1.3",
+    libraryDependencies ++= depResponseUtil
+  )
+
 lazy val restAkkaHttp = (project in file("rest-akka-http"))
   .settings(commonSettings: _*)
   .settings(
@@ -200,15 +209,6 @@ lazy val uuid = project
   .settings(
     description := "UUID related utils",
     version := "0.1.1"
-  )
-
-lazy val responseUtil = project
-  .settings(commonSettings: _*)
-  .settings(
-    name := "response-util",
-    description := "HTTP Response Utils",
-    version := "0.1.3",
-    libraryDependencies ++= depResponseUtil
   )
 
 /*

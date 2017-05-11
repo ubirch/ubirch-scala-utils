@@ -408,7 +408,7 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "futures" % "0.1.0"
+      "com.ubirch.util" %% "futures" % "0.1.1"
     )
 
 ### Release History
