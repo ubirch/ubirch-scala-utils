@@ -251,9 +251,7 @@ lazy val depMongoTestUtils = Seq(
 
 lazy val depMongoUtils = Seq(
   akkaSlf4j,
-  reactiveMongo excludeAll(
-    Seq(ExclusionRule(organization = akkaG)): _*
-    ),
+  reactiveMongo,
   ubirchUtilConfig,
   jodaTime,
   jodaConvert,
@@ -346,7 +344,7 @@ lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8.1"
 lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
 lazy val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
 
-lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.12.1"
+lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.12.1" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
@@ -363,7 +361,7 @@ lazy val depLog4jToSlf4j = Seq(
   log4jToslf4j
 )
 
-lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = "com.typesafe.akka")
+lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
