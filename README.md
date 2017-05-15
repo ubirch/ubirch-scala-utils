@@ -511,10 +511,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.2.0"
+      "com.ubirch.util" %% "mongo-utils" % "0.2.1"
     )
 
 ### Release History
+
+#### Version 0.2.1 (2017-05-15)
+
+* exclude Akka 2.3.x dependencies
 
 #### Version 0.2.0 (2017-04-28)
 
@@ -534,10 +538,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.2.0"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.2.1"
     )
 
 ### Release History
+
+#### Version 0.2.1 (2017-05-15)
+
+* update to _com.ubirch.util:mongo-utils:0.2.1
 
 #### Version 0.2.0 (2017-04-28)
 
@@ -710,7 +718,7 @@ to provide a config prefix and the software will look for them under it.
 | Config Item                | Mandatory  | Description               |
 |:---------------------------|:-----------|:--------------------------|
 | ubirch.redisUtil.host      | yes        | host redis is running on  |
-| ubirch.redisUtil.port      | yes        | redis TCP port            |
+| ubirch.redisUtil.port      | yes        | redis TCP port      l      |
 | ubirch.redisUtil.password  | no         | redis password            |
 
 Here's an example config:
