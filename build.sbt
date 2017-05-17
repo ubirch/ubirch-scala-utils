@@ -134,7 +134,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.2.1",
+    version := "0.3.0",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -143,7 +143,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.2.1",
+    version := "0.3.0",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -301,7 +301,7 @@ lazy val depResponseUtil = Seq(
 
 // Versions
 val json4sV = "3.5.1"
-val akkaV = "2.4.17"
+val akkaV = "2.5.1"
 val akkaHttpV = "10.0.6"
 val elasticsearchV = "5.3.2"
 val log4jV = "2.8.2"
@@ -344,7 +344,7 @@ lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8.1"
 lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
 lazy val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
 
-lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.12.1" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
+lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.12.3" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
@@ -366,7 +366,7 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll Excl
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.4"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.2.1"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.3.0"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.2.1"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.2.0"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"

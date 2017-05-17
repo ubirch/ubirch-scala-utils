@@ -511,10 +511,15 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.2.1"
+      "com.ubirch.util" %% "mongo-utils" % "0.3.0"
     )
 
 ### Release History
+
+#### Version 0.3.0 (2017-05-18)
+
+* update to reactivemongo 0.12.3
+* update to Akka 2.5.1 ([migration guide](http://doc.akka.io/docs/akka/2.5/project/migration-guide-2.4.x-2.5.x.html)
 
 #### Version 0.2.1 (2017-05-15)
 
@@ -538,10 +543,15 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.2.1"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.3.0"
     )
 
 ### Release History
+
+#### Version 0.3.0 (2017-05-18)
+
+* update to reactivemongo 0.12.3
+* update to Akka 2.5.1 ([migration guide](http://doc.akka.io/docs/akka/2.5/project/migration-guide-2.4.x-2.5.x.html)
 
 #### Version 0.2.1 (2017-05-15)
 
