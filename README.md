@@ -600,7 +600,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.4.0"
+      "com.ubirch.util" %% "oidc-utils" % "0.4.1"
     )
 
 ### Config
@@ -627,6 +627,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.4.1 (2017-05-18)
+
+* update Akka Http to 10.0.6
 
 #### Version 0.4.0 (2017-04-26)
 
@@ -759,10 +763,14 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "response-util" % "0.1.3"
+      "com.ubirch.util" %% "response-util" % "0.1.4"
     )
 
 ### Release History
+
+#### Version 0.1.4 (2017-05-18)
+
+* update Akka Http to 10.0.6
 
 #### Version 0.1.3 (2017-04-10)
 
@@ -788,15 +796,16 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http" % "0.3.6" // for Akka HTTP 10.0.6
       "com.ubirch.util" %% "rest-akka-http" % "0.3.5" // for Akka HTTP 10.0.5
       "com.ubirch.util" %% "rest-akka-http" % "0.3.3" // for Akka HTTP 10.0.3
-      "com.ubirch.util" %% "rest-akka-http" % "0.3.1" // for Akka HTTP 2.4.11.1
-      "com.ubirch.util" %% "rest-akka-http" % "0.3" // for Akka HTTP 2.4.11
-      "com.ubirch.util" %% "rest-akka-http" % "0.2" // for Akka HTTP 2.4.10
-      "com.ubirch.util" %% "rest-akka-http" % "0.1" // for Akka HTTP 2.4.9-RC2
     )
 
 ### Release History
+
+#### Version 0.3.6 (2017-05-18)
+
+* update Akka Http to 10.0.6
 
 #### Version 0.3.5 (2017-05-05)
 
@@ -829,13 +838,16 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http-test" % "0.3.6" // for Akka HTTP 10.0.6
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.5" // for Akka HTTP 10.0.5
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.3" // for Akka HTTP 10.0.3
-      "com.ubirch.util" %% "rest-akka-http-test" % "0.3.1" // for Akka HTTP 2.4.11.1
-      "com.ubirch.util" %% "rest-akka-http-test" % "0.3" // for Akka HTTP 2.4.11
     )
 
 ### Release History
+
+#### Version 0.3.6 (2017-05-18)
+
+* update Akka Http to 10.0.6
 
 #### Version 0.3.5 (2017-05-05)
 
