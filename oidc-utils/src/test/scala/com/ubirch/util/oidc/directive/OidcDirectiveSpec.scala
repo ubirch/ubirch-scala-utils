@@ -80,12 +80,20 @@ class OidcDirectiveSpec extends FeatureSpec
       val token = "some-token"
       val providerId = "some-provider-id"
       val userId = "some-user-id"
+      val userName = "Jane Doe"
+      val locale = "en"
 
       val initialTtl = 10L
       val refreshTtl = OidcUtilsConfig.redisUpdateExpiry
 
       val redisKey = OidcUtil.tokenToHashedKey(token)
-      val redisValue = write(UserContext(context = context, providerId = providerId, userId = userId))
+      val redisValue = write(UserContext(
+        context = context,
+        providerId = providerId,
+        userId = userId,
+        userName = userName,
+        locale = locale
+      ))
       Await.result(redis.set(redisKey, redisValue, exSeconds = Some(initialTtl)), 2 seconds) shouldBe true
 
       val authorizationHeader: HttpHeader = Authorization(OAuth2BearerToken(token))

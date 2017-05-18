@@ -16,7 +16,7 @@ object MongoUtilDebug extends App
 
   val mongo = new MongoUtil()
 
-  mongo.db() map { db =>
+  mongo.db map { db =>
 
     logger.info(s"connected to database: ${db.name}")
     logger.info("listing collection names")
