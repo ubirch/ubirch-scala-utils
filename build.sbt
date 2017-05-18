@@ -134,7 +134,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.3.0",
+    version := "0.2.2",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -143,7 +143,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.3.0",
+    version := "0.2.2",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -152,7 +152,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.5.0",
+    version := "0.4.1",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -164,7 +164,7 @@ lazy val redisTestUtil = (project in file("redis-test-util"))
   .settings(
     name := "redis-test-util",
     description := "Redis related test utils",
-    version := "0.3.0",
+    version := "0.2.2",
     libraryDependencies ++= depRedisTestUtils
   )
 
@@ -173,7 +173,7 @@ lazy val redisUtil = (project in file("redis-util"))
   .settings(
     name := "redis-util",
     description := "Redis related utils",
-    version := "0.3.0",
+    version := "0.2.2",
     libraryDependencies ++= depRedisUtil
   )
 
@@ -301,7 +301,7 @@ lazy val depResponseUtil = Seq(
 
 // Versions
 val json4sV = "3.5.1"
-val akkaV = "2.5.0"
+val akkaV = "2.4.18"
 val akkaHttpV = "10.0.6"
 val elasticsearchV = "5.3.2"
 val log4jV = "2.8.2"
@@ -366,9 +366,9 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll Excl
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.4"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.3.0"
-lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.0"
-lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.0"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.2.2"
+lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.2.2T"
+lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.2.2"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"
 
 /*
