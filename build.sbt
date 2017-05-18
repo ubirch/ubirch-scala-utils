@@ -301,7 +301,7 @@ lazy val depResponseUtil = Seq(
 
 // Versions
 val json4sV = "3.5.1"
-val akkaV = "2.5.1"
+val akkaV = "2.5.0"
 val akkaHttpV = "10.0.6"
 val elasticsearchV = "5.3.2"
 val log4jV = "2.8.2"
