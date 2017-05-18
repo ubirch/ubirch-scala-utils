@@ -519,7 +519,7 @@ Utils related to Scala Futures.
 #### Version 0.3.0 (2017-05-18)
 
 * update to reactivemongo 0.12.3
-* update to Akka 2.5.1 ([migration guide](http://doc.akka.io/docs/akka/2.5/project/migration-guide-2.4.x-2.5.x.html)
+* update to Akka 2.5.0 ([migration guide](http://doc.akka.io/docs/akka/2.5/project/migration-guide-2.4.x-2.5.x.html))
 
 #### Version 0.2.1 (2017-05-15)
 
@@ -551,7 +551,7 @@ Utils related to Scala Futures.
 #### Version 0.3.0 (2017-05-18)
 
 * update to reactivemongo 0.12.3
-* update to Akka 2.5.1 ([migration guide](http://doc.akka.io/docs/akka/2.5/project/migration-guide-2.4.x-2.5.x.html)
+* update to Akka 2.5.0 ([migration guide](http://doc.akka.io/docs/akka/2.5/project/migration-guide-2.4.x-2.5.x.html)
 
 #### Version 0.2.1 (2017-05-15)
 
@@ -641,7 +641,7 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 #### Version 0.5.0 (2017-05-18)
 
 * update Akka Http to 10.0.6
-* update to Akka 2.5.1 ([migration guide](http://doc.akka.io/docs/akka/2.5/project/migration-guide-2.4.x-2.5.x.html)
+* update to Akka 2.5.0 ([migration guide](http://doc.akka.io/docs/akka/2.5/project/migration-guide-2.4.x-2.5.x.html))
 
 #### Version 0.4.0 (2017-04-26)
 
@@ -703,7 +703,7 @@ The required config is documented in the `redis-util` section.
 
 #### Version 0.3.0 (2017-05-18)
 
-* update to Akka 2.5.1 ([migration guide](http://doc.akka.io/docs/akka/2.5/project/migration-guide-2.4.x-2.5.x.html)
+* update to Akka 2.5.0 ([migration guide](http://doc.akka.io/docs/akka/2.5/project/migration-guide-2.4.x-2.5.x.html))
 
 #### Version 0.2.1 (2017-04-10)
 
@@ -761,7 +761,7 @@ And this how you get a redis client:
 
 #### Version 0.3.0 (2017-05-18)
 
-* update to Akka 2.5.1 ([migration guide](http://doc.akka.io/docs/akka/2.5/project/migration-guide-2.4.x-2.5.x.html)
+* update to Akka 2.5.0 ([migration guide](http://doc.akka.io/docs/akka/2.5/project/migration-guide-2.4.x-2.5.x.html))
 
 #### Version 0.2.0 (2017-04-09)
 
