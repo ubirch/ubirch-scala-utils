@@ -60,7 +60,7 @@ lazy val crypto = project
   .settings(commonSettings: _*)
   .settings(
     description := "ubirch util with crypto related code",
-    version := "0.3.3",
+    version := "0.3.4",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -220,7 +220,7 @@ lazy val depCrypto = Seq(
   scalaTest % "test",
   jodaTime % "test",
   jodaConvert % "test"
-)
+) ++ depSlf4jLogging
 
 lazy val depElasticsearchClientBinary = Seq(
   elasticSearch,

@@ -133,7 +133,7 @@ public class EdDSAPrivateKey implements EdDSAKey, PrivateKey {
      *
      * @return 32 bytes for Ed25519, throws for other curves
      */
-    private static byte[] decode(byte[] d) throws InvalidKeySpecException {
+    static public byte[] decode(byte[] d) throws InvalidKeySpecException {
         try {
             int idx = 0;
             if (d[idx++] != 0x30 ||

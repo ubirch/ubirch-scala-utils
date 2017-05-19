@@ -44,6 +44,10 @@
 
 ### Release History
 
+#### Version 0.3.4 (2017-05-19)
+
+* added EccUtil (sign/validate/keypair gen)
+
 #### Version 0.3.3 (2016-11-09)
 
 * fixed refactoring bug
