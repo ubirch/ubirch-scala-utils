@@ -191,8 +191,8 @@ lazy val restAkkaHttp = (project in file("rest-akka-http"))
   .settings(
     name := "rest-akka-http",
     description := "shared custom classes related to akka-http-experimental (for example certain directives)",
-    version := "0.3.6", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
-    libraryDependencies += akkaHttp
+    version := "0.3.7", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
+    libraryDependencies ++= depRestAkkaHttp
   )
 
 lazy val restAkkaHttpTest = (project in file("rest-akka-http-test"))
@@ -200,7 +200,7 @@ lazy val restAkkaHttpTest = (project in file("rest-akka-http-test"))
   .settings(
     name := "rest-akka-http-test",
     description := "akka-http-experimental related test utils",
-    version := "0.3.6", // NOTE: please keep major.minor version synchronized with restAkkaHttp
+    version := "0.3.7", // NOTE: please keep major.minor version synchronized with restAkkaHttp
     libraryDependencies ++= depRestAkkaHttpTest
   )
 
@@ -281,6 +281,11 @@ lazy val depRedisUtil = Seq(
   ubirchUtilConfig
 )
 
+lazy val depRestAkkaHttp = Seq(
+  akkaHttp,
+  akkaHttpCors
+)
+
 lazy val depRestAkkaHttpTest = Seq(
   akkaHttp,
   akkaHttpTestkit,
@@ -292,7 +297,6 @@ lazy val depResponseUtil = Seq(
   akkaHttpTestkit % "test",
   scalaTest % "test"
 )
-
 
 
 /*
@@ -345,6 +349,9 @@ lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
 lazy val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
 
 lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.12.3" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
+
+// https://github.com/lomigmegard/akka-http-cors
+lazy val akkaHttpCors = "ch.megard" %% "akka-http-cors" % "0.2.1"
 
 lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"

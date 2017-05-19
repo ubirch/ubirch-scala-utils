@@ -819,12 +819,17 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http" % "0.3.7" // for Akka HTTP 10.0.6
       "com.ubirch.util" %% "rest-akka-http" % "0.3.6" // for Akka HTTP 10.0.6
       "com.ubirch.util" %% "rest-akka-http" % "0.3.5" // for Akka HTTP 10.0.5
       "com.ubirch.util" %% "rest-akka-http" % "0.3.3" // for Akka HTTP 10.0.3
     )
 
 ### Release History
+
+#### Version 0.3.7 (107-05-22)
+
+* switch to using a CORS library: https://github.com/lomigmegard/akka-http-cors
 
 #### Version 0.3.6 (2017-05-18)
 
@@ -861,12 +866,18 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http-test" % "0.3.7" // for Akka HTTP 10.0.6
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.6" // for Akka HTTP 10.0.6
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.5" // for Akka HTTP 10.0.5
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.3" // for Akka HTTP 10.0.3
     )
 
 ### Release History
+
+#### Version 0.3.7 (107-05-22)
+
+* switch to using a CORS library: https://github.com/lomigmegard/akka-http-cors
+* updated `CORSUtil` to conform with CORS library
 
 #### Version 0.3.6 (2017-05-18)
 
