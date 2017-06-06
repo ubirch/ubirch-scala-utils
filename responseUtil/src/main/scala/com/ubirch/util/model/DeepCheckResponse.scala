@@ -7,12 +7,12 @@ import org.json4s.native.Serialization.write
 
 /**
   * author: cvandrei
-  * since: 2016-09-20
+  * since: 2017-06-06
   */
-case class JsonResponse(version: String = "1.0",
-                        status: String = "OK",
-                        message: String
-                       ) {
+case class DeepCheckResponse(version: String = "1.0",
+                           status: String = "OK",
+                           messages: Seq[String] = Seq.empty
+                          ) {
 
   implicit val formats: Formats = JsonFormats.default
 

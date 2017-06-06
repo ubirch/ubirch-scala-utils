@@ -108,7 +108,7 @@ In addition to this there's some other utils as well:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.0.2"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.0.3"
     )
 
 
@@ -195,6 +195,10 @@ Example Config (simple localhost cluster without Shield/X-Pack):
     }
 
 ### Release History
+
+#### Version 2.0.3 (2017-06-??)
+
+* update to _com.ubirch.util:json:0.3.5_
 
 #### Version 2.0.2 (2017-05-02)
 
@@ -436,10 +440,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.3.4"
+      "com.ubirch.util" %% "json" % "0.3.5"
     )
 
 ### Release History
+
+#### Version 0.3.5 (2017-06-??)
+
+* add `DeepCheckResponse` model
 
 #### Version 0.3.4 (2017-04-10)
 
@@ -478,10 +486,14 @@ Utils related to Scala Futures.
       Resolver.bintrayRepo("hseeberger", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json-auto-convert" % "0.3.4"
+      "com.ubirch.util" %% "json-auto-convert" % "0.3.5"
     )
 
 ### Release History
+
+#### Version 0.3.5 (2017-06-??)
+
+* update to _com.ubirch.util:json:0.3.5_
 
 #### Version 0.3.4 (2017-04-10)
 
@@ -614,7 +626,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.4.1"
+      "com.ubirch.util" %% "oidc-utils" % "0.4.2"
     )
 
 ### Config
@@ -641,6 +653,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.4.2 (2017-06-??)
+
+* update to _com.ubirch.util:json:0.3.5_
 
 #### Version 0.4.1 (2017-05-18)
 
@@ -786,10 +802,15 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "response-util" % "0.1.4"
+      "com.ubirch.util" %% "response-util" % "0.1.5"
     )
 
 ### Release History
+
+#### Version 0.1.5 (2017-06-??)
+
+* update to _com.ubirch.util:json:0.3.5_
+* refactored `ResponseUtil` to accept `AnyRef` instead of just `JsonResponse`
 
 #### Version 0.1.4 (2017-05-18)
 

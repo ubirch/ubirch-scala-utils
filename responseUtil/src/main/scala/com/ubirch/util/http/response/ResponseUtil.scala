@@ -1,6 +1,10 @@
 package com.ubirch.util.http.response
 
+import com.ubirch.util.json.JsonFormats
 import com.ubirch.util.model.{JsonErrorResponse, JsonResponse}
+
+import org.json4s.Formats
+import org.json4s.native.Serialization.write
 
 import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCode}
@@ -11,28 +15,59 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusC
   */
 trait ResponseUtil {
 
-  def response(message: String): HttpResponse = {
-    response(JsonResponse(message = message))
+  implicit val formats: Formats = JsonFormats.default
+
+  /**
+    * Creates a response with the given http status and the "responseObject" converted to JSON.
+    *
+    * @param responseObject any object that can be converted to JSON
+    * @param status         HTTP status code of the response (defaults to 200)
+    * @return
+    */
+  def response(responseObject: AnyRef, status: StatusCode = OK): HttpResponse = {
+
+    HttpResponse(
+      status = status,
+      entity = HttpEntity(
+        ContentTypes.`application/json`,
+        write(responseObject)
+      )
+    )
+
   }
 
-  def response(response: JsonResponse): HttpResponse = {
-    HttpResponse(status = OK, entity = HttpEntity(ContentTypes.`application/json`, response.toJsonString))
+  def response(message: String): HttpResponse = {
+    response(JsonResponse(message = message))
   }
 
   def requestErrorResponse(errorType: String, errorMessage: String): HttpResponse = {
     requestErrorResponse(JsonErrorResponse(errorType = errorType, errorMessage = errorMessage))
   }
 
-  def requestErrorResponse(response: JsonErrorResponse, status: StatusCode = BadRequest): HttpResponse = {
-    HttpResponse(status = status, entity = HttpEntity(ContentTypes.`application/json`, response.toJsonString))
+  /**
+    * Creates response with the given status and the "responseObject" converted to JSON.
+    *
+    * @param responseObject any object that can be converted to JSON
+    * @param status         HTTP status code of the response (defaults to 400)
+    * @return
+    */
+  def requestErrorResponse(responseObject: AnyRef, status: StatusCode = BadRequest): HttpResponse = {
+    response(responseObject, status)
   }
 
   def serverErrorResponse(errorType: String, errorMessage: String): HttpResponse = {
     serverErrorResponse(JsonErrorResponse(errorType = errorType, errorMessage = errorMessage))
   }
 
-  def serverErrorResponse(response: JsonErrorResponse, status: StatusCode = InternalServerError): HttpResponse = {
-    HttpResponse(status = status, entity = HttpEntity(ContentTypes.`application/json`, response.toJsonString))
+  /**
+    * Creates response with the given status and the "responseObject" converted to JSON.
+    *
+    * @param responseObject any object that can be converted to JSON
+    * @param status         HTTP status code of the response (defaults to 500)
+    * @return
+    */
+  def serverErrorResponse(responseObject: AnyRef, status: StatusCode = InternalServerError): HttpResponse = {
+    response(responseObject, status)
   }
 
 }

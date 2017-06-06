@@ -83,7 +83,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.0.2",
+    version := "2.0.3",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -113,7 +113,7 @@ lazy val json = project
   .settings(commonSettings: _*)
   .settings(
     description := "util to convert from/to JValue objects",
-    version := "0.3.4",
+    version := "0.3.5",
     libraryDependencies ++= depJson
   )
 
@@ -122,7 +122,7 @@ lazy val jsonAutoConvert = (project in file("json-auto-convert"))
   .settings(
     name := "json-auto-convert",
     description := "convert objects to/from JSON",
-    version := "0.3.4",
+    version := "0.3.5",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
@@ -152,7 +152,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.4.1",
+    version := "0.4.2",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -182,7 +182,7 @@ lazy val responseUtil = project
   .settings(
     name := "response-util",
     description := "HTTP Response Utils",
-    version := "0.1.4",
+    version := "0.1.5",
     libraryDependencies ++= depResponseUtil
   )
 
@@ -294,6 +294,7 @@ lazy val depRestAkkaHttpTest = Seq(
 
 lazy val depResponseUtil = Seq(
   akkaHttp,
+  ubirchUtilJson,
   akkaHttpTestkit % "test",
   scalaTest % "test"
 )
@@ -372,7 +373,7 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll Excl
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
-lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.4"
+lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.5"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.2.2"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.2.2"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.2.2"
