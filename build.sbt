@@ -37,7 +37,6 @@ lazy val scalaUtils = (project in file("."))
     elasticsearchUtil,
     futures,
     json,
-    jsonAutoConvert,
     mongoTestUtils,
     mongoUtils,
     oidcUtils,
@@ -83,7 +82,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.0.3",
+    version := "2.0.4",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -112,21 +111,12 @@ lazy val futures = project
 lazy val json = project
   .settings(commonSettings: _*)
   .settings(
-    description := "util to convert from/to JValue objects",
-    version := "0.3.5",
-    libraryDependencies ++= depJson
-  )
-
-lazy val jsonAutoConvert = (project in file("json-auto-convert"))
-  .settings(commonSettings: _*)
-  .settings(
-    name := "json-auto-convert",
-    description := "convert objects to/from JSON",
-    version := "0.3.5",
+    description := "collection of JSON utils",
+    version := "0.4.0",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
-    libraryDependencies ++= depJsonAutoConvert
+    libraryDependencies ++= depJson
   )
 
 lazy val mongoTestUtils = (project in file("mongo-test-utils"))
@@ -152,7 +142,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.4.2",
+    version := "0.4.3",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -182,7 +172,7 @@ lazy val responseUtil = project
   .settings(
     name := "response-util",
     description := "HTTP Response Utils",
-    version := "0.1.5",
+    version := "0.1.6",
     libraryDependencies ++= depResponseUtil
   )
 
@@ -236,14 +226,10 @@ lazy val depElasticsearchUtil = Seq(
 )
 
 lazy val depJson = Seq(
+  seebergerJson4s,
   scalaTest % "test",
   jodaTime % "test"
 ) ++ json4sWitNative
-
-lazy val depJsonAutoConvert = Seq(
-  seebergerJson4s,
-  ubirchUtilJson
-)
 
 lazy val depMongoTestUtils = Seq(
   ubirchUtilMongoUtils
@@ -373,7 +359,7 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll Excl
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
-lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.3.5"
+lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.0"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.2.2"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.2.2"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.2.2"

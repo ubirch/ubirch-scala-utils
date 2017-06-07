@@ -9,7 +9,6 @@
 * elasticsearch-util
 * futures
 * json
-* json-auto-convert
 * mongo-test-utils
 * mongo-utils
 * oidc-utils
@@ -108,7 +107,7 @@ In addition to this there's some other utils as well:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.0.3"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.0.4"
     )
 
 
@@ -195,6 +194,10 @@ Example Config (simple localhost cluster without Shield/X-Pack):
     }
 
 ### Release History
+
+#### Version 2.0.4 (2017-06-07)
+
+* update to _com.ubirch.util:json:0.4.0_
 
 #### Version 2.0.3 (2017-06-07)
 
@@ -437,13 +440,18 @@ Utils related to Scala Futures.
 ### Scala Dependency
 
     resolvers ++= Seq(
-      Resolver.sonatypeRepo("releases")
+      Resolver.sonatypeRepo("releases"),
+      Resolver.bintrayRepo("hseeberger", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.3.5"
+      "com.ubirch.util" %% "json" % "0.4.0"
     )
 
 ### Release History
+
+#### Version 0.4.0 (2017-06-07)
+
+* integrate code from _com.ubirch.util:json-auto-convert:0.3.5_
 
 #### Version 0.3.5 (2017-06-07)
 
@@ -479,42 +487,7 @@ Utils related to Scala Futures.
 
 ## `json-auto-convert`
 
-### Scala Dependency
-
-    resolvers ++= Seq(
-      Resolver.sonatypeRepo("releases"),
-      Resolver.bintrayRepo("hseeberger", "maven")
-    )
-    libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json-auto-convert" % "0.3.5"
-    )
-
-### Release History
-
-#### Version 0.3.5 (2017-06-07)
-
-* update to _com.ubirch.util:json:0.3.5_
-
-#### Version 0.3.4 (2017-04-10)
-
-* update json4s to version 3.5.1
-* de.heikoseeberger:akka-http-json4s to version 1.14.0
-
-#### Version 0.3.3 (2017-03-31)
-
-* update to com.ubirch.util:json:0.3.3
-
-#### Version 0.3.2 (2016-11-04)
-
-* add com.ubirch.util:json:0.3.2 dependency for it's default formats
-
-#### Version 0.3.1 (2016-11-02)
-
-* update dependency "de.heikoseeberger":"akka-http-json4s" from version 1.8.0 to 1.10.1
-
-#### Version 0.3 (2016-11-01)
-
-* update json4s dependency from version 3.4.0 to 3.4.2
+**all code from this module has been moved to _com.ubirch.util:json:0.4.0+_**
 
 
 -----------------------
@@ -626,7 +599,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.4.2"
+      "com.ubirch.util" %% "oidc-utils" % "0.4.3"
     )
 
 ### Config
@@ -653,6 +626,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.4.3 (2017-06-07)
+
+* update to _com.ubirch.util:json:0.4.0_
 
 #### Version 0.4.2 (2017-06-07)
 
@@ -802,10 +779,14 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "response-util" % "0.1.5"
+      "com.ubirch.util" %% "response-util" % "0.1.6"
     )
 
 ### Release History
+
+#### Version 0.1.6 (2017-06-07)
+
+* update to _com.ubirch.util:json:0.4.0_
 
 #### Version 0.1.5 (2017-06-07)
 
