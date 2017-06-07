@@ -1,9 +1,8 @@
 package com.ubirch.util.http.response
 
-import com.ubirch.util.json.JsonFormats
+import com.ubirch.util.json.MyJsonProtocol
 import com.ubirch.util.model.{JsonErrorResponse, JsonResponse}
 
-import org.json4s.Formats
 import org.json4s.native.Serialization.write
 
 import akka.http.scaladsl.model.StatusCodes._
@@ -13,9 +12,7 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusC
   * Created by derMicha on 28/10/16.
   * This util sh
   */
-trait ResponseUtil {
-
-  implicit val formats: Formats = JsonFormats.default
+trait ResponseUtil extends MyJsonProtocol {
 
   /**
     * Creates a response with the given http status and the "responseObject" converted to JSON.

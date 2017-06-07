@@ -787,6 +787,7 @@ And this how you get a redis client:
 #### Version 0.1.6 (2017-06-07)
 
 * update to _com.ubirch.util:json:0.4.0_
+* changed `ResponseUtil` to extend `MyJsonProtocol`
 
 #### Version 0.1.5 (2017-06-07)
 
