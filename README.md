@@ -196,7 +196,7 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 
 ### Release History
 
-#### Version 2.0.3 (2017-06-??)
+#### Version 2.0.3 (2017-06-07)
 
 * update to _com.ubirch.util:json:0.3.5_
 
@@ -445,7 +445,7 @@ Utils related to Scala Futures.
 
 ### Release History
 
-#### Version 0.3.5 (2017-06-??)
+#### Version 0.3.5 (2017-06-07)
 
 * add `DeepCheckResponse` model
 
@@ -491,7 +491,7 @@ Utils related to Scala Futures.
 
 ### Release History
 
-#### Version 0.3.5 (2017-06-??)
+#### Version 0.3.5 (2017-06-07)
 
 * update to _com.ubirch.util:json:0.3.5_
 
@@ -654,7 +654,7 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
-#### Version 0.4.2 (2017-06-??)
+#### Version 0.4.2 (2017-06-07)
 
 * update to _com.ubirch.util:json:0.3.5_
 
@@ -807,7 +807,7 @@ And this how you get a redis client:
 
 ### Release History
 
-#### Version 0.1.5 (2017-06-??)
+#### Version 0.1.5 (2017-06-07)
 
 * update to _com.ubirch.util:json:0.3.5_
 * refactored `ResponseUtil` to accept `AnyRef` instead of just `JsonResponse`
