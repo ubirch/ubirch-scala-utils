@@ -607,7 +607,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.4.3"
+      "com.ubirch.util" %% "oidc-utils" % "0.4.4"
     )
 
 ### Config
@@ -634,6 +634,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.4.4 (2017-06-08)
+
+* update _com.ubirch.util:redis-util_ to 0.2.3
 
 #### Version 0.4.3 (2017-06-07)
 
@@ -697,7 +701,7 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-test-util" % "0.2.2"
+      "com.ubirch.util" %% "redis-test-util" % "0.2.3"
     )
 
 ### Config
@@ -705,6 +709,10 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 The required config is documented in the `redis-util` section.
 
 ### Release History
+
+#### Version 0.2.3 (2017-06-08)
+
+* update _com.ubirch.util:redis-util_ to 0.2.3
 
 #### Version 0.2.2 (2017-05-18)
 
@@ -731,7 +739,7 @@ the whole environment itself)
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-util" % "0.2.2"
+      "com.ubirch.util" %% "redis-util" % "0.2.3"
     )
 
 ### Config
@@ -763,6 +771,10 @@ And this how you get a redis client:
     ```
 
 ### Release History
+
+#### Version 0.2.3 (2017-06-08)
+
+* add method `RedisClientUtil.connectivityCheck`
 
 #### Version 0.2.2 (2017-05-18)
 
