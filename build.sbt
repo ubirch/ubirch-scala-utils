@@ -124,7 +124,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.2.2",
+    version := "0.2.3",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -133,7 +133,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.2.2",
+    version := "0.2.3",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -238,6 +238,7 @@ lazy val depMongoTestUtils = Seq(
 lazy val depMongoUtils = Seq(
   akkaSlf4j,
   reactiveMongo,
+  ubirchUtilResponseUtil,
   ubirchUtilConfig,
   jodaTime,
   jodaConvert,
@@ -360,9 +361,10 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll Excl
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.0"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.2.2"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.2.3"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.2.2"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.2.2"
+lazy val ubirchUtilResponseUtil = ubirchUtilGroup %% "response-util" % "0.1.6"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"
 
 /*

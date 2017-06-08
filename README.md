@@ -500,10 +500,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.2.2"
+      "com.ubirch.util" %% "mongo-utils" % "0.2.3"
     )
 
 ### Release History
+
+#### Version 0.2.3 (2017-06-08)
+
+* add method `MongoUtil.connectivityCheck`
 
 #### Version 0.2.2 (2017-05-18)
 
@@ -532,10 +536,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.2.2"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.2.3"
     )
 
 ### Release History
+
+#### Version 0.2.3 (2017-06-08)
+
+* update _com.ubirch.util:mongo-utils_ to 0.2.3
 
 #### Version 0.2.2 (2017-05-18)
 
