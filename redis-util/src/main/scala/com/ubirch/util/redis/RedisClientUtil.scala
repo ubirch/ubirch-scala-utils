@@ -1,6 +1,6 @@
 package com.ubirch.util.redis
 
-import com.ubirch.util.model.DeepCheckResponse
+import com.ubirch.util.deepCheck.model.DeepCheckResponse
 import com.ubirch.util.redis.config.Config
 
 import akka.actor.ActorSystem
@@ -60,7 +60,7 @@ object RedisClientUtil {
 
         case t: Throwable =>
           DeepCheckResponse(
-            status = "NOK",
+            status = false,
             messages = Seq(s"[$serviceName] ${t.getMessage}")
           )
 
