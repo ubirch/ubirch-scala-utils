@@ -81,7 +81,7 @@ lazy val deepCheckModel = (project in file("deep-check-model"))
 .settings(commonSettings: _*)
 .settings(
   name := "deep-check-model",
-  description := "",
+  description := "actor and JSON models for the /deepCheck endpoints",
   version := "0.1.0",
   libraryDependencies ++= depDeepCheckModel
 )
