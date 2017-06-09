@@ -33,6 +33,7 @@ lazy val scalaUtils = (project in file("."))
     config,
     crypto,
     date,
+    deepCheckModel,
     elasticsearchClientBinary,
     elasticsearchUtil,
     futures,
@@ -76,13 +77,22 @@ lazy val date = project
     )
   )
 
+lazy val deepCheckModel = (project in file("deep-check-model"))
+.settings(commonSettings: _*)
+.settings(
+  name := "deep-check-model",
+  description := "",
+  version := "0.1.0-SNAPSHOT",
+  libraryDependencies ++= depDeepCheckModel
+)
+
 lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-binary"))
   .settings(commonSettings: _*)
   .dependsOn(config)
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.0.4",
+    version := "2.0.5-SNAPSHOT",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -172,7 +182,7 @@ lazy val responseUtil = project
   .settings(
     name := "response-util",
     description := "HTTP Response Utils",
-    version := "0.1.6",
+    version := "0.2.0-SNAPSHOT",
     libraryDependencies ++= depResponseUtil
   )
 
@@ -212,10 +222,16 @@ lazy val depCrypto = Seq(
   jodaConvert % "test"
 ) ++ depSlf4jLogging
 
+lazy val depDeepCheckModel = Seq(
+  ubirchUtilJson,
+  scalaTest % "test"
+) ++ json4sWitNative
+
 lazy val depElasticsearchClientBinary = Seq(
   elasticSearch,
   elasticsearchXPack,
   ubirchUtilJson,
+  ubirchUtilDeepCheckModel,
   ubirchUtilUuid,
   scalaTest % "test"
 ) ++ json4sBase ++ depSlf4jLogging ++ depLog4jToSlf4j
@@ -361,6 +377,7 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll Excl
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
+lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.1.0-SNAPSHOT"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.0"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.2.3"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.2.3"

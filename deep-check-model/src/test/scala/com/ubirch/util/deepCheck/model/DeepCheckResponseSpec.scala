@@ -1,4 +1,4 @@
-package com.ubirch.util.model
+package com.ubirch.util.deepCheck.model
 
 import org.scalatest.{FeatureSpec, Matchers}
 
@@ -20,7 +20,7 @@ class DeepCheckResponseSpec extends FeatureSpec
       val json = deepCheckResult.toJsonString
 
       // verify
-      val expected = """{"version":"1.0","status":"OK","messages":[]}"""
+      val expected = """{"status":true,"messages":[]}"""
       json should be(expected)
 
     }
@@ -28,13 +28,13 @@ class DeepCheckResponseSpec extends FeatureSpec
     scenario("NOK; with two messages") {
 
       // prepare
-      val deepCheckResult = DeepCheckResponse(status = "NOK", messages = Seq("foo", "bar"))
+      val deepCheckResult = DeepCheckResponse(status = false, messages = Seq("foo", "bar"))
 
       // test
       val json = deepCheckResult.toJsonString
 
       // verify
-      val expected = """{"version":"1.0","status":"NOK","messages":["foo","bar"]}"""
+      val expected = """{"status":false,"messages":["foo","bar"]}"""
       json should be(expected)
 
     }

@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutionException
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
 
+import com.ubirch.util.deepCheck.model.DeepCheckResponse
 import com.ubirch.util.json.{Json4sUtil, JsonFormats}
 import com.ubirch.util.uuid.UUIDUtil
 
@@ -208,6 +209,21 @@ trait ESStorageBase extends StrictLogging {
     val res: DeleteResponse = esClient.prepareDelete(docIndex, docType, docId).get()
     res.getResult == Result.DELETED
 
+  }
+
+  def connectivityCheck(): Future[DeepCheckResponse] = {
+
+    getDocs(docIndex = "foo", docType = "bar", size = Some(1))
+      .map(_ => DeepCheckResponse())
+      .recover {
+
+        case t: Throwable =>
+          DeepCheckResponse(
+            status = false,
+            messages = Seq(t.getMessage)
+          )
+
+      }
   }
 
 }

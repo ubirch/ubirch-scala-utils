@@ -89,6 +89,26 @@
 
 -----------------------
 
+## `deep-check-model`
+
+### Scala Dependency
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases"),
+      "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "deep-check-model" % "0.1.0"
+    )
+
+### Release History
+
+#### Version 0.1.0 (2017-06-??)
+
+* extracted a refactored `DeepCheckResponse` from _com.ubirch.util:response-util:0.1.6_
+
+-----------------------
+
 ## `elasticsearch-client-binary`
 
 A client for Elasticsearch 2.4 using the binary protocol through
@@ -109,8 +129,6 @@ In addition to this there's some other utils as well:
     libraryDependencies ++= Seq(
       "com.ubirch.util" %% "elasticsearch-client-binary" % "2.0.4"
     )
-
-
 
 ### Config
 
@@ -194,6 +212,10 @@ Example Config (simple localhost cluster without Shield/X-Pack):
     }
 
 ### Release History
+
+#### Version 2.0.5 (2017-06-??)
+
+* add method `ESStorageBase.connectivityCheck`
 
 #### Version 2.0.4 (2017-06-07)
 
@@ -803,6 +825,10 @@ And this how you get a redis client:
     )
 
 ### Release History
+
+#### Version 0.2.0 (2017-06-??)
+
+* extracted a refactored `DeepCheckResponse` to new module: _com.ubirch.util:deep-check-model:0.1.0_
 
 #### Version 0.1.6 (2017-06-07)
 
