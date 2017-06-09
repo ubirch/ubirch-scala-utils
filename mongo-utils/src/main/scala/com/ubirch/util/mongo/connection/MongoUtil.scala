@@ -2,7 +2,7 @@ package com.ubirch.util.mongo.connection
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
 
-import com.ubirch.util.model.DeepCheckResponse
+import com.ubirch.util.deepCheck.model.DeepCheckResponse
 import com.ubirch.util.mongo.config.{MongoConfig, MongoConfigKeys}
 
 import reactivemongo.api.collections.bson.BSONCollection
@@ -76,7 +76,7 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
 
       case t: Throwable =>
         DeepCheckResponse(
-          status = "NOK",
+          status = false,
           messages = Seq(t.getMessage)
         )
 
