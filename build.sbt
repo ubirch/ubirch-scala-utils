@@ -82,7 +82,7 @@ lazy val deepCheckModel = (project in file("deep-check-model"))
 .settings(
   name := "deep-check-model",
   description := "actor and JSON models for the /deepCheck endpoints",
-  version := "0.1.0",
+  version := "0.1.1-SNAPSHOT",
   libraryDependencies ++= depDeepCheckModel
 )
 
@@ -92,7 +92,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.0.5",
+    version := "2.0.6-SNAPSHOT",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -122,7 +122,7 @@ lazy val json = project
   .settings(commonSettings: _*)
   .settings(
     description := "collection of JSON utils",
-    version := "0.4.0",
+    version := "0.4.1-SNAPSHOT",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
@@ -134,7 +134,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.3.0",
+    version := "0.3.1-SNAPSHOT",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -143,7 +143,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.3.0",
+    version := "0.3.1-SNAPSHOT",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -152,7 +152,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.4.5",
+    version := "0.4.6-SNAPSHOT",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -164,7 +164,7 @@ lazy val redisTestUtil = (project in file("redis-test-util"))
   .settings(
     name := "redis-test-util",
     description := "Redis related test utils",
-    version := "0.3.0",
+    version := "0.3.1-SNAPSHOT",
     libraryDependencies ++= depRedisTestUtils
   )
 
@@ -173,7 +173,7 @@ lazy val redisUtil = (project in file("redis-util"))
   .settings(
     name := "redis-util",
     description := "Redis related utils",
-    version := "0.3.0",
+    version := "0.3.1-SNAPSHOT",
     libraryDependencies ++= depRedisUtil
   )
 
@@ -182,7 +182,7 @@ lazy val responseUtil = project
   .settings(
     name := "response-util",
     description := "HTTP Response Utils",
-    version := "0.2.0",
+    version := "0.2.1-SNAPSHOT",
     libraryDependencies ++= depResponseUtil
   )
 
@@ -309,7 +309,7 @@ lazy val depResponseUtil = Seq(
  ********************************************************/
 
 // Versions
-val json4sV = "3.5.1"
+val json4sV = "3.5.2"
 val akkaV = "2.4.18"
 val akkaHttpV = "10.0.6"
 val elasticsearchV = "5.3.2"
@@ -326,7 +326,6 @@ lazy val json4sBase = Seq(
   json4sExt
 )
 lazy val json4sWitNative = json4sBase :+ json4sNative
-lazy val json4sWithSeeberger = json4sBase :+ seebergerJson4s
 
 lazy val json4sJackson = "org.json4s" %% "json4s-jackson" % json4sV
 lazy val json4sCore = "org.json4s" %% "json4s-core" % json4sV
@@ -377,11 +376,11 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll Excl
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
-lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.1.0"
-lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.0"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.3.0"
-lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.0"
-lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.0"
+lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.1.1-SNAPSHOT"
+lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.1-SNAPSHOT"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.3.1-SNAPSHOT"
+lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.1-SNAPSHOT"
+lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.1-SNAPSHOT"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"
 
 /*

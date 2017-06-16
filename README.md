@@ -98,12 +98,16 @@
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "deep-check-model" % "0.1.0"
+      "com.ubirch.util" %% "deep-check-model" % "0.1.1"
     )
 
 ### Release History
 
-#### Version 0.1.0 (2017-06-??)
+#### Version 0.1.1 (2017-06-16)
+
+* update json4s to version 3.5.2
+
+#### Version 0.1.0 (2017-06-09)
 
 * extracted a refactored `DeepCheckResponse` from _com.ubirch.util:response-util:0.1.6_
 
@@ -127,7 +131,7 @@ In addition to this there's some other utils as well:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.0.4"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.0.5"
     )
 
 ### Config
@@ -213,7 +217,11 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 
 ### Release History
 
-#### Version 2.0.5 (2017-06-??)
+#### Version 2.0.6 (2017-06-16)
+
+* update json4s to version 3.5.2
+
+#### Version 2.0.5 (2017-06-09)
 
 * add method `ESStorageBase.connectivityCheck`
 
@@ -466,10 +474,14 @@ Utils related to Scala Futures.
       Resolver.bintrayRepo("hseeberger", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.4.0"
+      "com.ubirch.util" %% "json" % "0.4.1"
     )
 
 ### Release History
+
+#### Version 0.4.1 (2017-06-16)
+
+* update json4s to version 3.5.2
 
 #### Version 0.4.0 (2017-06-07)
 
@@ -522,12 +534,16 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.3.0"
+      "com.ubirch.util" %% "mongo-utils" % "0.3.1"
     )
 
 ### Release History
 
-#### Version 0.3.0 (2017-06-??)
+#### Version 0.3.1 (2017-06-16)
+
+* update json4s to version 3.5.2
+
+#### Version 0.3.0 (2017-06-09)
 
 * migrate from _com.ubirch.util:response-util_ to _com.ubirch.util:deep-check-model_
 
@@ -562,12 +578,16 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.3.0"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.3.1"
     )
 
 ### Release History
 
-#### Version 0.2.3 (2017-06-??)
+#### Version 0.3.1 (2017-06-16)
+
+* update json4s to version 3.5.2
+
+#### Version 0.2.3 (2017-06-09)
 
 * update _com.ubirch.util:mongo-utils_ to 0.3.0
 
@@ -637,7 +657,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.4.5"
+      "com.ubirch.util" %% "oidc-utils" % "0.4.6"
     )
 
 ### Config
@@ -665,7 +685,11 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
-#### Version 0.4.4 (2017-06-??)
+#### Version 0.4.6 (2017-06-16)
+
+* update json4s to version 3.5.2
+
+#### Version 0.4.5 (2017-06-09)
 
 * update _com.ubirch.util:redis-test-util_ to 0.3.0
 * update _com.ubirch.util:redis-util_ to 0.3.0
@@ -745,7 +769,11 @@ The required config is documented in the `redis-util` section.
 
 ### Release History
 
-#### Version 0.3.0 (2017-06-??)
+#### Version 0.3.1 (2017-06-16)
+
+* update json4s to version 3.5.2
+
+#### Version 0.3.0 (2017-06-09)
 
 * update _com.ubirch.util:redis-util_ to 0.3.0
 
@@ -778,7 +806,7 @@ the whole environment itself)
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-util" % "0.3.0"
+      "com.ubirch.util" %% "redis-util" % "0.3.1"
     )
 
 ### Config
@@ -811,7 +839,11 @@ And this how you get a redis client:
 
 ### Release History
 
-#### Version 0.3.0 (2017-06-??)
+#### Version 0.3.1 (2017-06-16)
+
+* update json4s to version 3.5.2
+
+#### Version 0.3.0 (2017-06-09)
 
 * migrate from _com.ubirch.util:response-util_ to _com.ubirch.util:deep-check-model_
 
@@ -842,12 +874,16 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "response-util" % "0.1.6"
+      "com.ubirch.util" %% "response-util" % "0.2.1"
     )
 
 ### Release History
 
-#### Version 0.2.0 (2017-06-??)
+#### Version 0.2.1 (2017-06-16)
+
+* update json4s to version 3.5.2
+
+#### Version 0.2.0 (2017-06-09)
 
 * extracted a refactored `DeepCheckResponse` to new module: _com.ubirch.util:deep-check-model:0.1.0_
 
