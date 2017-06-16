@@ -105,7 +105,7 @@
 
 #### Version 0.1.1 (2017-06-16)
 
-* update json4s to version 3.5.2
+* update json4s to 3.5.2
 
 #### Version 0.1.0 (2017-06-09)
 
@@ -219,7 +219,7 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 
 #### Version 2.0.6 (2017-06-16)
 
-* update json4s to version 3.5.2
+* update json4s to 3.5.2
 
 #### Version 2.0.5 (2017-06-09)
 
@@ -481,7 +481,7 @@ Utils related to Scala Futures.
 
 #### Version 0.4.1 (2017-06-16)
 
-* update json4s to version 3.5.2
+* update json4s to 3.5.2
 
 #### Version 0.4.0 (2017-06-07)
 
@@ -541,7 +541,7 @@ Utils related to Scala Futures.
 
 #### Version 0.3.1 (2017-06-16)
 
-* update json4s to version 3.5.2
+* update json4s to 3.5.2
 
 #### Version 0.3.0 (2017-06-09)
 
@@ -585,7 +585,7 @@ Utils related to Scala Futures.
 
 #### Version 0.3.1 (2017-06-16)
 
-* update json4s to version 3.5.2
+* update json4s to 3.5.2
 
 #### Version 0.2.3 (2017-06-09)
 
@@ -687,7 +687,7 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 #### Version 0.4.6 (2017-06-16)
 
-* update json4s to version 3.5.2
+* update json4s to 3.5.2
 
 #### Version 0.4.5 (2017-06-09)
 
@@ -771,7 +771,7 @@ The required config is documented in the `redis-util` section.
 
 #### Version 0.3.1 (2017-06-16)
 
-* update json4s to version 3.5.2
+* update json4s to 3.5.2
 
 #### Version 0.3.0 (2017-06-09)
 
@@ -841,7 +841,7 @@ And this how you get a redis client:
 
 #### Version 0.3.1 (2017-06-16)
 
-* update json4s to version 3.5.2
+* update json4s to 3.5.2
 
 #### Version 0.3.0 (2017-06-09)
 
@@ -881,7 +881,7 @@ And this how you get a redis client:
 
 #### Version 0.2.1 (2017-06-16)
 
-* update json4s to version 3.5.2
+* update json4s to 3.5.2
 
 #### Version 0.2.0 (2017-06-09)
 
