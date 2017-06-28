@@ -15,6 +15,16 @@ object Json4sUtil {
 
   def jvalue2String(jval: JValue): String = compact(render(jval))
 
+  def any2String(obj: AnyRef): Option[String] = {
+    try {
+      Some(write[AnyRef](obj))
+    }
+    catch {
+      case t: Throwable =>
+        None
+    }
+  }
+
   def string2JValue(value: String): Option[JValue] = {
     try {
       Some(read[JValue](value))

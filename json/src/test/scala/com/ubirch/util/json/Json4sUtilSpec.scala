@@ -9,7 +9,7 @@ import org.scalatest.{FeatureSpec, Matchers}
 /**
   * Created by derMicha on 01/08/16.
   */
-class Json4sUtilTest extends FeatureSpec
+class Json4sUtilSpec extends FeatureSpec
   with Matchers {
 
   case class TestModel(name: String, age: Int, created: DateTime)
@@ -17,6 +17,27 @@ class Json4sUtilTest extends FeatureSpec
   case class Simple(a: String)
 
   implicit val formats: Formats = JsonFormats.default
+
+  feature("any2String()") {
+
+    scenario("transformation successful") {
+
+      // prepare
+      val testModel = Simple("heinz")
+
+      // test
+      val stringOpt = Json4sUtil.any2String(testModel)
+
+      // verify
+      stringOpt.isDefined shouldBe true
+
+      val s = stringOpt.get
+      val expected = s"""{"a":"${testModel.a}"}"""
+      s should be(expected)
+
+    }
+
+  }
 
   feature("any2jvalue()") {
 

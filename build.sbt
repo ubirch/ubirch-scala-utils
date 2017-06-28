@@ -122,7 +122,7 @@ lazy val json = project
   .settings(commonSettings: _*)
   .settings(
     description := "collection of JSON utils",
-    version := "0.4.1",
+    version := "0.4.2",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),

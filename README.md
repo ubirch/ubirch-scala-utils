@@ -474,10 +474,14 @@ Utils related to Scala Futures.
       Resolver.bintrayRepo("hseeberger", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.4.1"
+      "com.ubirch.util" %% "json" % "0.4.2"
     )
 
 ### Release History
+
+#### Version 0.4.2 (2017-06-28)
+
+* add method `Json4sUtil#any2String`
 
 #### Version 0.4.1 (2017-06-16)
 
