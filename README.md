@@ -551,7 +551,7 @@ Utils related to Scala Futures.
 
 ### Release History
 
-#### Version 0.3.3 (tbd)
+#### Version 0.3.3 (2017-07-13)
 
 * introduce `MongoConstraintsBase`
 
