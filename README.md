@@ -598,10 +598,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.3.2"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.3.3"
     )
 
 ### Release History
+
+#### Version 0.3.3 (2017-07-13)
+
+* update to _com.ubirch.util:mongo-utils:0.3.3_
 
 #### Version 0.3.2 (2017-06-28)
 
