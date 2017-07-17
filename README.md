@@ -5,6 +5,7 @@
 * config
 * crypto
 * date
+* deep-check-model
 * elasticsearch-client-binary
 * elasticsearch-util
 * futures
@@ -12,6 +13,8 @@
 * mongo-test-utils
 * mongo-utils
 * oidc-utils
+* redis-test-util
+* redis-util
 * response-util
 * rest-akka-http
 * rest-akka-http-test
@@ -685,7 +688,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.4.7"
+      "com.ubirch.util" %% "oidc-utils" % "0.4.8"
     )
 
 ### Config
@@ -712,6 +715,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.4.8 (2017-07-17)
+
+* update Akka Http to 10.0.9
 
 #### Version 0.4.7 (2017-06-28)
 
@@ -914,10 +921,14 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "response-util" % "0.2.2"
+      "com.ubirch.util" %% "response-util" % "0.2.3"
     )
 
 ### Release History
+
+#### Version 0.2.3 (2017-07-17)
+
+* update Akka Http to 10.0.9
 
 #### Version 0.2.2 (2017-06-28)
 
@@ -969,13 +980,15 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http" % "0.3.8" // for Akka HTTP 10.0.9
       "com.ubirch.util" %% "rest-akka-http" % "0.3.7" // for Akka HTTP 10.0.6
-      "com.ubirch.util" %% "rest-akka-http" % "0.3.6" // for Akka HTTP 10.0.6
-      "com.ubirch.util" %% "rest-akka-http" % "0.3.5" // for Akka HTTP 10.0.5
-      "com.ubirch.util" %% "rest-akka-http" % "0.3.3" // for Akka HTTP 10.0.3
     )
 
 ### Release History
+
+#### Version 0.3.8 (107-07-17)
+
+* update Akka Http to 10.0.9
 
 #### Version 0.3.7 (107-05-22)
 
@@ -1016,13 +1029,15 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http-test" % "0.3.8" // for Akka HTTP 10.0.9
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.7" // for Akka HTTP 10.0.6
-      "com.ubirch.util" %% "rest-akka-http-test" % "0.3.6" // for Akka HTTP 10.0.6
-      "com.ubirch.util" %% "rest-akka-http-test" % "0.3.5" // for Akka HTTP 10.0.5
-      "com.ubirch.util" %% "rest-akka-http-test" % "0.3.3" // for Akka HTTP 10.0.3
     )
 
 ### Release History
+
+#### Version 0.3.8 (107-07-17)
+
+* update Akka Http to 10.0.9
 
 #### Version 0.3.7 (107-05-22)
 
