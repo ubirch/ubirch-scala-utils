@@ -135,7 +135,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.3.3",
+    version := "0.3.4",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -144,7 +144,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.3.3",
+    version := "0.3.4",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -353,7 +353,7 @@ lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8.1"
 lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
 lazy val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
 
-lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.12.3" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
+lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.12.5" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 // https://github.com/lomigmegard/akka-http-cors
 lazy val akkaHttpCors = "ch.megard" %% "akka-http-cors" % "0.2.1"
@@ -379,7 +379,7 @@ lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.3.3"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.1.2"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.2"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.3.3"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.3.4"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.2"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.2"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"
