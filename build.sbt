@@ -123,7 +123,7 @@ lazy val json = project
   .settings(commonSettings: _*)
   .settings(
     description := "collection of JSON utils",
-    version := "0.4.2",
+    version := "0.4.3-SNAPSHOT",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
@@ -153,7 +153,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.4.8",
+    version := "0.4.9-SNAPSHOT",
     resolvers ++= Seq(
       resolverHasher
     ),

@@ -490,6 +490,10 @@ Utils related to Scala Futures.
 
 ### Release History
 
+#### Version 0.4.3 (tbd)
+
+* add method `Json4sUtil#string2any`
+
 #### Version 0.4.2 (2017-06-28)
 
 * add method `Json4sUtil#any2String`
@@ -723,6 +727,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.4.9 (tbd)
+
+* `com.ubirch.util.oidc.directive.OidcDirective.bearerToken` is now public
 
 #### Version 0.4.8 (2017-07-17)
 

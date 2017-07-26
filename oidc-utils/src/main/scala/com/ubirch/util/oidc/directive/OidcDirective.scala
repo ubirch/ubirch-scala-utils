@@ -25,7 +25,7 @@ class OidcDirective()(implicit system: ActorSystem)
 
   implicit private val formatter = JsonFormats.default
 
-  private val bearerToken: Directive1[Option[String]] =
+  val bearerToken: Directive1[Option[String]] =
     optionalHeaderValueByType(classOf[Authorization]).map(extractBearerToken)
 
   val oidcToken2UserContext: Directive1[UserContext] = {
