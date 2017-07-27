@@ -73,4 +73,11 @@ object Json4sUtil {
 
   }
 
+  def string2any[T<:Any](jsonString: String)(implicit mf:Manifest[T]): T = {
+
+    // TODO unit tests
+    read[T](jsonString)
+
+  }
+
 }
