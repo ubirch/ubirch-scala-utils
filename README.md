@@ -101,10 +101,14 @@
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "deep-check-model" % "0.1.3"
+      "com.ubirch.util" %% "deep-check-model" % "0.2.0"
     )
 
 ### Release History
+
+#### Version 0.2.0 (2017-07-28)
+
+* add `DeepCheckResponseUtil`
 
 #### Version 0.1.3 (2017-07-27)
 
