@@ -926,7 +926,7 @@ to provide a config prefix and the software will look for them under it.
 | Config Item                | Mandatory  | Description               |
 |:---------------------------|:-----------|:--------------------------|
 | ubirch.redisUtil.host      | yes        | host redis is running on  |
-| ubirch.redisUtil.port      | yes        | redis TCP port      l      |
+| ubirch.redisUtil.port      | yes        | redis TCP port            |
 | ubirch.redisUtil.password  | no         | redis password            |
 
 Here's an example config:
