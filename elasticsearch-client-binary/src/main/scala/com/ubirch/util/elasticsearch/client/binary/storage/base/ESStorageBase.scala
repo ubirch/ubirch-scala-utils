@@ -186,7 +186,11 @@ trait ESStorageBase extends StrictLogging {
           List()
 
         case execExc: ExecutionException if execExc.getCause.getCause.getCause.getCause.isInstanceOf[QueryShardException] =>
-          logger.error(s"QueryShardException: index=$docIndex", execExc)
+          logger.error(s"QueryShardException (5.3.x): index=$docIndex", execExc)
+          List()
+
+        case execExc: ExecutionException if execExc.getCause.getCause.getCause.isInstanceOf[QueryShardException] =>
+          logger.error(s"QueryShardException (5.5.x): index=$docIndex", execExc)
           List()
 
       }
