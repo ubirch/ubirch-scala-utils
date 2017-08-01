@@ -1,16 +1,19 @@
 package com.ubirch.util.oidc.directive
 
-import akka.actor.ActorSystem
-import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
-import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.{AuthorizationFailedRejection, Directive1}
 import com.typesafe.scalalogging.slf4j.StrictLogging
+
 import com.ubirch.util.json.JsonFormats
 import com.ubirch.util.oidc.config.OidcUtilsConfig
 import com.ubirch.util.oidc.model.UserContext
 import com.ubirch.util.oidc.util.OidcUtil
 import com.ubirch.util.redis.RedisClientUtil
+
 import org.json4s.native.Serialization.read
+
+import akka.actor.ActorSystem
+import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
+import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.{AuthorizationFailedRejection, Directive1}
 import redis.RedisClient
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -52,16 +55,17 @@ class OidcDirective()(implicit system: ActorSystem)
   }
 
   private def tokenToUserContext(token: String): Future[UserContext] = {
+
     val redis = RedisClientUtil.getRedisClient
     val tokenKey = OidcUtil.tokenToHashedKey(token)
     redis.get[String](tokenKey) map {
 
       case None =>
-        logger.debug(s"token does not exist: redisKey=$token")
+        logger.debug(s"token does not exist: redisKey=$tokenKey")
         throw new VerificationException()
 
       case Some(json) =>
-        logger.debug(s"token is valid...will update it's TTL now")
+        logger.debug(s"token is valid...will update it's TTL now (tokenKey=$tokenKey)")
         updateExpiry(redis, tokenKey)
         read[UserContext](json)
 
@@ -72,7 +76,17 @@ class OidcDirective()(implicit system: ActorSystem)
   private def updateExpiry(redis: RedisClient, tokenKey: String): Future[Boolean] = {
 
     val refreshInterval = OidcUtilsConfig.redisUpdateExpiry
-    redis.expire(tokenKey, seconds = refreshInterval)
+    redis.expire(tokenKey, seconds = refreshInterval) map { res =>
+
+      if (res) {
+        logger.debug(s"refreshed token expiry ($refreshInterval seconds): tokenKey: $tokenKey")
+      } else {
+        logger.error(s"failed refresh token expiry ($refreshInterval seconds): tokenKey: $tokenKey")
+      }
+
+      res
+
+    }
 
   }
 
