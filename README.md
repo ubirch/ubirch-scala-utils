@@ -237,6 +237,10 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 * update to Elasticsearch 5.5.1 while remaining compatible with 5.3.2
 * update to `com.ubirch.util:deep-check-model:0.2.0`
 
+##### Known Bugs
+
+* login with credentials on a 5.3 instance no longer works!!!
+
 #### Version 2.0.8 (2017-07-27)
 
 * update to `com.ubirch.util:json:0.4.3`
@@ -447,6 +451,10 @@ Example Config:
 #### Version 2.1.0 (2017-07-31)
 
 * update to Elasticsearch 5.5.1 while remaining compatible with 5.3.2
+
+##### Known Bugs
+
+* login with credentials on a 5.3 instance no longer works!!!
 
 #### Version 2.0.1 (2017-05-02)
 
