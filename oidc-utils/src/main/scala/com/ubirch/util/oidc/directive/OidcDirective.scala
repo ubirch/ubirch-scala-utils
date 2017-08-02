@@ -81,7 +81,7 @@ class OidcDirective()(implicit system: ActorSystem)
       if (res) {
         logger.debug(s"refreshed token expiry ($refreshInterval seconds): tokenKey: $tokenKey")
       } else {
-        logger.error(s"failed refresh token expiry ($refreshInterval seconds): tokenKey: $tokenKey")
+        logger.error(s"failed to refresh token expiry ($refreshInterval seconds): tokenKey: $tokenKey")
       }
 
       res
