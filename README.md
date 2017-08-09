@@ -745,7 +745,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.4.11-SNAPSHOT"
+      "com.ubirch.util" %% "oidc-utils" % "0.4.11"
     )
 
 ### Config
@@ -773,7 +773,7 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
-#### Version 0.4.11 (tbd)
+#### Version 0.4.11 (2017-08-09)
 
 * improve logging of tokenKey expiry refreshes
 
