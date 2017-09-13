@@ -3,6 +3,7 @@ package com.ubirch.crypto.ecc
 import java.security._
 import java.util.Base64
 
+import com.ubirch.crypto.codec.CodecUtil
 import net.i2p.crypto.eddsa.spec.{EdDSANamedCurveTable, EdDSAParameterSpec, EdDSAPrivateKeySpec, EdDSAPublicKeySpec}
 import net.i2p.crypto.eddsa.{EdDSAEngine, EdDSAPrivateKey, EdDSAPublicKey, KeyPairGenerator}
 
@@ -103,13 +104,17 @@ object EccUtil {
   def decodePublicKey(publicKey: String): PublicKey = {
     //    val spec: EdDSAParameterSpec = EdDSANamedCurveTable.getByName("ed25519-sha-512")
 
-    val decoded = Base64.getDecoder.decode(publicKey)
-    val pubKeyBytes: Array[Byte] = decoded.length match {
-      case 32 => decoded
-      case _ => EdDSAPublicKey.decode(decoded)
+    CodecUtil.multiDecoder(publicKey) match {
+      case Some(decoded) =>
+        val pubKeyBytes: Array[Byte] = decoded.length match {
+          case 32 => decoded
+          case _ => EdDSAPublicKey.decode(decoded)
+        }
+        val pubKey: EdDSAPublicKeySpec = new EdDSAPublicKeySpec(pubKeyBytes, EDDSASPEC)
+        new EdDSAPublicKey(pubKey)
+      case None =>
+        throw new IllegalArgumentException(s"invalid pubkey: $publicKey")
     }
-    val pubKey: EdDSAPublicKeySpec = new EdDSAPublicKeySpec(pubKeyBytes, EDDSASPEC)
-    new EdDSAPublicKey(pubKey)
   }
 
   /**
