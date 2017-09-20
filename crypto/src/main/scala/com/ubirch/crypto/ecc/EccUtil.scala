@@ -11,11 +11,11 @@ import net.i2p.crypto.eddsa.{EdDSAEngine, EdDSAPrivateKey, EdDSAPublicKey, KeyPa
   */
 object EccUtil {
 
-  final private lazy val DEFAULTHASHALGORITHM = "SHA-512"
+  final private lazy val DEFAULT_HASH_ALGORITHM = "SHA-512"
 
-  final private lazy val DEFAULTECCCURVE = EdDSANamedCurveTable.CURVE_ED25519_SHA512
+  final private lazy val DEFAULT_ECC_CURVE = EdDSANamedCurveTable.CURVE_ED25519_SHA512
 
-  final private lazy val EDDSASPEC: EdDSAParameterSpec = EdDSANamedCurveTable.getByName(DEFAULTECCCURVE)
+  final private lazy val EDDSA_SPEC: EdDSAParameterSpec = EdDSANamedCurveTable.getByName(DEFAULT_ECC_CURVE)
 
   /**
     *
@@ -23,12 +23,12 @@ object EccUtil {
     * @param signature
     * @param payload
     */
-  def validateSignature(publicKey: String, signature: String, payload: String) = {
+  def validateSignature(publicKey: String, signature: String, payload: String): Boolean = {
 
     val edsaPubKey = decodePublicKey(publicKey)
 
     val signatureBytes: Array[Byte] = Base64.getDecoder.decode(signature)
-    val eddsaSignature: EdDSAEngine = new EdDSAEngine(MessageDigest.getInstance(DEFAULTHASHALGORITHM))
+    val eddsaSignature: EdDSAEngine = new EdDSAEngine(MessageDigest.getInstance(DEFAULT_HASH_ALGORITHM))
 
     eddsaSignature.initVerify(edsaPubKey)
     eddsaSignature.update(payload.getBytes())
@@ -48,7 +48,7 @@ object EccUtil {
     */
   def signPayload(privateKey: String, payload: String): String = {
 
-    val sgr: Signature = new EdDSAEngine(MessageDigest.getInstance(DEFAULTHASHALGORITHM))
+    val sgr: Signature = new EdDSAEngine(MessageDigest.getInstance(DEFAULT_HASH_ALGORITHM))
 
     val eddsaPrivateKey = decodePrivateKey(privateKey)
 
@@ -60,7 +60,7 @@ object EccUtil {
   }
 
   def generateEccKeyPair: (PublicKey, PrivateKey) = {
-    val spec: EdDSAParameterSpec = EdDSANamedCurveTable.getByName(DEFAULTECCCURVE)
+    val spec: EdDSAParameterSpec = EdDSANamedCurveTable.getByName(DEFAULT_ECC_CURVE)
     val kpg: KeyPairGenerator = new KeyPairGenerator
 
     kpg.initialize(spec, new SecureRandom(java.util.UUID.randomUUID.toString.getBytes))
@@ -90,7 +90,7 @@ object EccUtil {
     * @param publicKey EdDSA PublicKey
     * @return Base64 encoded ECC PrivateKey
     */
-  private def encodePublicKey(publicKey: PublicKey): String = {
+  def encodePublicKey(publicKey: PublicKey): String = {
     val publicKeyBytes = publicKey.getEncoded
     Base64.getEncoder.encodeToString(publicKeyBytes)
   }
@@ -108,7 +108,7 @@ object EccUtil {
       case 32 => decoded
       case _ => EdDSAPublicKey.decode(decoded)
     }
-    val pubKey: EdDSAPublicKeySpec = new EdDSAPublicKeySpec(pubKeyBytes, EDDSASPEC)
+    val pubKey: EdDSAPublicKeySpec = new EdDSAPublicKeySpec(pubKeyBytes, EDDSA_SPEC)
     new EdDSAPublicKey(pubKey)
   }
 
@@ -135,7 +135,7 @@ object EccUtil {
       case _ => EdDSAPrivateKey.decode(decoded)
     }
 
-    val privKeySpec: EdDSAPrivateKeySpec = new EdDSAPrivateKeySpec(privKeyBytes, EDDSASPEC)
+    val privKeySpec: EdDSAPrivateKeySpec = new EdDSAPrivateKeySpec(privKeyBytes, EDDSA_SPEC)
     new EdDSAPrivateKey(privKeySpec)
   }
 }

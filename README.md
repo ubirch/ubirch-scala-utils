@@ -41,10 +41,14 @@
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "crypto" % "0.3.3"
+      "com.ubirch.util" %% "crypto" % "0.3.5"
     )
 
 ### Release History
+
+#### Version 0.3.5 (tbd)
+
+* make `EccUtil.encodePublicKey` public
 
 #### Version 0.3.4 (2017-05-19)
 
