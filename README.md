@@ -236,6 +236,12 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 
 ### Release History
 
+#### Version 2.1.1 (2017-09-26)
+
+* `ESStorageBase.getDoc` catches Elasticsearch 5.5 QueryShardExceptions, too, now (most common cause: no timestamp mapping on empty index)
+* change log level from error to info when catching a SearchParseException or QueryShardException in`ESStorageBase.getDoc()` and `ESStorageBase.getDoc()`
+* refactored `ESStorageBase.connectivityCheck` to accept a doc index and type 
+
 #### Version 2.1.0 (2017-07-31)
 
 * update to Elasticsearch 5.5.1 while remaining compatible with 5.3.2
