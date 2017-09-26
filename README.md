@@ -150,7 +150,7 @@ In addition to this there's some other utils as well:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.1.0"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.1.1"
     )
 
 ### Config
