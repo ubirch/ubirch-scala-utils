@@ -365,7 +365,7 @@ lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.7"
 lazy val log4jApi = log4jG % "log4j-api" % log4jV
-lazy val log4jToslf4j = "org.apache.logging.log4j" % "log4j-to-slf4j" % "2.7"
+lazy val log4jToSlf4j = "org.apache.logging.log4j" % "log4j-to-slf4j" % "2.7"
 lazy val depSlf4jLogging = Seq(
   scalaLoggingSlf4j,
   slf4j,
@@ -373,7 +373,7 @@ lazy val depSlf4jLogging = Seq(
 )
 lazy val depLog4jToSlf4j = Seq(
   log4jApi,
-  log4jToslf4j
+  log4jToSlf4j
 )
 
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
