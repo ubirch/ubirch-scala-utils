@@ -72,10 +72,8 @@ lazy val date = project
   .settings(commonSettings: _*)
   .settings(
     description := "a collection of date related utils",
-    version := "0.1",
-    libraryDependencies ++= Seq(
-      jodaTime
-    )
+    version := "0.2",
+    libraryDependencies ++= depDate
   )
 
 lazy val deepCheckModel = (project in file("deep-check-model"))
@@ -222,6 +220,11 @@ lazy val depCrypto = Seq(
   jodaTime % "test",
   jodaConvert % "test"
 ) ++ depSlf4jLogging
+
+lazy val depDate = Seq(
+  jodaTime,
+  scalaTest % "test"
+)
 
 lazy val depDeepCheckModel = Seq(
   ubirchUtilJson,

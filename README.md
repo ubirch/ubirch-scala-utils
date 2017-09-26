@@ -84,10 +84,14 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "date" % "0.1"
+      "com.ubirch.util" %% "date" % "0.2"
     )
 
 ### Release History
+
+#### Version 0.2 (2016-09-26)
+
+* add method `DateUtil.parseDateToUTC()`
 
 #### Version 0.1 (2016-09-22)
 
