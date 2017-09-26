@@ -46,7 +46,7 @@
 
 ### Release History
 
-#### Version 0.3.5 (tbd)
+#### Version 0.3.5 (2017-09-26)
 
 * make `EccUtil.encodePublicKey` public
 
