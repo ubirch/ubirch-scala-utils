@@ -2,6 +2,7 @@
 
 ## List of Modules in this Repository
 
+* camel-utils
 * config
 * crypto
 * date
@@ -19,6 +20,24 @@
 * rest-akka-http
 * rest-akka-http-test
 * uuid
+
+## `camel-utils`
+
+### Scala Dependency
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "camel-utils" % "0.1.0"
+    )
+
+### Release History
+
+#### Version 0.1.0 (2017-10-09)
+
+* initial release
+
 
 ## `config`
 

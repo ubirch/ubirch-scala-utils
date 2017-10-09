@@ -30,6 +30,7 @@ lazy val commonSettings = Seq(
 lazy val scalaUtils = (project in file("."))
   .settings(commonSettings: _*)
   .aggregate(
+    camelUtils,
     config,
     crypto,
     date,
@@ -47,6 +48,14 @@ lazy val scalaUtils = (project in file("."))
     restAkkaHttp,
     restAkkaHttpTest,
     uuid
+  )
+
+lazy val camelUtils = (project in file("camel-utils"))
+  .settings(commonSettings: _*)
+  .settings(
+    description := "Camel related utils",
+    version := "0.1.0-SNAPSHOT",
+    libraryDependencies ++= depCamelUtils
   )
 
 lazy val config = project
@@ -213,6 +222,10 @@ lazy val uuid = project
 /*
  * MODULE DEPENDENCIES
  ********************************************************/
+
+lazy val depCamelUtils = Seq(
+  scalaTest % "test"
+)
 
 lazy val depCrypto = Seq(
   roundeightsHasher,
@@ -396,4 +409,3 @@ val sonatypeSnapshots = Resolver.sonatypeRepo("snapshots")
 val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
 val resolverHasher = "RoundEights" at "http://maven.spikemark.net/roundeights"
 val resolverElasticsearch = "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
-
