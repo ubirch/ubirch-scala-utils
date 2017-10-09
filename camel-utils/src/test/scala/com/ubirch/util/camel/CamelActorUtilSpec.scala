@@ -7,6 +7,7 @@ import org.scalatest.{FeatureSpec, Matchers}
   * since: 2017-10-09
   */
 class CamelActorUtilSpec extends FeatureSpec
+  with CamelActorUtil
   with Matchers {
 
   feature("sqsEndpointConsumer()") {
@@ -23,7 +24,7 @@ class CamelActorUtilSpec extends FeatureSpec
       )
 
       // test
-      val result = CamelActorUtil.sqsEndpointConsumer(config)
+      val result = sqsEndpointConsumer(config)
 
       // verify
       val expected = s"aws-sqs://queueName?region=aws-region&queueOwnerAWSAccountId=123456&accessKey=myAccessKey&secretKey=mySecretKey&concurrentConsumers=2"
@@ -44,7 +45,7 @@ class CamelActorUtilSpec extends FeatureSpec
       )
 
       // test
-      val result = CamelActorUtil.sqsEndpointConsumer(config)
+      val result = sqsEndpointConsumer(config)
 
       // verify
       val expected = s"aws-sqs://queueName?region=aws-region&queueOwnerAWSAccountId=123456&accessKey=myAccessKey&secretKey=mySecretKey&concurrentConsumers=1"
@@ -65,7 +66,7 @@ class CamelActorUtilSpec extends FeatureSpec
       )
 
       // test
-      val result = CamelActorUtil.sqsEndpointConsumer(config)
+      val result = sqsEndpointConsumer(config)
 
       // verify
       val expected = s"aws-sqs://queueName?region=aws-region&queueOwnerAWSAccountId=123456&accessKey=myAccessKey&secretKey=mySecretKey&concurrentConsumers=2"
@@ -86,7 +87,7 @@ class CamelActorUtilSpec extends FeatureSpec
       )
 
       // test
-      val result = CamelActorUtil.sqsEndpointConsumer(config)
+      val result = sqsEndpointConsumer(config)
 
       // verify
       val expected = s"aws-sqs://queueName?region=aws-region&queueOwnerAWSAccountId=123456&accessKey=myAccessKey&secretKey=mySecretKey&concurrentConsumers=3"
@@ -107,7 +108,7 @@ class CamelActorUtilSpec extends FeatureSpec
       )
 
       // test
-      val result = CamelActorUtil.sqsEndpointConsumer(config)
+      val result = sqsEndpointConsumer(config)
 
       // verify
       val expected = s"aws-sqs://queueName?region=aws-region&queueOwnerAWSAccountId=123456&accessKey=myAccessKey&secretKey=mySecretKey&concurrentConsumers=2&maxMessagesPerPoll=100"

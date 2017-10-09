@@ -4,7 +4,7 @@ package com.ubirch.util.camel
   * author: cvandrei
   * since: 2017-10-09
   */
-object CamelActorUtil {
+trait CamelActorUtil {
 
   def sqsEndpointConsumer(config: SqsConfig): String = {
 
