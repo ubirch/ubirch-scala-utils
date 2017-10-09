@@ -61,7 +61,7 @@ lazy val crypto = project
   .settings(commonSettings: _*)
   .settings(
     description := "ubirch util with crypto related code",
-    version := "0.3.4",
+    version := "0.3.5",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -72,10 +72,8 @@ lazy val date = project
   .settings(commonSettings: _*)
   .settings(
     description := "a collection of date related utils",
-    version := "0.1",
-    libraryDependencies ++= Seq(
-      jodaTime
-    )
+    version := "0.2",
+    libraryDependencies ++= depDate
   )
 
 lazy val deepCheckModel = (project in file("deep-check-model"))
@@ -93,7 +91,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.1.0",
+    version := "2.2.0",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -105,7 +103,7 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
-    version := "2.1.0",
+    version := "2.2.0",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -224,6 +222,11 @@ lazy val depCrypto = Seq(
   jodaConvert % "test"
 ) ++ depSlf4jLogging
 
+lazy val depDate = Seq(
+  jodaTime,
+  scalaTest % "test"
+)
+
 lazy val depDeepCheckModel = Seq(
   ubirchUtilJson,
   scalaTest % "test"
@@ -314,7 +317,7 @@ lazy val depResponseUtil = Seq(
 val json4sV = "3.5.2"
 val akkaV = "2.4.18"
 val akkaHttpV = "10.0.9"
-val elasticsearchV = "5.5.1"
+val elasticsearchV = "5.3.2"
 val log4jV = "2.8.2"
 val scalaTestV = "3.0.1"
 
@@ -365,7 +368,7 @@ lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.7"
 lazy val log4jApi = log4jG % "log4j-api" % log4jV
-lazy val log4jToslf4j = "org.apache.logging.log4j" % "log4j-to-slf4j" % "2.7"
+lazy val log4jToSlf4j = "org.apache.logging.log4j" % "log4j-to-slf4j" % "2.7"
 lazy val depSlf4jLogging = Seq(
   scalaLoggingSlf4j,
   slf4j,
@@ -373,7 +376,7 @@ lazy val depSlf4jLogging = Seq(
 )
 lazy val depLog4jToSlf4j = Seq(
   log4jApi,
-  log4jToslf4j
+  log4jToSlf4j
 )
 
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")

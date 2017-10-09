@@ -111,11 +111,15 @@ trait ESStorageBase extends StrictLogging {
         None
 
       case execExc: ExecutionException if execExc.getCause.getCause.getCause.isInstanceOf[SearchParseException] =>
-        logger.error(s"SearchParseException: index=$docIndex", execExc)
+        logger.info(s"SearchParseException: index=$docIndex", execExc)
         None
 
       case execExc: ExecutionException if execExc.getCause.getCause.getCause.getCause.isInstanceOf[QueryShardException] =>
-        logger.error(s"QueryShardException: index=$docIndex", execExc)
+        logger.info(s"QueryShardException (5.3.x): index=$docIndex", execExc)
+        None
+
+      case execExc: ExecutionException if execExc.getCause.getCause.getCause.isInstanceOf[QueryShardException] =>
+        logger.info(s"QueryShardException (5.5.x): index=$docIndex", execExc)
         None
 
     }
@@ -182,15 +186,15 @@ trait ESStorageBase extends StrictLogging {
           List()
 
         case execExc: ExecutionException if execExc.getCause.getCause.getCause.isInstanceOf[SearchParseException] =>
-          logger.error(s"SearchParseException: index=$docIndex", execExc)
+          logger.info(s"SearchParseException: index=$docIndex", execExc)
           List()
 
         case execExc: ExecutionException if execExc.getCause.getCause.getCause.getCause.isInstanceOf[QueryShardException] =>
-          logger.error(s"QueryShardException (5.3.x): index=$docIndex", execExc)
+          logger.info(s"QueryShardException (5.3.x): index=$docIndex", execExc)
           List()
 
         case execExc: ExecutionException if execExc.getCause.getCause.getCause.isInstanceOf[QueryShardException] =>
-          logger.error(s"QueryShardException (5.5.x): index=$docIndex", execExc)
+          logger.info(s"QueryShardException (5.5.x): index=$docIndex", execExc)
           List()
 
       }
@@ -215,9 +219,16 @@ trait ESStorageBase extends StrictLogging {
 
   }
 
-  def connectivityCheck(): Future[DeepCheckResponse] = {
+  /**
+    * Query an index for a single record to test connectivity to Elasticsearch.
+    *
+    * @param docIndex index to query
+    * @param docType  type to query
+    * @return result of connectivity check
+    */
+  def connectivityCheck(docIndex: String = "foo", docType: String = "bar"): Future[DeepCheckResponse] = {
 
-    getDocs(docIndex = "foo", docType = "bar", size = Some(1))
+    getDocs(docIndex = docIndex, docType = docType, size = Some(1))
       .map(_ => DeepCheckResponse())
       .recover {
 

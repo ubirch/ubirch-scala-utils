@@ -41,10 +41,14 @@
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "crypto" % "0.3.3"
+      "com.ubirch.util" %% "crypto" % "0.3.5"
     )
 
 ### Release History
+
+#### Version 0.3.5 (2017-09-26)
+
+* make `EccUtil.encodePublicKey` public
 
 #### Version 0.3.4 (2017-05-19)
 
@@ -80,10 +84,14 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "date" % "0.1"
+      "com.ubirch.util" %% "date" % "0.2"
     )
 
 ### Release History
+
+#### Version 0.2 (2016-09-26)
+
+* add method `DateUtil.parseDateToUTC()`
 
 #### Version 0.1 (2016-09-22)
 
@@ -146,7 +154,7 @@ In addition to this there's some other utils as well:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.1.0"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.2.0"
     )
 
 ### Config
@@ -231,6 +239,16 @@ Example Config (simple localhost cluster without Shield/X-Pack):
     }
 
 ### Release History
+
+#### Version 2.2.0 (2017-09-26)
+
+* roll back to Elasticsearch 5.3.2
+
+#### Version 2.1.1 (2017-09-26)
+
+* `ESStorageBase.getDoc` catches Elasticsearch 5.5 QueryShardExceptions, too, now (most common cause: no timestamp mapping on empty index)
+* change log level from error to info when catching a SearchParseException or QueryShardException in`ESStorageBase.getDoc()` and `ESStorageBase.getDoc()`
+* refactored `ESStorageBase.connectivityCheck` to accept a doc index and type 
 
 #### Version 2.1.0 (2017-07-31)
 
@@ -443,10 +461,14 @@ Example Config:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-util" % "2.1.0"
+      "com.ubirch.util" %% "elasticsearch-util" % "2.2.0"
     )
 
 ### Release History
+
+#### Version 2.2.0 (2017-09-26)
+
+* roll back to Elasticsearch 5.3.2
 
 #### Version 2.1.0 (2017-07-31)
 
