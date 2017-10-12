@@ -19,4 +19,21 @@ object DateUtil {
 
   }
 
+  /**
+    *
+    * @param from start date
+    * @param to end date
+    * @param stepSize milliseconds between dates in range
+    * @return resulting DateTime range
+    */
+  def dateRange(from: DateTime, to: DateTime, stepSize: Int): Iterator[DateTime] = {
+
+    if (from.isBefore(to)) {
+      Iterator.iterate(from)(_.plus(stepSize)).takeWhile(!_.isAfter(to))
+    } else {
+      Iterator.iterate(from)(_.minus(stepSize)).takeWhile(!_.isBefore(to))
+    }
+
+  }
+
 }

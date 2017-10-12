@@ -103,10 +103,14 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "date" % "0.2"
+      "com.ubirch.util" %% "date" % "0.3"
     )
 
 ### Release History
+
+#### Version 0.3 (tbd)
+
+* add method `DateUtil.dateRange`
 
 #### Version 0.2 (2016-09-26)
 
