@@ -26,12 +26,20 @@ object DateUtil {
     * @param stepSize milliseconds between dates in range
     * @return resulting DateTime range
     */
-  def dateRange(from: DateTime, to: DateTime, stepSize: Int): Iterator[DateTime] = {
+  def dateRange(from: DateTime, to: DateTime, stepSize: Int): Seq[DateTime] = {
 
-    if (from.isBefore(to)) {
-      Iterator.iterate(from)(_.plus(stepSize)).takeWhile(!_.isAfter(to))
+    if (stepSize < 1) {
+
+      Seq.empty
+
     } else {
-      Iterator.iterate(from)(_.minus(stepSize)).takeWhile(!_.isBefore(to))
+
+      if (from.isBefore(to)) {
+        Iterator.iterate(from)(_.plus(stepSize)).takeWhile(!_.isAfter(to)).toSeq
+      } else {
+        Iterator.iterate(from)(_.minus(stepSize)).takeWhile(!_.isBefore(to)).toSeq
+      }
+
     }
 
   }

@@ -35,22 +35,18 @@ class DateUtilSpec extends FeatureSpec
       val result = DateUtil.dateRange(from = from, to = to, stepSize = 5000)
 
       // verify
-      result.toList should be(List(from))
+      result should be(List(from))
 
     }
 
-    ignore("from = to, -5 second stepSize") {
+    scenario("from = to, -5 second stepSize") {
 
-      // TODO fix endless loop
       // prepare
       val from = DateTime.now(DateTimeZone.UTC)
       val to = from
 
-      // test
-      val result = DateUtil.dateRange(from = from, to = to, stepSize = -5000)
-
-      // verify
-      result.toList should be(List(from))
+      // test && verify
+      DateUtil.dateRange(from = from, to = to, stepSize = -5000) should be(Seq.empty)
 
     }
 
@@ -66,7 +62,7 @@ class DateUtilSpec extends FeatureSpec
 
       // verify
       val expected = List(from, from.plus(stepSize), to)
-      result.toList should be(expected)
+      result should be(expected)
 
     }
 
@@ -82,7 +78,7 @@ class DateUtilSpec extends FeatureSpec
 
       // verify
       val expected = List(from, from.plus(stepSize))
-      result.toList should be(expected)
+      result should be(expected)
 
     }
 
@@ -98,58 +94,43 @@ class DateUtilSpec extends FeatureSpec
 
       // verify
       val expected = List(from, from.plus(stepSize), from.plus(2 * stepSize))
-      result.toList should be(expected)
+      result should be(expected)
 
     }
 
-    ignore("from < to (=from + 2*stepSize), -5 second stepSize") {
+    scenario("from < to (=from + 2*stepSize), -5 second stepSize") {
 
-      // TODO fix endless loop
       // prepare
       val stepSize = -5000
       val from = DateTime.now(DateTimeZone.UTC)
       val to = from.plus(2 * stepSize)
 
-      // test
-      val result = DateUtil.dateRange(from = from, to = to, stepSize = stepSize)
-
-      // verify
-      val expected = List(from, from.plus(stepSize), to)
-      result.toList should be(expected)
+      // test && verify
+      DateUtil.dateRange(from = from, to = to, stepSize = stepSize) should be(Seq.empty)
 
     }
 
-    ignore("from < to (=from + 2*stepSize-1), -5000 millisecond stepSize") {
+    scenario("from < to (=from + 2*stepSize-1), -5000 millisecond stepSize") {
 
-      // TODO fix endless loop
       // prepare
       val stepSize = -5000
       val from = DateTime.now(DateTimeZone.UTC)
       val to = from.plus(2 * stepSize - 1)
 
-      // test
-      val result = DateUtil.dateRange(from = from, to = to, stepSize = stepSize)
-
-      // verify
-      val expected = List(from, from.plus(stepSize))
-      result.toList should be(expected)
+      // test && verify
+      DateUtil.dateRange(from = from, to = to, stepSize = stepSize) should be(Seq.empty)
 
     }
 
-    ignore("from < to (=from + 2*stepSize+1), -5000 millisecond stepSize") {
+    scenario("from < to (=from + 2*stepSize+1), -5000 millisecond stepSize") {
 
-      // TODO fix endless loop
       // prepare
       val stepSize = -5000
       val from = DateTime.now(DateTimeZone.UTC)
       val to = from.plus(2 * stepSize + 1)
 
-      // test
-      val result = DateUtil.dateRange(from = from, to = to, stepSize = stepSize)
-
-      // verify
-      val expected = List(from, from.plus(stepSize), from.plus(2 * stepSize))
-      result.toList should be(expected)
+      // test && verify
+      DateUtil.dateRange(from = from, to = to, stepSize = stepSize) should be(Seq.empty)
 
     }
 
@@ -165,7 +146,7 @@ class DateUtilSpec extends FeatureSpec
 
       // verify
       val expected = List(from, from.minus(stepSize), to)
-      result.toList should be(expected)
+      result should be(expected)
 
     }
 
@@ -181,7 +162,7 @@ class DateUtilSpec extends FeatureSpec
 
       // verify
       val expected = List(from, from.minus(stepSize))
-      result.toList should be(expected)
+      result should be(expected)
 
     }
 
@@ -197,58 +178,43 @@ class DateUtilSpec extends FeatureSpec
 
       // verify
       val expected = List(from, from.minus(stepSize), from.minus(2 * stepSize))
-      result.toList should be(expected)
+      result should be(expected)
 
     }
 
-    ignore("to > from (=to + 2*stepSize), -5 second stepSize") {
+    scenario("to > from (=to + 2*stepSize), -5 second stepSize") {
 
-      // TODO fix endless loop
       // prepare
       val stepSize = -5000
       val to = DateTime.now(DateTimeZone.UTC)
       val from = to.plus(2 * stepSize)
 
-      // test
-      val result = DateUtil.dateRange(from = from, to = to, stepSize = stepSize)
-
-      // verify
-      val expected = List(from, from.minus(stepSize), to)
-      result.toList should be(expected)
+      // test && verify
+      DateUtil.dateRange(from = from, to = to, stepSize = stepSize) should be(Seq.empty)
 
     }
 
-    ignore("to > from (=to + 2*stepSize-1), -5000 millisecond stepSize") {
+    scenario("to > from (=to + 2*stepSize-1), -5000 millisecond stepSize") {
 
-      // TODO fix endless loop
       // prepare
       val stepSize = -5000
       val to = DateTime.now(DateTimeZone.UTC)
       val from = to.plus(2 * stepSize - 1)
 
-      // test
-      val result = DateUtil.dateRange(from = from, to = to, stepSize = stepSize)
-
-      // verify
-      val expected = List(from, from.minus(stepSize))
-      result.toList should be(expected)
+      // test && verify
+      DateUtil.dateRange(from = from, to = to, stepSize = stepSize) should be(Seq.empty)
 
     }
 
-    ignore("from > to (=from + 2*stepSize+1), -5000 millisecond stepSize") {
+    scenario("from > to (=from + 2*stepSize+1), -5000 millisecond stepSize") {
 
-      // TODO fix endless loop
       // prepare
       val stepSize = -5000
       val to = DateTime.now(DateTimeZone.UTC)
       val from = to.plus(2 * stepSize + 1)
 
-      // test
-      val result = DateUtil.dateRange(from = from, to = to, stepSize = stepSize)
-
-      // verify
-      val expected = List(from, from.minus(stepSize), from.minus(2 * stepSize))
-      result.toList should be(expected)
+      // test && verify
+      DateUtil.dateRange(from = from, to = to, stepSize = stepSize) should be(Seq.empty)
 
     }
 
