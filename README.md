@@ -34,7 +34,7 @@
 
 ### Release History
 
-#### Version 0.1.0 (2017-10-09)
+#### Version 0.1.0 (2017-10-16)
 
 * initial release
 
@@ -108,7 +108,7 @@
 
 ### Release History
 
-#### Version 0.3 (tbd)
+#### Version 0.3 (2017-10-16)
 
 * add method `DateUtil.dateRange`
 
