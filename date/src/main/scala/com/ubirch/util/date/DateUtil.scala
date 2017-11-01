@@ -1,7 +1,7 @@
 package com.ubirch.util.date
 
 import org.joda.time.format.ISODateTimeFormat
-import org.joda.time.{DateTime, DateTimeZone}
+import org.joda.time.{DateTime, DateTimeZone, LocalTime}
 
 /**
   * author: cvandrei
@@ -10,6 +10,8 @@ import org.joda.time.{DateTime, DateTimeZone}
 object DateUtil {
 
   def nowUTC: DateTime = DateTime.now(DateTimeZone.UTC)
+
+  def todayAtMidnight: DateTime = nowUTC.withTime(LocalTime.MIDNIGHT)
 
   def parseDateToUTC(dateString: String): DateTime = {
 
