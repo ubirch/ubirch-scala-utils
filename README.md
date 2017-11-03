@@ -267,6 +267,18 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 
 ### Release History
 
+#### Version 2.3.1 (2017-11-03)
+
+* update to Elasticsearch 5.6.3
+
+#### Version 2.3.0 (2017-11-03)
+
+* update to Elasticsearch 5.6.1
+
+#### Version 2.2.0 (2017-09-26)
+
+* update to Elasticsearch 5.6.1
+
 #### Version 2.2.0 (2017-09-26)
 
 * roll back to Elasticsearch 5.3.2
@@ -492,6 +504,14 @@ Example Config:
     )
 
 ### Release History
+
+#### Version 2.3.1 (2017-11-03)
+
+* update to Elasticsearch 5.6.3
+
+#### Version 2.3.0 (2017-11-03)
+
+* update to Elasticsearch 5.6.1
 
 #### Version 2.2.0 (2017-09-26)
 
