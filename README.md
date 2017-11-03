@@ -2,6 +2,7 @@
 
 ## List of Modules in this Repository
 
+* camel-utils
 * config
 * crypto
 * date
@@ -19,6 +20,24 @@
 * rest-akka-http
 * rest-akka-http-test
 * uuid
+
+## `camel-utils`
+
+### Scala Dependency
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "camel-utils" % "0.1.0"
+    )
+
+### Release History
+
+#### Version 0.1.0 (2017-10-16)
+
+* initial release
+
 
 ## `config`
 
@@ -84,10 +103,18 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "date" % "0.2"
+      "com.ubirch.util" %% "date" % "0.4"
     )
 
 ### Release History
+
+#### Version 0.4 (2017-11-01)
+
+* add method `DateUtil.todayAtMidnight`
+
+#### Version 0.3 (2017-10-16)
+
+* add method `DateUtil.dateRange`
 
 #### Version 0.2 (2016-09-26)
 
