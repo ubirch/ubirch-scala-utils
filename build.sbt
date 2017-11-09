@@ -82,7 +82,7 @@ lazy val date = project
   .settings(commonSettings: _*)
   .settings(
     description := "a collection of date related utils",
-    version := "0.4",
+    version := "0.5-SNAPSHOT",
     libraryDependencies ++= depDate
   )
 
