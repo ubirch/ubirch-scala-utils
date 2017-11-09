@@ -1,7 +1,7 @@
 package com.ubirch.util.date
 
 import org.joda.time.format.ISODateTimeFormat
-import org.joda.time.{DateTime, DateTimeZone, LocalTime}
+import org.joda.time.{DateTime, DateTimeZone, LocalTime, Period}
 
 /**
   * author: cvandrei
@@ -25,12 +25,13 @@ object DateUtil {
     *
     * @param from start date
     * @param to end date
-    * @param stepSize milliseconds between dates in range
+    * @param stepSize period between dates in range
     * @return resulting DateTime range
     */
-  def dateRange(from: DateTime, to: DateTime, stepSize: Int): Seq[DateTime] = {
+  def dateRange(from: DateTime, to: DateTime, stepSize: Period): Seq[DateTime] = {
 
-    if (stepSize < 1) {
+    val now = nowUTC
+    if (now.isAfter(now.plus(stepSize))) {
 
       Seq.empty
 
