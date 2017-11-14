@@ -1,20 +1,21 @@
 package com.ubirch.util.oidc.directive
 
+import akka.http.scaladsl.{Http, HttpExt}
+import akka.http.scaladsl.{Http, HttpExt}
 import com.ubirch.util.json.JsonFormats
 import com.ubirch.util.oidc.config.{OidcUtilsConfig, OidcUtilsConfigKeys}
 import com.ubirch.util.oidc.model.UserContext
 import com.ubirch.util.oidc.util.OidcUtil
 import com.ubirch.util.redis.RedisClientUtil
 import com.ubirch.util.redis.test.RedisCleanup
-
 import org.json4s.native.Serialization.write
 import org.scalatest.{BeforeAndAfterEach, FeatureSpec, Matchers}
-
 import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
 import akka.http.scaladsl.model.{HttpHeader, StatusCodes}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{AuthorizationFailedRejection, Route}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
+import akka.stream.ActorMaterializer
 import redis.RedisClient
 
 import scala.concurrent.Await
@@ -34,6 +35,8 @@ class OidcDirectiveSpec extends FeatureSpec
   implicit protected val redis: RedisClient = RedisClientUtil.getRedisClient()
 
   implicit private val formatter = JsonFormats.default
+
+  implicit val httpClient: HttpExt = Http()
 
   private val configPrefix = OidcUtilsConfigKeys.PREFIX
 

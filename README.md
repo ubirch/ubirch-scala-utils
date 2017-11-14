@@ -103,10 +103,14 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "date" % "0.4"
+      "com.ubirch.util" %% "date" % "0.5-SNAPSHOT"
     )
 
 ### Release History
+
+#### Version 0.5 (tbd)
+
+* refactored _stepSize_ parameter in `DateUtil.dateRange` from `Period` to `Int`
 
 #### Version 0.4 (2017-11-01)
 
@@ -181,7 +185,7 @@ In addition to this there's some other utils as well:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.2.0"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.3.1"
     )
 
 ### Config
@@ -500,7 +504,7 @@ Example Config:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-util" % "2.2.0"
+      "com.ubirch.util" %% "elasticsearch-util" % "2.3.1"
     )
 
 ### Release History
@@ -841,6 +845,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.4.12-SNAPSHOT (2017-11-14)
+
+* added ubirchToken auth (early beta)
 
 #### Version 0.4.11 (2017-08-09)
 
