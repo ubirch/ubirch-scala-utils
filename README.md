@@ -281,10 +281,6 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 
 #### Version 2.2.0 (2017-09-26)
 
-* update to Elasticsearch 5.6.1
-
-#### Version 2.2.0 (2017-09-26)
-
 * roll back to Elasticsearch 5.3.2
 
 #### Version 2.1.1 (2017-09-26)

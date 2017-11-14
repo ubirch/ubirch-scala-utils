@@ -1,6 +1,6 @@
 package com.ubirch.util.date
 
-import org.joda.time.{DateTime, DateTimeZone}
+import org.joda.time.{DateTime, DateTimeZone, Period}
 import org.joda.time.format.ISODateTimeFormat
 import org.scalatest.{FeatureSpec, Matchers}
 
@@ -28,11 +28,12 @@ class DateUtilSpec extends FeatureSpec
     scenario("from = to, 5 second stepSize") {
 
       // prepare
+      println(s"stepSize=${Period.seconds(5).getMillis}")
       val from = DateTime.now(DateTimeZone.UTC)
       val to = from
 
       // test
-      val result = DateUtil.dateRange(from = from, to = to, stepSize = 5000)
+      val result = DateUtil.dateRange(from = from, to = to, stepSize = Period.seconds(5))
 
       // verify
       result should be(List(from))
@@ -46,16 +47,16 @@ class DateUtilSpec extends FeatureSpec
       val to = from
 
       // test && verify
-      DateUtil.dateRange(from = from, to = to, stepSize = -5000) should be(Seq.empty)
+      DateUtil.dateRange(from = from, to = to, stepSize = Period.seconds(-5)) should be(Seq.empty)
 
     }
 
     scenario("from < to (=from + 2*stepSize), 5 second stepSize") {
 
       // prepare
-      val stepSize = 5000
+      val stepSize = Period.seconds(5)
       val from = DateTime.now(DateTimeZone.UTC)
-      val to = from.plus(2 * stepSize)
+      val to = from.plus(stepSize).plus(stepSize)
 
       // test
       val result = DateUtil.dateRange(from = from, to = to, stepSize = stepSize)
@@ -66,12 +67,12 @@ class DateUtilSpec extends FeatureSpec
 
     }
 
-    scenario("from < to (=from + 2*stepSize-1), 5000 millisecond stepSize") {
+    scenario("from < to (=from + 2*stepSize-1), 5 millisecond stepSize") {
 
       // prepare
-      val stepSize = 5000
+      val stepSize = Period.millis(5000)
       val from = DateTime.now(DateTimeZone.UTC)
-      val to = from.plus(2 * stepSize - 1)
+      val to = from.plus(stepSize).plus(stepSize).plus(-1)
 
       // test
       val result = DateUtil.dateRange(from = from, to = to, stepSize = stepSize)
@@ -85,15 +86,15 @@ class DateUtilSpec extends FeatureSpec
     scenario("from < to (=from + 2*stepSize+1), 5000 millisecond stepSize") {
 
       // prepare
-      val stepSize = 5000
+      val stepSize = Period.millis(5000)
       val from = DateTime.now(DateTimeZone.UTC)
-      val to = from.plus(2 * stepSize + 1)
+      val to = from.plus(stepSize).plus(stepSize).plus(1)
 
       // test
-      val result = DateUtil.dateRange(from = from, to = to, stepSize = stepSize)
+      val result = DateUtil.dateRange(from = from, to = to, stepSize = Period.millis(5000))
 
       // verify
-      val expected = List(from, from.plus(stepSize), from.plus(2 * stepSize))
+      val expected = List(from, from.plus(stepSize), from.plus(stepSize).plus(stepSize))
       result should be(expected)
 
     }
@@ -101,9 +102,9 @@ class DateUtilSpec extends FeatureSpec
     scenario("from < to (=from + 2*stepSize), -5 second stepSize") {
 
       // prepare
-      val stepSize = -5000
+      val stepSize = Period.millis(-5000)
       val from = DateTime.now(DateTimeZone.UTC)
-      val to = from.plus(2 * stepSize)
+      val to = from.plus(stepSize).plus(stepSize)
 
       // test && verify
       DateUtil.dateRange(from = from, to = to, stepSize = stepSize) should be(Seq.empty)
@@ -113,9 +114,9 @@ class DateUtilSpec extends FeatureSpec
     scenario("from < to (=from + 2*stepSize-1), -5000 millisecond stepSize") {
 
       // prepare
-      val stepSize = -5000
+      val stepSize = Period.millis(-5000)
       val from = DateTime.now(DateTimeZone.UTC)
-      val to = from.plus(2 * stepSize - 1)
+      val to = from.plus(stepSize).plus(stepSize).plus(-1)
 
       // test && verify
       DateUtil.dateRange(from = from, to = to, stepSize = stepSize) should be(Seq.empty)
@@ -125,9 +126,9 @@ class DateUtilSpec extends FeatureSpec
     scenario("from < to (=from + 2*stepSize+1), -5000 millisecond stepSize") {
 
       // prepare
-      val stepSize = -5000
+      val stepSize = Period.millis(-5000)
       val from = DateTime.now(DateTimeZone.UTC)
-      val to = from.plus(2 * stepSize + 1)
+      val to = from.plus(stepSize).plus(stepSize).plus(1)
 
       // test && verify
       DateUtil.dateRange(from = from, to = to, stepSize = stepSize) should be(Seq.empty)
@@ -137,9 +138,9 @@ class DateUtilSpec extends FeatureSpec
     scenario("to > from (=to + 2*stepSize), 5 second stepSize") {
 
       // prepare
-      val stepSize = 5000
+      val stepSize = Period.seconds(5)
       val to = DateTime.now(DateTimeZone.UTC)
-      val from = to.plus(2 * stepSize)
+      val from = to.plus(stepSize).plus(stepSize)
 
       // test
       val result = DateUtil.dateRange(from = from, to = to, stepSize = stepSize)
@@ -153,9 +154,9 @@ class DateUtilSpec extends FeatureSpec
     scenario("to > from (=to + 2*stepSize-1), 5000 millisecond stepSize") {
 
       // prepare
-      val stepSize = 5000
+      val stepSize = Period.millis(5000)
       val to = DateTime.now(DateTimeZone.UTC)
-      val from = to.plus(2 * stepSize - 1)
+      val from = to.plus(stepSize).plus(stepSize).plus(-1)
 
       // test
       val result = DateUtil.dateRange(from = from, to = to, stepSize = stepSize)
@@ -169,15 +170,15 @@ class DateUtilSpec extends FeatureSpec
     scenario("from > to (=from + 2*stepSize+1), 5000 millisecond stepSize") {
 
       // prepare
-      val stepSize = 5000
+      val stepSize = Period.millis(5000)
       val to = DateTime.now(DateTimeZone.UTC)
-      val from = to.plus(2 * stepSize + 1)
+      val from = to.plus(stepSize).plus(stepSize).plus(1)
 
       // test
       val result = DateUtil.dateRange(from = from, to = to, stepSize = stepSize)
 
       // verify
-      val expected = List(from, from.minus(stepSize), from.minus(2 * stepSize))
+      val expected = List(from, from.minus(stepSize), from.minus(stepSize).minus(stepSize))
       result should be(expected)
 
     }
@@ -185,9 +186,9 @@ class DateUtilSpec extends FeatureSpec
     scenario("to > from (=to + 2*stepSize), -5 second stepSize") {
 
       // prepare
-      val stepSize = -5000
+      val stepSize = Period.seconds(-5)
       val to = DateTime.now(DateTimeZone.UTC)
-      val from = to.plus(2 * stepSize)
+      val from = to.plus(stepSize).plus(stepSize)
 
       // test && verify
       DateUtil.dateRange(from = from, to = to, stepSize = stepSize) should be(Seq.empty)
@@ -197,9 +198,9 @@ class DateUtilSpec extends FeatureSpec
     scenario("to > from (=to + 2*stepSize-1), -5000 millisecond stepSize") {
 
       // prepare
-      val stepSize = -5000
+      val stepSize = Period.millis(-5000)
       val to = DateTime.now(DateTimeZone.UTC)
-      val from = to.plus(2 * stepSize - 1)
+      val from = to.plus(stepSize).plus(stepSize).plus(-1)
 
       // test && verify
       DateUtil.dateRange(from = from, to = to, stepSize = stepSize) should be(Seq.empty)
@@ -209,9 +210,9 @@ class DateUtilSpec extends FeatureSpec
     scenario("from > to (=from + 2*stepSize+1), -5000 millisecond stepSize") {
 
       // prepare
-      val stepSize = -5000
+      val stepSize = Period.millis(-5000)
       val to = DateTime.now(DateTimeZone.UTC)
-      val from = to.plus(2 * stepSize + 1)
+      val from = to.plus(stepSize).plus(stepSize).plus(1)
 
       // test && verify
       DateUtil.dateRange(from = from, to = to, stepSize = stepSize) should be(Seq.empty)
