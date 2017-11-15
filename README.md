@@ -842,6 +842,10 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
+#### Version 0.4.12-SNAPSHOT (2017-11-14)
+
+* added ubirchToken auth (early beta)
+
 #### Version 0.4.11 (2017-08-09)
 
 * improve logging of tokenKey expiry refreshes
