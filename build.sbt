@@ -82,7 +82,7 @@ lazy val date = project
   .settings(commonSettings: _*)
   .settings(
     description := "a collection of date related utils",
-    version := "0.5-SNAPSHOT",
+    version := "0.5",
     libraryDependencies ++= depDate
   )
 
@@ -161,7 +161,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.4.12-SNAPSHOT",
+    version := "0.4.12",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -395,7 +395,7 @@ lazy val depLog4jToSlf4j = Seq(
 )
 
 val ubirchUserG = "com.ubirch.user"
-val ubirchUserV = "0.6.4-SNAPSHOT"
+val ubirchUserV = "0.6.4"
 
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 

@@ -103,12 +103,12 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "date" % "0.5-SNAPSHOT"
+      "com.ubirch.util" %% "date" % "0.5"
     )
 
 ### Release History
 
-#### Version 0.5 (tbd)
+#### Version 0.5 (2018-01-15)
 
 * refactored _stepSize_ parameter in `DateUtil.dateRange` from `Period` to `Int`
 
@@ -814,7 +814,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.4.11"
+      "com.ubirch.util" %% "oidc-utils" % "0.4.12"
     )
 
 ### Config
@@ -842,9 +842,10 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
-#### Version 0.4.12-SNAPSHOT (2017-11-14)
+#### Version 0.4.12 (2018-01-15)
 
 * added ubirchToken auth (early beta)
+* updated to `com.ubirch.user:client-rest:0.6.4`
 
 #### Version 0.4.11 (2017-08-09)
 
