@@ -103,12 +103,12 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "date" % "0.5-SNAPSHOT"
+      "com.ubirch.util" %% "date" % "0.5"
     )
 
 ### Release History
 
-#### Version 0.5 (tbd)
+#### Version 0.5 (2018-01-15)
 
 * refactored _stepSize_ parameter in `DateUtil.dateRange` from `Period` to `Int`
 
