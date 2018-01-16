@@ -91,7 +91,7 @@ object EccUtil {
     * @param publicKey EdDSA PublicKey
     * @return Base64 encoded ECC PrivateKey
     */
-  private def encodePublicKey(publicKey: PublicKey): String = {
+  def encodePublicKey(publicKey: PublicKey): String = {
     val publicKeyBytes = publicKey.getEncoded
     Base64.getEncoder.encodeToString(publicKeyBytes)
   }
