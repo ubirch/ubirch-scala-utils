@@ -85,6 +85,48 @@ object HashUtil {
     hashToBase64(bytes)
   }
 
+  final val bcryptRoundsDefault: Int = 10000
+
+  /**
+    * Gives us the Digest of a bcrypt hash based on which we can call all sorts of methods (including conversion to
+    * hexString or byteArray).
+    *
+    * @param data   data to hash
+    * @param rounds bcrypt iterations count
+    * @return digest with hashed input data
+    */
+  def bcryptDigest(data: String, rounds: Int = bcryptRoundsDefault): Digest = data.bcrypt(rounds)
+
+  /**
+    * Convenience method that gives us the hash of the input as hexString.
+    *
+    * @param data   data to hash
+    * @param rounds bcrypt iterations count
+    * @return hex string representation: bcrypt(inputData)
+    */
+  def bcryptHexString(data: String, rounds: Int = bcryptRoundsDefault): String = bcryptDigest(data, rounds).hex
+
+  /**
+    * Convenience method that gives us the hash of the input as Base64 encoded string.
+    *
+    * @param data   data to hash
+    * @param rounds bcrypt iterations count
+    * @return Base64 encoded string representation: bcrypt(inputData)
+    */
+  def bcryptByteArray(data: String, rounds: Int = bcryptRoundsDefault): Array[Byte] = bcryptDigest(data, rounds).bytes
+
+  /**
+    * Convenience method that gives us the input hashed with bcrypt as Base64 encoded string.
+    *
+    * @param data   data to hash
+    * @param rounds bcrypt iterations count
+    * @return Base64 encoded string representation: bcrypt(inputData)
+    */
+  def bcryptBase64(data: String, rounds: Int = bcryptRoundsDefault): String = {
+    val bytes = bcryptDigest(data, rounds).bytes
+    hashToBase64(bytes)
+  }
+
   /**
     * Convenience method correctly converting a hash from hex string to byte array.
     *

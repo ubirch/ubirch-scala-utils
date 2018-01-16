@@ -60,10 +60,14 @@
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "crypto" % "0.3.5"
+      "com.ubirch.util" %% "crypto" % "0.4.0"
     )
 
 ### Release History
+
+#### Version 0.4.0 (2018-01-16)
+
+* added methods `HashUtil.bcrypt*()`
 
 #### Version 0.3.5 (2017-09-26)
 
@@ -814,7 +818,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.4.12"
+      "com.ubirch.util" %% "oidc-utils" % "0.4.13"
     )
 
 ### Config
@@ -841,6 +845,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.4.13 (2018-01-16)
+
+* updated to `com.ubirch.util:crypto:0.4.0`
 
 #### Version 0.4.12 (2018-01-15)
 
