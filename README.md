@@ -57,7 +57,7 @@
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases"),
-	  "RoundEights" at "http://maven.spikemark.net/roundeights"
+	     "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
       "com.ubirch.util" %% "crypto" % "0.4.2-SNAPSHOT"
