@@ -1,5 +1,7 @@
 package com.ubirch.crypto.hash
 
+import java.util.UUID
+
 import org.joda.time.DateTime
 import org.scalatest.{FeatureSpec, Matchers}
 
@@ -24,6 +26,26 @@ class HashUtilSpec extends FeatureSpec
 
     scenario("ensure that SHA-512 is configured") {
       HashUtil.sha512HexString("ubirchChainService") should be("167154b1038c90a065b0ef738341a7dcee7d69928a633a8af1e501f758b541a5a2eb08d87eef1037ebf9f408a22e6bfdbecdf495fb114b3b320bb6056e149f46")
+    }
+
+  }
+
+  feature("HashUtil.pbkdf2Base64") {
+
+    scenario("ensure PBKDF2 works") {
+
+      // prepare
+      val data = "ubirchChainService"
+      val salt = UUID.randomUUID().toString
+      val iterations = 10000
+
+      // test
+      val base64_1 = HashUtil.pbkdf2Base64(data, salt, iterations)
+      val base64_2 = HashUtil.pbkdf2Base64(data, salt, iterations)
+
+      // verify
+      base64_1 should be(base64_2)
+
     }
 
   }
@@ -70,39 +92,71 @@ class HashUtilSpec extends FeatureSpec
 
   }
 
-  ignore("hashing performance") {
+  ignore("hashing performance (SHA256)") {
 
     scenario("1,000 hashes") {
-      measureHashingPerformance(1000)
+      measureHashingPerformanceSHA256(1000)
     }
 
     scenario("10,000 hashes") {
-      measureHashingPerformance(10000)
+      measureHashingPerformanceSHA256(10000)
     }
 
     scenario("25,000 hashes") {
-      measureHashingPerformance(25000)
+      measureHashingPerformanceSHA256(25000)
     }
 
     scenario("50,000 hashes") {
-      measureHashingPerformance(50000)
+      measureHashingPerformanceSHA256(50000)
     }
 
     scenario("75,000 hashes") {
-      measureHashingPerformance(75000)
+      measureHashingPerformanceSHA256(75000)
     }
 
     scenario("100,000 hashes") {
-      measureHashingPerformance(100000)
+      measureHashingPerformanceSHA256(100000)
     }
 
     scenario("500,000 hashes") {
-      measureHashingPerformance(500000)
+      measureHashingPerformanceSHA256(500000)
     }
 
   }
 
-  def measureHashingPerformance(count: Int): Unit = {
+  ignore("hashing performance (PBKDF2)") {
+
+    scenario("10,000 iterations") {
+      measureHashingPerformancePBKDF2(UUID.randomUUID().toString, 10000)
+    }
+
+    scenario(s"50,000 iterations") {
+      measureHashingPerformancePBKDF2(UUID.randomUUID().toString, 50000)
+    }
+
+    scenario(s"100,000 iterations") {
+      measureHashingPerformancePBKDF2(UUID.randomUUID().toString, 100000)
+    }
+
+    scenario(s"250,000 iterations") {
+      measureHashingPerformancePBKDF2(UUID.randomUUID().toString, 250000)
+    }
+
+    scenario(s"500,000 iterations") {
+      measureHashingPerformancePBKDF2(UUID.randomUUID().toString, 500000)
+    }
+
+    scenario(s"1,000,000 iterations") {
+      measureHashingPerformancePBKDF2(UUID.randomUUID().toString, 1000000)
+    }
+
+    scenario(s"2,000,000 iterations") {
+      measureHashingPerformancePBKDF2(UUID.randomUUID().toString, 2000000)
+    }
+
+  }
+
+  def measureHashingPerformanceSHA256(count: Int): Unit = {
 
     println(s"starting to generate random list with $count elements")
     val randomSeq: Seq[String] = for (i <- 1 to count) yield Random.nextLong.toString
@@ -114,6 +168,23 @@ class HashUtilSpec extends FeatureSpec
 
     val duration = after.getMillis - before.getMillis
     println(s"hashing $count hashes took $duration ms")
+
+  }
+
+  def measureHashingPerformancePBKDF2(salt: String, iterations: Int): Unit = {
+
+    val count = 10
+    println(s"starting to generate random list with $count elements (iterations=$iterations)")
+    val randomSeq: Seq[String] = for (i <- 1 to count) yield Random.nextLong.toString
+    println(s"finished generating random list with $count elements")
+    println(s"starting to calculate $count hashes")
+    val before = DateTime.now
+    randomSeq.map(HashUtil.pbkdf2HexString(_, salt, iterations))
+    val after = DateTime.now
+
+    val duration = after.getMillis - before.getMillis
+    val average = duration / count
+    println(s"hashing $count hashes took $duration ms (average = $average ms)")
 
   }
 

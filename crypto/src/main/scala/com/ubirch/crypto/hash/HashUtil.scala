@@ -85,45 +85,48 @@ object HashUtil {
     hashToBase64(bytes)
   }
 
-  final val bcryptRoundsDefault: Int = 10000
+  final val pbkdf2IterationsDefault: Int = 10000
 
   /**
-    * Gives us the Digest of a bcrypt hash based on which we can call all sorts of methods (including conversion to
-    * hexString or byteArray).
+    * Gives us the Digest of a PBKDF2 hash.
     *
-    * @param data   data to hash
-    * @param rounds bcrypt iterations count
+    * @param data       data to hash
+    * @param salt       salt to use with hash function
+    * @param iterations bcrypt iterations count
     * @return digest with hashed input data
     */
-  def bcryptDigest(data: String, rounds: Int = bcryptRoundsDefault): Digest = data.bcrypt(rounds)
+  def pbkdf2Digest(data: String, salt: String, iterations: Int = pbkdf2IterationsDefault): Digest = data.pbkdf2(salt, iterations, 128)
 
   /**
-    * Convenience method that gives us the hash of the input as hexString.
+    * Convenience method to get PBKDF2 hash as hexString.
     *
-    * @param data   data to hash
-    * @param rounds bcrypt iterations count
-    * @return hex string representation: bcrypt(inputData)
+    * @param data       data to hash
+    * @param salt       salt to use with hash function
+    * @param iterations bcrypt iterations count
+    * @return hash as hex string
     */
-  def bcryptHexString(data: String, rounds: Int = bcryptRoundsDefault): String = bcryptDigest(data, rounds).hex
+  def pbkdf2HexString(data: String, salt: String, iterations: Int = pbkdf2IterationsDefault): String = pbkdf2Digest(data, salt, iterations).hex
 
   /**
-    * Convenience method that gives us the hash of the input as Base64 encoded string.
+    * Convenience method to get PBKDF2 hash as byte array.
     *
-    * @param data   data to hash
-    * @param rounds bcrypt iterations count
-    * @return Base64 encoded string representation: bcrypt(inputData)
+    * @param data       data to hash
+    * @param salt       salt to use with hash function
+    * @param iterations bcrypt iterations count
+    * @return hash as byte array
     */
-  def bcryptByteArray(data: String, rounds: Int = bcryptRoundsDefault): Array[Byte] = bcryptDigest(data, rounds).bytes
+  def pbkdf2ByteArray(data: String, salt: String, iterations: Int = pbkdf2IterationsDefault): Array[Byte] = pbkdf2Digest(data, salt, iterations).bytes
 
   /**
-    * Convenience method that gives us the input hashed with bcrypt as Base64 encoded string.
+    * Convenience method to get PBKDF2 hash as Base64 encoded string.
     *
-    * @param data   data to hash
-    * @param rounds bcrypt iterations count
-    * @return Base64 encoded string representation: bcrypt(inputData)
+    * @param data       data to hash
+    * @param salt       salt to use with hash function
+    * @param iterations bcrypt iterations count
+    * @return base64(hash)
     */
-  def bcryptBase64(data: String, rounds: Int = bcryptRoundsDefault): String = {
-    val bytes = bcryptDigest(data, rounds).bytes
+  def pbkdf2Base64(data: String, salt: String, iterations: Int = pbkdf2IterationsDefault): String = {
+    val bytes = pbkdf2Digest(data, salt, iterations).bytes
     hashToBase64(bytes)
   }
 

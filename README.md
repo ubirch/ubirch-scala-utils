@@ -60,10 +60,14 @@
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "crypto" % "0.4.1"
+      "com.ubirch.util" %% "crypto" % "0.4.2-SNAPSHOT"
     )
 
 ### Release History
+
+#### Version 0.4.2 (tbd)
+
+* `HashUtil`: replace bcrypt methods PBKDF2
 
 #### Version 0.4.1 (2018-01-16)
 
