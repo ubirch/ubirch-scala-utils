@@ -67,7 +67,7 @@
 
 #### Version 0.4.2 (tbd)
 
-* `HashUtil`: replace bcrypt methods PBKDF2
+* `HashUtil`: replace bcrypt methods with PBKDF2
 
 #### Version 0.4.1 (2018-01-16)
 
