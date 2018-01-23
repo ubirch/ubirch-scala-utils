@@ -8,5 +8,6 @@ case class UserContext(context: String,
                        providerId: String,
                        userId: String,
                        userName: String,
-                       locale: String
+                       locale: String,
+                       authToken: Option[String] = None
                       )

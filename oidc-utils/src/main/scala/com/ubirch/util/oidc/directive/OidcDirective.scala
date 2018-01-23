@@ -96,7 +96,8 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
                 providerId = "ubirchToken",
                 userId = mailHash,
                 userName = user.displayName,
-                locale = user.locale
+                locale = user.locale,
+                authToken = Some(ubToken)
               )
               redis.append[String](ubToken, Json4sUtil.any2String(uc).get)
               uc

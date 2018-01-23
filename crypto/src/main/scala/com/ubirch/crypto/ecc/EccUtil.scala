@@ -24,7 +24,17 @@ object EccUtil {
     * @param signature
     * @param payload
     */
-  def validateSignature(publicKey: String, signature: String, payload: String) = {
+  def validateSignature(publicKey: String, signature: String, payload: String): Boolean = {
+    validateSignature(publicKey, signature, payload.getBytes)
+  }
+
+  /**
+    *
+    * @param publicKey Base64 encoded ECC public key
+    * @param signature
+    * @param payload
+    */
+  def validateSignature(publicKey: String, signature: String, payload: Array[Byte]): Boolean = {
 
     val edsaPubKey = decodePublicKey(publicKey)
 
@@ -32,7 +42,7 @@ object EccUtil {
     val eddsaSignature: EdDSAEngine = new EdDSAEngine(MessageDigest.getInstance(DEFAULTHASHALGORITHM))
 
     eddsaSignature.initVerify(edsaPubKey)
-    eddsaSignature.update(payload.getBytes())
+    eddsaSignature.update(payload)
     eddsaSignature.verify(signatureBytes) match {
       case true =>
         true
