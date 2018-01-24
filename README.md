@@ -115,10 +115,14 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "date" % "0.5"
+      "com.ubirch.util" %% "date" % "0.5.1"
     )
 
 ### Release History
+
+#### Version 0.5.1 (tbd)
+
+* added method `DateUtil.toString_YYYY_MM_dd`
 
 #### Version 0.5 (2018-01-15)
 

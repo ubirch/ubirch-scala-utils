@@ -47,4 +47,6 @@ object DateUtil {
 
   }
 
+  def toString_YYYY_MM_dd(date: DateTime): String = date.toString("YYYY-MM-dd")
+
 }
