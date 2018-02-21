@@ -201,7 +201,7 @@ In addition to this there's some other utils as well:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.3.1"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.3.4"
     )
 
 ### Config
@@ -286,6 +286,10 @@ Example Config (simple localhost cluster without Shield/X-Pack):
     }
 
 ### Release History
+
+#### Version 2.3.4 (2018-02-21)
+
+* added _ESStorageBase.getAverage()_
 
 #### Version 2.3.3 (2018-01-04)
 

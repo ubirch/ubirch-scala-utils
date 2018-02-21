@@ -14,6 +14,7 @@ import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.index.IndexNotFoundException
 import org.elasticsearch.index.query.{QueryBuilder, QueryShardException}
 import org.elasticsearch.search.SearchParseException
+import org.elasticsearch.search.aggregations.metrics.avg.{Avg, AvgAggregationBuilder}
 import org.elasticsearch.search.sort.SortBuilder
 import org.json4s._
 
@@ -198,6 +199,70 @@ trait ESStorageBase extends StrictLogging {
           List()
 
       }
+    }
+
+  }
+
+  /**
+    * @param docIndex name of the ElasticSearch index
+    * @param docType  name of the type of document
+    * @param query    search query as created with [[org.elasticsearch.index.query.QueryBuilders]]
+    * @param agg      average function
+    * @return
+    */
+  def getAverage(docIndex: String,
+                 docType: String,
+                 query: Option[QueryBuilder] = None,
+                 agg: AvgAggregationBuilder
+                ): Future[Option[Double]] = {
+
+    require(docIndex.nonEmpty && docType.nonEmpty, "json invalid arguments")
+
+    Future {
+
+      var requestBuilder = esClient
+        .prepareSearch(docIndex)
+        .setTypes(docType)
+
+      if (query.isDefined) {
+        requestBuilder = requestBuilder.setQuery(query.get)
+      }
+
+      try {
+
+        val searchResponse = requestBuilder.addAggregation(agg)
+          .execute()
+          .get()
+
+        val avg: Avg = searchResponse.getAggregations.get(agg.getName)
+
+        avg.getValue match {
+
+          case avgValue if !avgValue.equals(Double.NaN) => Some(avgValue)
+          case _ => None
+
+        }
+
+      } catch {
+
+        case execExc: ExecutionException if execExc.getCause.getCause.isInstanceOf[IndexNotFoundException] =>
+          logger.error(s"IndexNotFoundException: index=$docIndex", execExc)
+          None
+
+        case execExc: ExecutionException if execExc.getCause.getCause.getCause.isInstanceOf[SearchParseException] =>
+          logger.info(s"SearchParseException: index=$docIndex", execExc)
+          None
+
+        case execExc: ExecutionException if execExc.getCause.getCause.getCause.getCause.isInstanceOf[QueryShardException] =>
+          logger.info(s"QueryShardException (5.3.x): index=$docIndex", execExc)
+          None
+
+        case execExc: ExecutionException if execExc.getCause.getCause.getCause.isInstanceOf[QueryShardException] =>
+          logger.info(s"QueryShardException (5.5.x): index=$docIndex", execExc)
+          None
+
+      }
+
     }
 
   }

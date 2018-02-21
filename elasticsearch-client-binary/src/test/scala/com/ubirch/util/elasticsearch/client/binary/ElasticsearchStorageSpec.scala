@@ -13,6 +13,8 @@ import org.scalatest.{AsyncFeatureSpec, BeforeAndAfterAll, Matchers}
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.common.settings.Settings
 import org.elasticsearch.common.transport.InetSocketTransportAddress
+import org.elasticsearch.search.aggregations.AggregationBuilders
+import org.elasticsearch.search.aggregations.metrics.avg.AvgAggregationBuilder
 import org.elasticsearch.transport.client.PreBuiltTransportClient
 
 import scala.concurrent.Await
@@ -28,24 +30,24 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
   with BeforeAndAfterAll
   with StrictLogging {
 
-  implicit private val formats = JsonFormats.default
+  implicit private val formats: Formats = JsonFormats.default
 
   val docIndex = "tests"
 
   val docType = "test"
 
-  case class TestDoc(id: String, hello: String)
+  case class TestDoc(id: String, hello: String, value: Int)
 
-  val testDoc = TestDoc("1", "World")
+  val testDoc = TestDoc("1", "World", 10)
 
-  val testDoc2 = TestDoc("1", "Galaxy")
+  val testDoc2 = TestDoc("1", "Galaxy", 20)
 
   feature("simple CRUD tests") {
 
     scenario("store") {
       val jval = Json4sUtil.any2jvalue(testDoc).get
 
-      DeviceStorage.storeDoc(
+      TestStorage.storeDoc(
         docIndex = docIndex,
         docType = docType,
         docIdOpt = Some(testDoc.id),
@@ -56,12 +58,12 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
     }
 
     scenario("failed get") {
-      val f = Await.result(DeviceStorage.getDoc(docIndex, docType, UUIDUtil.uuidStr), 5 seconds)
+      val f = Await.result(TestStorage.getDoc(docIndex, docType, UUIDUtil.uuidStr), 5 seconds)
       f.isDefined shouldBe false
     }
 
     scenario("get") {
-      DeviceStorage.getDoc(docIndex, docType, testDoc.id).map {
+      TestStorage.getDoc(docIndex, docType, testDoc.id).map {
         case Some(jval) =>
           val rTestDoc = jval.extract[TestDoc]
           rTestDoc.id shouldBe testDoc.id
@@ -73,12 +75,12 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
 
     scenario("update") {
       val jval = Json4sUtil.any2jvalue(testDoc2).get
-      Await.ready(DeviceStorage.storeDoc(
+      Await.ready(TestStorage.storeDoc(
         docIndex = docIndex,
         docType = docType,
         docIdOpt = Some(testDoc2.id),
         doc = jval), 2 seconds)
-      DeviceStorage.getDoc(docIndex, docType, testDoc2.id).map {
+      TestStorage.getDoc(docIndex, docType, testDoc2.id).map {
         case Some(jValue) =>
           val rTestDoc = jValue.extract[TestDoc]
           rTestDoc.id shouldBe testDoc2.id
@@ -87,17 +89,55 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
       }
     }
 
-    scenario("getAll") {
+    scenario("getDocs") {
       Thread.sleep(1000)
-      DeviceStorage.getDocs(docIndex, docType).map {
+      TestStorage.getDocs(docIndex, docType).map {
         case jvals: List[JValue] =>
           jvals.size shouldBe 1
         case _ => fail("could not read stored document")
       }
     }
 
+    scenario("getAverage() of existing field --> Some") {
+
+      val aggregation: AvgAggregationBuilder =
+        AggregationBuilders
+          .avg("average")
+          .field("value")
+
+      TestStorage.getAverage(
+        docIndex = docIndex,
+        docType = docType,
+        agg = aggregation
+      ) map { result =>
+
+        result shouldBe Some(20d)
+
+      }
+
+    }
+
+    scenario("getAverage() of non-existing field --> None") {
+
+      val aggregation: AvgAggregationBuilder =
+        AggregationBuilders
+          .avg("average")
+          .field("value2")
+
+      TestStorage.getAverage(
+        docIndex = docIndex,
+        docType = docType,
+        agg = aggregation
+      ) map { result =>
+
+        result shouldBe 'empty
+
+      }
+
+    }
+
     scenario("delete") {
-      DeviceStorage.deleteDoc(docIndex, docType, testDoc.id).map { res =>
+      TestStorage.deleteDoc(docIndex, docType, testDoc.id).map { res =>
         res shouldBe true
       }
     }
@@ -105,7 +145,7 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
 
 }
 
-object DeviceStorage extends ESStorageBase {
+object TestStorage extends ESStorageBase {
 
   private val address = new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300)
 
