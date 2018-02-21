@@ -16,7 +16,7 @@ import scala.collection.JavaConverters._
   * author: cvandrei
   * since: 2016-12-13
   */
-object ESConfig extends ConfigBase {
+object  ESConfig extends ConfigBase {
 
   /*
    * connection

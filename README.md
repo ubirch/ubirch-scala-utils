@@ -287,6 +287,15 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 
 ### Release History
 
+#### Version 2.3.3 (2018-01-04)
+
+* changed backoffPolicy
+* fixed deprecation warning (IndexRequest.source)
+
+#### Version 2.3.2 (2018-01-03)
+
+* update to Elasticsearch 5.6.5
+
 #### Version 2.3.1 (2017-11-03)
 
 * update to Elasticsearch 5.6.3
@@ -520,6 +529,10 @@ Example Config:
     )
 
 ### Release History
+
+#### Version 2.3.1 (2018-01-03)
+
+* update to Elasticsearch 5.6.5
 
 #### Version 2.3.1 (2017-11-03)
 

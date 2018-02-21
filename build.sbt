@@ -87,13 +87,13 @@ lazy val date = project
   )
 
 lazy val deepCheckModel = (project in file("deep-check-model"))
-.settings(commonSettings: _*)
-.settings(
-  name := "deep-check-model",
-  description := "actor and JSON models for the /deepCheck endpoints",
-  version := "0.2.0",
-  libraryDependencies ++= depDeepCheckModel
-)
+  .settings(commonSettings: _*)
+  .settings(
+    name := "deep-check-model",
+    description := "actor and JSON models for the /deepCheck endpoints",
+    version := "0.2.0",
+    libraryDependencies ++= depDeepCheckModel
+  )
 
 lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-binary"))
   .settings(commonSettings: _*)
@@ -101,7 +101,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.3.1",
+    version := "2.3.3",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -113,7 +113,7 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
-    version := "2.3.1",
+    version := "2.3.2",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -332,7 +332,7 @@ lazy val depResponseUtil = Seq(
 val json4sV = "3.5.2"
 val akkaV = "2.4.18"
 val akkaHttpV = "10.0.9"
-val elasticsearchV = "5.6.3"
+val elasticsearchV = "5.6.5"
 val log4jV = "2.8.2"
 val scalaTestV = "3.0.1"
 
@@ -357,7 +357,7 @@ lazy val typesafeConfig = "com.typesafe" % "config" % "1.3.0"
 
 lazy val roundeightsHasher = "com.roundeights" %% "hasher" % "1.2.0"
 
-lazy val apacheCommonsCodec = "commons-codec" % "commons-codec" % "1.10"
+lazy val apacheCommonsCodec = "commons-codec" % "commons-codec" % "1.11"
 
 lazy val netI2pCryptoEddsa = "net.i2p.crypto" % "eddsa" % "0.1.0"
 
@@ -400,7 +400,7 @@ val ubirchUserV = "0.6.4"
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
-lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.1"
+lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.2"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.2.0"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.3"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.3.6"

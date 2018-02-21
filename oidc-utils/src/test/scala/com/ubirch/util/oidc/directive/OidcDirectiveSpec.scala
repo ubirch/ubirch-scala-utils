@@ -1,6 +1,10 @@
 package com.ubirch.util.oidc.directive
 
-import akka.http.scaladsl.{Http, HttpExt}
+import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
+import akka.http.scaladsl.model.{HttpHeader, StatusCodes}
+import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.{AuthorizationFailedRejection, Route}
+import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.http.scaladsl.{Http, HttpExt}
 import com.ubirch.util.json.JsonFormats
 import com.ubirch.util.oidc.config.{OidcUtilsConfig, OidcUtilsConfigKeys}
@@ -10,12 +14,6 @@ import com.ubirch.util.redis.RedisClientUtil
 import com.ubirch.util.redis.test.RedisCleanup
 import org.json4s.native.Serialization.write
 import org.scalatest.{BeforeAndAfterEach, FeatureSpec, Matchers}
-import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
-import akka.http.scaladsl.model.{HttpHeader, StatusCodes}
-import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.{AuthorizationFailedRejection, Route}
-import akka.http.scaladsl.testkit.ScalatestRouteTest
-import akka.stream.ActorMaterializer
 import redis.RedisClient
 
 import scala.concurrent.Await
@@ -95,7 +93,8 @@ class OidcDirectiveSpec extends FeatureSpec
         providerId = providerId,
         userId = userId,
         userName = userName,
-        locale = locale
+        locale = locale,
+        authToken = Some(token)
       ))
       Await.result(redis.set(redisKey, redisValue, exSeconds = Some(initialTtl)), 2 seconds) shouldBe true
 
