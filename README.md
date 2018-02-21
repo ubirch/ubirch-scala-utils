@@ -120,7 +120,7 @@
 
 ### Release History
 
-#### Version 0.5.1 (tbd)
+#### Version 0.5.1 (2018-02-21)
 
 * added method `DateUtil.toString_YYYY_MM_dd`
 
