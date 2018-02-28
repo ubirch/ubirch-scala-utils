@@ -9,5 +9,6 @@ case class UserContext(context: String,
                        userId: String,
                        userName: String,
                        locale: String,
+                       email: Option[String] = None,
                        authToken: Option[String] = None
                       )
