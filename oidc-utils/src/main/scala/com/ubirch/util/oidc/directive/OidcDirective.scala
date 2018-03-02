@@ -90,7 +90,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
           val mailHash = splt(1)
           val signature = splt(2)
           UserServiceClientRest.userGET(providerId = "ubirchToken", externalUserId = mailHash).map {
-            case Some(user) if user.id.isDefined =>
+            case Some(user) if user.id.isDefined && user.activeUser =>
               val uc = UserContext(
                 context = context,
                 providerId = "ubirchToken",

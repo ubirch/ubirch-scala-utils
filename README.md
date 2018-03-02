@@ -875,8 +875,10 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
+
 #### Version 0.4.15 (tbd)
 
+* reject not active user using ubirchToken
 * add optional field _UserContext.email_ 
 
 #### Version 0.4.14 (2018-01-16)
