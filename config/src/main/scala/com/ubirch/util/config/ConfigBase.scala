@@ -15,6 +15,10 @@ trait ConfigBase {
 
   private val envKey = "ubirch.env"
 
+  val envId = "ubirch.envid"
+
+  def environmentId(): String = config.getString(envId)
+
   protected val config: Config = {
 
     getEnvKey match {

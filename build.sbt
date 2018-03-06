@@ -63,8 +63,8 @@ lazy val config = project
   .settings(commonSettings: _*)
   .settings(
     description := "common config related code",
-    version := "0.1",
-    libraryDependencies += typesafeConfig
+    version := "0.2-SNAPSHOT",
+    libraryDependencies ++= depConfig
   )
 
 lazy val crypto = project
@@ -225,6 +225,11 @@ lazy val uuid = project
  ********************************************************/
 
 lazy val depCamelUtils = Seq(
+  scalaTest % "test"
+)
+
+lazy val depConfig = Seq(
+  typesafeConfig,
   scalaTest % "test"
 )
 

@@ -47,8 +47,27 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "config" % "0.1"
+      "com.ubirch.util" %% "config" % "0.2.0-SNAPSHOT"
     )
+
+### Configuration
+
+#### Environment Id
+
+Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of a prefix (e.g. _ubirch_) and a postfix
+(_-local_, _-dev_, _-demo_, _-prod_). Some examples:
+
+    ubirch.envid="ubirch-prod"
+    ubirch.envid="ubirch-demo"
+    ubirch.envid="ubirch-dev"
+    ubirch.envid="ubirch-local"
+
+### Release History
+
+#### Version 0.2.0 (2018-03-??)
+
+* added method _ConfigBase.environmentId()_
+* added object _EnvironmentUtil_
 
 
 ## `crypto`
