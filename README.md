@@ -703,10 +703,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.3.6"
+      "com.ubirch.util" %% "mongo-utils" % "0.3.7-SNAPSHOT"
     )
 
 ### Release History
+
+#### Version 0.3.7 (2018-03-??)
+
+* update to `com.ubirch.util:config:0.2.0`
 
 #### Version 0.3.6 (2017-07-31)
 
@@ -767,12 +771,16 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.3.6"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.3.7-SNAPSHOT"
     )
 
 ### Release History
 
-#### Version 0.3.5 (2017-07-31)
+#### Version 0.3.7 (2017-03-??)
+
+* update to `com.ubirch.util:mongo-utils:0.3.7`
+
+#### Version 0.3.6 (2017-07-31)
 
 * update to `com.ubirch.util:mongo-utils:0.3.6`
 
@@ -898,7 +906,10 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 #### Version 0.4.15 (tbd)
 
 * reject not active user using ubirchToken
-* add optional field _UserContext.email_ 
+* add optional field _UserContext.email_
+* updated to `com.ubirch.util:redis-util:0.3.5` 
+* updated to `com.ubirch.util:redis-test-util:0.3.5`
+* updated to `com.ubirch.user:client-rest:0.7.0` 
 
 #### Version 0.4.14 (2018-01-16)
 
@@ -1009,7 +1020,7 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-test-util" % "0.3.4"
+      "com.ubirch.util" %% "redis-test-util" % "0.3.5-SNAPSHOT"
     )
 
 ### Config
@@ -1017,6 +1028,10 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 The required config is documented in the `redis-util` section.
 
 ### Release History
+
+#### Version 0.3.5 (2018-03-??)
+
+* update to `com.ubirch.util:redis-util:0.3.5`
 
 #### Version 0.3.4 (2017-07-31)
 
@@ -1067,7 +1082,7 @@ the whole environment itself)
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-util" % "0.3.4"
+      "com.ubirch.util" %% "redis-util" % "0.3.5-SNAPSHOT"
     )
 
 ### Config
@@ -1099,6 +1114,10 @@ And this how you get a redis client:
     ```
 
 ### Release History
+
+#### Version 0.3.5 (2018-03-??)
+
+* update to `com.ubirch.util:config:0.2.0`
 
 #### Version 0.3.4 (2017-07-31)
                    

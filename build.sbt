@@ -63,7 +63,7 @@ lazy val config = project
   .settings(commonSettings: _*)
   .settings(
     description := "common config related code",
-    version := "0.2-SNAPSHOT",
+    version := "0.2.0-SNAPSHOT",
     libraryDependencies ++= depConfig
   )
 
@@ -143,7 +143,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.3.6",
+    version := "0.3.7-SNAPSHOT",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -152,7 +152,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.3.6",
+    version := "0.3.7-SNAPSHOT",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -173,7 +173,7 @@ lazy val redisTestUtil = (project in file("redis-test-util"))
   .settings(
     name := "redis-test-util",
     description := "Redis related test utils",
-    version := "0.3.4",
+    version := "0.3.5-SNAPSHOT",
     libraryDependencies ++= depRedisTestUtils
   )
 
@@ -182,7 +182,7 @@ lazy val redisUtil = (project in file("redis-util"))
   .settings(
     name := "redis-util",
     description := "Redis related utils",
-    version := "0.3.4",
+    version := "0.3.5-SNAPSHOT",
     libraryDependencies ++= depRedisUtil
   )
 
@@ -400,17 +400,17 @@ lazy val depLog4jToSlf4j = Seq(
 )
 
 val ubirchUserG = "com.ubirch.user"
-val ubirchUserV = "0.6.4"
+val ubirchUserV = "0.7.0-SNAPSHOT"
 
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
-lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.1"
+lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.0-SNAPSHOT"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.2"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.2.0"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.3"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.3.6"
-lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.4"
-lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.4"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.3.7-SNAPSHOT"
+lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.5-SNAPSHOT"
+lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.5-SNAPSHOT"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"
 lazy val ubirchUserRest = ubirchUserG %% "client-rest" % ubirchUserV
 /*
