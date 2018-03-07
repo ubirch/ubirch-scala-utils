@@ -97,11 +97,10 @@ lazy val deepCheckModel = (project in file("deep-check-model"))
 
 lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-binary"))
   .settings(commonSettings: _*)
-  .dependsOn(config)
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.3.4",
+    version := "2.3.5-SNAPSHOT",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -254,6 +253,7 @@ lazy val depDeepCheckModel = Seq(
 lazy val depElasticsearchClientBinary = Seq(
   elasticSearch,
   elasticsearchXPack,
+  ubirchUtilConfig,
   ubirchUtilJson,
   ubirchUtilDeepCheckModel,
   ubirchUtilUuid,
