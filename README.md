@@ -707,12 +707,12 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.3.7-SNAPSHOT"
+      "com.ubirch.util" %% "mongo-utils" % "0.3.7"
     )
 
 ### Release History
 
-#### Version 0.3.7 (2018-03-??)
+#### Version 0.3.7 (2018-03-08)
 
 * update to `com.ubirch.util:config:0.2.0`
 
@@ -775,12 +775,12 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.3.7-SNAPSHOT"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.3.7"
     )
 
 ### Release History
 
-#### Version 0.3.7 (2017-03-??)
+#### Version 0.3.7 (2017-03-08)
 
 * update to `com.ubirch.util:mongo-utils:0.3.7`
 
