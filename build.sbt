@@ -63,7 +63,7 @@ lazy val config = project
   .settings(commonSettings: _*)
   .settings(
     description := "common config related code",
-    version := "0.2.0-SNAPSHOT",
+    version := "0.2.0",
     libraryDependencies ++= depConfig
   )
 
@@ -404,7 +404,7 @@ val ubirchUserV = "0.7.0-SNAPSHOT"
 
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
-lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.0-SNAPSHOT"
+lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.0"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.2"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.2.0"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.3"
