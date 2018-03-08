@@ -47,7 +47,7 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "config" % "0.2.0-SNAPSHOT"
+      "com.ubirch.util" %% "config" % "0.2.0"
     )
 
 ### Configuration
@@ -64,7 +64,7 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
 
 ### Release History
 
-#### Version 0.2.0 (2018-03-??)
+#### Version 0.2.0 (2018-03-08)
 
 * added method _ConfigBase.environmentId()_
 * added object _EnvironmentUtil_
@@ -1024,7 +1024,7 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-test-util" % "0.3.5-SNAPSHOT"
+      "com.ubirch.util" %% "redis-test-util" % "0.3.5"
     )
 
 ### Config
@@ -1033,7 +1033,7 @@ The required config is documented in the `redis-util` section.
 
 ### Release History
 
-#### Version 0.3.5 (2018-03-??)
+#### Version 0.3.5 (2018-03-08)
 
 * update to `com.ubirch.util:redis-util:0.3.5`
 
@@ -1086,7 +1086,7 @@ the whole environment itself)
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-util" % "0.3.5-SNAPSHOT"
+      "com.ubirch.util" %% "redis-util" % "0.3.5"
     )
 
 ### Config
@@ -1119,7 +1119,7 @@ And this how you get a redis client:
 
 ### Release History
 
-#### Version 0.3.5 (2018-03-??)
+#### Version 0.3.5 (2018-03-08)
 
 * update to `com.ubirch.util:config:0.2.0`
 

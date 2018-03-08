@@ -172,7 +172,7 @@ lazy val redisTestUtil = (project in file("redis-test-util"))
   .settings(
     name := "redis-test-util",
     description := "Redis related test utils",
-    version := "0.3.5-SNAPSHOT",
+    version := "0.3.5",
     libraryDependencies ++= depRedisTestUtils
   )
 
@@ -181,7 +181,7 @@ lazy val redisUtil = (project in file("redis-util"))
   .settings(
     name := "redis-util",
     description := "Redis related utils",
-    version := "0.3.5-SNAPSHOT",
+    version := "0.3.5",
     libraryDependencies ++= depRedisUtil
   )
 
@@ -409,8 +409,8 @@ lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.2"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.2.0"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.3"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.3.7-SNAPSHOT"
-lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.5-SNAPSHOT"
-lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.5-SNAPSHOT"
+lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.5"
+lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.5"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"
 lazy val ubirchUserRest = ubirchUserG %% "client-rest" % ubirchUserV
 /*
