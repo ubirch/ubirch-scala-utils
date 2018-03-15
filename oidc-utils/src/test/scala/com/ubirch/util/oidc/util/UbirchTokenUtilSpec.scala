@@ -11,6 +11,30 @@ import org.scalatest.{FeatureSpec, Matchers}
   */
 class UbirchTokenUtilSpec extends FeatureSpec with Matchers {
 
+  feature("providerId") {
+
+    scenario("ensure value did not change") {
+      UbirchTokenUtil.providerId shouldBe "ubirchToken"
+    }
+
+  }
+
+  feature("delim") {
+
+    scenario("ensure value did not change") {
+      UbirchTokenUtil.delim shouldBe "::"
+    }
+
+  }
+
+  feature("defaultSignature") {
+
+    scenario("ensure value did not change") {
+      UbirchTokenUtil.defaultSignature shouldBe "to-be-specified"
+    }
+
+  }
+
   feature("toUbirchToken()") {
 
     scenario("without private key") {

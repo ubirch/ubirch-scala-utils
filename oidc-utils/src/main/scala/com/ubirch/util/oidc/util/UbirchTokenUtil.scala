@@ -9,6 +9,11 @@ import com.ubirch.crypto.hash.HashUtil
 object UbirchTokenUtil {
 
   /**
+    * provider as used in auth- and user-service.
+    */
+  val providerId = "ubirchToken"
+
+  /**
     * Delimiter used to separate the different parts of a ubirch token.
     */
   val delim = "::"
