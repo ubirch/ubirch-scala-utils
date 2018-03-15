@@ -6,7 +6,7 @@ import com.ubirch.crypto.hash.HashUtil
   * author: cvandrei
   * since: 2018-03-15
   */
-object TokenUtil {
+object UbirchTokenUtil {
 
   /**
     * Delimiter used to separate the different parts of a ubirch token.
@@ -34,7 +34,7 @@ object TokenUtil {
                     privateKey: Option[String] = None
                    ): String = {
 
-    val emailHash = HashUtil.sha256HexString(email)
+    val emailHash = hashEmail(email)
 
     val signature = if (privateKey.isEmpty) {
       defaultSignature
@@ -47,5 +47,7 @@ object TokenUtil {
     s"$context$delim$emailHash$delim$signature"
 
   }
+
+  def hashEmail(email: String): String = HashUtil.sha256HexString(email)
 
 }

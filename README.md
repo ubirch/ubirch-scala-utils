@@ -906,6 +906,11 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
+#### Version 0.5.1 (2018-03-15)
+
+* rename `TokenUtil` to `UbirchTokenUtil` for clarity and to avoid duplication with an auth-service util
+* added method `UbirchTokenUtil.hashEmail()` 
+
 #### Version 0.5.0 (2018-03-15)
 
 * added `TokenUtil` with method `toUbirchToken()`

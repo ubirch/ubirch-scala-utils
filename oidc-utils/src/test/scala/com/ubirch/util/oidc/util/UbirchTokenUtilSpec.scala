@@ -9,7 +9,7 @@ import org.scalatest.{FeatureSpec, Matchers}
   * author: cvandrei
   * since: 2018-03-15
   */
-class TokenUtilSpec extends FeatureSpec with Matchers {
+class UbirchTokenUtilSpec extends FeatureSpec with Matchers {
 
   feature("toUbirchToken()") {
 
@@ -20,14 +20,14 @@ class TokenUtilSpec extends FeatureSpec with Matchers {
       val email = "test@ubirch.com"
 
       // test
-      val result = TokenUtil.toUbirchToken(
+      val result = UbirchTokenUtil.toUbirchToken(
         context = context,
         email = email
       )
 
       // verify
-      val hashedEmail = HashUtil.sha256HexString(email)
-      val expected = s"$context${TokenUtil.delim}$hashedEmail${TokenUtil.delim}${TokenUtil.defaultSignature}"
+      val hashedEmail = UbirchTokenUtil.hashEmail(email)
+      val expected = s"$context${UbirchTokenUtil.delim}$hashedEmail${UbirchTokenUtil.delim}${UbirchTokenUtil.defaultSignature}"
       result shouldBe expected
 
     }
@@ -40,15 +40,33 @@ class TokenUtilSpec extends FeatureSpec with Matchers {
       val email = "test@ubirch.com"
 
       // test
-      val result = TokenUtil.toUbirchToken(
+      val result = UbirchTokenUtil.toUbirchToken(
         context = context,
         email = email,
         privateKey = Some(privateKey)
       )
 
       // verify
-      val hashedEmail = HashUtil.sha256HexString(email)
-      val expected = s"$context${TokenUtil.delim}$hashedEmail${TokenUtil.delim}${TokenUtil.defaultSignature}"
+      val hashedEmail = UbirchTokenUtil.hashEmail(email)
+      val expected = s"$context${UbirchTokenUtil.delim}$hashedEmail${UbirchTokenUtil.delim}${UbirchTokenUtil.defaultSignature}"
+      result shouldBe expected
+
+    }
+
+  }
+
+  feature("hashEmail()") {
+
+    scenario("hash --> sha256HexString() is applied") {
+
+      // prepare
+      val email = "test@ubirch.com"
+
+      // test
+      val result = UbirchTokenUtil.hashEmail(email)
+
+      // verify
+      val expected = HashUtil.sha256HexString(email)
       result shouldBe expected
 
     }
