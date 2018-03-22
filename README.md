@@ -707,10 +707,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.3.7"
+      "com.ubirch.util" %% "mongo-utils" % "0.4.0"
     )
 
 ### Release History
+
+#### Version 0.4.0 (2018-03-22)
+
+* add Mongo mapping for `BigInt` and `BigDecimal`
 
 #### Version 0.3.7 (2018-03-08)
 
@@ -775,10 +779,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.3.7"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.4.0"
     )
 
 ### Release History
+
+#### Version 0.4.0 (2018-03-22)
+
+* update to `com.ubirch.util:mongo-utils:0.4.0`
 
 #### Version 0.3.7 (2017-03-08)
 

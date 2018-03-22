@@ -3,9 +3,9 @@ package com.ubirch.util.mongo.format
 import java.io.{ByteArrayOutputStream, DataOutputStream}
 import java.util.UUID
 
-import org.joda.time.DateTime
+import org.joda.time.{DateTime, DateTimeZone}
 
-import reactivemongo.bson.{BSONBinary, BSONDateTime, BSONHandler, BSONReader, BSONWriter, Subtype}
+import reactivemongo.bson.{BSONBinary, BSONDateTime, BSONDocument, BSONDocumentReader, BSONDocumentWriter, BSONHandler, BSONReader, BSONWriter, Subtype}
 
 /**
   * author: cvandrei
@@ -44,8 +44,53 @@ trait MongoFormats {
   }
 
   implicit protected object BSONDateTimeHandler extends BSONHandler[BSONDateTime, DateTime] {
-    def read(jodaTime: BSONDateTime): DateTime = new DateTime(jodaTime.value)
-    def write(jodaTime: DateTime) = BSONDateTime(jodaTime.getMillis)
+    def read(jodaTime: BSONDateTime): DateTime = new DateTime(jodaTime.value).withZone(DateTimeZone.UTC)
+    def write(jodaTime: DateTime) = BSONDateTime(jodaTime.withZone(DateTimeZone.UTC).getMillis)
   }
+
+  implicit val bigDecimalBSONWriter: BSONWriter[BigDecimal, BSONDocument] =
+    new BSONWriter[BigDecimal, BSONDocument] {
+      override def write(bigDecimal: BigDecimal): BSONDocument = {
+        BSONDocument(
+          "scale" -> bigDecimal.scale,
+          "precision" -> bigDecimal.precision,
+          "value" -> BigInt(bigDecimal.underlying.unscaledValue())
+        )
+      }
+    }
+
+  implicit val bigDecimalBSONReader: BSONReader[BSONDocument, BigDecimal] =
+    new BSONReader[BSONDocument, BigDecimal] {
+      override def read(bson: BSONDocument): BigDecimal = {
+        BigDecimal.apply(
+          bson.getAs[BigInt]("value").get,
+          bson.getAs[Int]("scale").get,
+          new java.math.MathContext(bson.getAs[Int]("precision").get)
+        )
+      }
+    }
+
+  implicit val bigIntBSONWriter: BSONWriter[BigInt, BSONDocument] =
+    new BSONWriter[BigInt, BSONDocument] {
+      override def write(bigInt: BigInt): BSONDocument = {
+        BSONDocument(
+          "signum" -> bigInt.signum,
+          "value" -> BSONBinary(bigInt.toByteArray, Subtype.UserDefinedSubtype)
+        )
+      }
+    }
+
+  implicit val bigIntBSONReader: BSONReader[BSONDocument, BigInt] =
+    new BSONReader[BSONDocument, BigInt] {
+      override def read(bson: BSONDocument): BigInt = {
+        BigInt(
+          signum = bson.getAs[Int]("signum").get,
+          magnitude = {
+            val buf = bson.getAs[BSONBinary]("value").get.value
+            buf.readArray(buf.readable)
+          }
+        )
+      }
+    }
 
 }
