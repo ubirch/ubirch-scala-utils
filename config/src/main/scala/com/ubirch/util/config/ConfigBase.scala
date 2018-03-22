@@ -29,6 +29,8 @@ trait ConfigBase {
 
   }
 
+  protected def environmentId(): String = config.getString("ubirch.envid")
+
   private def getEnvKey: Option[String] = {
 
     System.getProperties.asScala.get(envKey) match {

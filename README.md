@@ -47,8 +47,27 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "config" % "0.1"
+      "com.ubirch.util" %% "config" % "0.2.0"
     )
+
+### Configuration
+
+#### Environment Id
+
+Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of a prefix (e.g. _ubirch_) and a postfix
+(_-local_, _-dev_, _-demo_, _-prod_). Some examples:
+
+    ubirch.envid="ubirch-prod"
+    ubirch.envid="ubirch-demo"
+    ubirch.envid="ubirch-dev"
+    ubirch.envid="ubirch-local"
+
+### Release History
+
+#### Version 0.2.0 (2018-03-08)
+
+* added method _ConfigBase.environmentId()_
+* added object _EnvironmentUtil_
 
 
 ## `crypto`
@@ -290,10 +309,11 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 #### Version 2.3.6 (2018-03-18)
 
 * update to UUIDUtil 0.1.2
+* update to Elasticsearch 5.6.8 
 
 #### Version 2.3.5 (2018-03-08)
 
-* update to Elasticsearch 5.6.8 
+* update to `com.ubirch.util:config:0.2.0`
 
 #### Version 2.3.4 (2018-02-21)
 
@@ -698,10 +718,18 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.3.6"
+      "com.ubirch.util" %% "mongo-utils" % "0.4.0"
     )
 
 ### Release History
+
+#### Version 0.4.0 (2018-03-22)
+
+* add Mongo mapping for `BigInt` and `BigDecimal`
+
+#### Version 0.3.7 (2018-03-08)
+
+* update to `com.ubirch.util:config:0.2.0`
 
 #### Version 0.3.6 (2017-07-31)
 
@@ -762,12 +790,20 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.3.6"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.4.0"
     )
 
 ### Release History
 
-#### Version 0.3.5 (2017-07-31)
+#### Version 0.4.0 (2018-03-22)
+
+* update to `com.ubirch.util:mongo-utils:0.4.0`
+
+#### Version 0.3.7 (2017-03-08)
+
+* update to `com.ubirch.util:mongo-utils:0.3.7`
+
+#### Version 0.3.6 (2017-07-31)
 
 * update to `com.ubirch.util:mongo-utils:0.3.6`
 
@@ -861,7 +897,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.4.15-SNAPSHOT"
+      "com.ubirch.util" %% "oidc-utils" % "0.5.2"
     )
 
 ### Config
@@ -889,11 +925,26 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
+#### Version 0.5.2 (2018-03-15)
 
-#### Version 0.4.15 (tbd)
+* added constant `UbirchTokenUtil.providerId`
+
+#### Version 0.5.1 (2018-03-15)
+
+* rename `TokenUtil` to `UbirchTokenUtil` for clarity and to avoid duplication with an auth-service util
+* added method `UbirchTokenUtil.hashEmail()` 
+
+#### Version 0.5.0 (2018-03-15)
+
+* added `TokenUtil` with method `toUbirchToken()`
+
+#### Version 0.4.15 (2018-03-08)
 
 * reject not active user using ubirchToken
-* add optional field _UserContext.email_ 
+* add optional field _UserContext.email_
+* updated to `com.ubirch.util:redis-util:0.3.5` 
+* updated to `com.ubirch.util:redis-test-util:0.3.5`
+* updated to `com.ubirch.user:client-rest:0.7.0` 
 
 #### Version 0.4.14 (2018-01-16)
 
@@ -1004,7 +1055,7 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-test-util" % "0.3.4"
+      "com.ubirch.util" %% "redis-test-util" % "0.3.5"
     )
 
 ### Config
@@ -1012,6 +1063,10 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 The required config is documented in the `redis-util` section.
 
 ### Release History
+
+#### Version 0.3.5 (2018-03-08)
+
+* update to `com.ubirch.util:redis-util:0.3.5`
 
 #### Version 0.3.4 (2017-07-31)
 
@@ -1062,7 +1117,7 @@ the whole environment itself)
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-util" % "0.3.4"
+      "com.ubirch.util" %% "redis-util" % "0.3.5"
     )
 
 ### Config
@@ -1094,6 +1149,10 @@ And this how you get a redis client:
     ```
 
 ### Release History
+
+#### Version 0.3.5 (2018-03-08)
+
+* update to `com.ubirch.util:config:0.2.0`
 
 #### Version 0.3.4 (2017-07-31)
                    
