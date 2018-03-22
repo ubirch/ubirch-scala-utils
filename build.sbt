@@ -101,7 +101,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.3.5",
+    version := "2.3.6",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -326,7 +326,6 @@ lazy val depResponseUtil = Seq(
 
 lazy val depUuid = Seq(
   scalaUuid,
-  apacheCommonsLang3,
   apacheCommonsCodec % "test",
   scalaTest % "test"
 )
@@ -416,7 +415,7 @@ lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.3"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.3.6"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.4"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.4"
-lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.1"
+lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.2"
 lazy val ubirchUserRest = ubirchUserG %% "client-rest" % ubirchUserV
 /*
  * RESOLVER

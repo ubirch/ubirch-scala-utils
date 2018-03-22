@@ -201,7 +201,7 @@ In addition to this there's some other utils as well:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.3.5"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.3.6"
     )
 
 ### Config
@@ -287,9 +287,13 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 
 ### Release History
 
-#### Version 2.3.5 (2018-03-18)
+#### Version 2.3.6 (2018-03-18)
 
-* update to Elasticsearch 5.6.8
+* update to UUIDUtil 0.1.2
+
+#### Version 2.3.5 (2018-03-08)
+
+* update to Elasticsearch 5.6.8 
 
 #### Version 2.3.4 (2018-02-21)
 
@@ -1305,10 +1309,14 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "uuid" % "0.1.1"
+      "com.ubirch.util" %% "uuid" % "0.1.2"
     )
 
 ### Release History
+
+#### Version 0.1.2 (2018-03-22)
+
+* added from/toByteArray
 
 #### Version 0.1.1 (2016-11-28)
 
