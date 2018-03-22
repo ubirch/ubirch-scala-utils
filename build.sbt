@@ -101,7 +101,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.3.4",
+    version := "2.3.5",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -113,7 +113,7 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
-    version := "2.3.2",
+    version := "2.3.3",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -217,7 +217,8 @@ lazy val uuid = project
   .settings(commonSettings: _*)
   .settings(
     description := "UUID related utils",
-    version := "0.1.1"
+    version := "0.1.2",
+    libraryDependencies ++= depUuid
   )
 
 /*
@@ -323,6 +324,12 @@ lazy val depResponseUtil = Seq(
   scalaTest % "test"
 )
 
+lazy val depUuid = Seq(
+  scalaUuid,
+  apacheCommonsLang3,
+  apacheCommonsCodec % "test",
+  scalaTest % "test"
+)
 
 /*
  * DEPENDENCIES
@@ -332,7 +339,7 @@ lazy val depResponseUtil = Seq(
 val json4sV = "3.5.2"
 val akkaV = "2.4.18"
 val akkaHttpV = "10.0.9"
-val elasticsearchV = "5.6.5"
+val elasticsearchV = "5.6.8"
 val log4jV = "2.8.2"
 val scalaTestV = "3.0.1"
 
@@ -358,6 +365,7 @@ lazy val typesafeConfig = "com.typesafe" % "config" % "1.3.0"
 lazy val roundeightsHasher = "com.roundeights" %% "hasher" % "1.2.0"
 
 lazy val apacheCommonsCodec = "commons-codec" % "commons-codec" % "1.11"
+lazy val apacheCommonsLang3 = "org.apache.commons" % "commons-lang3" % "3.7"
 
 lazy val netI2pCryptoEddsa = "net.i2p.crypto" % "eddsa" % "0.1.0"
 
@@ -378,6 +386,8 @@ lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.12.5" exclu
 
 // https://github.com/lomigmegard/akka-http-cors
 lazy val akkaHttpCors = "ch.megard" %% "akka-http-cors" % "0.2.1"
+
+lazy val scalaUuid = "io.jvm.uuid" %% "scala-uuid" % "0.2.3"
 
 lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
