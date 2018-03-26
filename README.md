@@ -901,7 +901,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.5.2"
+      "com.ubirch.util" %% "oidc-utils" % "0.5.3"
     )
 
 ### Config
@@ -929,6 +929,10 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
+#### Version 0.5.3 (2018-03-26)
+
+* updated to `com.ubirch.user:client-rest:0.8.3`
+
 #### Version 0.5.2 (2018-03-15)
 
 * added constant `UbirchTokenUtil.providerId`
@@ -946,9 +950,9 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 * reject not active user using ubirchToken
 * add optional field _UserContext.email_
-* updated to `com.ubirch.util:redis-util:0.3.5` 
+* updated to `com.ubirch.util:redis-util:0.3.5`
 * updated to `com.ubirch.util:redis-test-util:0.3.5`
-* updated to `com.ubirch.user:client-rest:0.7.0` 
+* updated to `com.ubirch.user:client-rest:0.7.0`
 
 #### Version 0.4.14 (2018-01-16)
 

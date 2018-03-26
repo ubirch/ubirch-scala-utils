@@ -160,7 +160,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.5.2",
+    version := "0.5.3",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -409,7 +409,6 @@ lazy val depLog4jToSlf4j = Seq(
 )
 
 val ubirchUserG = "com.ubirch.user"
-val ubirchUserV = "0.6.4"
 
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
@@ -422,7 +421,7 @@ lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.5
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.5"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.2"
 
-lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.7.0"
+lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.8.3"
 
 /*
  * RESOLVER
