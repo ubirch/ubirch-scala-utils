@@ -151,7 +151,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.4.0",
+    version := "0.4.1",
     libraryDependencies ++= depMongoUtils
   )
 

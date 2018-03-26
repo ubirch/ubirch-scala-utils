@@ -1,16 +1,19 @@
 package com.ubirch.util.mongo.connection
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
-
 import com.ubirch.util.deepCheck.model.DeepCheckResponse
 import com.ubirch.util.mongo.config.{MongoConfig, MongoConfigKeys}
-
 import reactivemongo.api.collections.bson.BSONCollection
 import reactivemongo.api.{DefaultDB, MongoConnection, MongoDriver}
 import reactivemongo.bson.{BSONDocumentReader, BSONDocumentWriter, document}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration._
+
+import scala.util.Failure
+
+import scala.language.postfixOps
 
 /**
   * author: cvandrei
@@ -20,6 +23,9 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
 
   private val driver = MongoDriver()
 
+
+  private var dbconn: Future[DefaultDB] = null
+
   /**
     * Opens a database connection. Don't forget to call #close to free up all resources afterwards.
     *
@@ -27,17 +33,25 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
     *
     * @return database connection
     */
-  val db: Future[DefaultDB] = {
+  def db: Future[DefaultDB] = {
+    if (dbconn != null) {
+      if (dbconn.isInstanceOf[Failure[DefaultDB]]) {
+        dbconn = reconectDb
+      }
+    }
+    else
+      dbconn = reconectDb
+    dbconn
+  }
 
+  def reconectDb: Future[DefaultDB] = {
     val hostUris = MongoConfig.hosts(configPrefix)
-
     for {
       uri <- Future.fromTry(MongoConnection.parseURI(hostUris))
+      dn <- Future(uri.db.getOrElse("noDbName"))
       con = driver.connection(uri)
-      dn <- Future(uri.db.get)
       db <- con.database(dn)
     } yield db
-
   }
 
   /**
@@ -70,18 +84,53 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
                                  (implicit writer: BSONDocumentWriter[T], reader: BSONDocumentReader[T])
   : Future[DeepCheckResponse] = {
 
-    collection(collectionName) flatMap {
-      _.find(document()).one[T] map (_ => DeepCheckResponse())
-    } recover {
+    checkConnection() match {
+      case true =>
+        logger.debug("db connection exists")
+        collection(collectionName) flatMap {
+          _.find(document()).one[T] map (_ => DeepCheckResponse())
+        } recover {
 
-      case t: Throwable =>
-        DeepCheckResponse(
+          case t: Throwable =>
+            DeepCheckResponse(
+              status = false,
+              messages = Seq(t.getMessage)
+            )
+
+        }
+      case false =>
+        logger.debug("db connection does not exists")
+        Future(DeepCheckResponse(
           status = false,
-          messages = Seq(t.getMessage)
-        )
-
+          messages = Seq("no mongo connection")
+        ))
     }
 
+  }
+
+  /**
+    *
+    * @return
+    */
+  def checkConnection(): Boolean = {
+    try {
+      val dbc = Await.result(db, 2 seconds)
+      if (dbc.connection.active) {
+        val cols = Await.result(dbc.collectionNames, 2 seconds)
+        if (cols.size > 0)
+          true
+        else
+          false
+      }
+      else
+        false
+    }
+    catch {
+      case t: Throwable =>
+        dbconn = null
+        logger.error("no db connection", t)
+        false
+    }
   }
 
 }
