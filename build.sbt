@@ -71,7 +71,7 @@ lazy val crypto = project
   .settings(commonSettings: _*)
   .settings(
     description := "ubirch util with crypto related code",
-    version := "0.4.2",
+    version := "0.4.3",
     resolvers ++= Seq(
       resolverHasher
     ),

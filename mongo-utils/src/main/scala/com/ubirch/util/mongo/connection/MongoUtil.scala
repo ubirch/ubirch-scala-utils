@@ -35,7 +35,7 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
     */
   def db: Future[DefaultDB] = {
     if (dbconn != null) {
-      if (dbconn.isInstanceOf[Failure[DefaultDB]]) {
+      if (dbconn.isInstanceOf[scala.util.Failure[reactivemongo.api.DefaultDB]]) {
         dbconn = reconectDb
       }
     }

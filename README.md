@@ -79,10 +79,14 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
 	     "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "crypto" % "0.4.2"
+      "com.ubirch.util" %% "crypto" % "0.4.3"
     )
 
 ### Release History
+
+#### Version 0.4.3 (2018-03-27)
+
+* added sign for bin data
 
 #### Version 0.4.2 (2018-01-22)
 

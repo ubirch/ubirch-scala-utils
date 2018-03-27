@@ -55,16 +55,26 @@ object EccUtil {
     *
     * @param privateKey base64 encoded ECC private key
     * @param payload    data as a String
-    * @return
+    * @return Base64 encoded signature
     */
   def signPayload(privateKey: String, payload: String): String = {
+    signPayload(privateKey, payload.getBytes)
+  }
+
+  /**
+    *
+    * @param privateKey base64 encoded ECC private key
+    * @param payload    data as Array[Byte]
+    * @return Base64 encoded signature
+    */
+  def signPayload(privateKey: String, payload: Array[Byte]): String = {
 
     val sgr: Signature = new EdDSAEngine(MessageDigest.getInstance(DEFAULTHASHALGORITHM))
 
     val eddsaPrivateKey = decodePrivateKey(privateKey)
 
     sgr.initSign(eddsaPrivateKey)
-    sgr.update(payload.getBytes)
+    sgr.update(payload)
     val signature: Array[Byte] = sgr.sign
 
     Base64.getEncoder.encodeToString(signature)
