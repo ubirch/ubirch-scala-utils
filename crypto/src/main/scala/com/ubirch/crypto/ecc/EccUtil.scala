@@ -126,15 +126,21 @@ object EccUtil {
 
     CodecUtil.multiDecoder(publicKey) match {
       case Some(decoded) =>
-        val pubKeyBytes: Array[Byte] = decoded.length match {
-          case 32 => decoded
-          case _ => EdDSAPublicKey.decode(decoded)
-        }
-        val pubKey: EdDSAPublicKeySpec = new EdDSAPublicKeySpec(pubKeyBytes, EDDSASPEC)
-        new EdDSAPublicKey(pubKey)
+        decodePublicKey(decoded)
       case None =>
         throw new IllegalArgumentException(s"invalid pubkey: $publicKey")
     }
+  }
+
+  def decodePublicKey(publicKey: Array[Byte]): PublicKey = {
+    //    val spec: EdDSAParameterSpec = EdDSANamedCurveTable.getByName("ed25519-sha-512")
+
+    val pubKeyBytes: Array[Byte] = publicKey.length match {
+      case 32 => publicKey
+      case _ => EdDSAPublicKey.decode(publicKey)
+    }
+    val pubKey: EdDSAPublicKeySpec = new EdDSAPublicKeySpec(pubKeyBytes, EDDSASPEC)
+    new EdDSAPublicKey(pubKey)
   }
 
   /**
@@ -154,13 +160,21 @@ object EccUtil {
     */
   def decodePrivateKey(privateKey: String): PrivateKey = {
 
-    val decoded = Base64.getDecoder.decode(privateKey)
-    val privKeyBytes: Array[Byte] = decoded.length match {
-      case 34 => decoded
-      case _ => EdDSAPrivateKey.decode(decoded)
+    CodecUtil.multiDecoder(privateKey) match {
+      case Some(decoded) =>
+        decodePrivateKey(decoded)
+      case None =>
+        throw new IllegalArgumentException(s"invalid privateKey: $privateKey")
     }
-
-    val privKeySpec: EdDSAPrivateKeySpec = new EdDSAPrivateKeySpec(privKeyBytes, EDDSASPEC)
-    new EdDSAPrivateKey(privKeySpec)
   }
+
+  def decodePrivateKey(privateKey: Array[Byte]): PrivateKey = {
+    val privKeyBytes: Array[Byte] = privateKey.length match {
+      case 64 => privateKey
+      case _ => EdDSAPrivateKey.decode(privateKey)
+    }
+    val pubKey: EdDSAPrivateKeySpec = new EdDSAPrivateKeySpec(privKeyBytes, EDDSASPEC)
+    new EdDSAPrivateKey(pubKey)
+  }
+
 }
