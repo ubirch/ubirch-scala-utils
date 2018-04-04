@@ -6,6 +6,7 @@ import java.util.Base64
 import com.ubirch.crypto.codec.CodecUtil
 import net.i2p.crypto.eddsa.spec.{EdDSANamedCurveTable, EdDSAParameterSpec, EdDSAPrivateKeySpec, EdDSAPublicKeySpec}
 import net.i2p.crypto.eddsa.{EdDSAEngine, EdDSAPrivateKey, EdDSAPublicKey, KeyPairGenerator}
+import org.apache.commons.codec.binary.Hex
 
 /**
   * Created by derMicha on 19/05/17.
@@ -17,6 +18,12 @@ object EccUtil {
   final private lazy val DEFAULTECCCURVE = EdDSANamedCurveTable.CURVE_ED25519_SHA512
 
   final private lazy val EDDSASPEC: EdDSAParameterSpec = EdDSANamedCurveTable.getByName(DEFAULTECCCURVE)
+
+  final val encHex = "hex"
+
+  final val encB64 = "b64"
+
+  final private val edDsaEng: EdDSAEngine = new EdDSAEngine(MessageDigest.getInstance(DEFAULTHASHALGORITHM))
 
   /**
     *
@@ -39,11 +46,10 @@ object EccUtil {
     val edsaPubKey = decodePublicKey(publicKey)
 
     val signatureBytes: Array[Byte] = Base64.getDecoder.decode(signature)
-    val eddsaSignature: EdDSAEngine = new EdDSAEngine(MessageDigest.getInstance(DEFAULTHASHALGORITHM))
 
-    eddsaSignature.initVerify(edsaPubKey)
-    eddsaSignature.update(payload)
-    eddsaSignature.verify(signatureBytes) match {
+    edDsaEng.initVerify(edsaPubKey)
+    edDsaEng.update(payload)
+    edDsaEng.verify(signatureBytes) match {
       case true =>
         true
       case _ =>
@@ -67,17 +73,29 @@ object EccUtil {
     * @param payload    data as Array[Byte]
     * @return Base64 encoded signature
     */
+
   def signPayload(privateKey: String, payload: Array[Byte]): String = {
-
-    val sgr: Signature = new EdDSAEngine(MessageDigest.getInstance(DEFAULTHASHALGORITHM))
-
     val eddsaPrivateKey = decodePrivateKey(privateKey)
+    signPayload(eddsaPrivateKey, payload)
+  }
 
-    sgr.initSign(eddsaPrivateKey)
-    sgr.update(payload)
-    val signature: Array[Byte] = sgr.sign
+  /**
+    *
+    * @param eddsaPrivateKey ECC private key
+    * @param payload         as Array[Byte]
+    * @param encoding        EccUtil.encHex | EccUtil.encB64 -> encode signature hex/base64
+    * @return string encoded signature
+    */
+  def signPayload(eddsaPrivateKey: PrivateKey, payload: Array[Byte], encoding: String = encB64): String = {
 
-    Base64.getEncoder.encodeToString(signature)
+    edDsaEng.initSign(eddsaPrivateKey)
+    edDsaEng.update(payload)
+    val signature: Array[Byte] = edDsaEng.sign
+
+    if (encoding.equals(encHex))
+      Hex.encodeHexString(signature)
+    else
+      Base64.getEncoder.encodeToString(signature)
   }
 
   def generateEccKeyPair: (PublicKey, PrivateKey) = {
@@ -121,7 +139,7 @@ object EccUtil {
     * @param publicKey Base64 encoded ECC PublicKey
     * @return EdDSA PublicKey
     */
-  def decodePublicKey(publicKey: String): PublicKey = {
+  def decodePublicKey(publicKey: String): EdDSAPublicKey = {
     //    val spec: EdDSAParameterSpec = EdDSANamedCurveTable.getByName("ed25519-sha-512")
 
     CodecUtil.multiDecoder(publicKey) match {
@@ -132,7 +150,7 @@ object EccUtil {
     }
   }
 
-  def decodePublicKey(publicKey: Array[Byte]): PublicKey = {
+  def decodePublicKey(publicKey: Array[Byte]): EdDSAPublicKey = {
     //    val spec: EdDSAParameterSpec = EdDSANamedCurveTable.getByName("ed25519-sha-512")
 
     val pubKeyBytes: Array[Byte] = publicKey.length match {
@@ -158,7 +176,7 @@ object EccUtil {
     * @param privateKey Base64 encoded ECC PrivateKey
     * @return EdDSA PrivateKey
     */
-  def decodePrivateKey(privateKey: String): PrivateKey = {
+  def decodePrivateKey(privateKey: String): EdDSAPrivateKey = {
 
     CodecUtil.multiDecoder(privateKey) match {
       case Some(decoded) =>
@@ -168,9 +186,10 @@ object EccUtil {
     }
   }
 
-  def decodePrivateKey(privateKey: Array[Byte]): PrivateKey = {
+  def decodePrivateKey(privateKey: Array[Byte]): EdDSAPrivateKey = {
     val privKeyBytes: Array[Byte] = privateKey.length match {
-      case 64 => privateKey
+      case 32 => privateKey
+      case 64 => privateKey.take(32)
       case _ => EdDSAPrivateKey.decode(privateKey)
     }
     val pubKey: EdDSAPrivateKeySpec = new EdDSAPrivateKeySpec(privKeyBytes, EDDSASPEC)
