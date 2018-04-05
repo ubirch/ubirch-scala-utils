@@ -84,6 +84,10 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
 
 ### Release History
 
+#### Version 0.4.7 (2018-04-05)
+
+* added sha512 version of signature validation (ECCUtil.validateSignatureSha512) 
+
 #### Version 0.4.6 (2018-04-05)
 
 * added bin support to hash functions (related to ubirchProtocol)

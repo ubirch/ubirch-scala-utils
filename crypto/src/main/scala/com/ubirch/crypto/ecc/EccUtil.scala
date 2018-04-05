@@ -37,10 +37,12 @@ object EccUtil {
   }
 
   /**
+    * this validation function validates given bin data
     *
     * @param publicKey Base64 encoded ECC public key
-    * @param signature
-    * @param payload
+    * @param signature Base64 encoded ECC signature
+    * @param payload   bin data as an array of bytes
+    * @return boolean validation state
     */
   def validateSignature(publicKey: String, signature: String, payload: Array[Byte]): Boolean = {
 
@@ -56,6 +58,36 @@ object EccUtil {
       case _ =>
         false
     }
+  }
+
+  /**
+    * this validation function validates given sha256 hashed bin data
+    *
+    * @param publicKey Base64 encoded ECC public key
+    * @param signature Base64 encoded ECC signature
+    * @param payload   bin data as an array of bytes
+    * @return boolean validation state
+    */
+  def validateSignatureSha256(publicKey: String, signature: String, payload: Array[Byte]): Boolean = {
+    val hashedPayload = HashUtil.sha256(payload)
+    validateSignature(publicKey = publicKey,
+      signature = signature,
+      payload = hashedPayload)
+  }
+
+  /**
+    * this validation function validates given sha512 hashed bin data
+    *
+    * @param publicKey Base64 encoded ECC public key
+    * @param signature Base64 encoded ECC signature
+    * @param payload   bin data as an array of bytes
+    * @return boolean validation state
+    */
+  def validateSignatureSha512(publicKey: String, signature: String, payload: Array[Byte]): Boolean = {
+    val hashedPayload = HashUtil.sha512(payload)
+    validateSignature(publicKey = publicKey,
+      signature = signature,
+      payload = hashedPayload)
   }
 
   /**

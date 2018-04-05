@@ -11,43 +11,47 @@ class EccUtilSpec
     with StrictLogging
     with Matchers {
 
-  val emptyPayload = ""
-  val payload = "Hello World!"
+  private val emptyPayload = ""
+  private val payload = "Hello World!"
+  private val binPayload = payload.getBytes
 
-  val (publicKeyValid1, privateKeyValid1) = EccUtil.generateEccKeyPairEncoded
+  private val (publicKeyValid_1, privateKeyValid_1) = EccUtil.generateEccKeyPair
+  private val publicKeyValidB64_1 = EccUtil.encodePublicKey(publicKeyValid_1)
+  private val privateKeyValidB64_1 = EccUtil.encodePrivateKey(privateKeyValid_1)
 
-  val (publicKeyValid2, privateKeyValid2) = EccUtil.generateEccKeyPairEncoded
+  private val (publicKeyValid_2, privateKeyValid_2) = EccUtil.generateEccKeyPair
+  private val publicKeyValidB64_2 = EccUtil.encodePublicKey(publicKeyValid_2)
+  private val privateKeyValidB64_2 = EccUtil.encodePrivateKey(privateKeyValid_2)
 
-  val publicKeyInvalid = "invalidPubKey"
-  val privateKeyInvalid = "invalidPrivateKey"
+  private val publicKeyInvalid = "invalidPubKey"
+  private val privateKeyInvalid = "invalidPrivateKey"
 
-  val signaturePayloadValid = EccUtil.signPayload(privateKeyValid1, payload)
-  val signatureEmptyPayloadValid = EccUtil.signPayload(privateKeyValid1, emptyPayload)
-  val signatureInvalid = "invalidSignature"
+  private val signaturePayloadValid = EccUtil.signPayload(privateKeyValidB64_1, payload)
+  private val signatureEmptyPayloadValid = EccUtil.signPayload(privateKeyValidB64_1, emptyPayload)
+  private val signatureInvalid = "invalidSignature"
 
   feature("ECCUtil Tests") {
 
     scenario("validate with valid payload(empty)/pubKey/signature") {
-      logger.info(s"publicKey: $publicKeyValid1")
-      logger.info(s"privateKey: $privateKeyValid1")
+      logger.info(s"publicKey: $publicKeyValidB64_1")
+      logger.info(s"privateKey: $privateKeyValidB64_1")
       logger.info(s"signature: $signatureEmptyPayloadValid")
       logger.info(s"payload: >>$emptyPayload<<")
 
-      EccUtil.validateSignature(publicKeyValid1, signatureEmptyPayloadValid, emptyPayload) shouldBe true
+      EccUtil.validateSignature(publicKeyValidB64_1, signatureEmptyPayloadValid, emptyPayload) shouldBe true
     }
 
     scenario("validate with valid payload/pubKey/signature") {
-      logger.info(s"publicKey: $publicKeyValid1")
-      logger.info(s"privateKey: $privateKeyValid1")
+      logger.info(s"publicKey: $publicKeyValidB64_1")
+      logger.info(s"privateKey: $privateKeyValidB64_1")
       logger.info(s"signature: $signaturePayloadValid")
       logger.info(s"payload: >>$payload<<")
 
-      EccUtil.validateSignature(publicKeyValid1, signaturePayloadValid, payload) shouldBe true
+      EccUtil.validateSignature(publicKeyValidB64_1, signaturePayloadValid, payload) shouldBe true
     }
 
     scenario("validate with valid payload/signature and invalid pubKey") {
       logger.info(s"publicKey: $publicKeyInvalid")
-      logger.info(s"privateKey: $privateKeyValid1")
       logger.info(s"signature: $signaturePayloadValid")
       logger.info(s"payload: >>$payload<<")
 
@@ -57,13 +61,30 @@ class EccUtilSpec
     }
 
     scenario("validate with valid payload/signature and wrong pubKey") {
-      logger.info(s"publicKey: $publicKeyValid2")
-      logger.info(s"privateKey: $privateKeyValid1")
+      logger.info(s"publicKey: $publicKeyValidB64_2")
       logger.info(s"signature: $signaturePayloadValid")
       logger.info(s"payload: >>$payload<<")
 
 
-      EccUtil.validateSignature(publicKeyValid2, signaturePayloadValid, payload) shouldBe false
+      EccUtil.validateSignature(publicKeyValidB64_2, signaturePayloadValid, payload) shouldBe false
+
+    }
+
+    scenario("sign haseh bin data") {
+      logger.info(s"publicKey: $publicKeyValidB64_1")
+      logger.info(s"privateKey: $privateKeyValidB64_1")
+      logger.info(s"payload: >>$payload<<")
+
+      val signature = EccUtil.signPayloadSha512(eddsaPrivateKey = privateKeyValid_1,
+        payload = binPayload
+      )
+
+      val validation = EccUtil.validateSignatureSha512(publicKey = publicKeyValidB64_1,
+        signature = signature,
+        payload = binPayload
+      )
+
+      validation shouldBe true
 
     }
 
