@@ -142,7 +142,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.4.1",
+    version := "0.5.0",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -151,7 +151,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.4.1",
+    version := "0.5.0",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -416,7 +416,7 @@ lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.0"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.5"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.2.0"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.3"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.4.1"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.5.0"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.5"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.5"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.2"

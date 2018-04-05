@@ -16,6 +16,8 @@ trait MongoConstraintsBase extends StrictLogging {
 
   val constraints: Map[String, Set[Index]]
 
+  val constraintsToDrop: Map[String, Set[String]] = Map.empty
+
   val collections: Set[String]
 
   def createMongoConstraints()(implicit mongo: MongoUtil, ec: ExecutionContext): Unit = {
@@ -35,6 +37,33 @@ trait MongoConstraintsBase extends StrictLogging {
     }
 
     Thread.sleep(500)
+
+  }
+
+  def dropMongoConstraints()(implicit mongo: MongoUtil, ec: ExecutionContext): Unit = {
+
+    for (collectionName <- constraintsToDrop.keys) {
+
+      mongo.collection(collectionName) map { collection =>
+
+        for (constraintName <- constraintsToDrop.getOrElse(collectionName, Set.empty)) {
+          collection.indexesManager.drop(constraintName) map { result =>
+            logger.info(s"dropMongoConstraints() - collection=$collectionName, constraintName=$constraintName, result=$result")
+          }
+        }
+
+      }
+
+    }
+
+    Thread.sleep(500)
+
+  }
+
+  def prepareMongoConstraints()(implicit mongo: MongoUtil, ec: ExecutionContext): Unit = {
+
+    createMongoConstraints()
+    dropMongoConstraints()
 
   }
 
