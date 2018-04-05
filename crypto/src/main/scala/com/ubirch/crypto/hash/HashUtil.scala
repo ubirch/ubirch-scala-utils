@@ -4,6 +4,7 @@ import java.util.Base64
 
 import com.roundeights.hasher.Implicits._
 import com.roundeights.hasher.{Digest, Hash}
+import org.apache.commons.codec.binary.Hex
 
 import scala.util.Random
 
@@ -50,6 +51,33 @@ object HashUtil {
   }
 
   /**
+    *
+    * @param binData
+    * @return sha256 hash as array of bytes
+    */
+  def sha256(binData: Array[Byte]): Array[Byte] = {
+    binData.sha256.bytes
+  }
+
+  /**
+    *
+    * @param binData
+    * @return sha256 hash as hex encoded string
+    */
+  def sha256Hex(binData: Array[Byte]): String = {
+    Hex.encodeHexString(sha256(binData))
+  }
+
+  /**
+    *
+    * @param binData
+    * @return sha256 hash as base64 encoded string
+    */
+  def sha256Base64(binData: Array[Byte]): String = {
+    Base64.getEncoder.encodeToString(sha256(binData))
+  }
+
+  /**
     * Gives us the Digest of a hash based on which call all sorts of methods (including conversion to hexString or
     * byteArray).
     *
@@ -83,6 +111,33 @@ object HashUtil {
   def sha512Base64(data: String): String = {
     val bytes = sha512Digest(data).bytes
     hashToBase64(bytes)
+  }
+
+  /**
+    *
+    * @param binData
+    * @return sha512 hash as array of bytes
+    */
+  def sha512(binData: Array[Byte]): Array[Byte] = {
+    binData.sha512.bytes
+  }
+
+  /**
+    *
+    * @param binData
+    * @return sha512 hash as hex encoded string
+    */
+  def sha512Hex(binData: Array[Byte]): String = {
+    Hex.encodeHexString(sha512(binData))
+  }
+
+  /**
+    *
+    * @param binData
+    * @return sha512 hash as base64 encoded string
+    */
+  def sha512Base64(binData: Array[Byte]): String = {
+    Base64.getEncoder.encodeToString(sha512(binData))
   }
 
   final val pbkdf2IterationsDefault: Int = 10000

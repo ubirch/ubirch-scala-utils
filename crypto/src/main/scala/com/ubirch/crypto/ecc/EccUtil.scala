@@ -4,6 +4,7 @@ import java.security._
 import java.util.Base64
 
 import com.ubirch.crypto.codec.CodecUtil
+import com.ubirch.crypto.hash.HashUtil
 import net.i2p.crypto.eddsa.spec.{EdDSANamedCurveTable, EdDSAParameterSpec, EdDSAPrivateKeySpec, EdDSAPublicKeySpec}
 import net.i2p.crypto.eddsa.{EdDSAEngine, EdDSAPrivateKey, EdDSAPublicKey, KeyPairGenerator}
 import org.apache.commons.codec.binary.Hex
@@ -98,6 +99,20 @@ object EccUtil {
       Base64.getEncoder.encodeToString(signature)
   }
 
+  /**
+    *
+    * @param eddsaPrivateKey ECC private key
+    * @param payload         as Array[Byte]
+    * @param encoding        EccUtil.encHex | EccUtil.encB64 -> encode signature hex/base64
+    * @return signed sha512 hashed data (sign(sha512(payload))
+    */
+  def signPayloadSha512(eddsaPrivateKey: PrivateKey, payload: Array[Byte], encoding: String = encB64): String = {
+    val hashedPayload = HashUtil.sha512(payload)
+    signPayload(eddsaPrivateKey = eddsaPrivateKey,
+      payload = hashedPayload,
+      encoding = encoding)
+  }
+
   def generateEccKeyPair: (PublicKey, PrivateKey) = {
     val spec: EdDSAParameterSpec = EdDSANamedCurveTable.getByName(DEFAULTECCCURVE)
     val kpg: KeyPairGenerator = new KeyPairGenerator
@@ -111,6 +126,7 @@ object EccUtil {
 
     (pKey, sKey)
   }
+
 
   /**
     *

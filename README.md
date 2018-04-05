@@ -84,6 +84,17 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
 
 ### Release History
 
+#### Version 0.4.6 (2018-04-05)
+
+* added bin support to hash functions (related to ubirchProtocol)
+* added sha512 version of bin sign function (related to ubirchProtocol)
+
+#### Version 0.4.5 (2018-03-28)
+
+* fixed PubKey decoding
+* added sign function with new signature (pirvKey as PrivateKey)
+* tuned performance (EdDSAEngine is now a static property)
+
 #### Version 0.4.4 (2018-03-28)
 
 * fixed private/public key parsing
