@@ -71,7 +71,7 @@ lazy val crypto = project
   .settings(commonSettings: _*)
   .settings(
     description := "ubirch util with crypto related code",
-    version := "0.4.6",
+    version := "0.4.7",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -142,7 +142,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.4.1",
+    version := "0.5.1",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -151,7 +151,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.4.1",
+    version := "0.5.1",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -160,7 +160,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.5.3",
+    version := "0.5.4",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -413,10 +413,10 @@ val ubirchUserG = "com.ubirch.user"
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.0"
-lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.7"
+lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.6"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.2.0"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.3"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.4.1"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.5.1"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.5"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.5"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.2"

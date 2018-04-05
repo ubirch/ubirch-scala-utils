@@ -741,10 +741,19 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.4.0"
+      "com.ubirch.util" %% "mongo-utils" % "0.5.1"
     )
 
 ### Release History
+
+#### Version 0.5.1 (2018-04-05)
+
+* removed default value from `MongoConstraintsBase.constraintsToDrop`
+* renamed `MongoConstraintsBase.constraints` to `MongoConstraintsBase.constraintsToCreate`
+
+#### Version 0.5.0 (2018-04-05)
+
+* allow deletion of MongoDB constraints (see `MongoConstraintsBase.dropMongoConstraints` & `MongoConstraintsBase.prepareMongoConstraints`)
 
 #### Version 0.4.0 (2018-03-22)
 
@@ -813,10 +822,18 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.4.1"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.5.1"
     )
 
 ### Release History
+
+#### Version 0.5.1 (2018-04-05)
+
+* update to `com.ubirch.util:mongo-utils:0.5.1`
+
+#### Version 0.5.0 (2018-04-05)
+
+* update to `com.ubirch.util:mongo-utils:0.5.0`
 
 #### Version 0.4.1 (2018-03-26)
 
@@ -924,7 +941,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.5.3"
+      "com.ubirch.util" %% "oidc-utils" % "0.5.4"
     )
 
 ### Config
@@ -951,6 +968,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.5.4 (2018-04-04)
+
+* updated to `com.ubirch.util:crypto:0.4.5`
 
 #### Version 0.5.3 (2018-03-26)
 
