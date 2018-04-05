@@ -14,19 +14,19 @@ import scala.concurrent.ExecutionContext
   */
 trait MongoConstraintsBase extends StrictLogging {
 
-  val constraints: Map[String, Set[Index]]
+  val constraintsToCreate: Map[String, Set[Index]]
 
-  val constraintsToDrop: Map[String, Set[String]] = Map.empty
+  val constraintsToDrop: Map[String, Set[String]]
 
   val collections: Set[String]
 
   def createMongoConstraints()(implicit mongo: MongoUtil, ec: ExecutionContext): Unit = {
 
-    for (collectionName <- constraints.keys) {
+    for (collectionName <- constraintsToCreate.keys) {
 
       mongo.collection(collectionName) map { collection =>
 
-        for (constraint <- constraints.getOrElse(collectionName, Set.empty)) {
+        for (constraint <- constraintsToCreate.getOrElse(collectionName, Set.empty)) {
           collection.indexesManager.create(constraint) map { result =>
             logger.info(s"createMongoConstraints() - collection=$collectionName, constraint=$constraint, result=$result")
           }

@@ -726,10 +726,15 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.5.0"
+      "com.ubirch.util" %% "mongo-utils" % "0.5.1"
     )
 
 ### Release History
+
+#### Version 0.5.1 (2018-04-05)
+
+* removed default value from `MongoConstraintsBase.constraintsToDrop`
+* renamed `MongoConstraintsBase.constraints` to `MongoConstraintsBase.constraintsToCreate`
 
 #### Version 0.5.0 (2018-04-05)
 
@@ -802,10 +807,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.5.0"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.5.1"
     )
 
 ### Release History
+
+#### Version 0.5.1 (2018-04-05)
+
+* update to `com.ubirch.util:mongo-utils:0.5.1`
 
 #### Version 0.5.0 (2018-04-05)
 
