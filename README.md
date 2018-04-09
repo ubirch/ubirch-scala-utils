@@ -838,10 +838,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.5.1"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.5.3"
     )
 
 ### Release History
+
+#### Version 0.5.3 (2018-04-09)
+
+* update to `com.ubirch.util:mongo-utils:0.5.3`
 
 #### Version 0.5.1 (2018-04-05)
 
@@ -957,7 +961,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.5.4"
+      "com.ubirch.util" %% "oidc-utils" % "0.5.5"
     )
 
 ### Config
@@ -984,6 +988,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.5.5 (2018-04-04)
+
+* updated to `com.ubirch.util:redis-(test-)util:0.3.6`
 
 #### Version 0.5.4 (2018-04-04)
 
@@ -1123,7 +1131,7 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-test-util" % "0.3.5"
+      "com.ubirch.util" %% "redis-test-util" % "0.3.6"
     )
 
 ### Config
@@ -1131,6 +1139,10 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 The required config is documented in the `redis-util` section.
 
 ### Release History
+
+#### Version 0.3.6 (2018-04-09)
+
+* update to `com.ubirch.util:redis-util:0.3.6`
 
 #### Version 0.3.5 (2018-03-08)
 

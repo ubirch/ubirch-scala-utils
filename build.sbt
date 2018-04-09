@@ -142,7 +142,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.5.1",
+    version := "0.5.3",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -160,7 +160,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.5.4",
+    version := "0.5.5",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -172,7 +172,7 @@ lazy val redisTestUtil = (project in file("redis-test-util"))
   .settings(
     name := "redis-test-util",
     description := "Redis related test utils",
-    version := "0.3.5",
+    version := "0.3.6",
     libraryDependencies ++= depRedisTestUtils
   )
 
@@ -416,9 +416,9 @@ lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.0"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.7"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.2.0"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.3"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.5.1"
-lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.5"
-lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.5"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.5.3"
+lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.6"
+lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.6"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.2"
 
 lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.8.3"
