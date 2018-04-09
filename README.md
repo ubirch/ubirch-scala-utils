@@ -754,6 +754,10 @@ Utils related to Scala Futures.
 
 ### Release History
 
+#### Version 0.5.3 (2018-04-09)
+
+* update to `com.typesafe.akka:akka-(actor|slf4j):2.4.20`
+
 #### Version 0.5.2 (2018-04-09)
 
 * update to `com.typesafe.akka:akka-(actor|slf4j):2.4.19`
@@ -1181,7 +1185,7 @@ the whole environment itself)
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-util" % "0.3.6"
+      "com.ubirch.util" %% "redis-util" % "0.3.7"
     )
 
 ### Config
@@ -1213,6 +1217,10 @@ And this how you get a redis client:
     ```
 
 ### Release History
+
+#### Version 0.3.7 (2018-04-09)
+
+* update to `com.typesafe.akka:akka-(actor|slf4j):2.4.20`
 
 #### Version 0.3.6 (2018-04-09)
 

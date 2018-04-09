@@ -341,7 +341,7 @@ lazy val depUuid = Seq(
 
 // Versions
 val json4sV = "3.5.2"
-val akkaV = "2.4.19"
+val akkaV = "2.4.20"
 val akkaHttpV = "10.0.9"
 val elasticsearchV = "5.6.8"
 val log4jV = "2.8.2"
