@@ -151,7 +151,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.5.1",
+    version := "0.5.2",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -181,7 +181,7 @@ lazy val redisUtil = (project in file("redis-util"))
   .settings(
     name := "redis-util",
     description := "Redis related utils",
-    version := "0.3.5",
+    version := "0.3.6",
     libraryDependencies ++= depRedisUtil
   )
 

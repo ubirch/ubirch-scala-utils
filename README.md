@@ -749,10 +749,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.5.1"
+      "com.ubirch.util" %% "mongo-utils" % "0.5.2"
     )
 
 ### Release History
+
+#### Version 0.5.2 (2018-04-09)
+
+* update to `com.typesafe.akka:akka-(actor|slf4j):2.4.19`
 
 #### Version 0.5.1 (2018-04-05)
 
@@ -1177,7 +1181,7 @@ the whole environment itself)
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-util" % "0.3.5"
+      "com.ubirch.util" %% "redis-util" % "0.3.6"
     )
 
 ### Config
@@ -1209,6 +1213,10 @@ And this how you get a redis client:
     ```
 
 ### Release History
+
+#### Version 0.3.6 (2018-04-09)
+
+* update to `com.typesafe.akka:akka-(actor|slf4j):2.4.19`
 
 #### Version 0.3.5 (2018-03-08)
 
