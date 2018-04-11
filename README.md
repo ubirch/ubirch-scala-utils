@@ -961,7 +961,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.5.5"
+      "com.ubirch.util" %% "oidc-utils" % "0.5.6"
     )
 
 ### Config
@@ -988,6 +988,11 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.5.6 (2018-04-11)
+
+* update Akka Http to 10.0.11
+* updated to `com.ubirch.user:client-rest:0.8.4`
 
 #### Version 0.5.5 (2018-04-04)
 
@@ -1285,10 +1290,14 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "response-util" % "0.2.4"
+      "com.ubirch.util" %% "response-util" % "0.2.5"
     )
 
 ### Release History
+
+#### Version 0.2.5 (2018-04-11)
+
+* update Akka Http to 10.0.11
 
 #### Version 0.2.4 (2017-07-27)
 
@@ -1300,7 +1309,7 @@ And this how you get a redis client:
 
 #### Version 0.2.2 (2017-06-28)
 
-* update to _com.ubirch.util:json:0.4.2_
+* update to `com.ubirch.util:json:0.4.2`
 
 #### Version 0.2.1 (2017-06-16)
 
@@ -1348,17 +1357,22 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http" % "0.3.9" // for Akka HTTP 10.0.11
       "com.ubirch.util" %% "rest-akka-http" % "0.3.8" // for Akka HTTP 10.0.9
       "com.ubirch.util" %% "rest-akka-http" % "0.3.7" // for Akka HTTP 10.0.6
     )
 
 ### Release History
 
-#### Version 0.3.8 (107-07-17)
+#### Version 0.3.9 (2018-04-11)
+
+* update Akka Http to 10.0.11
+
+#### Version 0.3.8 (2017-07-17)
 
 * update Akka Http to 10.0.9
 
-#### Version 0.3.7 (107-05-22)
+#### Version 0.3.7 (2017-05-22)
 
 * switch to using a CORS library: https://github.com/lomigmegard/akka-http-cors
 
@@ -1397,11 +1411,16 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http-test" % "0.3.9" // for Akka HTTP 10.0.11
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.8" // for Akka HTTP 10.0.9
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.7" // for Akka HTTP 10.0.6
     )
 
 ### Release History
+
+#### Version 0.3.9 (2018-04-11)
+
+* update Akka Http to 10.0.11
 
 #### Version 0.3.8 (107-07-17)
 

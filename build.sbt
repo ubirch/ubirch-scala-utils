@@ -160,7 +160,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.5.5",
+    version := "0.5.6",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -190,7 +190,7 @@ lazy val responseUtil = project
   .settings(
     name := "response-util",
     description := "HTTP Response Utils",
-    version := "0.2.4",
+    version := "0.2.5",
     libraryDependencies ++= depResponseUtil
   )
 
@@ -199,7 +199,7 @@ lazy val restAkkaHttp = (project in file("rest-akka-http"))
   .settings(
     name := "rest-akka-http",
     description := "shared custom classes related to akka-http-experimental (for example certain directives)",
-    version := "0.3.8", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
+    version := "0.3.9", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
     libraryDependencies ++= depRestAkkaHttp
   )
 
@@ -208,7 +208,7 @@ lazy val restAkkaHttpTest = (project in file("rest-akka-http-test"))
   .settings(
     name := "rest-akka-http-test",
     description := "akka-http-experimental related test utils",
-    version := "0.3.8", // NOTE: please keep major.minor version synchronized with restAkkaHttp
+    version := "0.3.9", // NOTE: please keep major.minor version synchronized with restAkkaHttp
     libraryDependencies ++= depRestAkkaHttpTest
   )
 
@@ -342,7 +342,7 @@ lazy val depUuid = Seq(
 // Versions
 val json4sV = "3.5.2"
 val akkaV = "2.4.20"
-val akkaHttpV = "10.0.9"
+val akkaHttpV = "10.0.11"
 val elasticsearchV = "5.6.8"
 val log4jV = "2.8.2"
 val scalaTestV = "3.0.1"
@@ -421,7 +421,7 @@ lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.6
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.6"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.2"
 
-lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.8.3"
+lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.8.4"
 
 /*
  * RESOLVER
