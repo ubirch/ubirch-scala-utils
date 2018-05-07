@@ -1,12 +1,12 @@
 import sbt.Keys.libraryDependencies
 
-packagedArtifacts in file(".") := Map.empty // disable publishing of root project
-
 lazy val ubirchUtilGroup = "com.ubirch.util"
 lazy val commonSettings = Seq(
 
   scalaVersion := "2.11.8",
-  scalacOptions ++= Seq("-feature"),
+  scalacOptions ++= Seq(
+    "-feature"
+  ),
 
   organization := ubirchUtilGroup,
 
@@ -20,15 +20,14 @@ lazy val commonSettings = Seq(
     sonatypeReleases,
     sonatypeSnapshots
   )
-
 )
 
 /*
  * MODULES
  ********************************************************/
 
-lazy val scalaUtils = (project in file("."))
-  .settings(commonSettings: _*)
+lazy val scalaUtils = project
+  .settings(commonSettings ++ Seq(packagedArtifacts := Map.empty): _*)
   .aggregate(
     camelUtils,
     config,
@@ -215,9 +214,19 @@ lazy val restAkkaHttpTest = (project in file("rest-akka-http-test"))
 lazy val uuid = project
   .settings(commonSettings: _*)
   .settings(
+    name := "uuid",
     description := "UUID related utils",
     version := "0.1.2",
     libraryDependencies ++= depUuid
+  )
+
+lazy val lockUtil = (project in file("lock-util"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "lock-util",
+    description := "Simple Lock Manager based on Redis",
+    version := "0.0.1",
+    libraryDependencies ++= depLockUtil
   )
 
 /*
@@ -335,6 +344,15 @@ lazy val depUuid = Seq(
   scalaTest % "test"
 )
 
+lazy val depLockUtil = Seq(
+  redisson,
+  rediscala,
+  ubirchUtilRedisUtil,
+  scalaLoggingSlf4j,
+  ubirchUtilConfig,
+  scalaTest % "test"
+)
+
 /*
  * DEPENDENCIES
  ********************************************************/
@@ -398,6 +416,7 @@ lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.7"
 lazy val log4jApi = log4jG % "log4j-api" % log4jV
 lazy val log4jToSlf4j = "org.apache.logging.log4j" % "log4j-to-slf4j" % "2.7"
+
 lazy val depSlf4jLogging = Seq(
   scalaLoggingSlf4j,
   slf4j,
@@ -408,10 +427,10 @@ lazy val depLog4jToSlf4j = Seq(
   log4jToSlf4j
 )
 
-val ubirchUserG = "com.ubirch.user"
-
+lazy val redisson = "org.redisson" % "redisson" % "3.6.2"
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
+val ubirchUserG = "com.ubirch.user"
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.0"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.7"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.2.0"
