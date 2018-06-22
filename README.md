@@ -239,11 +239,12 @@ In addition to this there's some other utils as well:
 ### Scala Dependency
 
     resolvers ++= Seq(
-      Resolver.sonatypeRepo("releases"),
+      //Resolver.sonatypeRepo("releases"),
+      Resolver.sonatypeRepo("snapshots"),
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.3.7"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.4.0-SNAPSHOT"
     )
 
 ### Config
@@ -328,6 +329,10 @@ Example Config (simple localhost cluster without Shield/X-Pack):
     }
 
 ### Release History
+
+#### Version 2.4.0 (2018-06-22)
+
+* add method `ESStorageBase.byDocumentId()`
 
 #### Version 2.3.7 (2018-04-09)
 
@@ -579,15 +584,20 @@ Example Config:
 ### Scala Dependency
 
     resolvers ++= Seq(
-      Resolver.sonatypeRepo("releases"),
+      //Resolver.sonatypeRepo("releases"),
+      Resolver.sonatypeRepo("snapshots"),
       Resolver.bintrayRepo("rick-beton", "maven"),
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-util" % "2.3.7"
+      "com.ubirch.util" %% "elasticsearch-util" % "2.4.0-SNAPSHOT"
     )
 
 ### Release History
+
+#### Version 2.4.0 (2018-06-22)
+
+* increment version to match latest compatible version of `elasticsearch-client-binary`
 
 #### Version 2.3.7 (2018-04-09)
 

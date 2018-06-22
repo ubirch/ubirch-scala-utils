@@ -1,5 +1,6 @@
 package com.ubirch.util.elasticsearch.client.binary.storage.base
 
+import java.util.UUID
 import java.util.concurrent.ExecutionException
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
@@ -94,7 +95,10 @@ trait ESStorageBase extends StrictLogging {
     * @param docId    unique Id per Document
     * @return
     */
-  def getDoc(docIndex: String, docType: String, docId: String): Future[Option[JValue]] = Future {
+  def getDoc(docIndex: String,
+             docType: String,
+             docId: String
+            ): Future[Option[JValue]] = Future {
 
     require(docIndex.nonEmpty && docType.nonEmpty && docId.nonEmpty, "json invalid arguments")
 
@@ -199,6 +203,45 @@ trait ESStorageBase extends StrictLogging {
           List()
 
       }
+    }
+
+  }
+
+  /**
+    * Loads a document by it's documentId. This allows us to load a document before Elasticsearch has finished indexing
+    * it.
+    *
+    * @param docIndex name of the ElasticSearch index
+    * @param docType  name of the type of document
+    * @param docId    unique Id per Document
+    * @return
+    */
+  def byDocumentId(docIndex: String,
+                   docType: String,
+                   docId: String
+                  ): Option[JValue] = {
+
+    // TODO (TRD-696) automated tests
+    // see https://www.elastic.co/guide/en/elasticsearch/client/java-api/5.6/java-docs-get.html
+    try {
+
+      val getResponse = esClient.prepareGet(docIndex, docType, docId).get()
+
+      if (getResponse.isSourceEmpty) {
+        None
+      } else {
+
+        Json4sUtil.string2JValue(getResponse.getSourceAsString)
+          .map(_.extract[JValue])
+
+      }
+
+    } catch {
+
+      case indexNotFound: IndexNotFoundException =>
+        logger.error(s"IndexNotFoundException: index=$docIndex", indexNotFound)
+        None
+
     }
 
   }
