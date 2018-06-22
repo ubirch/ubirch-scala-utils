@@ -268,32 +268,6 @@ trait ESStorageBase extends StrictLogging {
   }
 
   /**
-    * Loads a document by it's documentId. This allows us to load a document before Elasticsearch has finished indexing
-    * it.
-    *
-    * @param docIndex name of the ElasticSearch index
-    * @param docType  name of the type of document
-    * @param docIds   set of unique Ids per Document
-    * @return
-    */
-  def byDocumentIds(docIndex: String,
-                    docType: String,
-                    docIds: Set[UUID]
-                   ): Set[Option[JValue]] = {
-
-    docIds.map { id =>
-
-      byDocumentId(
-        docIndex = docIndex,
-        docType = docType,
-        docId = id
-      )
-
-    }
-
-  }
-
-  /**
     * @param docIndex name of the ElasticSearch index
     * @param docType  name of the type of document
     * @param query    search query as created with [[org.elasticsearch.index.query.QueryBuilders]]

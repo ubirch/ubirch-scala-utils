@@ -333,7 +333,6 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 #### Version 2.4.0 (2018-06-22)
 
 * add `ESStorageBase.byDocumentId()` methods
-* add method `ESStorageBase.byDocumentIds()`
 
 #### Version 2.3.7 (2018-04-09)
 
