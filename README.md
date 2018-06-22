@@ -239,12 +239,11 @@ In addition to this there's some other utils as well:
 ### Scala Dependency
 
     resolvers ++= Seq(
-      //Resolver.sonatypeRepo("releases"),
-      Resolver.sonatypeRepo("snapshots"),
+      Resolver.sonatypeRepo("releases"),
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.4.0-SNAPSHOT"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.4.0"
     )
 
 ### Config
@@ -584,13 +583,12 @@ Example Config:
 ### Scala Dependency
 
     resolvers ++= Seq(
-      //Resolver.sonatypeRepo("releases"),
-      Resolver.sonatypeRepo("snapshots"),
+      Resolver.sonatypeRepo("releases"),
       Resolver.bintrayRepo("rick-beton", "maven"),
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-util" % "2.4.0-SNAPSHOT"
+      "com.ubirch.util" %% "elasticsearch-util" % "2.4.0"
     )
 
 ### Release History
