@@ -221,7 +221,6 @@ trait ESStorageBase extends StrictLogging {
                    docId: String
                   ): Option[JValue] = {
 
-    // TODO (TRD-696) automated tests
     // see https://www.elastic.co/guide/en/elasticsearch/client/java-api/5.6/java-docs-get.html
     try {
 
@@ -241,6 +240,54 @@ trait ESStorageBase extends StrictLogging {
       case indexNotFound: IndexNotFoundException =>
         logger.error(s"IndexNotFoundException: index=$docIndex", indexNotFound)
         None
+
+    }
+
+  }
+
+  /**
+    * Loads a document by it's documentId. This allows us to load a document before Elasticsearch has finished indexing
+    * it.
+    *
+    * @param docIndex name of the ElasticSearch index
+    * @param docType  name of the type of document
+    * @param docId    unique Id per Document as UUID
+    * @return
+    */
+  def byDocumentId(docIndex: String,
+                   docType: String,
+                   docId: UUID
+                  ): Option[JValue] = {
+
+    byDocumentId(
+      docIndex = docIndex,
+      docType = docType,
+      docId = docId.toString
+    )
+
+  }
+
+  /**
+    * Loads a document by it's documentId. This allows us to load a document before Elasticsearch has finished indexing
+    * it.
+    *
+    * @param docIndex name of the ElasticSearch index
+    * @param docType  name of the type of document
+    * @param docIds   set of unique Ids per Document
+    * @return
+    */
+  def byDocumentIds(docIndex: String,
+                    docType: String,
+                    docIds: Set[UUID]
+                   ): Set[Option[JValue]] = {
+
+    docIds.map { id =>
+
+      byDocumentId(
+        docIndex = docIndex,
+        docType = docType,
+        docId = id
+      )
 
     }
 
