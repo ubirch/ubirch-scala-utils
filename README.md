@@ -243,7 +243,7 @@ In addition to this there's some other utils as well:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.4.0"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.4.1"
     )
 
 ### Config
@@ -328,6 +328,10 @@ Example Config (simple localhost cluster without Shield/X-Pack):
     }
 
 ### Release History
+
+#### Version 2.4.1 (2018-07-10)
+
+* update to Elasticsearch 5.6.10
 
 #### Version 2.4.0 (2018-06-22)
 
@@ -588,10 +592,14 @@ Example Config:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-util" % "2.4.0"
+      "com.ubirch.util" %% "elasticsearch-util" % "2.4.1"
     )
 
 ### Release History
+
+#### Version 2.4.1 (2018-07-10)
+
+* update to Elasticsearch 5.6.10
 
 #### Version 2.4.0 (2018-06-22)
 
