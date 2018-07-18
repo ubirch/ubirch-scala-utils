@@ -3,7 +3,7 @@ import sbt.Keys.libraryDependencies
 lazy val ubirchUtilGroup = "com.ubirch.util"
 lazy val commonSettings = Seq(
 
-  scalaVersion := "2.11.8",
+  scalaVersion := "2.11.12",
   scalacOptions ++= Seq(
     "-feature"
   ),
