@@ -29,10 +29,14 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "camel-utils" % "0.1.1"
+      "com.ubirch.util" %% "camel-utils" % "1.0.0-SNAPSHOT"
     )
 
 ### Release History
+
+#### Version 1.0.0 (2018-07-??)
+
+* deleted trait `CamelActorUtil` and move endpoint uri generating code into new case classes `SqsConfigConsumer` and `SqsConfigProducer`
 
 #### Version 0.1.1 (2018-07-18)
 

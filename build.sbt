@@ -55,7 +55,7 @@ lazy val camelUtils = (project in file("camel-utils"))
   .settings(
     name := "camel-utils",
     description := "Camel related utils",
-    version := "0.1.1",
+    version := "1.0.0-SNAPSHOT",
     libraryDependencies ++= depCamelUtils
   )
 
