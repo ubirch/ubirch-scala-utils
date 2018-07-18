@@ -38,6 +38,7 @@ lazy val scalaUtils = project
     elasticsearchUtil,
     futures,
     json,
+    lockUtil,
     mongoTestUtils,
     mongoUtils,
     oidcUtils,
@@ -54,7 +55,7 @@ lazy val camelUtils = (project in file("camel-utils"))
   .settings(
     name := "camel-utils",
     description := "Camel related utils",
-    version := "0.1.0",
+    version := "0.1.1",
     libraryDependencies ++= depCamelUtils
   )
 
@@ -62,7 +63,7 @@ lazy val config = project
   .settings(commonSettings: _*)
   .settings(
     description := "common config related code",
-    version := "0.2.0",
+    version := "0.2.1",
     libraryDependencies ++= depConfig
   )
 
@@ -70,7 +71,7 @@ lazy val crypto = project
   .settings(commonSettings: _*)
   .settings(
     description := "ubirch util with crypto related code",
-    version := "0.4.7",
+    version := "0.4.8",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -81,7 +82,7 @@ lazy val date = project
   .settings(commonSettings: _*)
   .settings(
     description := "a collection of date related utils",
-    version := "0.5.1",
+    version := "0.5.2",
     libraryDependencies ++= depDate
   )
 
@@ -90,7 +91,7 @@ lazy val deepCheckModel = (project in file("deep-check-model"))
   .settings(
     name := "deep-check-model",
     description := "actor and JSON models for the /deepCheck endpoints",
-    version := "0.2.0",
+    version := "0.2.1",
     libraryDependencies ++= depDeepCheckModel
   )
 
@@ -99,7 +100,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.4.1",
+    version := "2.4.2",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -111,7 +112,7 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
-    version := "2.4.1",
+    version := "2.4.2",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -129,11 +130,20 @@ lazy val json = project
   .settings(commonSettings: _*)
   .settings(
     description := "collection of JSON utils",
-    version := "0.4.3",
+    version := "0.4.4",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
     libraryDependencies ++= depJson
+  )
+
+lazy val lockUtil = (project in file("lock-util"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "lock-util",
+    description := "Simple Lock Manager based on Redis",
+    version := "0.1.0",
+    libraryDependencies ++= depLockUtil
   )
 
 lazy val mongoTestUtils = (project in file("mongo-test-utils"))
@@ -141,7 +151,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.5.3",
+    version := "0.6.0",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -150,7 +160,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.5.3",
+    version := "0.6.0",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -159,7 +169,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.5.6",
+    version := "0.6.0",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -171,7 +181,7 @@ lazy val redisTestUtil = (project in file("redis-test-util"))
   .settings(
     name := "redis-test-util",
     description := "Redis related test utils",
-    version := "0.3.6",
+    version := "0.4.0",
     libraryDependencies ++= depRedisTestUtils
   )
 
@@ -180,7 +190,7 @@ lazy val redisUtil = (project in file("redis-util"))
   .settings(
     name := "redis-util",
     description := "Redis related utils",
-    version := "0.3.6",
+    version := "0.4.0",
     libraryDependencies ++= depRedisUtil
   )
 
@@ -189,7 +199,7 @@ lazy val responseUtil = project
   .settings(
     name := "response-util",
     description := "HTTP Response Utils",
-    version := "0.2.5",
+    version := "0.3.0",
     libraryDependencies ++= depResponseUtil
   )
 
@@ -198,7 +208,7 @@ lazy val restAkkaHttp = (project in file("rest-akka-http"))
   .settings(
     name := "rest-akka-http",
     description := "shared custom classes related to akka-http-experimental (for example certain directives)",
-    version := "0.3.9", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
+    version := "0.4.0", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
     libraryDependencies ++= depRestAkkaHttp
   )
 
@@ -207,7 +217,7 @@ lazy val restAkkaHttpTest = (project in file("rest-akka-http-test"))
   .settings(
     name := "rest-akka-http-test",
     description := "akka-http-experimental related test utils",
-    version := "0.3.9", // NOTE: please keep major.minor version synchronized with restAkkaHttp
+    version := "0.4.0", // NOTE: please keep major.minor version synchronized with restAkkaHttp
     libraryDependencies ++= depRestAkkaHttpTest
   )
 
@@ -216,17 +226,8 @@ lazy val uuid = project
   .settings(
     name := "uuid",
     description := "UUID related utils",
-    version := "0.1.2",
+    version := "0.1.3",
     libraryDependencies ++= depUuid
-  )
-
-lazy val lockUtil = (project in file("lock-util"))
-  .settings(commonSettings: _*)
-  .settings(
-    name := "lock-util",
-    description := "Simple Lock Manager based on Redis",
-    version := "0.0.1",
-    libraryDependencies ++= depLockUtil
   )
 
 /*
@@ -264,8 +265,8 @@ lazy val depElasticsearchClientBinary = Seq(
   elasticSearch,
   elasticsearchXPack,
   ubirchUtilConfig,
-  ubirchUtilJson,
   ubirchUtilDeepCheckModel,
+  ubirchUtilJson,
   ubirchUtilUuid,
   scalaTest % "test"
 ) ++ json4sBase ++ depSlf4jLogging ++ depLog4jToSlf4j
@@ -286,21 +287,22 @@ lazy val depMongoTestUtils = Seq(
 )
 
 lazy val depMongoUtils = Seq(
+  ubirchUtilConfig,
+  ubirchUtilDeepCheckModel,
   akkaSlf4j,
   reactiveMongo,
-  ubirchUtilDeepCheckModel,
-  ubirchUtilConfig,
   jodaTime,
   jodaConvert,
   scalaTest % "test"
 ) ++ depSlf4jLogging
 
 lazy val depOidcUtils = Seq(
-  ubirchUserRest,
   akkaHttp,
+  akkaStream,
   json4sNative,
-  ubirchUtilJson,
+  ubirchUserRest,
   ubirchUtilCrypto,
+  ubirchUtilJson,
   ubirchUtilRedisUtil,
   scalaTest % "test",
   akkaHttpTestkit % "test",
@@ -322,6 +324,7 @@ lazy val depRedisUtil = Seq(
 
 lazy val depRestAkkaHttp = Seq(
   akkaHttp,
+  akkaStream,
   akkaHttpCors
 )
 
@@ -333,6 +336,7 @@ lazy val depRestAkkaHttpTest = Seq(
 
 lazy val depResponseUtil = Seq(
   akkaHttp,
+  akkaStream,
   ubirchUtilJson,
   akkaHttpTestkit % "test",
   scalaTest % "test"
@@ -345,11 +349,11 @@ lazy val depUuid = Seq(
 )
 
 lazy val depLockUtil = Seq(
+  ubirchUtilConfig,
+  ubirchUtilRedisUtil,
   redisson,
   rediscala,
-  ubirchUtilRedisUtil,
   scalaLoggingSlf4j,
-  ubirchUtilConfig,
   scalaTest % "test"
 )
 
@@ -359,14 +363,13 @@ lazy val depLockUtil = Seq(
 
 // Versions
 val json4sV = "3.5.2"
-val akkaV = "2.4.20"
-val akkaHttpV = "10.0.11"
+val akkaV = "2.5.11"
+val akkaHttpV = "10.1.3"
 val elasticsearchV = "5.6.10"
 val log4jV = "2.8.2"
-val scalaTestV = "3.0.1"
+val scalaTestV = "3.0.5"
 
 // Groups
-val akkaG = "com.typesafe.akka"
 val log4jG = "org.apache.logging.log4j"
 
 lazy val json4sBase = Seq(
@@ -391,8 +394,10 @@ lazy val apacheCommonsLang3 = "org.apache.commons" % "commons-lang3" % "3.7"
 
 lazy val netI2pCryptoEddsa = "net.i2p.crypto" % "eddsa" % "0.1.0"
 
-lazy val akkaActor = "com.typesafe.akka" %% "akka-actor" % akkaV
-lazy val akkaSlf4j = "com.typesafe.akka" %% "akka-slf4j" % akkaV
+val akkaG = "com.typesafe.akka"
+lazy val akkaActor = akkaG %% "akka-actor" % akkaV
+lazy val akkaStream = akkaG %% "akka-stream" % akkaV
+lazy val akkaSlf4j = akkaG %% "akka-slf4j" % akkaV
 lazy val akkaHttp = akkaG %% "akka-http" % akkaHttpV
 lazy val akkaHttpTestkit = akkaG %% "akka-http-testkit" % akkaHttpV
 
@@ -407,7 +412,7 @@ lazy val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % 
 lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.12.5" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 // https://github.com/lomigmegard/akka-http-cors
-lazy val akkaHttpCors = "ch.megard" %% "akka-http-cors" % "0.2.1"
+lazy val akkaHttpCors = "ch.megard" %% "akka-http-cors" % "0.3.0"
 
 lazy val scalaUuid = "io.jvm.uuid" %% "scala-uuid" % "0.2.3"
 
@@ -430,15 +435,14 @@ lazy val depLog4jToSlf4j = Seq(
 lazy val redisson = "org.redisson" % "redisson" % "3.6.2"
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
-val ubirchUserG = "com.ubirch.user"
-lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.0"
-lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.7"
-lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.2.0"
-lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.3"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.5.3"
-lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.3.6"
-lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.3.6"
-lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.2"
+lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.1"
+lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.8"
+lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.2.1"
+lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.4"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.6.0"
+lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.4.0"
+lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.4.0"
+lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
 
 lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.8.4"
 

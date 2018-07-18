@@ -13,9 +13,8 @@ import scala.collection.immutable.Seq
   */
 trait CORSDirective extends Directives {
 
-  private val corsSettings = CorsSettings.defaultSettings.copy(
-    allowedMethods = Seq(GET, POST, PUT, DELETE, OPTIONS)
-  )
+  private val corsSettings = CorsSettings.defaultSettings.withAllowedMethods(Seq(GET, POST, PUT, DELETE, OPTIONS))
+
   private val rejectionHandler = corsRejectionHandler withFallback RejectionHandler.default
 
   def respondWithCORS(routes: => Route): Route = {

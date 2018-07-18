@@ -29,10 +29,14 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "camel-utils" % "0.1.0"
+      "com.ubirch.util" %% "camel-utils" % "0.1.1"
     )
 
 ### Release History
+
+#### Version 0.1.1 (2018-07-18)
+
+* update to `org.scalatest:scalatest:3.0.5`
 
 #### Version 0.1.0 (2017-10-16)
 
@@ -47,7 +51,7 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "config" % "0.2.0"
+      "com.ubirch.util" %% "config" % "0.2.1"
     )
 
 ### Configuration
@@ -64,6 +68,10 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
 
 ### Release History
 
+#### Version 0.2.1 (2018-07-18)
+
+* update to `org.scalatest:scalatest:3.0.5`
+
 #### Version 0.2.0 (2018-03-08)
 
 * added method _ConfigBase.environmentId()_
@@ -79,10 +87,14 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
 	     "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "crypto" % "0.4.4"
+      "com.ubirch.util" %% "crypto" % "0.4.8"
     )
 
 ### Release History
+
+#### Version 0.4.8 (2018-07-18)
+
+* update to `org.scalatest:scalatest:3.0.5`
 
 #### Version 0.4.7 (2018-04-05)
 
@@ -157,10 +169,14 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "date" % "0.5.1"
+      "com.ubirch.util" %% "date" % "0.5.2"
     )
 
 ### Release History
+
+#### Version 0.5.2 (2018-07-18)
+
+* update to `org.scalatest:scalatest:3.0.5`
 
 #### Version 0.5.1 (2018-02-21)
 
@@ -198,10 +214,15 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "deep-check-model" % "0.2.0"
+      "com.ubirch.util" %% "deep-check-model" % "0.2.1"
     )
 
 ### Release History
+
+#### Version 0.2.1 (2018-07-18)
+
+* update to `org.scalatest:scalatest:3.0.5`
+* update to `com.ubirch.util:json:0.4.4`
 
 #### Version 0.2.0 (2017-07-28)
 
@@ -243,7 +264,7 @@ In addition to this there's some other utils as well:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.4.1"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.4.2"
     )
 
 ### Config
@@ -328,6 +349,14 @@ Example Config (simple localhost cluster without Shield/X-Pack):
     }
 
 ### Release History
+
+#### Version 2.4.2 (2018-07-18)
+
+* update to `org.scalatest:scalatest:3.0.5`
+* update to `com.ubirch.util:config:0.2.1`
+* update to `com.ubirch.util:deep-check-model:0.2.1`
+* update to `com.ubirch.util:json:0.4.4`
+* update to `com.ubirch.util:uuid:0.1.3`
 
 #### Version 2.4.1 (2018-07-10)
 
@@ -592,10 +621,14 @@ Example Config:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-util" % "2.4.1"
+      "com.ubirch.util" %% "elasticsearch-util" % "2.4.2"
     )
 
 ### Release History
+
+#### Version 2.4.2 (2018-07-18)
+
+* increment version to match latest compatible version of `elasticsearch-client-binary`
 
 #### Version 2.4.1 (2018-07-10)
 
@@ -697,14 +730,16 @@ Utils related to Scala Futures.
       Resolver.bintrayRepo("hseeberger", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.4.2"
+      "com.ubirch.util" %% "json" % "0.4.4"
     )
 
 ### Release History
 
-#### Version 0.4.3 (tbd)
+#### Version 0.4.4 (2018-07-18)
 
+* skipped version 0.4.3 as it was already taken from about a year ago --> skipping this one
 * add method `Json4sUtil#string2any`
+* update to `org.scalatest:scalatest:3.0.5`
 
 #### Version 0.4.2 (2017-06-28)
 
@@ -757,6 +792,28 @@ Utils related to Scala Futures.
 
 -----------------------
 
+## `lock-util`
+
+### Scala Dependency
+
+    resolvers ++= Seq(
+      Resolver.sonatypeRepo("releases")
+    )
+    libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "lock-util" % "0.1.0"
+    )
+
+### Release History
+
+#### Version 0.1.0 (2018-07-18)
+
+* update to `org.scalatest:scalatest:3.0.5`
+* update to `com.ubirch.util:config:0.2.1`
+* update to `com.ubirch.util:redis-util:0.4.0`
+
+
+-----------------------
+
 ## `mongo-utils`
 
 ### Scala Dependency
@@ -765,10 +822,17 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.5.3"
+      "com.ubirch.util" %% "mongo-utils" % "0.6.0"
     )
 
 ### Release History
+
+#### Version 0.6.0 (2018-07-18)
+
+* update to `org.scalatest:scalatest:3.0.5`
+* update to `com.typesafe.akka:akka-(actor|slf4j):2.5.11`
+* update to `com.ubirch.util:config:0.2.1`
+* update to `com.ubirch.util:deep-check-model:0.2.1`
 
 #### Version 0.5.3 (2018-04-09)
 
@@ -854,10 +918,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.5.3"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.6.0"
     )
 
 ### Release History
+
+#### Version 0.6.0 (2018-07-18)
+
+* update to `com.ubirch.util:mongo-utils:0.6.0`
 
 #### Version 0.5.3 (2018-04-09)
 
@@ -977,7 +1045,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.5.6"
+      "com.ubirch.util" %% "oidc-utils" % "0.6.0"
     )
 
 ### Config
@@ -1004,6 +1072,15 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.6.0 (2018-07-18)
+
+* update to `org.scalatest:scalatest:3.0.5`
+* update to `com.typesafe.akka:akka-http(-testkit):10.1.3`
+* update to `com.ubirch.util:json:0.4.4`
+* update to `com.ubirch.util:crypto:0.4.8`
+* update to `com.ubirch.util:redis-util:0.4.0`
+* update to `com.ubirch.util:redis-test-util:0.4.0`
 
 #### Version 0.5.6 (2018-04-11)
 
@@ -1152,7 +1229,7 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-test-util" % "0.3.6"
+      "com.ubirch.util" %% "redis-test-util" % "0.4.0"
     )
 
 ### Config
@@ -1160,6 +1237,10 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 The required config is documented in the `redis-util` section.
 
 ### Release History
+
+#### Version 0.4.0 (2018-07-18)
+
+* update to `com.ubirch.util:redis-util:0.4.0`
 
 #### Version 0.3.6 (2018-04-09)
 
@@ -1218,7 +1299,7 @@ the whole environment itself)
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-util" % "0.3.6"
+      "com.ubirch.util" %% "redis-util" % "0.4.0"
     )
 
 ### Config
@@ -1250,6 +1331,12 @@ And this how you get a redis client:
     ```
 
 ### Release History
+
+#### Version 0.4.0 (2018-07-18)
+
+* update to `com.typesafe.akka:akka-(actor|slf4j):2.5.11`
+* update to `com.ubirch.util:config:0.2.1`
+* update to `com.ubirch.util:deep-check-model:0.2.1`
 
 #### Version 0.3.6 (2018-04-09)
 
@@ -1306,10 +1393,16 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "response-util" % "0.2.5"
+      "com.ubirch.util" %% "response-util" % "0.3.0"
     )
 
 ### Release History
+
+#### Version 0.3.0 (2018-07-18)
+
+* update to `org.scalatest:scalatest:3.0.5`
+* update to `com.typesafe.akka:akka-http(-testkit):10.1.3`
+* update to `com.ubirch.util:json:0.4.4`
 
 #### Version 0.2.5 (2018-04-11)
 
@@ -1373,12 +1466,19 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http" % "0.4.0" // for Akka HTTP 10.1.3
       "com.ubirch.util" %% "rest-akka-http" % "0.3.9" // for Akka HTTP 10.0.11
       "com.ubirch.util" %% "rest-akka-http" % "0.3.8" // for Akka HTTP 10.0.9
       "com.ubirch.util" %% "rest-akka-http" % "0.3.7" // for Akka HTTP 10.0.6
     )
 
 ### Release History
+
+#### Version 0.4.0 (2018-07-18)
+
+* update to `org.scalatest:scalatest:3.0.5`
+* update to `ch.megard:akka-http-cors:0.3.0`
+* update to `com.typesafe.akka:akka-http(-testkit):10.1.3`
 
 #### Version 0.3.9 (2018-04-11)
 
@@ -1427,12 +1527,18 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
+      "com.ubirch.util" %% "rest-akka-http-test" % "0.4.0" // for Akka HTTP 10.1.3
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.9" // for Akka HTTP 10.0.11
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.8" // for Akka HTTP 10.0.9
       "com.ubirch.util" %% "rest-akka-http-test" % "0.3.7" // for Akka HTTP 10.0.6
     )
 
 ### Release History
+
+#### Version 0.4.0 (2018-04-18)
+
+* update to `org.scalatest:scalatest:3.0.5`
+* update to `com.typesafe.akka:akka-http(-testkit):10.1.3`
 
 #### Version 0.3.9 (2018-04-11)
 
@@ -1487,10 +1593,14 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "uuid" % "0.1.2"
+      "com.ubirch.util" %% "uuid" % "0.1.3"
     )
 
 ### Release History
+
+#### Version 0.1.3 (2018-07-18)
+
+* update to `org.scalatest:scalatest:3.0.5`
 
 #### Version 0.1.2 (2018-03-22)
 
