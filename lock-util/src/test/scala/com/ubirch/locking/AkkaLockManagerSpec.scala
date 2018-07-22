@@ -5,14 +5,13 @@ import akka.pattern._
 import akka.testkit.{ImplicitSender, TestActors, TestKit}
 import akka.util.Timeout
 import com.typesafe.scalalogging.slf4j.StrictLogging
-import com.ubirch.locking.config.LockingConfig
 import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpecLike}
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-class AkkaLocksSpec extends
+class AkkaLockManagerSpec extends
   TestKit(ActorSystem("MyTestSystem1"))
   with ImplicitSender
   with WordSpecLike
@@ -115,26 +114,23 @@ class AkkaLocksSpec extends
   }
 }
 
-class LockTesterActor extends Actor with ActorLogging {
+class LockTesterActor extends Actor
+  with LockManager
+  with ActorLogging {
 
-  val redisson = LockingConfig.redisson
-  val lockName = "lockingActor"
+  val lockId = "lockingActor"
 
   override def receive: Receive = {
     case "lock" =>
       log.debug("try to get lock")
-      if (!redisson.getLock(lockName).isLocked) {
-        redisson.getLock(lockName).tryLock()
+      if (lock)
         sender ! "okay"
-      }
       else
         sender ! "nok"
     case "unlock" =>
       log.debug("try unlock")
-      if (redisson.getLock(lockName).isLocked && redisson.getLock(lockName).isHeldByCurrentThread) {
-        redisson.getLock(lockName).unlock()
+      if (unlock)
         sender ! "okay"
-      }
       else
         sender ! "nok"
   }
@@ -145,4 +141,3 @@ object LockTesterActor {
     Props(new LockTesterActor)
   }
 }
-

@@ -7,7 +7,7 @@ import com.ubirch.locking.config.LockingConfig
 import com.ubirch.util.uuid.UUIDUtil
 import org.scalatest.{FeatureSpec, Matchers}
 
-class LockUtilSpec extends FeatureSpec
+class RedissonLockSpec extends FeatureSpec
   with StrictLogging
   with Matchers {
 
