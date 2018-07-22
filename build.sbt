@@ -54,13 +54,13 @@ lazy val scalaUtils = project
     uuid
   )
 
-lazy val lockUtils = (project in file("lock-utils"))
+lazy val lockUtil = (project in file("lock-util"))
   .settings(commonSettings: _*)
   .settings(
-    name := "lock-utils",
+    name := "lock-util",
     description := "Simple Redis based locking utils",
     version := "0.0.1",
-    libraryDependencies ++= depLockUtils
+    libraryDependencies ++= depLockUtil
   )
 
 lazy val camelUtils = (project in file("camel-utils"))
@@ -148,15 +148,6 @@ lazy val json = project
       resolverSeebergerJson
     ),
     libraryDependencies ++= depJson
-  )
-
-lazy val lockUtil = (project in file("lock-util"))
-  .settings(commonSettings: _*)
-  .settings(
-    name := "lock-util",
-    description := "Simple Lock Manager based on Redis",
-    version := "0.1.0",
-    libraryDependencies ++= depLockUtil
   )
 
 lazy val mongoTestUtils = (project in file("mongo-test-utils"))
@@ -247,9 +238,16 @@ lazy val uuid = project
  * MODULE DEPENDENCIES
  ********************************************************/
 
-lazy val depLockUtils = Seq(
-  scalaTest % "test"
-)
+lazy val depLockUtil = Seq(
+  ubirchUtilConfig,
+  ubirchUtilRedisUtil,
+  redisson,
+  rediscala,
+  typesafeConfig,
+  ubirchUtilUuid % "test",
+  scalaTest % "test",
+  akkaTestkit % "test"
+) ++ depSlf4jLogging
 
 lazy val depCamelUtils = Seq(
   scalaTest % "test"
@@ -365,15 +363,6 @@ lazy val depUuid = Seq(
   scalaTest % "test"
 )
 
-lazy val depLockUtil = Seq(
-  ubirchUtilConfig,
-  ubirchUtilRedisUtil,
-  redisson,
-  rediscala,
-  scalaLoggingSlf4j,
-  scalaTest % "test"
-)
-
 /*
  * DEPENDENCIES
  ********************************************************/
@@ -415,8 +404,10 @@ val akkaG = "com.typesafe.akka"
 lazy val akkaActor = akkaG %% "akka-actor" % akkaV
 lazy val akkaStream = akkaG %% "akka-stream" % akkaV
 lazy val akkaSlf4j = akkaG %% "akka-slf4j" % akkaV
+lazy val akkaTestkit = akkaG %% "akka-testkit" % akkaV
 lazy val akkaHttp = akkaG %% "akka-http" % akkaHttpV
 lazy val akkaHttpTestkit = akkaG %% "akka-http-testkit" % akkaHttpV
+
 
 lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestV
 
@@ -449,7 +440,7 @@ lazy val depLog4jToSlf4j = Seq(
   log4jToSlf4j
 )
 
-lazy val redisson = "org.redisson" % "redisson" % "3.6.2"
+lazy val redisson = "org.redisson" % "redisson" % "3.7.5"
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.1"
