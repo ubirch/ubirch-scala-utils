@@ -115,7 +115,7 @@ class AkkaLockManagerSpec extends
 }
 
 class LockTesterActor extends Actor
-  with LockManager
+  with StaticLockManager
   with ActorLogging {
 
   val lockId = "lockingActor"

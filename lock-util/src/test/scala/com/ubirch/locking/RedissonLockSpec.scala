@@ -11,15 +11,9 @@ class RedissonLockSpec extends FeatureSpec
   with StrictLogging
   with Matchers {
 
-
-  val redisson = LockingConfig.redisson
-
+  private val redisson = LockingConfig.redisson
 
   feature("basic test") {
-
-    scenario("dummy test") {
-      1 shouldBe 1
-    }
 
     scenario("create a lock") {
       val lockName = s"myLock-${UUIDUtil.uuidStr}"

@@ -2,10 +2,8 @@ package com.ubirch.locking
 
 trait LockManager extends RLockManager {
 
-  val lockId: String
+  def lock(lockId: String): Boolean = rLock(lockId)
 
-  def lock: Boolean = rLock(lockId)
-
-  def unlock: Boolean = rUnlock(lockId)
+  def unlock(lockId: String): Boolean = rUnlock(lockId)
 
 }

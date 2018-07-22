@@ -12,7 +12,7 @@ import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-class AkkaLocksSpec extends
+class AkkaRedissonLocksSpec extends
   TestKit(ActorSystem("MyTestSystem1"))
   with ImplicitSender
   with WordSpecLike
