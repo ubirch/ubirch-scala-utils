@@ -1,5 +1,9 @@
 import sbt.Keys.libraryDependencies
 
+concurrentRestrictions in Global := Seq(
+  Tags.limit(Tags.Test, 1)
+)
+
 lazy val ubirchUtilGroup = "com.ubirch.util"
 lazy val commonSettings = Seq(
 
@@ -48,6 +52,15 @@ lazy val scalaUtils = project
     restAkkaHttp,
     restAkkaHttpTest,
     uuid
+  )
+
+lazy val lockUtils = (project in file("lock-utils"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "lock-utils",
+    description := "Simple Redis based locking utils",
+    version := "0.0.1",
+    libraryDependencies ++= depLockUtils
   )
 
 lazy val camelUtils = (project in file("camel-utils"))
@@ -233,6 +246,10 @@ lazy val uuid = project
 /*
  * MODULE DEPENDENCIES
  ********************************************************/
+
+lazy val depLockUtils = Seq(
+  scalaTest % "test"
+)
 
 lazy val depCamelUtils = Seq(
   scalaTest % "test"
