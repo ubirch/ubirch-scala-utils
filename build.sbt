@@ -59,7 +59,7 @@ lazy val lockUtil = (project in file("lock-util"))
   .settings(
     name := "lock-util",
     description := "Simple Redis based locking utils",
-    version := "0.0.1",
+    version := "0.0.1-SNAPSHOT",
     libraryDependencies ++= depLockUtil
   )
 
@@ -84,7 +84,7 @@ lazy val crypto = project
   .settings(commonSettings: _*)
   .settings(
     description := "ubirch util with crypto related code",
-    version := "0.4.8",
+    version := "0.4.9-SNAPSHOT",
     resolvers ++= Seq(
       resolverHasher
     ),
