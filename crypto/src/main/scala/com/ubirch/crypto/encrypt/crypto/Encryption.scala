@@ -55,7 +55,7 @@ class JavaCryptoEncryption(
 
   val keyLen: Int = if (algorithmName.equals("AES")) 256 else 64
 
-  private val salt = config.getString("crypto.aes.salt")
+  private val salt = config.getString("crypto.sym.salt")
 
   /**
     *
