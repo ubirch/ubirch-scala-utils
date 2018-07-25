@@ -5,10 +5,11 @@
 
 package com.ubirch.crypto.encrypt.crypto
 
-import java.util.Base64
+import java.util.{Base64, UUID}
 
-import javax.crypto.Cipher
-import javax.crypto.spec.SecretKeySpec
+import com.ubirch.util.config.ConfigBase
+import javax.crypto.{Cipher, SecretKeyFactory}
+import javax.crypto.spec.{PBEKeySpec, SecretKeySpec}
 import org.apache.commons.codec.binary.Hex
 
 trait Encryption {
@@ -49,8 +50,12 @@ class JavaCryptoEncryption(
                             mode: String = "ECB",
                             padding: String = "PKCS5Padding",
                             encoding: String = "UTF-8")
-  extends Encryption {
+  extends Encryption
+    with ConfigBase {
 
+  val keyLen: Int = if (algorithmName.equals("AES")) 256 else 64
+
+  private val salt = config.getString("crypto.aes.salt")
 
   /**
     *
@@ -108,12 +113,11 @@ class JavaCryptoEncryption(
   def encrypt(bytes: Array[Byte], secret: String): Array[Byte] = {
 
     assert(bytes.length >= 0, message = "given data may not be zero")
-    if (algorithmName.equals("AES"))
-      assert(secret.length >= 16, message = "AES secret must have at least length of 15")
-    else if (algorithmName.equals("DES"))
-      assert(secret.length == 8, message = "DES secret must have a length of 8")
 
-    val secretKey = new SecretKeySpec(secret.getBytes(encoding), algorithmName)
+    assert(secret.length >= 8, message = "secret must have length of at least 8 chars")
+
+    val secretKey = deriveKey(secret)
+
     val encipher = Cipher.getInstance(s"$algorithmName/$mode/$padding")
     encipher.init(Cipher.ENCRYPT_MODE, secretKey)
     encipher.doFinal(bytes)
@@ -170,9 +174,20 @@ class JavaCryptoEncryption(
     * @return decrypted data as array of bytes
     */
   def decrypt(bytes: Array[Byte], secret: String): Array[Byte] = {
-    val secretKey = new SecretKeySpec(secret.getBytes(encoding), algorithmName)
+
+    assert(bytes.length >= 0, message = "given data may not be zero")
+
+    val secretKey = deriveKey(secret)
+
     val encipher = Cipher.getInstance(s"$algorithmName/$mode/$padding")
     encipher.init(Cipher.DECRYPT_MODE, secretKey)
     encipher.doFinal(bytes)
+  }
+
+  private def deriveKey(secret: String): SecretKeySpec = {
+    val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
+    val spec = new PBEKeySpec(secret.toCharArray, salt.getBytes, 2048, keyLen)
+    val tmp = factory.generateSecret(spec)
+    new SecretKeySpec(tmp.getEncoded, algorithmName)
   }
 }

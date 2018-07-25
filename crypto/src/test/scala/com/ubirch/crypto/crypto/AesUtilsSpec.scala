@@ -1,11 +1,11 @@
 package com.ubirch.crypto.crypto
 
+import java.security.SecureRandom
 import java.util.Base64
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
 import com.ubirch.crypto.encrypt.AES
 import org.scalatest.{FeatureSpec, Matchers}
-
 import org.apache.commons.codec.binary.Hex
 
 class AesUtilsSpec extends FeatureSpec
@@ -17,7 +17,7 @@ class AesUtilsSpec extends FeatureSpec
     scenario("encrypt bytes to bytes") {
       val data = "Hallo Welt öäüÖÄÜß".getBytes("UTF-8")
 
-      val secret = "0123456789012345"
+      val secret = "ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"
 
       val encData = AES.encrypt(data, secret)
 
@@ -31,7 +31,7 @@ class AesUtilsSpec extends FeatureSpec
     scenario("encrypt String to bytes") {
       val data = "Hallo Welt öäüÖÄÜß"
 
-      val secret = "0123456789012345"
+      val secret = "ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"
 
       val encData = AES.encryptStr(data, secret)
 
@@ -43,7 +43,7 @@ class AesUtilsSpec extends FeatureSpec
     scenario("encrypt Base64 to bytes") {
       val data = Base64.getEncoder.encodeToString("Hallo Welt öäüÖÄÜß".getBytes("UTF-8"))
 
-      val secret = "0123456789012345"
+      val secret = "ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"
 
       val encData = AES.encryptB64(data, secret)
 
@@ -57,7 +57,7 @@ class AesUtilsSpec extends FeatureSpec
       val dataBytes = data.getBytes("UTF-8")
       val dataHex = Hex.encodeHexString(dataBytes)
 
-      val secret = "0123456789012345"
+      val secret = "ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"
 
       val encData = AES.encryptHex(dataHex, secret)
 
@@ -76,7 +76,7 @@ class AesUtilsSpec extends FeatureSpec
       val data = "Hallo Welt öäüÖÄÜß"
       val dataBytes = "Hallo Welt öäüÖÄÜß".getBytes("UTF-8")
 
-      val secret = "0123456789012345"
+      val secret = "ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"
 
       val encData = AES.encryptStr2B64(data, secret)
 
@@ -93,7 +93,7 @@ class AesUtilsSpec extends FeatureSpec
       val data = "Hallo Welt öäüÖÄÜß"
       val dataBytes = "Hallo Welt öäüÖÄÜß".getBytes("UTF-8")
 
-      val secret = "0123456789012345"
+      val secret = "ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"
 
       val encData = AES.encryptStr2Hex(data, secret)
 

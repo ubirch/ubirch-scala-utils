@@ -13,6 +13,7 @@ import com.ubirch.util.oidc.config.OidcUtilsConfig
 import com.ubirch.util.oidc.model.UserContext
 import com.ubirch.util.oidc.util.OidcUtil
 import com.ubirch.util.redis.RedisClientUtil
+import org.json4s.Formats
 import org.json4s.native.Serialization.read
 import redis.RedisClient
 
@@ -26,7 +27,7 @@ import scala.concurrent.Future
 class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materializer: Materializer)
   extends StrictLogging {
 
-  implicit private val formatter = JsonFormats.default
+  implicit private val formatter: Formats = JsonFormats.default
 
   val bearerToken: Directive1[Option[String]] =
     optionalHeaderValueByType(classOf[Authorization]).map(extractBearerToken)
@@ -89,6 +90,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
           val context = splt(0)
           val mailHash = splt(1)
           val signature = splt(2)
+
           UserServiceClientRest.userGET(providerId = "ubirchToken", externalUserId = mailHash).map {
             case Some(user) if user.id.isDefined && user.activeUser =>
               val uc = UserContext(

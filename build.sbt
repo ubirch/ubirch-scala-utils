@@ -173,7 +173,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.6.0",
+    version := "0.6.1-SNAPSHOT",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -261,6 +261,7 @@ lazy val depConfig = Seq(
 lazy val depCrypto = Seq(
   roundeightsHasher,
   apacheCommonsCodec,
+  ubirchUtilConfig,
   scalaTest % "test",
   jodaTime % "test",
   jodaConvert % "test"
