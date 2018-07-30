@@ -91,10 +91,16 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
 	     "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "crypto" % "0.4.8"
+      "com.ubirch.util" %% "crypto" % "0.4.9"
     )
 
 ### Release History
+
+#### Version 0.4.9 (2018-07-30)
+
+* added trait `Encryption`
+* added object `AES`
+* added object `DES`
 
 #### Version 0.4.8 (2018-07-18)
 
@@ -1049,7 +1055,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.6.0"
+      "com.ubirch.util" %% "oidc-utils" % "0.6.1"
     )
 
 ### Config
@@ -1076,6 +1082,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.6.1 (2018-07-30)
+
+* update to `com.ubirch.util:crypto:0.4.9`
 
 #### Version 0.6.0 (2018-07-18)
 
