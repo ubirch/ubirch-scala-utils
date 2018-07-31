@@ -59,7 +59,7 @@ lazy val lockUtil = (project in file("lock-util"))
   .settings(
     name := "lock-util",
     description := "Simple Redis based locking utils",
-    version := "0.0.1-SNAPSHOT",
+    version := "0.2.0",
     libraryDependencies ++= depLockUtil
   )
 
@@ -104,7 +104,7 @@ lazy val deepCheckModel = (project in file("deep-check-model"))
   .settings(
     name := "deep-check-model",
     description := "actor and JSON models for the /deepCheck endpoints",
-    version := "0.2.1",
+    version := "0.3.0",
     libraryDependencies ++= depDeepCheckModel
   )
 
@@ -113,7 +113,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.4.2",
+    version := "2.5.0",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -125,7 +125,7 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
-    version := "2.4.2",
+    version := "2.5.0",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -143,7 +143,7 @@ lazy val json = project
   .settings(commonSettings: _*)
   .settings(
     description := "collection of JSON utils",
-    version := "0.4.4",
+    version := "0.5.0",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
@@ -155,7 +155,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.6.0",
+    version := "0.7.0",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -164,7 +164,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.6.0",
+    version := "0.7.0",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -173,7 +173,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.6.1",
+    version := "0.7.0",
     resolvers ++= Seq(
       resolverHasher
     ),
@@ -185,7 +185,7 @@ lazy val redisTestUtil = (project in file("redis-test-util"))
   .settings(
     name := "redis-test-util",
     description := "Redis related test utils",
-    version := "0.4.0",
+    version := "0.5.0",
     libraryDependencies ++= depRedisTestUtils
   )
 
@@ -194,7 +194,7 @@ lazy val redisUtil = (project in file("redis-util"))
   .settings(
     name := "redis-util",
     description := "Redis related utils",
-    version := "0.4.0",
+    version := "0.5.0",
     libraryDependencies ++= depRedisUtil
   )
 
@@ -203,7 +203,7 @@ lazy val responseUtil = project
   .settings(
     name := "response-util",
     description := "HTTP Response Utils",
-    version := "0.3.0",
+    version := "0.4.0",
     libraryDependencies ++= depResponseUtil
   )
 
@@ -275,7 +275,7 @@ lazy val depDate = Seq(
 lazy val depDeepCheckModel = Seq(
   ubirchUtilJson,
   scalaTest % "test"
-) ++ json4sWitNative
+) ++ json4sWithNative
 
 lazy val depElasticsearchClientBinary = Seq(
   elasticSearch,
@@ -296,7 +296,7 @@ lazy val depJson = Seq(
   seebergerJson4s,
   scalaTest % "test",
   jodaTime % "test"
-) ++ json4sWitNative
+) ++ json4sWithNative
 
 lazy val depMongoTestUtils = Seq(
   ubirchUtilMongoUtils
@@ -369,7 +369,7 @@ lazy val depUuid = Seq(
  ********************************************************/
 
 // Versions
-val json4sV = "3.5.2"
+val json4sV = "3.6.0"
 val akkaV = "2.5.11"
 val akkaHttpV = "10.1.3"
 val elasticsearchV = "5.6.10"
@@ -384,13 +384,13 @@ lazy val json4sBase = Seq(
   json4sJackson,
   json4sExt
 )
-lazy val json4sWitNative = json4sBase :+ json4sNative
+lazy val json4sWithNative = json4sBase :+ json4sNative
 
 lazy val json4sJackson = "org.json4s" %% "json4s-jackson" % json4sV
 lazy val json4sCore = "org.json4s" %% "json4s-core" % json4sV
 lazy val json4sExt = "org.json4s" %% "json4s-ext" % json4sV
 lazy val json4sNative = "org.json4s" %% "json4s-native" % json4sV
-lazy val seebergerJson4s = "de.heikoseeberger" %% "akka-http-json4s" % "1.14.0"
+lazy val seebergerJson4s = "de.heikoseeberger" %% "akka-http-json4s" % "1.21.0"
 
 lazy val typesafeConfig = "com.typesafe" % "config" % "1.3.0"
 
@@ -446,14 +446,14 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll Excl
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.1"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.9"
-lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.2.1"
-lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.4.4"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.6.0"
-lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.4.0"
-lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.4.0"
+lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3.0"
+lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.0"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.7.0"
+lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.0"
+lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.5.0"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
 
-lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.8.4"
+lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.10.1"
 
 /*
  * RESOLVER

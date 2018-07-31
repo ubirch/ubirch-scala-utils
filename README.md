@@ -224,10 +224,15 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "deep-check-model" % "0.2.1"
+      "com.ubirch.util" %% "deep-check-model" % "0.3.0"
     )
 
 ### Release History
+
+#### Version 0.3.0 (2018-07-31)
+
+* update to `org.json4s:json4s-*:3.6.0`
+* update to `com.ubirch.util:json:0.5.0`
 
 #### Version 0.2.1 (2018-07-18)
 
@@ -274,7 +279,7 @@ In addition to this there's some other utils as well:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.4.2"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.5.0"
     )
 
 ### Config
@@ -359,6 +364,12 @@ Example Config (simple localhost cluster without Shield/X-Pack):
     }
 
 ### Release History
+
+#### Version 2.5.0 (2018-07-31)
+
+* update to `org.json4s:json4s-*:3.6.0`
+* update to `com.ubirch.util:json:0.5.0`
+* update to `com.ubirch.util:deep-check-model:0.3.0`
 
 #### Version 2.4.2 (2018-07-18)
 
@@ -631,10 +642,14 @@ Example Config:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-util" % "2.4.2"
+      "com.ubirch.util" %% "elasticsearch-util" % "2.5.0"
     )
 
 ### Release History
+
+#### Version 2.5.0 (2018-07-31)
+
+* increment version to match latest compatible version of `elasticsearch-client-binary`
 
 #### Version 2.4.2 (2018-07-18)
 
@@ -740,10 +755,15 @@ Utils related to Scala Futures.
       Resolver.bintrayRepo("hseeberger", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.4.4"
+      "com.ubirch.util" %% "json" % "0.5.0"
     )
 
 ### Release History
+
+#### Version 0.5.0 (2018-07-31)
+
+* update to `org.json4s:json4s-native:3.6.0`
+* update to `de.heikoseeberger:akka-http-json4s:1.21.0`
 
 #### Version 0.4.4 (2018-07-18)
 
@@ -785,7 +805,7 @@ Utils related to Scala Futures.
 
 #### Version 0.3 (2016-11-01)
 
-* updated json4s dependencies to verion 3.4.2
+* updated json4s dependencies to version 3.4.2
 
 #### Version 0.2 (2016-10-28)
 
@@ -810,10 +830,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "lock-util" % "0.1.0"
+      "com.ubirch.util" %% "lock-util" % "0.2.0"
     )
 
 ### Release History
+
+#### Version 0.2.0 (2018-07-31)
+
+* update to `com.ubirch.util:redis-util:0.5.0`
 
 #### Version 0.1.0 (2018-07-18)
 
@@ -832,10 +856,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.6.0"
+      "com.ubirch.util" %% "mongo-utils" % "0.7.0"
     )
 
 ### Release History
+
+#### Version 0.7.0 (2018-07-31)
+
+* update to `com.ubirch.util:deep-check-model:0.3.0`
 
 #### Version 0.6.0 (2018-07-18)
 
@@ -928,10 +956,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.6.0"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.7.0"
     )
 
 ### Release History
+
+#### Version 0.7.0 (2018-07-31)
+
+* update to `com.ubirch.util:mongo-utils:0.7.0`
 
 #### Version 0.6.0 (2018-07-18)
 
@@ -1055,7 +1087,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.6.1"
+      "com.ubirch.util" %% "oidc-utils" % "0.7.0"
     )
 
 ### Config
@@ -1082,6 +1114,14 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.7.0 (2018-07-31)
+
+* update to `org.json4s:json4s-*:3.6.0`
+* update to `com.ubirch.util:json:0.5.0`
+* update to `com.ubirch.util:redis-util:0.5.0`
+* update to `com.ubirch.util:redis-test-util:0.5.0`
+* update to `com.ubirch.user:client-rest:0.10.1`
 
 #### Version 0.6.1 (2018-07-30)
 
@@ -1243,7 +1283,7 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-test-util" % "0.4.0"
+      "com.ubirch.util" %% "redis-test-util" % "0.5.0"
     )
 
 ### Config
@@ -1251,6 +1291,10 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 The required config is documented in the `redis-util` section.
 
 ### Release History
+
+#### Version 0.5.0 (2018-07-31)
+
+* update to `com.ubirch.util:redis-util:0.5.0`
 
 #### Version 0.4.0 (2018-07-18)
 
@@ -1313,7 +1357,7 @@ the whole environment itself)
 ### Scala Dependency
 
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "redis-util" % "0.4.0"
+      "com.ubirch.util" %% "redis-util" % "0.5.0"
     )
 
 ### Config
@@ -1345,6 +1389,10 @@ And this how you get a redis client:
     ```
 
 ### Release History
+
+#### Version 0.5.0 (2018-07-31)
+
+* update to `com.ubirch.util:deep-check-model:0.3.0`
 
 #### Version 0.4.0 (2018-07-18)
 
@@ -1407,10 +1455,14 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "response-util" % "0.3.0"
+      "com.ubirch.util" %% "response-util" % "0.4.0"
     )
 
 ### Release History
+
+#### Version 0.4.0 (2018-07-31)
+
+* update to `com.ubirch.util:json:0.5.0`
 
 #### Version 0.3.0 (2018-07-18)
 
