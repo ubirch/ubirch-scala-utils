@@ -1095,7 +1095,7 @@ Here's an example of a config with more than one host:
 	  "RoundEights" at "http://maven.spikemark.net/roundeights"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.7.0"
+      "com.ubirch.util" %% "oidc-utils" % "0.7.1"
     )
 
 ### Config
@@ -1122,6 +1122,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.7.1 (2018-08-01)
+
+* update to `com.ubirch.user:client-rest:0.11.0`
 
 #### Version 0.7.0 (2018-07-31)
 
