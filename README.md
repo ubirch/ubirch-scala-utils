@@ -29,12 +29,12 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "camel-utils" % "1.0.0-SNAPSHOT"
+      "com.ubirch.util" %% "camel-utils" % "1.0.0"
     )
 
 ### Release History
 
-#### Version 1.0.0 (2018-07-??)
+#### Version 1.0.0 (2018-08-01)
 
 * deleted trait `CamelActorUtil` and move endpoint uri generating code into new case classes `SqsConfigConsumer` and `SqsConfigProducer`
 
@@ -856,10 +856,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.7.0"
+      "com.ubirch.util" %% "mongo-utils" % "0.8.0"
     )
 
 ### Release History
+
+#### Version 0.8.0 (2018-08-01)
+
+* update to `org.reactivemongo:reactivemongo:0.15.0`
 
 #### Version 0.7.0 (2018-07-31)
 
@@ -956,10 +960,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.7.0"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.8.0"
     )
 
 ### Release History
+
+#### Version 0.8.0 (2018-08-01)
+
+* update to `com.ubirch.util:mongo-utils:0.8.0`
 
 #### Version 0.7.0 (2018-07-31)
 
