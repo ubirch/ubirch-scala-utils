@@ -462,5 +462,5 @@ lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.11.0"
 val sonatypeReleases = Resolver.sonatypeRepo("releases")
 val sonatypeSnapshots = Resolver.sonatypeRepo("snapshots")
 val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
-val resolverHasher = "RoundEights" at "http://maven.spikemark.net/roundeights"
+val resolverHasher = Resolver.url("RoundEights", url("http://maven.spikemark.net/roundeights"))(Patterns("com.roundeights"))
 val resolverElasticsearch = "elasticsearch-releases" at "https://artifacts.elastic.co/maven"

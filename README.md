@@ -88,7 +88,7 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases"),
-	     "RoundEights" at "http://maven.spikemark.net/roundeights"
+	  Resolver.url("RoundEights", url("http://maven.spikemark.net/roundeights"))(Patterns("com.roundeights"))
     )
     libraryDependencies ++= Seq(
       "com.ubirch.util" %% "crypto" % "0.4.9"
@@ -1092,7 +1092,7 @@ Here's an example of a config with more than one host:
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases"),
-	  "RoundEights" at "http://maven.spikemark.net/roundeights"
+	  Resolver.url("RoundEights", url("http://maven.spikemark.net/roundeights"))(Patterns("com.roundeights"))
     )
     libraryDependencies ++= Seq(
       "com.ubirch.util" %% "oidc-utils" % "0.7.1"
