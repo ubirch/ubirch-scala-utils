@@ -87,8 +87,7 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
 ### Scala Dependency
 
     resolvers ++= Seq(
-      Resolver.sonatypeRepo("releases"),
-	  Resolver.url("RoundEights", url("http://maven.spikemark.net/roundeights"))(Patterns("com.roundeights"))
+      Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
       "com.ubirch.util" %% "crypto" % "0.4.9"
@@ -1091,8 +1090,7 @@ Here's an example of a config with more than one host:
 ### Scala Dependency
 
     resolvers ++= Seq(
-      Resolver.sonatypeRepo("releases"),
-	  Resolver.url("RoundEights", url("http://maven.spikemark.net/roundeights"))(Patterns("com.roundeights"))
+      Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
       "com.ubirch.util" %% "oidc-utils" % "0.7.1"

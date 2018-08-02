@@ -85,9 +85,6 @@ lazy val crypto = project
   .settings(
     description := "ubirch util with crypto related code",
     version := "0.4.9",
-    resolvers ++= Seq(
-      resolverHasher
-    ),
     libraryDependencies ++= depCrypto
   )
 
@@ -174,9 +171,6 @@ lazy val oidcUtils = (project in file("oidc-utils"))
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
     version := "0.7.1",
-    resolvers ++= Seq(
-      resolverHasher
-    ),
     libraryDependencies ++= depOidcUtils
   )
 
@@ -462,5 +456,4 @@ lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.11.0"
 val sonatypeReleases = Resolver.sonatypeRepo("releases")
 val sonatypeSnapshots = Resolver.sonatypeRepo("snapshots")
 val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
-val resolverHasher = Resolver.url("RoundEights", url("http://maven.spikemark.net/roundeights"))(Patterns("com.roundeights"))
 val resolverElasticsearch = "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
