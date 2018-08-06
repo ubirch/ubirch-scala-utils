@@ -59,7 +59,7 @@ lazy val lockUtil = (project in file("lock-util"))
   .settings(
     name := "lock-util",
     description := "Simple Redis based locking utils",
-    version := "0.2.0",
+    version := "0.2.1",
     libraryDependencies ++= depLockUtil
   )
 
@@ -76,7 +76,7 @@ lazy val config = project
   .settings(commonSettings: _*)
   .settings(
     description := "common config related code",
-    version := "0.2.1",
+    version := "0.2.3",
     libraryDependencies ++= depConfig
   )
 
@@ -237,7 +237,6 @@ lazy val depLockUtil = Seq(
   ubirchUtilRedisUtil,
   redisson,
   rediscala,
-  typesafeConfig,
   ubirchUtilUuid % "test",
   scalaTest % "test",
   akkaTestkit % "test"
@@ -386,7 +385,7 @@ lazy val json4sExt = "org.json4s" %% "json4s-ext" % json4sV
 lazy val json4sNative = "org.json4s" %% "json4s-native" % json4sV
 lazy val seebergerJson4s = "de.heikoseeberger" %% "akka-http-json4s" % "1.21.0"
 
-lazy val typesafeConfig = "com.typesafe" % "config" % "1.3.0"
+lazy val typesafeConfig = "com.typesafe" % "config" % "1.3.3"
 
 lazy val roundeightsHasher = "com.roundeights" %% "hasher" % "1.2.0"
 

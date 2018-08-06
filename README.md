@@ -55,7 +55,7 @@
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "config" % "0.2.1"
+      "com.ubirch.util" %% "config" % "0.2.2"
     )
 
 ### Configuration
@@ -71,6 +71,17 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
     ubirch.envid="ubirch-local"
 
 ### Release History
+
+#### Version 0.2.3 (2018-08-06)
+
+* update to `com.typesafe:config:1.3.3`
+
+#### Version 0.2.2 (2018-08-06)
+
+* added protected methods:
+** `ConfigBase.stringWithDefault()`
+** `ConfigBase.intWithDefault()`
+** `ConfigBase.booleanWithDefault()`
 
 #### Version 0.2.1 (2018-07-18)
 
