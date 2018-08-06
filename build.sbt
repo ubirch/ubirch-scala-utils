@@ -84,7 +84,7 @@ lazy val crypto = project
   .settings(commonSettings: _*)
   .settings(
     description := "ubirch util with crypto related code",
-    version := "0.4.9",
+    version := "0.4.10",
     libraryDependencies ++= depCrypto
   )
 
@@ -110,7 +110,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.5.0",
+    version := "2.5.1",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -122,7 +122,7 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
-    version := "2.5.0",
+    version := "2.5.1",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -152,7 +152,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.8.0",
+    version := "0.8.2",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -161,7 +161,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.8.0",
+    version := "0.8.2",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -170,7 +170,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.7.1",
+    version := "0.7.2",
     libraryDependencies ++= depOidcUtils
   )
 
@@ -179,7 +179,7 @@ lazy val redisTestUtil = (project in file("redis-test-util"))
   .settings(
     name := "redis-test-util",
     description := "Redis related test utils",
-    version := "0.5.0",
+    version := "0.5.1",
     libraryDependencies ++= depRedisTestUtils
   )
 
@@ -188,7 +188,7 @@ lazy val redisUtil = (project in file("redis-util"))
   .settings(
     name := "redis-util",
     description := "Redis related utils",
-    version := "0.5.0",
+    version := "0.5.1",
     libraryDependencies ++= depRedisUtil
   )
 
@@ -233,7 +233,6 @@ lazy val uuid = project
  ********************************************************/
 
 lazy val depLockUtil = Seq(
-  ubirchUtilConfig,
   ubirchUtilRedisUtil,
   redisson,
   rediscala,
@@ -437,13 +436,13 @@ lazy val depLog4jToSlf4j = Seq(
 lazy val redisson = "org.redisson" % "redisson" % "3.7.5"
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
-lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.1"
-lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.9"
+lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.3"
+lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.10"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3.0"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.0"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.8.0"
-lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.0"
-lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.5.0"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.8.2"
+lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.1"
+lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.5.1"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
 
 lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.11.0"
