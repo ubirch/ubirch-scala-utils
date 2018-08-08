@@ -101,10 +101,15 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "crypto" % "0.4.10"
+      "com.ubirch.util" %% "crypto" % "0.4.11"
     )
 
 ### Release History
+
+#### Version 0.4.11 (2018-08-08)
+
+* update to `joda-time:joda-time:2.10`
+* update to `org.joda:joda-convert:2.1.1`
 
 #### Version 0.4.10 (2018-08-06)
 
@@ -197,6 +202,11 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
     )
 
 ### Release History
+
+#### Version 0.5.3 (2018-08-08)
+
+* update to `joda-time:joda-time:2.10`
+* update to `org.joda:joda-convert:2.1.1`
 
 #### Version 0.5.2 (2018-07-18)
 
@@ -777,10 +787,15 @@ Utils related to Scala Futures.
       Resolver.bintrayRepo("hseeberger", "maven")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "json" % "0.5.0"
+      "com.ubirch.util" %% "json" % "0.5.1"
     )
 
 ### Release History
+
+#### Version 0.5.1 (2018-08-08)
+
+* update to `joda-time:joda-time:2.10`
+* update to `org.joda:joda-convert:2.1.1`
 
 #### Version 0.5.0 (2018-07-31)
 
@@ -882,10 +897,15 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-utils" % "0.8.2"
+      "com.ubirch.util" %% "mongo-utils" % "0.8.3"
     )
 
 ### Release History
+
+#### Version 0.8.3 (2018-08-08)
+
+* update to `joda-time:joda-time:2.10`
+* update to `org.joda:joda-convert:2.1.1`
 
 #### Version 0.8.2 (2018-08-06)
 
@@ -994,10 +1014,14 @@ Utils related to Scala Futures.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "mongo-test-utils" % "0.8.2"
+      "com.ubirch.util" %% "mongo-test-utils" % "0.8.3"
     )
 
 ### Release History
+
+#### Version 0.8.3 (2018-08-08)
+
+* update to `com.ubirch.util:mongo-utils:0.8.3`
 
 #### Version 0.8.2 (2018-08-06)
 

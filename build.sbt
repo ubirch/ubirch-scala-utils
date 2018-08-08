@@ -84,7 +84,7 @@ lazy val crypto = project
   .settings(commonSettings: _*)
   .settings(
     description := "ubirch util with crypto related code",
-    version := "0.4.10",
+    version := "0.4.11",
     libraryDependencies ++= depCrypto
   )
 
@@ -92,7 +92,7 @@ lazy val date = project
   .settings(commonSettings: _*)
   .settings(
     description := "a collection of date related utils",
-    version := "0.5.2",
+    version := "0.5.3",
     libraryDependencies ++= depDate
   )
 
@@ -140,7 +140,7 @@ lazy val json = project
   .settings(commonSettings: _*)
   .settings(
     description := "collection of JSON utils",
-    version := "0.5.0",
+    version := "0.5.1",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
@@ -152,7 +152,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.8.2",
+    version := "0.8.3",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -161,7 +161,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.8.2",
+    version := "0.8.3",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -260,9 +260,8 @@ lazy val depCrypto = Seq(
 ) ++ depSlf4jLogging
 
 lazy val depDate = Seq(
-  jodaTime,
   scalaTest % "test"
-)
+) ++ joda
 
 lazy val depDeepCheckModel = Seq(
   ubirchUtilJson,
@@ -299,10 +298,8 @@ lazy val depMongoUtils = Seq(
   ubirchUtilDeepCheckModel,
   akkaSlf4j,
   reactiveMongo,
-  jodaTime,
-  jodaConvert,
   scalaTest % "test"
-) ++ depSlf4jLogging
+) ++ depSlf4jLogging ++ joda
 
 lazy val depOidcUtils = Seq(
   akkaHttp,
@@ -404,8 +401,9 @@ lazy val akkaHttpTestkit = akkaG %% "akka-http-testkit" % akkaHttpV
 
 lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestV
 
-lazy val jodaTime = "joda-time" % "joda-time" % "2.9.4"
-lazy val jodaConvert = "org.joda" % "joda-convert" % "1.8.1"
+val jodaTime = "joda-time" % "joda-time" % "2.10"
+val jodaConvert = "org.joda" % "joda-convert" % "2.1.1"
+val joda = Seq(jodaTime, jodaConvert)
 
 lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
 lazy val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
@@ -440,7 +438,7 @@ lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.3"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.10"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3.0"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.0"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.8.2"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.8.3"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.1"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.5.1"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
