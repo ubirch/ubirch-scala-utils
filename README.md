@@ -13,6 +13,8 @@
 * json
 * mongo-test-utils
 * mongo-utils
+* neo4-config
+* neo4-utils
 * oidc-utils
 * redis-test-util
 * redis-util
@@ -1142,6 +1144,120 @@ Here's an example of a config with more than one host:
 ### Release History
 
 #### Version 0.1.0 (2017-04-04)
+
+* initial release
+
+
+-----------------------
+
+## `neo4j-config`
+
+### Scala Dependency
+                 
+     resolvers ++= Seq(
+       Resolver.sonatypeRepo("releases")
+     )
+     libraryDependencies ++= Seq(
+       "com.ubirch.util" %% "neo4j-config" % "0.1.0"
+     )
+ 
+### Config
+
+Through `Neo4jConfigReader` the following configuration is read:
+
+Useful Links:
+
+* [info on connection URI formats](https://neo4j.com/docs/developer-manual/3.4/drivers/client-applications/#driver-connection-uris)
+* [driver config details](https://neo4j.com/docs/developer-manual/3.4/drivers/client-applications/#driver-configuration)
+
+| Config Item                           | Mandatory | Default Value                         | Description       |
+|:--------------------------------------|:----------|:--------------------------------------|:------------------|
+| ubirch.neo4j.uri                      | no        | "bolt://localhost:7687"               | Neo4j URI         |
+| ubirch.neo4j.userName                 | no        | "neo4j"                               | database user     |
+| ubirch.neo4j.password                 | no        | "neo4jneo4j"                          | database password |
+| ubirch.neo4j.encryptionRequired       | no        | true                                  | true if connection needs to be encrypted |
+| ubirch.neo4j.trustStrategy            | no        | "TRUST_SYSTEM_CA_SIGNED_CERTIFICATES" | strategy by which to trust TLS certificates. possible values are: `TRUST_ALL_CERTIFICATES`, `TRUST_SYSTEM_CA_SIGNED_CERTIFICATES` |
+| ubirch.neo4j.pool.maxLifetime         | no        | 60 minutes                            | maximum lifetime of pooled connection |
+| ubirch.neo4j.pool.maxSize             | no        | 50                                    | maximum number of connections in pool |
+| ubirch.neo4j.pool.acquisitionTimeout  | no        | 60 seconds                            | maximum number of seconds to wait when acquiring a connection from pool |
+| ubirch.neo4j.timeout                  | no        | 60 seconds                            | maximum number of seconds to wait for response before we let a connection time out |
+| ubirch.neo4j.maxRetryTime             | no        | 60 seconds                            | maximum number of seconds in which to keep attempting retries of transaction functions |
+| ubirch.neo4j.loadBalancingStrategy    | no        | "LEAST_CONNECTED"                     | Load balancing strategy when connecting to a Neo4j cluster. Possible values are: `ROUND_ROBIN`, `LEAST_CONNECTED` |
+
+An example config:
+
+```
+ubirch {
+  neo4j {
+    uri = "bolt://neo4j.ubirch-dev.ubirch.com:7687"
+    userName = "neo4j"
+    password = "123456"
+    encryptionRequired = true
+    trustStrategy = "TRUST_SYSTEM_CA_SIGNED_CERTIFICATES" // (TRUST_ALL_CERTIFICATES, TRUST_SYSTEM_CA_SIGNED_CERTIFICATES)
+    pool {
+      maxLifetime = 60 // minutes
+      maxPoolSize = 200
+      acquisitionTimeout = 60 // seconds
+    }
+    timeout = 60 // seconds
+    maxRetryTime = 60 // seconds
+    loadBalancingStrategy = "LEAST_CONNECTED" // (ROUND_ROBIN, LEAST_CONNECTED)
+  }
+}
+```
+
+Minimum example config for local development:
+
+```
+ubirch {
+  neo4j {
+    trustStrategy = "TRUST_ALL_CERTIFICATES"
+  }
+}
+```
+
+### Usage of `Neo4jConfigReader`
+
+To read the neo4j config with keys exactly as described above:
+
+```$scala
+val neo4jConfig = new Neo4jConfigReader().neo4jConfig()
+```
+
+With custom prefix (instead of `ubirch.neo4j`):
+
+```$scala
+val neo4jConfig = new Neo4jConfigReader("ubirchKeyService.neo4j").neo4jConfig()
+```
+
+### Release History
+   
+#### Version 0.1.0 (2018-08-11)
+
+* initial release
+
+
+-----------------------
+
+## `neo4j-utils`
+
+### Scala Dependency
+                 
+     resolvers ++= Seq(
+       Resolver.sonatypeRepo("releases")
+     )
+     libraryDependencies ++= Seq(
+       "com.ubirch.util" %% "neo4j-utils" % "0.1.0"
+     )
+ 
+### Config
+
+A configuration will be needed in all environments except local. For details please refer to the configuration section
+of `neo4j-config`.
+
+### Release History
+   
+#### Version 0.1.0 (2018-08-11)
 
 * initial release
 

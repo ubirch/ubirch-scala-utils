@@ -45,6 +45,8 @@ lazy val scalaUtils = project
     lockUtil,
     mongoTestUtils,
     mongoUtils,
+    neo4jConfig,
+    neo4jUtils,
     oidcUtils,
     redisTestUtil,
     redisUtil,
@@ -55,7 +57,7 @@ lazy val scalaUtils = project
   )
 
 lazy val lockUtil = (project in file("lock-util"))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "lock-util",
     description := "Simple Redis based locking utils",
@@ -64,7 +66,7 @@ lazy val lockUtil = (project in file("lock-util"))
   )
 
 lazy val camelUtils = (project in file("camel-utils"))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "camel-utils",
     description := "Camel related utils",
@@ -73,7 +75,7 @@ lazy val camelUtils = (project in file("camel-utils"))
   )
 
 lazy val config = project
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     description := "common config related code",
     version := "0.2.3",
@@ -81,7 +83,7 @@ lazy val config = project
   )
 
 lazy val crypto = project
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     description := "ubirch util with crypto related code",
     version := "0.4.11",
@@ -89,7 +91,7 @@ lazy val crypto = project
   )
 
 lazy val date = project
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     description := "a collection of date related utils",
     version := "0.5.3",
@@ -97,7 +99,7 @@ lazy val date = project
   )
 
 lazy val deepCheckModel = (project in file("deep-check-model"))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "deep-check-model",
     description := "actor and JSON models for the /deepCheck endpoints",
@@ -106,7 +108,7 @@ lazy val deepCheckModel = (project in file("deep-check-model"))
   )
 
 lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-binary"))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
@@ -118,7 +120,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   )
 
 lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
@@ -130,14 +132,14 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   )
 
 lazy val futures = project
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     description := "utils related to Scala Futures",
     version := "0.1.1"
   )
 
 lazy val json = project
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     description := "collection of JSON utils",
     version := "0.5.1",
@@ -148,7 +150,7 @@ lazy val json = project
   )
 
 lazy val mongoTestUtils = (project in file("mongo-test-utils"))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
@@ -157,7 +159,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   )
 
 lazy val mongoUtils = (project in file("mongo-utils"))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
@@ -165,8 +167,26 @@ lazy val mongoUtils = (project in file("mongo-utils"))
     libraryDependencies ++= depMongoUtils
   )
 
+lazy val neo4jConfig = (project in file("neo4j-config"))
+  .settings(commonSettings)
+  .settings(
+    name := "neo4j-config",
+    description := "Neo4j config reader",
+    version := "0.1.0",
+    libraryDependencies ++= depNeo4jConfig
+  )
+
+lazy val neo4jUtils = (project in file("neo4j-utils"))
+  .settings(commonSettings)
+  .settings(
+    name := "neo4j-utils",
+    description := "Neo4j utils",
+    version := "0.1.0",
+    libraryDependencies ++= depNeo4jUtils
+  )
+
 lazy val oidcUtils = (project in file("oidc-utils"))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
@@ -175,7 +195,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   )
 
 lazy val redisTestUtil = (project in file("redis-test-util"))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "redis-test-util",
     description := "Redis related test utils",
@@ -184,7 +204,7 @@ lazy val redisTestUtil = (project in file("redis-test-util"))
   )
 
 lazy val redisUtil = (project in file("redis-util"))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "redis-util",
     description := "Redis related utils",
@@ -193,7 +213,7 @@ lazy val redisUtil = (project in file("redis-util"))
   )
 
 lazy val responseUtil = project
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "response-util",
     description := "HTTP Response Utils",
@@ -202,7 +222,7 @@ lazy val responseUtil = project
   )
 
 lazy val restAkkaHttp = (project in file("rest-akka-http"))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "rest-akka-http",
     description := "shared custom classes related to akka-http-experimental (for example certain directives)",
@@ -211,7 +231,7 @@ lazy val restAkkaHttp = (project in file("rest-akka-http"))
   )
 
 lazy val restAkkaHttpTest = (project in file("rest-akka-http-test"))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "rest-akka-http-test",
     description := "akka-http-experimental related test utils",
@@ -220,7 +240,7 @@ lazy val restAkkaHttpTest = (project in file("rest-akka-http-test"))
   )
 
 lazy val uuid = project
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "uuid",
     description := "UUID related utils",
@@ -300,6 +320,16 @@ lazy val depMongoUtils = Seq(
   reactiveMongo,
   scalaTest % "test"
 ) ++ depSlf4jLogging ++ joda
+
+lazy val depNeo4jConfig = Seq(
+  ubirchUtilConfig
+)
+
+lazy val depNeo4jUtils = Seq(
+  ubirchUtilNeo4jConfig,
+  neo4jJavaDriver,
+  scalaLoggingSlf4j
+) ++ joda
 
 lazy val depOidcUtils = Seq(
   akkaHttp,
@@ -398,7 +428,6 @@ lazy val akkaTestkit = akkaG %% "akka-testkit" % akkaV
 lazy val akkaHttp = akkaG %% "akka-http" % akkaHttpV
 lazy val akkaHttpTestkit = akkaG %% "akka-http-testkit" % akkaHttpV
 
-
 lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestV
 
 val jodaTime = "joda-time" % "joda-time" % "2.10"
@@ -409,6 +438,8 @@ lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
 lazy val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
 
 lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.15.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
+
+val neo4jJavaDriver = "org.neo4j.driver" % "neo4j-java-driver" % "1.6.2"
 
 // https://github.com/lomigmegard/akka-http-cors
 lazy val akkaHttpCors = "ch.megard" %% "akka-http-cors" % "0.3.0"
@@ -439,6 +470,7 @@ lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.10"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3.0"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.0"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.8.3"
+lazy val ubirchUtilNeo4jConfig = ubirchUtilGroup %% "neo4j-config" % "0.1.0"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.1"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.5.1"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
