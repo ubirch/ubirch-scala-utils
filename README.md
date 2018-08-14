@@ -1272,7 +1272,7 @@ of `neo4j-config`.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.7.2"
+      "com.ubirch.util" %% "oidc-utils" % "0.7.3"
     )
 
 ### Config
@@ -1299,6 +1299,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.7.3 (2018-08-14)
+
+* update to `com.ubirch.user:client-rest:0.12.2`
 
 #### Version 0.7.2 (2018-08-06)
 

@@ -190,7 +190,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.7.2",
+    version := "0.7.3",
     libraryDependencies ++= depOidcUtils
   )
 
@@ -475,7 +475,7 @@ lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.1
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.5.1"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
 
-lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.11.0"
+lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.12.2"
 
 /*
  * RESOLVER
