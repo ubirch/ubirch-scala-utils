@@ -1300,6 +1300,11 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
+#### Version 0.7.4-SNAPSHOT (2018-08-15)
+
+* started tp add signature checking for ubirchToken
+* renamed UserContext.userId to .externalUserId 
+
 #### Version 0.7.3 (2018-08-14)
 
 * update to `com.ubirch.user:client-rest:0.12.2`
