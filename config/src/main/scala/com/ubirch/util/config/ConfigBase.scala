@@ -31,6 +31,36 @@ trait ConfigBase {
 
   protected def environmentId(): String = config.getString("ubirch.envid")
 
+  protected def stringWithDefault(key: String, default: String): String = {
+
+    if (config.hasPath(key)) {
+      config.getString(key)
+    } else {
+      default
+    }
+
+  }
+
+  protected def intWithDefault(key: String, default: Int): Int = {
+
+    if (config.hasPath(key)) {
+      config.getInt(key)
+    } else {
+      default
+    }
+
+  }
+
+  protected def booleanWithDefault(key: String, default: Boolean): Boolean = {
+
+    if (config.hasPath(key)) {
+      config.getBoolean(key)
+    } else {
+      default
+    }
+
+  }
+
   private def getEnvKey: Option[String] = {
 
     System.getProperties.asScala.get(envKey) match {
