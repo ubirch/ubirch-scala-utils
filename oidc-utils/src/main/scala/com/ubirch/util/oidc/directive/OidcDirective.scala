@@ -8,26 +8,36 @@ import akka.http.scaladsl.server.{AuthorizationFailedRejection, Directive1}
 import akka.stream.Materializer
 import com.typesafe.scalalogging.slf4j.StrictLogging
 import com.ubirch.user.client.rest.UserServiceClientRest
+import com.ubirch.util.config.ConfigBase
 import com.ubirch.util.json.{Json4sUtil, JsonFormats}
 import com.ubirch.util.oidc.config.OidcUtilsConfig
 import com.ubirch.util.oidc.model.UserContext
 import com.ubirch.util.oidc.util.OidcUtil
 import com.ubirch.util.redis.RedisClientUtil
+import org.joda.time.{DateTime, DateTimeZone}
 import org.json4s.Formats
 import org.json4s.native.Serialization.read
 import redis.RedisClient
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration._
+import scala.language.postfixOps
 
 /**
   * author: cvandrei
   * since: 2017-03-17
   */
 class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materializer: Materializer)
-  extends StrictLogging {
+  extends StrictLogging
+    with ConfigBase {
 
   implicit private val formatter: Formats = JsonFormats.default
+
+  private val envid = config.getString("ubirch.envid").toLowerCase
+  private val skipSignatureChecking = config.getBoolean("ubirch.oidcUtils.skipSignatureChecking")
+  private val maxTokenAge = config.getInt("ubirch.oidcUtils.maxTokenAge")
+  private val skipTokenAgeCheck = config.getInt("ubirch.oidcUtils.maxTokenAge")
 
   val bearerToken: Directive1[Option[String]] =
     optionalHeaderValueByType(classOf[Authorization]).map(extractBearerToken)
@@ -79,7 +89,6 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
 
   }
 
-
   private def ubTokenToUserContext(ubToken: String)(implicit httpClient: HttpExt, materializer: Materializer): Future[UserContext] = {
     val redis = RedisClientUtil.getRedisClient
     redis.get[String](ubToken) flatMap {
@@ -88,35 +97,75 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
         val splt = ubToken.split("::")
         if (splt.size == 3) {
           val context = splt(0)
-          val mailHash = splt(1)
+
+          if (!envid.equals(context.toLowerCase)) {
+            logger.debug(s"invalid enviroment id: $context")
+            throw new VerificationException()
+          }
+
+          val token = splt(1)
+          val tokenParts = token.split("##")
+          val extUserId = tokenParts(0)
+          val tsStr = if (tokenParts.size >= 2)
+            Some(tokenParts(2))
+          else
+            None
           val signature = splt(2)
 
-          UserServiceClientRest.userGET(providerId = "ubirchToken", externalUserId = mailHash).map {
+          UserServiceClientRest.userGET(providerId = "ubirchToken", externalUserId = extUserId).map {
             case Some(user) if user.id.isDefined && user.activeUser =>
-              val uc = UserContext(
-                context = context,
-                providerId = "ubirchToken",
-                userId = mailHash,
-                userName = user.displayName,
-                locale = user.locale,
-                authToken = Some(ubToken)
-              )
-              redis.append[String](ubToken, Json4sUtil.any2String(uc).get)
-              uc
+
+              if (skipSignatureChecking || checkSignature(extUserId, token, signature, tsStr)) {
+
+                val uc = UserContext(
+                  context = context,
+                  providerId = "ubirchToken",
+                  externalUserId = extUserId,
+                  userName = user.displayName,
+                  locale = user.locale,
+                  authToken = Some(ubToken)
+                )
+
+                redis.append[String](ubToken, Json4sUtil.any2String(uc).get)
+                uc
+              }
+              else {
+                logger.debug(s"ubToken signature is invalid: redisKey=$ubToken")
+                throw new VerificationException()
+              }
             case _ =>
-              logger.debug(s"ubToken does not exist: redisKey=$ubToken")
+              logger.debug(s"ubToken contains invalid userId: redisKey=$ubToken")
               throw new VerificationException()
           }
         }
         else {
-          logger.debug(s"ubToken does not exist: redisKey=$ubToken")
+          logger.debug(s"invalid ubToken: redisKey=$ubToken")
           Future(throw new VerificationException())
         }
-      case Some(json) =>
+      case Some(json)
+      =>
         logger.debug(s"ubToken is valid...will update it's TTL now (tokenKey=$ubToken)")
         updateExpiry(redis, ubToken)
         Future(read[UserContext](json))
     }
+  }
+
+  private def checkSignature(extUserId: String, token: String, signature: String, tsStr: Option[String]): Boolean = {
+
+    //var pubKeys = Await.result(KeyServiceClientRest.currentlyValidPubKeys(extUserId), 5 seconds)
+
+    val now = new DateTime(DateTimeZone.UTC)
+    if (tsStr.isDefined) {
+      val ts = tsStr.get.toLong
+      val timestamp = new DateTime(ts, DateTimeZone.UTC)
+
+      if (now.minusMinutes(maxTokenAge).isBefore(timestamp))
+        true
+      else {
+        false
+      }
+    }
+    false
   }
 
   private def tokenToUserContext(token: String): Future[UserContext] = {
@@ -141,15 +190,16 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
   private def updateExpiry(redis: RedisClient, tokenKey: String): Future[Boolean] = {
 
     val refreshInterval = OidcUtilsConfig.redisUpdateExpiry
-    redis.expire(tokenKey, seconds = refreshInterval) map { res =>
+    redis.expire(tokenKey, seconds = refreshInterval) map {
+      res =>
 
-      if (res) {
-        logger.debug(s"refreshed token expiry ($refreshInterval seconds): tokenKey: $tokenKey")
-      } else {
-        logger.error(s"failed to refresh token expiry ($refreshInterval seconds): tokenKey: $tokenKey")
-      }
+        if (res) {
+          logger.debug(s"refreshed token expiry ($refreshInterval seconds): tokenKey: $tokenKey")
+        } else {
+          logger.error(s"failed to refresh token expiry ($refreshInterval seconds): tokenKey: $tokenKey")
+        }
 
-      res
+        res
 
     }
 

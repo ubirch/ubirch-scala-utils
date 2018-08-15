@@ -6,7 +6,7 @@ package com.ubirch.util.oidc.model
   */
 case class UserContext(context: String,
                        providerId: String,
-                       userId: String,
+                       externalUserId: String,
                        userName: String,
                        locale: String,
                        email: Option[String] = None,

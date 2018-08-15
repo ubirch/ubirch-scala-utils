@@ -12,6 +12,7 @@ import com.ubirch.util.oidc.model.UserContext
 import com.ubirch.util.oidc.util.OidcUtil
 import com.ubirch.util.redis.RedisClientUtil
 import com.ubirch.util.redis.test.RedisCleanup
+import org.json4s.Formats
 import org.json4s.native.Serialization.write
 import org.scalatest.{BeforeAndAfterEach, FeatureSpec, Matchers}
 import redis.RedisClient
@@ -32,7 +33,7 @@ class OidcDirectiveSpec extends FeatureSpec
 
   implicit protected val redis: RedisClient = RedisClientUtil.getRedisClient()
 
-  implicit private val formatter = JsonFormats.default
+  implicit private val formatter: Formats = JsonFormats.default
 
   implicit val httpClient: HttpExt = Http()
 
@@ -51,7 +52,7 @@ class OidcDirectiveSpec extends FeatureSpec
     get {
       pathSingleSlash {
         oidcToken2UserContext { userContext =>
-          complete(s"context=${userContext.context}; userId=${userContext.userId}")
+          complete(s"context=${userContext.context}; userId=${userContext.externalUserId}")
         }
       }
     }
@@ -91,7 +92,7 @@ class OidcDirectiveSpec extends FeatureSpec
       val redisValue = write(UserContext(
         context = context,
         providerId = providerId,
-        userId = userId,
+        externalUserId = userId,
         userName = userName,
         locale = locale,
         authToken = Some(token)

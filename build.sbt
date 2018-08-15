@@ -4,6 +4,7 @@ concurrentRestrictions in Global := Seq(
   Tags.limit(Tags.Test, 1)
 )
 
+lazy val ubirchKeyG = "com.ubirch.key"
 lazy val ubirchUtilGroup = "com.ubirch.util"
 lazy val commonSettings = Seq(
 
@@ -190,7 +191,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.7.3",
+    version := "0.7.4-SNAPSHOT",
     libraryDependencies ++= depOidcUtils
   )
 
@@ -339,6 +340,8 @@ lazy val depOidcUtils = Seq(
   ubirchUtilCrypto,
   ubirchUtilJson,
   ubirchUtilRedisUtil,
+  ubirchKeyClientRest,
+  ubirchKeyModelRest,
   scalaTest % "test",
   akkaHttpTestkit % "test",
   ubirchUtilRedisTestUtil % "test"
@@ -476,6 +479,11 @@ lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.5.1"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
 
 lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.12.2"
+
+val ubirchKeyV = "0.7.0"
+lazy val ubirchKeyClientRest = ubirchKeyG %% "client-rest" % ubirchKeyV
+lazy val ubirchKeyModelRest = ubirchKeyG %% "model-rest" % ubirchKeyV
+
 
 /*
  * RESOLVER
