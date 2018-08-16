@@ -98,7 +98,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
         if (splt.size == 3) {
           val context = splt(0).toLowerCase.replace("bearer", ""). trim
 
-          if (!envid.equals(context.toLowerCase)) {
+          if (!envid.equals(context)) {
             logger.debug(s"invalid enviroment id: $context")
             throw new VerificationException()
           }
