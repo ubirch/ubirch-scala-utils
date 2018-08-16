@@ -105,7 +105,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
 
           val token = splt(1)
           val tokenParts = token.split("##")
-          val extUserId = tokenParts(0)
+          val extUserId = tokenParts(0).toLowerCase.trim
           val tsStr = if (tokenParts.size >= 2)
             Some(tokenParts(1))
           else
