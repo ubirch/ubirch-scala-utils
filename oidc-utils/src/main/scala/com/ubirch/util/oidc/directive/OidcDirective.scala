@@ -35,6 +35,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
   implicit private val formatter: Formats = JsonFormats.default
 
   private val envid = config.getString("ubirch.envid").toLowerCase
+  private val skipEnvChecking = config.getBoolean("ubirch.oidcUtils.skipEnvChecking")
   private val skipSignatureChecking = config.getBoolean("ubirch.oidcUtils.skipSignatureChecking")
   private val maxTokenAge = config.getInt("ubirch.oidcUtils.maxTokenAge")
   private val skipTokenAgeCheck = config.getInt("ubirch.oidcUtils.maxTokenAge")
@@ -98,7 +99,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
         if (splt.size == 3) {
           val context = splt(0).toLowerCase.replace("bearer", ""). trim
 
-          if (!envid.equals(context)) {
+          if (!skipEnvChecking && !envid.equals(context)) {
             logger.debug(s"invalid enviroment id: $context")
             throw new VerificationException()
           }

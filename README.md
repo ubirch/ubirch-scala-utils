@@ -1300,7 +1300,11 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
-#### Version 0.7.4-SNAPSHOT (2018-08-15)
+#### Version 0.7.3.2 (2018-08-16)
+
+* added skipEnvChecking feature
+
+#### Version 0.7.3.1 (2018-08-15)
 
 * started tp add signature checking for ubirchToken
 * renamed UserContext.userId to .externalUserId 
