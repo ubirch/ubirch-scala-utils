@@ -63,7 +63,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
               u.map(provide).recover {
 
                 case _: VerificationException =>
-                  logger.error("Unable to log in with provided token")
+                  logger.error(s"Unable to log in with provided token: $ubToken")
                   reject(AuthorizationFailedRejection).toDirective[Tuple1[UserContext]]
 
               }.get
@@ -79,7 +79,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
           u.map(provide).recover {
 
             case _: VerificationException =>
-              logger.error("Unable to log in with provided token")
+              logger.error(s"Unable to log in with provided token: $token")
               reject(AuthorizationFailedRejection).toDirective[Tuple1[UserContext]]
 
           }.get
@@ -96,7 +96,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
       case None =>
         val splt = ubToken.split("::")
         if (splt.size == 3) {
-          val context = splt(0)
+          val context = splt(0).toLowerCase.replace("bearer", ""). trim
 
           if (!envid.equals(context.toLowerCase)) {
             logger.debug(s"invalid enviroment id: $context")
@@ -130,7 +130,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
                 uc
               }
               else {
-                logger.debug(s"ubToken signature is invalid: redisKey=$ubToken")
+                logger.debug(s"Unable to log in with provided token signature is invalid: redisKey=$ubToken")
                 throw new VerificationException()
               }
             case _ =>
