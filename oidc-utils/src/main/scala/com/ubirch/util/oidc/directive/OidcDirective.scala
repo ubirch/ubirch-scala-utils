@@ -100,7 +100,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
           val context = splt(0).toLowerCase.replace("bearer", ""). trim
 
           if (!skipEnvChecking && !envid.equals(context)) {
-            logger.debug(s"invalid enviroment id: $context")
+            logger.error(s"invalid enviroment id: $context")
             throw new VerificationException()
           }
 
@@ -131,16 +131,16 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
                 uc
               }
               else {
-                logger.debug(s"Unable to log in with provided token signature is invalid: redisKey=$ubToken")
+                logger.error(s"Unable to log in with provided token, signature is invalid: redisKey=$ubToken")
                 throw new VerificationException()
               }
             case _ =>
-              logger.debug(s"ubToken contains invalid userId: redisKey=$ubToken")
+              logger.error(s"ubToken contains invalid userId: redisKey=$ubToken")
               throw new VerificationException()
           }
         }
         else {
-          logger.debug(s"invalid ubToken: redisKey=$ubToken")
+          logger.error(s"invalid ubToken: redisKey=$ubToken")
           Future(throw new VerificationException())
         }
       case Some(json)
