@@ -4,9 +4,8 @@ concurrentRestrictions in Global := Seq(
   Tags.limit(Tags.Test, 1)
 )
 
-lazy val ubirchKeyG = "com.ubirch.key"
-lazy val ubirchUtilGroup = "com.ubirch.util"
-lazy val commonSettings = Seq(
+val ubirchUtilGroup = "com.ubirch.util"
+val commonSettings = Seq(
 
   scalaVersion := "2.11.12",
   scalacOptions ++= Seq(
@@ -191,7 +190,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.7.3.4",
+    version := "0.7.4",
     libraryDependencies ++= depOidcUtils
   )
 
@@ -341,7 +340,6 @@ lazy val depOidcUtils = Seq(
   ubirchUtilJson,
   ubirchUtilRedisUtil,
   ubirchKeyClientRest,
-  ubirchKeyModelRest,
   scalaTest % "test",
   akkaHttpTestkit % "test",
   ubirchUtilRedisTestUtil % "test"
@@ -399,6 +397,7 @@ val log4jV = "2.8.2"
 val scalaTestV = "3.0.5"
 
 // Groups
+val akkaG = "com.typesafe.akka"
 val log4jG = "org.apache.logging.log4j"
 
 lazy val json4sBase = Seq(
@@ -423,7 +422,6 @@ lazy val apacheCommonsLang3 = "org.apache.commons" % "commons-lang3" % "3.7"
 
 lazy val netI2pCryptoEddsa = "net.i2p.crypto" % "eddsa" % "0.1.0"
 
-val akkaG = "com.typesafe.akka"
 lazy val akkaActor = akkaG %% "akka-actor" % akkaV
 lazy val akkaStream = akkaG %% "akka-stream" % akkaV
 lazy val akkaSlf4j = akkaG %% "akka-slf4j" % akkaV
@@ -480,9 +478,7 @@ lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
 
 lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.12.2"
 
-val ubirchKeyV = "0.7.0"
-lazy val ubirchKeyClientRest = ubirchKeyG %% "client-rest" % ubirchKeyV
-lazy val ubirchKeyModelRest = ubirchKeyG %% "model-rest" % ubirchKeyV
+val ubirchKeyClientRest = "com.ubirch.key" %% "client-rest" % "0.8.0"
 
 
 /*
