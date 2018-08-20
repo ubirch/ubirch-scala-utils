@@ -1300,6 +1300,14 @@ An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
 
+#### Version 0.7.3.4 (2018-08-18)
+
+* limited redis ubToken caching to current app enviroment
+
+#### Version 0.7.3.3 (2018-08-18)
+
+* change error logging to leg level error
+
 #### Version 0.7.3.2 (2018-08-16)
 
 * added skipEnvChecking feature

@@ -20,8 +20,7 @@ import org.json4s.native.Serialization.read
 import redis.RedisClient
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{Await, Future}
-import scala.concurrent.duration._
+import scala.concurrent.Future
 import scala.language.postfixOps
 
 /**
@@ -64,7 +63,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
               u.map(provide).recover {
 
                 case _: VerificationException =>
-                  logger.error(s"Unable to log in with provided token: $ubToken")
+                  logger.error(s"Unable to log in with provided token: >>$ubToken<<")
                   reject(AuthorizationFailedRejection).toDirective[Tuple1[UserContext]]
 
               }.get
@@ -90,14 +89,17 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
 
   }
 
+  private def redisKey(ubToken: String) = {
+    s"$envid--$ubToken"
+  }
+
   private def ubTokenToUserContext(ubToken: String)(implicit httpClient: HttpExt, materializer: Materializer): Future[UserContext] = {
     val redis = RedisClientUtil.getRedisClient
-    redis.get[String](ubToken) flatMap {
-
+    redis.get[String](redisKey(ubToken)) flatMap {
       case None =>
         val splt = ubToken.split("::")
         if (splt.size == 3) {
-          val context = splt(0).toLowerCase.replace("bearer", ""). trim
+          val context = splt(0).toLowerCase.replace("bearer", "").trim
 
           if (!skipEnvChecking && !envid.equals(context)) {
             logger.error(s"invalid enviroment id: $context")
@@ -127,26 +129,26 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
                   authToken = Some(ubToken)
                 )
 
-                redis.append[String](ubToken, Json4sUtil.any2String(uc).get)
+                redis.append[String](redisKey(ubToken), Json4sUtil.any2String(uc).get)
                 uc
               }
               else {
-                logger.error(s"Unable to log in with provided token, signature is invalid: redisKey=$ubToken")
+                logger.error(s"Unable to log in with provided token, signature is invalid: >>$ubToken<<")
                 throw new VerificationException()
               }
             case _ =>
-              logger.error(s"ubToken contains invalid userId: redisKey=$ubToken")
+              logger.error(s"ubToken contains invalid userId: $extUserId")
               throw new VerificationException()
           }
         }
         else {
-          logger.error(s"invalid ubToken: redisKey=$ubToken")
+          logger.error(s"invalid ubToken: >>$ubToken<<")
           Future(throw new VerificationException())
         }
       case Some(json)
       =>
-        logger.debug(s"ubToken is valid...will update it's TTL now (tokenKey=$ubToken)")
-        updateExpiry(redis, ubToken)
+        logger.debug(s"ubToken is valid...will update it's TTL now (redisKey = >>$ubToken<<)")
+        updateExpiry(redis, redisKey(ubToken))
         Future(read[UserContext](json))
     }
   }
