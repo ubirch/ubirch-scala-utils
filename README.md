@@ -758,16 +758,25 @@ Example Config:
 
 Utils related to Scala Futures.
 
+**Deprecation Warning**
+
+Use `scala.concurrent.Future.sequence()` instead of `FutureUtil.unfoldInnerFutures())`. This code will be removed
+eventually.
+
 ### Scala Dependency
 
     resolvers ++= Seq(
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "futures" % "0.1.1"
+      "com.ubirch.util" %% "futures" % "0.1.2"
     )
 
 ### Release History
+
+#### Version 0.1.2 (2018-08-21)
+
+* added deprecation warning
 
 #### Version 0.1.1 (2016-12-12)
 

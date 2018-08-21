@@ -9,6 +9,7 @@ import scala.concurrent.Future
   */
 object FutureUtil {
 
+  @deprecated("use `scala.concurrent.Future.sequence()` instead; this method will be removed at some point", "0.1.1")
   def unfoldInnerFutures[T](seqOfFutures: Seq[Future[T]]): Future[Seq[T]] = {
 
     seqOfFutures.foldLeft(Future(Nil: Seq[T])) { (seqFuture, elementFuture) =>
