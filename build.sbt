@@ -40,7 +40,6 @@ lazy val scalaUtils = project
     deepCheckModel,
     elasticsearchClientBinary,
     elasticsearchUtil,
-    futures,
     json,
     lockUtil,
     mongoTestUtils,
@@ -129,13 +128,6 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
       resolverElasticsearch
     ),
     libraryDependencies ++= depElasticsearchUtil
-  )
-
-lazy val futures = project
-  .settings(commonSettings)
-  .settings(
-    description := "utils related to Scala Futures",
-    version := "0.1.2"
   )
 
 lazy val json = project

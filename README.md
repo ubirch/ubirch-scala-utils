@@ -9,7 +9,6 @@
 * deep-check-model
 * elasticsearch-client-binary
 * elasticsearch-util
-* futures
 * json
 * mongo-test-utils
 * mongo-utils
@@ -750,41 +749,6 @@ Example Config:
 #### Version 0.1.0
      
 * first release
-
-
------------------------
-
-## `futures`
-
-Utils related to Scala Futures.
-
-**Deprecation Warning**
-
-Use `scala.concurrent.Future.sequence()` instead of `FutureUtil.unfoldInnerFutures())`. This code will be removed
-eventually.
-
-### Scala Dependency
-
-    resolvers ++= Seq(
-      Resolver.sonatypeRepo("releases")
-    )
-    libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "futures" % "0.1.2"
-    )
-
-### Release History
-
-#### Version 0.1.2 (2018-08-21)
-
-* added deprecation warning
-
-#### Version 0.1.1 (2016-12-12)
-
-* switch input to type `Seq`
-
-#### Version 0.1.0 (2016-12-12)
-
-* initial release
 
 
 -----------------------
