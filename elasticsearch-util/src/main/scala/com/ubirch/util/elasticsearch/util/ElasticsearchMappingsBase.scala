@@ -4,6 +4,7 @@ import com.typesafe.scalalogging.slf4j.StrictLogging
 
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest
 import org.elasticsearch.client.transport.TransportClient
+import org.elasticsearch.common.xcontent.XContentType
 
 /**
   * This a util helping us to created Elasticsearch indexes and mappings. To use it overwrite only the fields marked
@@ -46,15 +47,28 @@ trait ElasticsearchMappingsBase extends StrictLogging {
 
     } else {
 
-      var requestBuilder = indicesClient.prepareCreate(index)
-      mappings foreach {
-        case (typeName, typeMapping) => requestBuilder = requestBuilder.addMapping(typeName, typeMapping)
-      }
+      val indexCreated = indicesClient.prepareCreate(index).get
+      if (indexCreated.isAcknowledged) {
 
-      if (requestBuilder.get().isAcknowledged) {
         logger.info(s"created index: '$index'")
+        var putMappingRequestBuilder = indicesClient.preparePutMapping(index)
+        mappings foreach {
+
+          case (typeName, typeMapping) =>
+
+            putMappingRequestBuilder = putMappingRequestBuilder.setType(typeName)
+              .setSource(typeMapping, XContentType.JSON)
+
+        }
+
+        if (putMappingRequestBuilder.get().isAcknowledged) {
+          logger.info(s"created mapping: index='$index'")
+        } else {
+          logger.error(s"failed to created mappings: index='$index'")
+        }
+
       } else {
-        logger.error(s"failed to created index: '$index'")
+        logger.error(s"failed to create index: '$index'")
       }
 
     }

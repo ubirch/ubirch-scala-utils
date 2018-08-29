@@ -8,14 +8,14 @@ import com.ubirch.util.elasticsearch.client.binary.storage.base.ESStorageBase
 import com.ubirch.util.json.{Json4sUtil, JsonFormats}
 import com.ubirch.util.uuid.UUIDUtil
 
-import org.json4s._
-import org.scalatest.{AsyncFeatureSpec, BeforeAndAfterAll, Matchers}
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.common.settings.Settings
-import org.elasticsearch.common.transport.InetSocketTransportAddress
+import org.elasticsearch.common.transport.TransportAddress
 import org.elasticsearch.search.aggregations.AggregationBuilders
 import org.elasticsearch.search.aggregations.metrics.avg.AvgAggregationBuilder
 import org.elasticsearch.transport.client.PreBuiltTransportClient
+import org.json4s._
+import org.scalatest.{AsyncFeatureSpec, BeforeAndAfterAll, Matchers}
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
@@ -147,7 +147,7 @@ class ElasticsearchStorageSpec extends AsyncFeatureSpec
 
 object TestStorage extends ESStorageBase {
 
-  private val address = new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300)
+  private val address = new TransportAddress(InetAddress.getByName("localhost"), 9300)
 
   override protected val esClient: TransportClient = new PreBuiltTransportClient(Settings.EMPTY)
     .addTransportAddress(address)

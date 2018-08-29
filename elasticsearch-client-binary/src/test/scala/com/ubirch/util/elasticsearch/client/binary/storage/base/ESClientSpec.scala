@@ -4,7 +4,7 @@ import java.net.InetAddress
 
 import com.ubirch.util.elasticsearch.client.binary.config.ESConfig
 
-import org.elasticsearch.common.transport.InetSocketTransportAddress
+import org.elasticsearch.common.transport.TransportAddress
 import org.scalatest.{FeatureSpec, Matchers}
 
 import scala.collection.JavaConversions._
@@ -23,9 +23,8 @@ class ESClientSpec extends FeatureSpec
 
       // verify
       val hosts = ESConfig.hosts map { host =>
-        new InetSocketTransportAddress(InetAddress.getByName(host.host), host.port)
+        new TransportAddress(InetAddress.getByName(host.host), host.port)
       }
-      val c = esClient
       esClient.transportAddresses() foreach { address =>
         hosts.contains(address) shouldBe true
       }

@@ -111,7 +111,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "2.5.1",
+    version := "3.0.0",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -123,7 +123,7 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
-    version := "2.5.1",
+    version := "3.0.0",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -384,7 +384,7 @@ lazy val depUuid = Seq(
 val json4sV = "3.6.0"
 val akkaV = "2.5.11"
 val akkaHttpV = "10.1.3"
-val elasticsearchV = "5.6.10"
+val elasticsearchV = "6.4.0"
 val log4jV = "2.8.2"
 val scalaTestV = "3.0.5"
 
@@ -427,8 +427,8 @@ val jodaTime = "joda-time" % "joda-time" % "2.10"
 val jodaConvert = "org.joda" % "joda-convert" % "2.1.1"
 val joda = Seq(jodaTime, jodaConvert)
 
-lazy val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
-lazy val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
+val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
+val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
 
 lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.15.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 

@@ -288,7 +288,7 @@ Version 0.2.0 introduced the mandatory parameter: _ubirch.envid_. It consists of
 
 ## `elasticsearch-client-binary`
 
-A client for Elasticsearch 2.4 using the binary protocol through
+A client for Elasticsearch using the binary protocol through
 [TransportClient](https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html).
 To use it mixin the trait `ESSimpleStorage` or `ESBulkStorage` and add the configuration documented below to your
 project. If you prefer working with objects they exists as well under the same names.
@@ -304,7 +304,8 @@ In addition to this there's some other utils as well:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.5.1"
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "3.0.0", // ES 6.4.0
+      "com.ubirch.util" %% "elasticsearch-client-binary" % "2.5.1"  // ES 5.6.10
     )
 
 ### Config
@@ -390,6 +391,13 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 
 ### Release History
 
+#### Version 3.0.0 (2018-08-29)
+
+* update to Elasticsearch 6.4.0
+* removed unused parameters from:
+  * `ESStorageBase.()` (`ttl` & `timestamp`)
+  * `ESBulkStorageBase.storeDocBulk()` (`timestamp`)
+
 #### Version 2.5.1 (2018-08-06)
 
 * update to `com.ubirch.util:config:0.2.3`
@@ -423,7 +431,7 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 #### Version 2.3.6 (2018-03-18)
 
 * update to UUIDUtil 0.1.2
-* update to Elasticsearch 5.6.8 
+* update to Elasticsearch 5.6.8
 
 #### Version 2.3.5 (2018-03-08)
 
@@ -671,10 +679,15 @@ Example Config:
       "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "elasticsearch-util" % "2.5.1"
+      "com.ubirch.util" %% "elasticsearch-util" % "3.0.0", // ES 6.4.0
+      "com.ubirch.util" %% "elasticsearch-util" % "2.5.1"  // ES 5.6.10
     )
 
 ### Release History
+
+#### Version 3.0.0 (2018-08-29)
+
+* update to Elasticsearch 6.4.0
 
 #### Version 2.5.1 (2018-08-06)
 

@@ -6,7 +6,7 @@ import com.ubirch.util.elasticsearch.client.binary.config.ESConfig
 
 import org.elasticsearch.client.transport.TransportClient
 import org.elasticsearch.common.settings.Settings
-import org.elasticsearch.common.transport.{InetSocketTransportAddress, TransportAddress}
+import org.elasticsearch.common.transport.TransportAddress
 import org.elasticsearch.transport.client.PreBuiltTransportClient
 import org.elasticsearch.xpack.client.PreBuiltXPackTransportClient
 
@@ -17,7 +17,7 @@ import org.elasticsearch.xpack.client.PreBuiltXPackTransportClient
 trait ESClient {
 
   private val hostAddresses: Set[TransportAddress] = ESConfig.hosts map { host =>
-    new InetSocketTransportAddress(InetAddress.getByName(host.host), host.port)
+    new TransportAddress(InetAddress.getByName(host.host), host.port)
   }
 
   final val esClient: TransportClient = {
