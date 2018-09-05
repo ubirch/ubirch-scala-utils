@@ -1572,8 +1572,8 @@ the whole environment itself)
 
 ### Config
 
-You can place the below config keys where you want in the config. When calling `RedisClientUtil.newInstance())` you need
-to provide a config prefix and the software will look for them under it.
+You can place the below config keys where you want in the config. When calling `RedisClientUtil.getRedisClient()` the
+following configuration is needed:
 
 | Config Item                | Mandatory  | Description               |
 |:---------------------------|:-----------|:--------------------------|
@@ -1581,9 +1581,9 @@ to provide a config prefix and the software will look for them under it.
 | ubirch.redisUtil.port      | yes        | redis TCP port            |
 | ubirch.redisUtil.password  | no         | redis password            |
 
-Here's an example config:
+Here's an example:
 
-    ubirchRedisUtil {
+    ubirch.redisUtil {
         host = localhost
         port = 6379
         password = not-a-secure-password
@@ -1595,7 +1595,7 @@ And this how you get a redis client:
     ```scala
     implicit val system = ActorSystem()
     implicit val timeout = Timeout(15 seconds)
-    val redis = RedisClientUtil.redisClient
+    val redis = RedisClientUtil.getRedisClient
     ```
 
 ### Release History
