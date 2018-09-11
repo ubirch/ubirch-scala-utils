@@ -1,5 +1,7 @@
 package com.ubirch.util.neo4j.utils
 
+import com.typesafe.scalalogging.slf4j.StrictLogging
+
 import org.joda.time.DateTime
 import org.neo4j.driver.v1.Value
 
@@ -7,7 +9,7 @@ import org.neo4j.driver.v1.Value
   * author: cvandrei
   * since: 2018-08-08
   */
-object Neo4jParseUtil {
+object Neo4jParseUtil extends StrictLogging {
 
   def asType[T](value: Value, field: String): T = {
 
@@ -53,6 +55,27 @@ object Neo4jParseUtil {
       case "--UNDEFINED--" => None
       case s: String => Some(DateTime.parse(s))
     }
+
+  }
+
+  /**
+    * Converts a key-value map into a format that we can put into a Cypher query. For example `CREATE (record:Record $data) RETURN record` where $data is `{fieldA: foo, fieldB: 42}`
+    *
+    * @param keyValue key-value map to convert into `{key1: value1, key2, value2, ...}` format
+    * @return string representation of input key-value map: `{key1: value1, key2, value2, ...}`
+    */
+  def keyValueToString(keyValue: Map[String, Any]): String = {
+
+    val data: String = keyValue map {
+      case (key, value: Int) => s"""$key: $value"""
+      case (key, value: Long) => s"""$key: $value"""
+      case (key, value: Boolean) => s"""$key: $value"""
+      case (key, value: String) => s"""$key: "$value""""
+      case (key, value) => s"""$key: "$value""""
+    } mkString("{", ", ", "}")
+    logger.debug(s"keyValues.string -- $data")
+
+    data
 
   }
 
