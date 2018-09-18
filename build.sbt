@@ -173,7 +173,7 @@ lazy val neo4jUtils = (project in file("neo4j-utils"))
   .settings(
     name := "neo4j-utils",
     description := "Neo4j utils",
-    version := "0.2.0",
+    version := "0.2.1",
     libraryDependencies ++= depNeo4jUtils
   )
 

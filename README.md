@@ -1233,7 +1233,7 @@ val neo4jConfig = new Neo4jConfigReader("ubirchKeyService.neo4j").neo4jConfig()
        Resolver.sonatypeRepo("releases")
      )
      libraryDependencies ++= Seq(
-       "com.ubirch.util" %% "neo4j-utils" % "0.2.0"
+       "com.ubirch.util" %% "neo4j-utils" % "0.2.1"
      )
  
 ### Config
@@ -1242,6 +1242,10 @@ A configuration will be needed in all environments except local. For details ple
 of `neo4j-config`.
 
 ### Release History
+
+#### Version 0.2.1 (2018-09-18)
+
+* made `Neo4jParseUtil.keyValueToString()` more flexible by introducing new parameters to configure how keys are separated from values and also for the enclosing characters of the resulting string
 
 #### Version 0.2.0 (2018-09-11)
 

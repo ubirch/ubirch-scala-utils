@@ -59,23 +59,54 @@ object Neo4jParseUtil extends StrictLogging {
   }
 
   /**
-    * Converts a key-value map into a format that we can put into a Cypher query. For example `CREATE (record:Record $data) RETURN record` where $data is `{fieldA: foo, fieldB: 42}`
+    * Converts a key-value map into a format that we can put into a Cypher query. For example `CREATE (record:Record $data) RETURN record` where $data is `{fieldA: foo, fieldB: 42}`.
     *
-    * @param keyValue key-value map to convert into `{key1: value1, key2, value2, ...}` format
-    * @return string representation of input key-value map: `{key1: value1, key2, value2, ...}`
+    * With different queries depending on different formats we can configure the opening and closing character and of
+    * the result and also the key-value delimiter.
+    *
+    * @param keyValue          key-value map to convert into `{key1: value1, key2: value2, ...}` format
+    * @param keyPrefix         sometimes a prefix is needed for values
+    * @param keyValueDelimiter string separating keys from values
+    * @param openingChar       string appended before the resulting total string
+    * @param closingChar       string appended after the resulting total string
+    * @return string representation of input key-value map: `{key1: value1, key2: value2, ...}`
     */
-  def keyValueToString(keyValue: Map[String, Any]): String = {
+  def keyValueToString(keyValue: Map[String, Any],
+                       keyPrefix: String = "",
+                       keyValueDelimiter: String = ": ",
+                       openingChar: String = "{",
+                       closingChar: String = "}"
+                      ): String = {
 
     val data: String = keyValue map {
-      case (key, value: Int) => s"""$key: $value"""
-      case (key, value: Long) => s"""$key: $value"""
-      case (key, value: Boolean) => s"""$key: $value"""
-      case (key, value: String) => s"""$key: "$value""""
-      case (key, value) => s"""$key: "$value""""
-    } mkString("{", ", ", "}")
+      case (key, value: Int) => s"$keyPrefix$keyPrefix$key$keyValueDelimiter$value"
+      case (key, value: Long) => s"$keyPrefix$keyPrefix$key$keyValueDelimiter$value"
+      case (key, value: Boolean) => s"$keyPrefix$key$keyValueDelimiter$value"
+      case (key, value: String) => s"""$keyPrefix$key$keyValueDelimiter"$value""""
+      case (key, value) => s"""$keyPrefix$key$keyValueDelimiter"$value""""
+    } mkString(openingChar, ", ", closingChar)
     logger.debug(s"keyValues.string -- $data")
 
     data
+
+  }
+
+  /**
+    * A version of `keyValueToString()` with defaults appropriate for `SET` clauses.
+    *
+    * @param keyValue key-value map to convert into `n.key1 = value1, n.key2 = value2, ...` format
+    * @param keyPrefix prefix of keys so Cypher know in what reference to do the update
+    * @return string representation of input key-value map: `n.key1 = value1, n.key2 = value2, ...`
+    */
+  def keyValueToStringSET(keyValue: Map[String, Any], keyPrefix: String): String = {
+
+    keyValueToString(
+      keyValue = keyValue,
+      keyPrefix = keyPrefix,
+      keyValueDelimiter = " = ",
+      openingChar = "",
+      closingChar = ""
+    )
 
   }
 
