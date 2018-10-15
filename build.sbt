@@ -182,7 +182,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.8.0",
+    version := "0.8.1",
     libraryDependencies ++= depOidcUtils
   )
 

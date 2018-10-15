@@ -89,7 +89,11 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
 
   }
 
-  private def hashedRedisKey(ubToken: String): String = OidcUtil.tokenToHashedKey(s"$envid--$ubToken")
+  private def hashedRedisKey(ubToken: String): String = {
+    // TODO redis keys may be hashed but since ubirch tokens are typically stored long-term this would have to include a migration of existing keys
+    //OidcUtil.tokenToHashedKey(s"$envid--$ubToken")
+    s"$envid--$ubToken"
+  }
 
   private def ubTokenToUserContext(ubToken: String)(implicit httpClient: HttpExt, materializer: Materializer): Future[UserContext] = {
     val redis = RedisClientUtil.getRedisClient
