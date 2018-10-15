@@ -4,7 +4,6 @@ import com.typesafe.scalalogging.slf4j.StrictLogging
 
 import com.ubirch.user.client.rest.UserServiceClientRest
 import com.ubirch.util.config.ConfigBase
-import com.ubirch.util.date.DateUtil
 import com.ubirch.util.json.{Json4sUtil, JsonFormats}
 import com.ubirch.util.oidc.config.OidcUtilsConfig
 import com.ubirch.util.oidc.model.UserContext
@@ -38,9 +37,9 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
   implicit private val formatter: Formats = JsonFormats.default
 
   private val envid = config.getString("ubirch.envid").toLowerCase
-  private val skipEnvChecking = config.getBoolean("ubirch.oidcUtils.skipEnvChecking")
-  private val skipSignatureChecking = config.getBoolean("ubirch.oidcUtils.skipSignatureChecking")
-  private val maxTokenAge = config.getInt("ubirch.oidcUtils.maxTokenAge")
+  private val skipEnvChecking = OidcUtilsConfig.skipEnvChecking()
+  private val skipSignatureChecking = OidcUtilsConfig.skipSignatureChecking()
+  private val maxTokenAge = OidcUtilsConfig.maxTokenAge()
 
   val bearerToken: Directive1[Option[String]] = optionalHeaderValueByType(classOf[Authorization]).map(extractBearerToken)
 
