@@ -94,8 +94,7 @@ class OidcDirectiveSpec extends FeatureSpec
         providerId = providerId,
         externalUserId = userId,
         userName = userName,
-        locale = locale,
-        authToken = Some(token)
+        locale = locale
       ))
       Await.result(redis.set(redisKey, redisValue, exSeconds = Some(initialTtl)), 2 seconds) shouldBe true
 

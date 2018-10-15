@@ -125,10 +125,10 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
                   providerId = "ubirchToken",
                   externalUserId = extUserId,
                   userName = user.displayName,
-                  locale = user.locale,
-                  authToken = Some(ubToken)
+                  locale = user.locale
                 )
 
+                // TODO UP-287: `ubToken` is persisted in clear text in Redis. see `tokenToUserContext()` for how to do it instead (or `StateAndCodeActor.rememberToken()` in user-service).
                 redis.append[String](redisKey(ubToken), Json4sUtil.any2String(uc).get)
                 uc
               }
