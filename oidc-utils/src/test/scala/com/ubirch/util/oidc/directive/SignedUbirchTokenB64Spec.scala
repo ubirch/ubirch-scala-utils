@@ -7,7 +7,7 @@ import com.ubirch.util.redis.test.RedisCleanup
 import org.joda.time.{DateTime, DateTimeZone}
 import org.scalatest.{BeforeAndAfterEach, FeatureSpec, Matchers}
 
-class SignedUbirchTokenB64Spek extends FeatureSpec
+class SignedUbirchTokenB64Spec extends FeatureSpec
   with ScalatestRouteTest
   with Matchers
   with BeforeAndAfterEach
@@ -52,11 +52,6 @@ class SignedUbirchTokenB64Spek extends FeatureSpec
       val tsDT = new DateTime(timestampLong * 1000l, DateTimeZone.UTC)
 
       EccUtil.validateSignature(pubKeyB64, signatureB64, payload) shouldBe true
-
-    }
-
-    scenario("check token 1") {
-
 
     }
 
