@@ -90,14 +90,11 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
 
   }
 
-  private def redisKey(ubToken: String) = {
-    // TODO UP-287: redis key should be hashed. see `tokenToUserContext()` or `StateAndCodeActor.rememberToken()` in user-service for examples.
-    s"$envid--$ubToken"
-  }
+  private def hashedRedisKey(ubToken: String): String = OidcUtil.tokenToHashedKey(s"$envid--$ubToken")
 
   private def ubTokenToUserContext(ubToken: String)(implicit httpClient: HttpExt, materializer: Materializer): Future[UserContext] = {
     val redis = RedisClientUtil.getRedisClient
-    redis.get[String](redisKey(ubToken)) flatMap {
+    redis.get[String](hashedRedisKey(ubToken)) flatMap {
 
       case None =>
 
@@ -132,7 +129,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
                   locale = user.locale
                 )
 
-                redis.append[String](redisKey(ubToken), Json4sUtil.any2String(uc).get)
+                redis.append[String](hashedRedisKey(ubToken), Json4sUtil.any2String(uc).get)
                 uc
               }
               else {
@@ -152,7 +149,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
       case Some(json) =>
 
         logger.debug(s"ubToken is valid...will update it's TTL now (redisKey = >>$ubToken<<)")
-        updateExpiry(redis, redisKey(ubToken))
+        updateExpiry(redis, hashedRedisKey(ubToken))
         Future(read[UserContext](json))
     }
   }
