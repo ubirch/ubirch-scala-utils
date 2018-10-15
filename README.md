@@ -1266,7 +1266,7 @@ of `neo4j-config`.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.7.5"
+      "com.ubirch.util" %% "oidc-utils" % "0.8.0"
     )
 
 ### Config
@@ -1293,6 +1293,15 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.8.0 (2018-10-15)
+
+* removed field `UserContext.authToken`
+* switched to storing hashed ubirch tokens when saving a `UserContext` to Redis
+* `OidcUtil.tokenToHashedKey()` now uses SHA-512 instead of SHA-256
+* extracted some of the config code to `OidcUtilConfig`
+* update to `com.ubirch.util:crypto:0.4.11`
+* update to `com.ubirch.user:client-rest:1.0.0`
 
 #### Version 0.7.5 (2018-10-02)
 
