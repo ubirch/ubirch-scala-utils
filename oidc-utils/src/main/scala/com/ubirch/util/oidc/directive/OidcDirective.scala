@@ -1,22 +1,26 @@
 package com.ubirch.util.oidc.directive
 
+import com.typesafe.scalalogging.slf4j.StrictLogging
+
+import com.ubirch.user.client.rest.UserServiceClientRest
+import com.ubirch.util.config.ConfigBase
+import com.ubirch.util.date.DateUtil
+import com.ubirch.util.json.{Json4sUtil, JsonFormats}
+import com.ubirch.util.oidc.config.OidcUtilsConfig
+import com.ubirch.util.oidc.model.UserContext
+import com.ubirch.util.oidc.util.{OidcUtil, UbirchTokenUtil}
+import com.ubirch.util.redis.RedisClientUtil
+
+import org.joda.time.{DateTime, DateTimeZone}
+import org.json4s.Formats
+import org.json4s.native.Serialization.read
+
 import akka.actor.ActorSystem
 import akka.http.scaladsl.HttpExt
 import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.{AuthorizationFailedRejection, Directive1}
 import akka.stream.Materializer
-import com.typesafe.scalalogging.slf4j.StrictLogging
-import com.ubirch.user.client.rest.UserServiceClientRest
-import com.ubirch.util.config.ConfigBase
-import com.ubirch.util.json.{Json4sUtil, JsonFormats}
-import com.ubirch.util.oidc.config.OidcUtilsConfig
-import com.ubirch.util.oidc.model.UserContext
-import com.ubirch.util.oidc.util.OidcUtil
-import com.ubirch.util.redis.RedisClientUtil
-import org.joda.time.{DateTime, DateTimeZone}
-import org.json4s.Formats
-import org.json4s.native.Serialization.read
 import redis.RedisClient
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -37,13 +41,10 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
   private val skipEnvChecking = config.getBoolean("ubirch.oidcUtils.skipEnvChecking")
   private val skipSignatureChecking = config.getBoolean("ubirch.oidcUtils.skipSignatureChecking")
   private val maxTokenAge = config.getInt("ubirch.oidcUtils.maxTokenAge")
-  private val skipTokenAgeCheck = config.getInt("ubirch.oidcUtils.maxTokenAge")
 
-  val bearerToken: Directive1[Option[String]] =
-    optionalHeaderValueByType(classOf[Authorization]).map(extractBearerToken)
+  val bearerToken: Directive1[Option[String]] = optionalHeaderValueByType(classOf[Authorization]).map(extractBearerToken)
 
-  val ubirchToken: Directive1[Option[String]] =
-    optionalHeaderValueByName("Authorization")
+  val ubirchToken: Directive1[Option[String]] = optionalHeaderValueByName("Authorization")
 
   val oidcToken2UserContext: Directive1[UserContext] = {
 
@@ -90,45 +91,47 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
   }
 
   private def redisKey(ubToken: String) = {
+    // TODO UP-287: redis key should be hashed. see `tokenToUserContext()` or `StateAndCodeActor.rememberToken()` in user-service for examples.
     s"$envid--$ubToken"
   }
 
   private def ubTokenToUserContext(ubToken: String)(implicit httpClient: HttpExt, materializer: Materializer): Future[UserContext] = {
     val redis = RedisClientUtil.getRedisClient
     redis.get[String](redisKey(ubToken)) flatMap {
+
       case None =>
-        val splt = ubToken.split("::")
-        if (splt.size == 3) {
-          val context = splt(0).toLowerCase.replace("bearer", "").trim
+
+        val split = ubToken.split("::")
+        if (split.size == 3) {
+          val context = split(0).toLowerCase.replace("bearer", "").trim
 
           if (!skipEnvChecking && !envid.equals(context)) {
-            logger.error(s"invalid enviroment id: $context")
+            logger.error(s"invalid environment id: $context")
             throw new VerificationException()
           }
 
-          val token = splt(1)
+          val token = split(1)
           val tokenParts = token.split("##")
           val extUserId = tokenParts(0).toLowerCase.trim
           val tsStr = if (tokenParts.size >= 2)
             Some(tokenParts(1))
           else
             None
-          val signature = splt(2)
+          val signature = split(2)
 
-          UserServiceClientRest.userGET(providerId = "ubirchToken", externalUserId = extUserId).map {
+          UserServiceClientRest.userGET(providerId = UbirchTokenUtil.providerId, externalUserId = extUserId).map {
             case Some(user) if user.id.isDefined && user.activeUser =>
 
               if (skipSignatureChecking || checkSignature(extUserId, token, signature, tsStr)) {
 
                 val uc = UserContext(
                   context = context,
-                  providerId = "ubirchToken",
+                  providerId = UbirchTokenUtil.providerId,
                   externalUserId = extUserId,
                   userName = user.displayName,
                   locale = user.locale
                 )
 
-                // TODO UP-287: `ubToken` is persisted in clear text in Redis. see `tokenToUserContext()` for how to do it instead (or `StateAndCodeActor.rememberToken()` in user-service).
                 redis.append[String](redisKey(ubToken), Json4sUtil.any2String(uc).get)
                 uc
               }
@@ -145,8 +148,9 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
           logger.error(s"invalid ubToken: >>$ubToken<<")
           Future(throw new VerificationException())
         }
-      case Some(json)
-      =>
+
+      case Some(json) =>
+
         logger.debug(s"ubToken is valid...will update it's TTL now (redisKey = >>$ubToken<<)")
         updateExpiry(redis, redisKey(ubToken))
         Future(read[UserContext](json))
