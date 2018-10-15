@@ -60,7 +60,7 @@ class OidcUtilSpec extends FeatureSpec
     val result = OidcUtil.tokenToHashedKey(token)
 
     // verify
-    result shouldBe HashUtil.sha256HexString(token)
+    result shouldBe HashUtil.sha512HexString(token)
 
   }
 

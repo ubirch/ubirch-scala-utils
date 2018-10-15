@@ -182,7 +182,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.7.5",
+    version := "0.8.0",
     libraryDependencies ++= depOidcUtils
   )
 
@@ -327,11 +327,11 @@ lazy val depOidcUtils = Seq(
   akkaHttp,
   akkaStream,
   json4sNative,
+  ubirchKeyClientRest,
   ubirchUserRest,
   ubirchUtilCrypto,
   ubirchUtilJson,
   ubirchUtilRedisUtil,
-  ubirchKeyClientRest,
   scalaTest % "test",
   akkaHttpTestkit % "test",
   ubirchUtilRedisTestUtil % "test"
@@ -459,16 +459,16 @@ lazy val redisson = "org.redisson" % "redisson" % "3.7.5"
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.3"
-lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.10"
+lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.11"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3.0"
-lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.0"
+lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.0" // TODO update to 0.5.11
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.8.3"
 lazy val ubirchUtilNeo4jConfig = ubirchUtilGroup %% "neo4j-config" % "0.1.0"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.1"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.5.1"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
 
-lazy val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "0.12.2"
+val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "1.0.0"
 
 val ubirchKeyClientRest = "com.ubirch.key" %% "client-rest" % "0.11.0"
 
