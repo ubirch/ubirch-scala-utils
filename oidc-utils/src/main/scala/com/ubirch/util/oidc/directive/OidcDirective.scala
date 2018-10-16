@@ -90,7 +90,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
   }
 
   private def hashedRedisKey(ubToken: String): String = {
-    // TODO redis keys may be hashed but since ubirch tokens are typically stored long-term this would have to include a migration of existing keys
+    // TODO redis keys may be hashed but since ubirch tokens are typically stored long-term this would have to include a migration of existing keys (consider adding hash iterations, too)
     //OidcUtil.tokenToHashedKey(s"$envid--$ubToken")
     s"$envid--$ubToken"
   }
