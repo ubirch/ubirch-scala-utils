@@ -60,7 +60,7 @@ lazy val lockUtil = (project in file("lock-util"))
   .settings(
     name := "lock-util",
     description := "Simple Redis based locking utils",
-    version := "0.2.1",
+    version := "0.2.2",
     libraryDependencies ++= depLockUtil
   )
 
@@ -102,7 +102,7 @@ lazy val deepCheckModel = (project in file("deep-check-model"))
   .settings(
     name := "deep-check-model",
     description := "actor and JSON models for the /deepCheck endpoints",
-    version := "0.3.0",
+    version := "0.3.1",
     libraryDependencies ++= depDeepCheckModel
   )
 
@@ -111,7 +111,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "3.0.0",
+    version := "3.0.1",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -123,7 +123,7 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
-    version := "3.0.0",
+    version := "3.0.1",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -146,7 +146,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.8.3",
+    version := "0.8.4",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -155,7 +155,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.8.3",
+    version := "0.8.4",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -182,7 +182,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.8.2",
+    version := "0.8.3",
     libraryDependencies ++= depOidcUtils
   )
 
@@ -191,7 +191,7 @@ lazy val redisTestUtil = (project in file("redis-test-util"))
   .settings(
     name := "redis-test-util",
     description := "Redis related test utils",
-    version := "0.5.1",
+    version := "0.5.2",
     libraryDependencies ++= depRedisTestUtils
   )
 
@@ -200,7 +200,7 @@ lazy val redisUtil = (project in file("redis-util"))
   .settings(
     name := "redis-util",
     description := "Redis related utils",
-    version := "0.5.1",
+    version := "0.5.2",
     libraryDependencies ++= depRedisUtil
   )
 
@@ -209,7 +209,7 @@ lazy val responseUtil = project
   .settings(
     name := "response-util",
     description := "HTTP Response Utils",
-    version := "0.4.0",
+    version := "0.4.1",
     libraryDependencies ++= depResponseUtil
   )
 
@@ -460,17 +460,17 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll Excl
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.3"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.11"
-lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3.0"
-lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.0" // TODO update to 0.5.11
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.8.3"
+lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3.1"
+lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.1"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.8.4"
 lazy val ubirchUtilNeo4jConfig = ubirchUtilGroup %% "neo4j-config" % "0.1.0"
-lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.1"
-lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.5.1"
+lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.2"
+lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.5.2"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
 
-val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "1.0.0"
+val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "1.0.1"
 
-val ubirchKeyClientRest = "com.ubirch.key" %% "client-rest" % "0.11.0"
+val ubirchKeyClientRest = "com.ubirch.key" %% "client-rest" % "0.11.1"
 
 
 /*
