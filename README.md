@@ -1266,7 +1266,7 @@ of `neo4j-config`.
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "oidc-utils" % "0.8.1"
+      "com.ubirch.util" %% "oidc-utils" % "0.8.2"
     )
 
 ### Config
@@ -1293,6 +1293,10 @@ If the provided token is valid a `UserContext` object will be returned.
 An example of how to use it can be found in `OidcDirectiveSpec`.
 
 ### Release History
+
+#### Version 0.8.2 (2018-10-16)
+
+* switch back to SHA-256 in `OidcUtil.tokenToHashedKey()`
 
 #### Version 0.8.1 (2018-10-15)
 

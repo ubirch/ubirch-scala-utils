@@ -13,6 +13,6 @@ object OidcUtil {
     HashUtil.sha256HexString(key)
   }
 
-  def tokenToHashedKey(token: String): String = HashUtil.sha512HexString(token)
+  def tokenToHashedKey(token: String): String = HashUtil.sha256HexString(token) // TODO consider upgrading to SHA-512 and maybe use a number of iterations, too
 
 }
