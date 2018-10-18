@@ -1739,10 +1739,14 @@ And this how you get a redis client:
       Resolver.sonatypeRepo("releases")
     )
     libraryDependencies ++= Seq(
-      "com.ubirch.util" %% "response-util" % "0.4.1"
+      "com.ubirch.util" %% "response-util" % "0.5.0"
     )
 
 ### Release History
+
+#### Version 0.5.0 (2018-10-18)
+
+* added `AuthUtil`
 
 #### Version 0.4.1 (2018-10-16)
 

@@ -204,12 +204,12 @@ lazy val redisUtil = (project in file("redis-util"))
     libraryDependencies ++= depRedisUtil
   )
 
-lazy val responseUtil = project
+lazy val responseUtil = (project in file("response-util"))
   .settings(commonSettings)
   .settings(
     name := "response-util",
     description := "HTTP Response Utils",
-    version := "0.4.1",
+    version := "0.5.0",
     libraryDependencies ++= depResponseUtil
   )
 
