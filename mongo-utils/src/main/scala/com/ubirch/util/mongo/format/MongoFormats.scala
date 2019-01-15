@@ -4,8 +4,7 @@ import java.io.{ByteArrayOutputStream, DataOutputStream}
 import java.util.UUID
 
 import org.joda.time.{DateTime, DateTimeZone}
-
-import reactivemongo.bson.{BSONBinary, BSONDateTime, BSONDocument, BSONDocumentReader, BSONDocumentWriter, BSONHandler, BSONReader, BSONWriter, Subtype}
+import reactivemongo.bson.{BSONBinary, BSONDateTime, BSONDocument, BSONHandler, BSONReader, BSONWriter, Subtype}
 
 /**
   * author: cvandrei
@@ -32,19 +31,20 @@ trait MongoFormats {
       }
     }
 
-  protected def getLong(array:Array[Byte], offset:Int):Long = {
+  protected def getLong(array: Array[Byte], offset: Int): Long = {
     (array(offset).toLong & 0xff) << 56 |
-      (array(offset+1).toLong & 0xff) << 48 |
-      (array(offset+2).toLong & 0xff) << 40 |
-      (array(offset+3).toLong & 0xff) << 32 |
-      (array(offset+4).toLong & 0xff) << 24 |
-      (array(offset+5).toLong & 0xff) << 16 |
-      (array(offset+6).toLong & 0xff) << 8 |
-      (array(offset+7).toLong & 0xff)
+      (array(offset + 1).toLong & 0xff) << 48 |
+      (array(offset + 2).toLong & 0xff) << 40 |
+      (array(offset + 3).toLong & 0xff) << 32 |
+      (array(offset + 4).toLong & 0xff) << 24 |
+      (array(offset + 5).toLong & 0xff) << 16 |
+      (array(offset + 6).toLong & 0xff) << 8 |
+      (array(offset + 7).toLong & 0xff)
   }
 
   implicit protected object BSONDateTimeHandler extends BSONHandler[BSONDateTime, DateTime] {
     def read(jodaTime: BSONDateTime): DateTime = new DateTime(jodaTime.value).withZone(DateTimeZone.UTC)
+
     def write(jodaTime: DateTime) = BSONDateTime(jodaTime.withZone(DateTimeZone.UTC).getMillis)
   }
 

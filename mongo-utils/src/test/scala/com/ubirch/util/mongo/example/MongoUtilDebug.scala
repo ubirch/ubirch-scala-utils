@@ -11,7 +11,8 @@ import scala.language.postfixOps
   * author: cvandrei
   * since: 2017-04-03
   */
-object MongoUtilDebug extends App
+object MongoUtilDebug
+  extends App
   with StrictLogging {
 
   val mongo = new MongoUtil()

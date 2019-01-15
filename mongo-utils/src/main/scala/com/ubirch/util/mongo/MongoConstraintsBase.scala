@@ -1,9 +1,7 @@
 package com.ubirch.util.mongo
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
-
 import com.ubirch.util.mongo.connection.MongoUtil
-
 import reactivemongo.api.indexes.Index
 
 import scala.concurrent.ExecutionContext

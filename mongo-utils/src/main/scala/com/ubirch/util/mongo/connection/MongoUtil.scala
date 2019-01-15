@@ -8,8 +8,10 @@ import reactivemongo.api.collections.bson.BSONCollection
 import reactivemongo.bson.{BSONDocumentReader, BSONDocumentWriter, document}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.duration._
+import scala.concurrent.{Await, Future, TimeoutException}
 import scala.language.postfixOps
+import scala.util.Try
 
 /**
   * author: cvandrei
@@ -52,63 +54,78 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
     * @return deep check response with _status:OK_ if ok; otherwise with _status:NOK_
     */
 
-  //TODO Validate with new refactoring
-  def connectivityCheck[T <: Any](collectionName: String)
-                                 (implicit writer: BSONDocumentWriter[T], reader: BSONDocumentReader[T])
-  : Future[DeepCheckResponse] = {
+  def connectivityCheck[T <: Any](collectionName: String)(implicit writer: BSONDocumentWriter[T], reader: BSONDocumentReader[T]): Future[DeepCheckResponse] = {
 
-    checkConnection() match {
-      case true =>
-        logger.debug("db connection exists")
-        collection(collectionName) flatMap {
-          _.find(document()).one[T] map (_ => DeepCheckResponse())
-        } recover {
+    if (checkConnection()) {
 
-          case t: Throwable =>
-            DeepCheckResponse(
-              status = false,
-              messages = Seq(t.getMessage)
-            )
+      logger.debug("db connection exists")
 
-        }
-      case false =>
-        logger.debug("db connection does not exists")
-        Future(DeepCheckResponse(
+      collection(collectionName)
+        .flatMap {
+          _.find(document())
+            .one[T]
+            .map(_ => DeepCheckResponse())
+        }.recover {
+
+        case e: Exception =>
+          DeepCheckResponse(
+            status = false,
+            messages = Seq(e.getMessage)
+          )
+
+      }
+    } else {
+
+      logger.debug("db connection does not exists")
+
+      Future.successful(
+        DeepCheckResponse(
           status = false,
           messages = Seq("no mongo connection")
         ))
+
     }
 
   }
 
-  /**
-    *
-    * @return
-    */
+  def checkConnection(): Boolean = {
 
-  //TODO Validate with new refactoring
-  def checkConnection(): Boolean = true
+    val atMost = 2 seconds
 
+    val futureIsConnectionActive: Future[Boolean] = db.map { db =>
+      db.connection.active
+    }
 
-//  {
-//    try {
-//      val dbc = Await.result(db, 2 seconds)
-//      if (dbc.connection.active) {
-//        val cols = Await.result(dbc.collectionNames, 2 seconds)
-//        if (cols.size > 0)
-//          true
-//        else
-//          false
-//      }
-//      else
-//        false
-//    }
-//    catch {
-//      case t: Throwable =>
-//        dbconn = null
-//        logger.error("no db connection", t)
-//        false
-//    }
-//  }
+    val futureHasCollectionNames: Future[Boolean] = db.flatMap { db =>
+      db.collectionNames.map(_.nonEmpty)
+    }
+
+    val futureChecks = {
+      val checks = for {
+        isConnectionActive <- futureIsConnectionActive if isConnectionActive
+        hasCollectionNames <- futureHasCollectionNames if hasCollectionNames
+      } yield {
+        true
+      }
+
+      checks.recover {
+        case e: Exception =>
+          logger.error("No DB Connection: " + e.getMessage)
+          false
+      }
+
+    }
+
+    val checks = Try(Await.result(futureChecks, atMost)).recover {
+      case e: TimeoutException =>
+        logger.error("It is taking more than {} to retrieve checks.", atMost.toString())
+        logger.error("This happened: ", e)
+
+        false
+    }.getOrElse(false)
+
+    checks
+
+  }
 
 }
