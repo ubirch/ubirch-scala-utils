@@ -1,0 +1,110 @@
+package com.ubirch.util.mongo.connection
+
+import com.typesafe.scalalogging.slf4j.LazyLogging
+import com.ubirch.util.mongo.config.{MongoConfig, MongoConfigKeys}
+import com.ubirch.util.mongo.connection.Exceptions._
+import reactivemongo.api.collections.bson.BSONCollection
+import reactivemongo.api.{DefaultDB, FailoverStrategy, MongoConnection, MongoDriver}
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.util.Try
+
+trait ConnectionBase {
+
+  def driver: MongoDriver
+
+  def hostUris: String
+
+  def parsedUri: Try[MongoConnection.ParsedURI]
+
+  def conn: Try[MongoConnection]
+
+  def close(): Unit = driver.close()
+
+}
+
+class Connection private(configPrefix: String) extends ConnectionBase {
+
+  val driver: MongoDriver = MongoDriver()
+  val hostUris: String = MongoConfig.hosts(configPrefix)
+  val parsedUri: Try[MongoConnection.ParsedURI] = MongoConnection.parseURI(hostUris)
+  val conn: Try[MongoConnection] = parsedUri.map(driver.connection)
+
+}
+
+object Connection extends LazyLogging {
+
+  private var connection: Option[Connection] = None
+
+  def get(configPrefix: String = MongoConfigKeys.PREFIX): Connection = synchronized {
+
+    connection.orElse {
+      val mf = new Connection(configPrefix)
+      connection = Some(mf)
+      connection
+    }.getOrElse {
+      val errorMessage = "Something went wrong when getting Connection"
+      logger.error(errorMessage)
+      throw GettingConnectionException(errorMessage)
+    }
+
+  }
+
+
+}
+
+trait DBBase {
+
+  val connection: Connection
+  val failoverStrategy: FailoverStrategy
+
+  def db: Future[DefaultDB]
+
+  def collection(name: String): Future[BSONCollection]
+
+}
+
+class DB(val connection: Connection, val failoverStrategy: FailoverStrategy)
+  extends DBBase
+    with LazyLogging {
+
+  import connection._
+
+  val futureConnection: Future[MongoConnection] = Future.fromTry(conn)
+
+  def db: Future[DefaultDB] = {
+    val _db = for {
+      conn <- futureConnection
+      database <- conn.database("", failoverStrategy) //TODO Add db name
+    } yield {
+      database
+    }
+
+    _db.recover {
+      case e: Exception =>
+        val errorMessage = "Something went wrong when getting Database Connection"
+        logger.error(errorMessage)
+        throw DatabaseConnectionException(e.getMessage)
+    }
+
+  }
+
+
+  def collection(name: String): Future[BSONCollection] = {
+
+    db.map { db =>
+      db.collection[BSONCollection](name)
+    }.recover {
+      case e: Exception =>
+        val errorMessage = "Something went wrong when running Collection"
+        logger.error(errorMessage)
+        throw CollectionException(e.getMessage)
+    }
+
+
+  }
+
+  def this(connection: Connection) = this(connection, FailoverStrategy.default)
+
+}

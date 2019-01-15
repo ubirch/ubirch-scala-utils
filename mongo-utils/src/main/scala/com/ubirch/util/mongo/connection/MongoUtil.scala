@@ -2,17 +2,13 @@ package com.ubirch.util.mongo.connection
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
 import com.ubirch.util.deepCheck.model.DeepCheckResponse
-import com.ubirch.util.mongo.config.{MongoConfig, MongoConfigKeys}
+import com.ubirch.util.mongo.config.MongoConfigKeys
+import reactivemongo.api.DefaultDB
 import reactivemongo.api.collections.bson.BSONCollection
-import reactivemongo.api.{DefaultDB, MongoConnection, MongoDriver}
 import reactivemongo.bson.{BSONDocumentReader, BSONDocumentWriter, document}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{Await, Future}
-import scala.concurrent.duration._
-
-import scala.util.Failure
-
+import scala.concurrent.Future
 import scala.language.postfixOps
 
 /**
@@ -21,10 +17,10 @@ import scala.language.postfixOps
   */
 class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLogging {
 
-  private val driver = MongoDriver()
+  def conn: Connection = Connection.get(configPrefix)
 
+  def dbStub: DB = new DB(conn)
 
-  private var dbconn: Future[DefaultDB] = null
 
   /**
     * Opens a database connection. Don't forget to call #close to free up all resources afterwards.
@@ -33,26 +29,7 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
     *
     * @return database connection
     */
-  def db: Future[DefaultDB] = {
-    if (dbconn != null) {
-      if (dbconn.isInstanceOf[scala.util.Failure[reactivemongo.api.DefaultDB]]) {
-        dbconn = reconectDb
-      }
-    }
-    else
-      dbconn = reconectDb
-    dbconn
-  }
-
-  def reconectDb: Future[DefaultDB] = {
-    val hostUris = MongoConfig.hosts(configPrefix)
-    for {
-      uri <- Future.fromTry(MongoConnection.parseURI(hostUris))
-      dn <- Future(uri.db.getOrElse("noDbName"))
-      con = driver.connection(uri)
-      db <- con.database(dn)
-    } yield db
-  }
+  def db: Future[DefaultDB] = dbStub.db
 
   /**
     * Connects us to a collection.
@@ -60,18 +37,12 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
     * @param name collection names
     * @return collection connection
     */
-  def collection(name: String): Future[BSONCollection] = {
-
-    db.map { db =>
-      db.collection[BSONCollection](name)
-    }
-
-  }
+  def collection(name: String): Future[BSONCollection] = dbStub.collection(name)
 
   /**
     * Close the connection and other related connection related resources.
     */
-  def close(): Unit = driver.close()
+  def close(): Unit = conn.close()
 
   /**
     * Check database connectivity by querying the given collection
@@ -80,6 +51,8 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
     * @tparam T type of resulting objects
     * @return deep check response with _status:OK_ if ok; otherwise with _status:NOK_
     */
+
+  //TODO Validate with new refactoring
   def connectivityCheck[T <: Any](collectionName: String)
                                  (implicit writer: BSONDocumentWriter[T], reader: BSONDocumentReader[T])
   : Future[DeepCheckResponse] = {
@@ -112,25 +85,30 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
     *
     * @return
     */
-  def checkConnection(): Boolean = {
-    try {
-      val dbc = Await.result(db, 2 seconds)
-      if (dbc.connection.active) {
-        val cols = Await.result(dbc.collectionNames, 2 seconds)
-        if (cols.size > 0)
-          true
-        else
-          false
-      }
-      else
-        false
-    }
-    catch {
-      case t: Throwable =>
-        dbconn = null
-        logger.error("no db connection", t)
-        false
-    }
-  }
+
+  //TODO Validate with new refactoring
+  def checkConnection(): Boolean = true
+
+
+//  {
+//    try {
+//      val dbc = Await.result(db, 2 seconds)
+//      if (dbc.connection.active) {
+//        val cols = Await.result(dbc.collectionNames, 2 seconds)
+//        if (cols.size > 0)
+//          true
+//        else
+//          false
+//      }
+//      else
+//        false
+//    }
+//    catch {
+//      case t: Throwable =>
+//        dbconn = null
+//        logger.error("no db connection", t)
+//        false
+//    }
+//  }
 
 }
