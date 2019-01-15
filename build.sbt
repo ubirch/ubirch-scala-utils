@@ -146,7 +146,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.8.4",
+    version := "0.9.0",
     libraryDependencies ++= depMongoTestUtils
   )
 
@@ -155,7 +155,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.8.4",
+    version := "0.9.0",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -310,7 +310,8 @@ lazy val depMongoUtils = Seq(
   ubirchUtilDeepCheckModel,
   akkaSlf4j,
   reactiveMongo,
-  scalaTest % "test"
+  scalaTest % "test",
+  mockito
 ) ++ depSlf4jLogging ++ joda
 
 lazy val depNeo4jConfig = Seq(
@@ -387,6 +388,7 @@ val akkaHttpV = "10.1.3"
 val elasticsearchV = "6.4.0"
 val log4jV = "2.8.2"
 val scalaTestV = "3.0.5"
+val mockitoV = "2.23.4"
 
 // Groups
 val akkaG = "com.typesafe.akka"
@@ -462,7 +464,7 @@ lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.3"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.11"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3.1"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.1"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.8.4"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.9.0"
 lazy val ubirchUtilNeo4jConfig = ubirchUtilGroup %% "neo4j-config" % "0.1.0"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.2"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.5.2"
@@ -471,6 +473,8 @@ lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
 val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "1.0.1"
 
 val ubirchKeyClientRest = "com.ubirch.key" %% "client-rest" % "0.11.1"
+
+val mockito = "org.mockito" % "mockito-core" % mockitoV
 
 
 /*

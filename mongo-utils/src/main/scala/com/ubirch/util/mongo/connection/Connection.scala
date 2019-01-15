@@ -8,7 +8,7 @@ import reactivemongo.api.{DefaultDB, FailoverStrategy, MongoConnection, MongoDri
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scala.util.Try
+import scala.util.{Failure, Success, Try}
 
 trait ConnectionBase {
 
@@ -40,9 +40,19 @@ object Connection extends LazyLogging {
   def get(configPrefix: String = MongoConfigKeys.PREFIX): Connection = synchronized {
 
     connection.orElse {
-      val mf = new Connection(configPrefix)
-      connection = Some(mf)
-      connection
+
+      Try(new Connection(configPrefix)) match {
+        case Success(conn) =>
+
+          connection = Some(conn)
+          connection
+
+        case Failure(e) =>
+          val errorMessage = "Something went wrong when getting Connection"
+          logger.error(errorMessage)
+          throw GettingConnectionException(errorMessage + ": " + e.getMessage)
+      }
+
     }.getOrElse {
       val errorMessage = "Something went wrong when getting Connection"
       logger.error(errorMessage)
