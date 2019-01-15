@@ -12,5 +12,6 @@ object Exceptions {
 
   case class CollectionException(message: String) extends ConnectionException(message)
 
+  case class NoDBNameFoundException(message: String) extends ConnectionException(message)
 
 }

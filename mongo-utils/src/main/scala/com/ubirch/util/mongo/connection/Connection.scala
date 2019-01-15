@@ -63,6 +63,15 @@ trait DBBase {
 
   def collection(name: String): Future[BSONCollection]
 
+  def getNameFromURI: Try[String] = {
+    connection.parsedUri.map { x =>
+      x.db.
+        filter(_.nonEmpty)
+        .getOrElse(throw NoDBNameFoundException("No DB Found in URI."))
+    }
+
+  }
+
 }
 
 class DB(val connection: Connection, val failoverStrategy: FailoverStrategy)
@@ -73,20 +82,32 @@ class DB(val connection: Connection, val failoverStrategy: FailoverStrategy)
 
   val futureConnection: Future[MongoConnection] = Future.fromTry(conn)
 
-  def db: Future[DefaultDB] = {
+  def db(name: String): Future[DefaultDB] = {
     val _db = for {
       conn <- futureConnection
-      database <- conn.database("", failoverStrategy) //TODO Add db name
+      database <- conn.database(name, failoverStrategy)
     } yield {
       database
     }
 
     _db.recover {
       case e: Exception =>
-        val errorMessage = "Something went wrong when getting Database Connection"
+        val errorMessage = "Something went wrong when getting Database Connection (db(name))"
         logger.error(errorMessage)
         throw DatabaseConnectionException(e.getMessage)
     }
+  }
+
+  def db: Future[DefaultDB] = {
+
+    Future.fromTry(getNameFromURI)
+      .flatMap(db)
+      .recover {
+        case e: Exception =>
+          val errorMessage = "Something went wrong when getting Database Connection (db)"
+          logger.error(errorMessage)
+          throw DatabaseConnectionException(e.getMessage)
+      }
 
   }
 
