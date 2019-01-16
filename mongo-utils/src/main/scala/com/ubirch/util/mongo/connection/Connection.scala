@@ -9,6 +9,8 @@ import reactivemongo.api.{DefaultDB, FailoverStrategy, MongoConnection, MongoDri
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
+import scala.concurrent.duration._
+import scala.language.postfixOps
 
 trait ConnectionBase {
 
@@ -21,6 +23,11 @@ trait ConnectionBase {
   def conn: Try[MongoConnection]
 
   def close(): Unit = driver.close()
+
+  def closeLogical(): Unit = { conn.map(_.askClose()(2  seconds)) }
+
+  def connIsActive: Boolean = conn.map(_.active).getOrElse(false)
+
 
 }
 
