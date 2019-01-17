@@ -1,9 +1,7 @@
 package com.ubirch.util.mongo.test
 
 import com.ubirch.util.mongo.connection.MongoUtil
-
-import reactivemongo.api.commands.bson.BSONCountCommand.Count
-import reactivemongo.api.commands.bson.BSONCountCommandImplicits._
+import reactivemongo.api.ReadConcern
 import reactivemongo.bson.BSONDocument
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -17,12 +15,17 @@ class MongoTestUtils(implicit mongo: MongoUtil) {
 
   def countAll(collectionName: String): Future[Int] = {
 
-    val command = Count(BSONDocument())
     for {
       collection <- mongo.collection(collectionName)
-      cmdResult <- collection.runCommand(command)
+      count <- collection.count(
+        Some(BSONDocument()),
+        None,
+        0,
+        None,
+        ReadConcern.Available
+      )
     } yield {
-      cmdResult.value
+      count.toInt
     }
 
   }

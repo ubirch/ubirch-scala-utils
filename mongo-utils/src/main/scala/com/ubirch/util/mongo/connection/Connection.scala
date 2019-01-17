@@ -97,7 +97,7 @@ class DB(val connection: Connection, val failoverStrategy: FailoverStrategy)
 
   import connection._
 
-  val futureConnection: Future[MongoConnection] = Future.fromTry(conn)
+  def futureConnection: Future[MongoConnection] = Future.fromTry(conn)
 
   def db(name: String): Future[DefaultDB] = {
     val _db = for {
@@ -109,7 +109,7 @@ class DB(val connection: Connection, val failoverStrategy: FailoverStrategy)
 
     _db.recover {
       case e: Exception =>
-        val errorMessage = "Something went wrong when getting Database Connection (db(name))"
+        val errorMessage = s"Something went wrong when getting Database Connection (db($name))"
         logger.error(errorMessage)
         throw DatabaseConnectionException(e.getMessage)
     }
@@ -143,6 +143,6 @@ class DB(val connection: Connection, val failoverStrategy: FailoverStrategy)
 
   }
 
-  def this(connection: Connection) = this(connection, FailoverStrategy.default)
+  def this(connection: Connection) = this(connection, FailoverStrategy.remote)
 
 }

@@ -148,7 +148,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
     description := "MongoDB related test utils",
     version := "0.9.0",
     libraryDependencies ++= depMongoTestUtils
-  )
+  ).dependsOn(mongoUtils)
 
 lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(commonSettings)
@@ -432,7 +432,7 @@ val joda = Seq(jodaTime, jodaConvert)
 val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
 val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
 
-lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.15.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
+lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.16.1" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 val neo4jJavaDriver = "org.neo4j.driver" % "neo4j-java-driver" % "1.6.2"
 

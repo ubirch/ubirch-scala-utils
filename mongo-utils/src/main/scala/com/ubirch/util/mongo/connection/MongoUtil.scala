@@ -122,6 +122,12 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
         logger.error("This happened: ", e)
 
         false
+
+      case e =>
+        logger.error("It is taking more than {} to retrieve checks.", atMost.toString())
+        logger.error("This happened: ", e)
+
+        false
     }.getOrElse(false)
 
     checks
