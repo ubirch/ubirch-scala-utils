@@ -62,7 +62,7 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
 
       collection(collectionName)
         .flatMap {
-          _.find(document())
+          _.find(document(), None)
             .one[T]
             .map(_ => DeepCheckResponse())
         }.recover {
