@@ -124,7 +124,7 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
 
       case e =>
 
-        logger.error("Something went wrong when running checks, got this: {} ", e.getMessage)
+        logger.error("Something went wrong when running checks. Got this: {} ", e.getMessage)
 
         false
 
