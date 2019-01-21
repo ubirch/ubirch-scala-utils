@@ -118,13 +118,13 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
     val checks = Try(Await.result(futureChecks, atMost)).recover {
       case e: TimeoutException =>
 
-        logger.error("(1) It is taking more than {} to retrieve checks. Got this error {} ", atMost.toString(), e)
+        logger.error("(1) It is taking more than {} to retrieve checks. Got this error {} ", atMost.toString(), e.getMessage)
 
         false
 
       case e =>
 
-        logger.error("Something went wrong when running checks, got this: ", e)
+        logger.error("Something went wrong when running checks, got this: {} ", e.getMessage)
 
         false
 
