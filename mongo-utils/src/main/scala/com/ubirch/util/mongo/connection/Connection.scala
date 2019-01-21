@@ -55,13 +55,13 @@ object Connection extends LazyLogging {
           connection
 
         case Failure(e) =>
-          val errorMessage = "Something went wrong when getting Connection"
+          val errorMessage = "(1) Something went wrong when getting Connection"
           logger.error(errorMessage)
           throw GettingConnectionException(errorMessage + ": " + e.getMessage)
       }
 
     }.getOrElse {
-      val errorMessage = "Something went wrong when getting Connection"
+      val errorMessage = "(2) Something went wrong when getting Connection"
       logger.error(errorMessage)
       throw GettingConnectionException(errorMessage)
     }
