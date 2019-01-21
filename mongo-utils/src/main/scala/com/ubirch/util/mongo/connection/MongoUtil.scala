@@ -108,6 +108,9 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
       }
 
       checks.recover {
+        case _: NoSuchElementException =>
+          logger.error("Check Predicates are not Satisfied")
+          false
         case e: Exception =>
           logger.error("No DB Connection: {} ", e.getMessage)
           false
