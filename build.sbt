@@ -4,10 +4,16 @@ concurrentRestrictions in Global := Seq(
   Tags.limit(Tags.Test, 1)
 )
 
+
+lazy val scala212 = "2.12.8"
+lazy val scala211 = "2.11.12"
+lazy val supportedScalaVersions = List(scala212, scala211)
+
 val ubirchUtilGroup = "com.ubirch.util"
 val commonSettings = Seq(
 
-  scalaVersion := "2.11.12",
+  //  scalaVersion := "2.11.12",
+  scalaVersion := "2.12.8",
   scalacOptions ++= Seq(
     "-feature"
   ),
@@ -79,6 +85,7 @@ lazy val config = project
     description := "common config related code",
     version := "0.2.3",
     libraryDependencies ++= depConfig
+
   )
 
 lazy val crypto = project
@@ -86,7 +93,8 @@ lazy val crypto = project
   .settings(
     description := "ubirch util with crypto related code",
     version := "0.4.11",
-    libraryDependencies ++= depCrypto
+    libraryDependencies ++= depCrypto,
+    crossScalaVersions := supportedScalaVersions
   )
 
 lazy val date = project
@@ -448,7 +456,7 @@ lazy val log4jApi = log4jG % "log4j-api" % log4jV
 lazy val log4jToSlf4j = "org.apache.logging.log4j" % "log4j-to-slf4j" % "2.7"
 
 lazy val depSlf4jLogging = Seq(
-  scalaLoggingSlf4j,
+  //scalaLoggingSlf4j,
   slf4j,
   logbackClassic
 )
