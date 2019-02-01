@@ -5,15 +5,14 @@ concurrentRestrictions in Global := Seq(
 )
 
 
-lazy val scala212 = "2.12.8"
+lazy val scala212 = "2.12.6"
 lazy val scala211 = "2.11.12"
 lazy val supportedScalaVersions = List(scala212, scala211)
 
 val ubirchUtilGroup = "com.ubirch.util"
 val commonSettings = Seq(
-
-  //  scalaVersion := "2.11.12",
-  scalaVersion := "2.12.8",
+  
+  scalaVersion := scala211,
   scalacOptions ++= Seq(
     "-feature"
   ),
@@ -82,6 +81,12 @@ lazy val camelUtils = (project in file("camel-utils"))
 lazy val config = project
   .settings(commonSettings)
   .settings(
+    scalaVersion := scala212,
+    crossScalaVersions := Seq(scala212, scala211),
+    scalacOptions in (Compile, doc) += "-Ymacro-no-expand"
+
+  )
+  .settings(
     description := "common config related code",
     version := "0.2.3",
     libraryDependencies ++= depConfig
@@ -91,11 +96,17 @@ lazy val config = project
 lazy val crypto = project
   .settings(commonSettings)
   .settings(
+    scalaVersion := scala212,
+    crossScalaVersions := Seq(scala212, scala211),
+    scalacOptions in (Compile, doc) += "-Ymacro-no-expand",
+      sources in (Compile, doc) := Seq()
+
+
+  )
+  .settings(
     description := "ubirch util with crypto related code",
     version := "0.4.11",
-    libraryDependencies ++= depCrypto,
-    crossScalaVersions := supportedScalaVersions
-  )
+    libraryDependencies ++= depCrypto).dependsOn(config)
 
 lazy val date = project
   .settings(commonSettings)
@@ -277,7 +288,7 @@ lazy val depCrypto = Seq(
   scalaTest % "test",
   jodaTime % "test",
   jodaConvert % "test"
-) ++ depSlf4jLogging
+) ++ depLogging
 
 lazy val depDate = Seq(
   scalaTest % "test"
@@ -449,14 +460,21 @@ lazy val akkaHttpCors = "ch.megard" %% "akka-http-cors" % "0.3.0"
 
 lazy val scalaUuid = "io.jvm.uuid" %% "scala-uuid" % "0.2.3"
 
+lazy val scalaLogging =  "com.typesafe.scala-logging" %% "scala-logging" % "3.9.0"
 lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.7"
 lazy val log4jApi = log4jG % "log4j-api" % log4jV
 lazy val log4jToSlf4j = "org.apache.logging.log4j" % "log4j-to-slf4j" % "2.7"
 
+lazy val depLogging = Seq(
+  scalaLogging,
+  slf4j,
+  logbackClassic
+)
+
 lazy val depSlf4jLogging = Seq(
-  //scalaLoggingSlf4j,
+  scalaLoggingSlf4j,
   slf4j,
   logbackClassic
 )
