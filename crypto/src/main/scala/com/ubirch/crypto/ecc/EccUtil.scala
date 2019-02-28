@@ -1,11 +1,12 @@
 package com.ubirch.crypto.ecc
 
 import java.security._
+import java.security.spec.X509EncodedKeySpec
 import java.util.Base64
 
 import com.ubirch.crypto.codec.CodecUtil
 import com.ubirch.crypto.hash.HashUtil
-import net.i2p.crypto.eddsa.spec.{EdDSANamedCurveTable, EdDSAParameterSpec, EdDSAPrivateKeySpec, EdDSAPublicKeySpec}
+import net.i2p.crypto.eddsa.spec._
 import net.i2p.crypto.eddsa.{EdDSAEngine, EdDSAPrivateKey, EdDSAPublicKey, KeyPairGenerator}
 import org.apache.commons.codec.binary.Hex
 
@@ -16,7 +17,7 @@ object EccUtil {
 
   final private lazy val DEFAULTHASHALGORITHM = "SHA-512"
 
-  final private lazy val DEFAULTECCCURVE = EdDSANamedCurveTable.CURVE_ED25519_SHA512
+  final private lazy val DEFAULTECCCURVE = EdDSANamedCurveTable.ED_25519
 
   final private lazy val EDDSASPEC: EdDSAParameterSpec = EdDSANamedCurveTable.getByName(DEFAULTECCCURVE)
 
@@ -199,14 +200,9 @@ object EccUtil {
   }
 
   def decodePublicKey(publicKey: Array[Byte]): EdDSAPublicKey = {
-    //    val spec: EdDSAParameterSpec = EdDSANamedCurveTable.getByName("ed25519-sha-512")
-
-    val pubKeyBytes: Array[Byte] = publicKey.length match {
-      case 32 => publicKey
-      case _ => EdDSAPublicKey.decode(publicKey)
-    }
-    val pubKey: EdDSAPublicKeySpec = new EdDSAPublicKeySpec(pubKeyBytes, EDDSASPEC)
-    new EdDSAPublicKey(pubKey)
+    //val spec: EdDSAParameterSpec = EdDSANamedCurveTable.ED_25519_CURVE_SPEC
+    val encoded = new X509EncodedKeySpec(publicKey)
+    new EdDSAPublicKey(encoded)
   }
 
   /**
@@ -235,13 +231,10 @@ object EccUtil {
   }
 
   def decodePrivateKey(privateKey: Array[Byte]): EdDSAPrivateKey = {
-    val privKeyBytes: Array[Byte] = privateKey.length match {
-      case 32 => privateKey
-      case 64 => privateKey.take(32)
-      case _ => EdDSAPrivateKey.decode(privateKey)
-    }
-    val pubKey: EdDSAPrivateKeySpec = new EdDSAPrivateKeySpec(privKeyBytes, EDDSASPEC)
-    new EdDSAPrivateKey(pubKey)
+    val spec: EdDSANamedCurveSpec = EdDSANamedCurveTable.getByName(EdDSANamedCurveTable.ED_25519)
+    val digest: MessageDigest = MessageDigest.getInstance("SHA-512")
+    val signEngine = new EdDSAEngine(digest)
+    new EdDSAPrivateKey(new EdDSAPrivateKeySpec(privateKey, spec))
   }
 
 }

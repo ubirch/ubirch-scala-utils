@@ -1,12 +1,11 @@
 package com.ubirch.crypto.crypto
 
-import java.security.SecureRandom
 import java.util.Base64
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
 import com.ubirch.crypto.encrypt.AES
-import org.scalatest.{FeatureSpec, Matchers}
 import org.apache.commons.codec.binary.Hex
+import org.scalatest.{FeatureSpec, Matchers}
 
 class AesUtilsSpec extends FeatureSpec
   with StrictLogging

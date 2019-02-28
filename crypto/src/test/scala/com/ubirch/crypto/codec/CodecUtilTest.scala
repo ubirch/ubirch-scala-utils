@@ -5,7 +5,6 @@ import java.util.Base64
 import com.typesafe.scalalogging.slf4j.StrictLogging
 import org.apache.commons.codec.binary.Hex
 import org.scalatest.{FeatureSpec, Matchers}
-import sun.misc.BASE64Encoder
 
 class CodecUtilTest extends FeatureSpec
   with StrictLogging

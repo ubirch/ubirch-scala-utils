@@ -60,7 +60,7 @@ lazy val lockUtil = (project in file("lock-util"))
   .settings(
     name := "lock-util",
     description := "Simple Redis based locking utils",
-    version := "0.2.2",
+    version := "0.3.0",
     libraryDependencies ++= depLockUtil
   )
 
@@ -266,6 +266,7 @@ lazy val depCrypto = Seq(
   roundeightsHasher,
   apacheCommonsCodec,
   ubirchUtilConfig,
+  eddsa,
   scalaTest % "test",
   jodaTime % "test",
   jodaConvert % "test"
@@ -476,6 +477,8 @@ val ubirchKeyClientRest = "com.ubirch.key" %% "client-rest" % "0.11.1"
 
 val mockito = "org.mockito" % "mockito-core" % mockitoV
 
+// https://mvnrepository.com/artifact/net.i2p.crypto/eddsa
+val eddsa = "net.i2p.crypto" % "eddsa" % "0.3.0"
 
 /*
  * RESOLVER
