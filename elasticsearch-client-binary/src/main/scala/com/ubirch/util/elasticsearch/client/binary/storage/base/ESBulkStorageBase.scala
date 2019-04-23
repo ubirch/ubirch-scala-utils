@@ -37,7 +37,7 @@ trait ESBulkStorageBase extends StrictLogging {
 
     @Override
     def beforeBulk(executionId: Long, request: BulkRequest): Unit = {
-      logger.debug("beforeBulk")
+      logger.debug(s"beforeBulk")
     }
 
     @Override
@@ -47,7 +47,11 @@ trait ESBulkStorageBase extends StrictLogging {
 
     @Override
     def afterBulk(executionId: Long, request: BulkRequest, failure: Throwable): Unit = {
-      logger.error("afterBulk", failure)
+      val desc = request.getDescription
+      val bytes = request.estimatedSizeInBytes()
+      val payloads = request.payloads().size()
+      val routing = request.routing()
+      logger.error(s"afterBulk wit error (desc: $desc / bytes: $bytes / num payloads: $payloads / routing: $routing)", failure)
     }
   }
   )

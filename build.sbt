@@ -111,7 +111,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "3.0.1",
+    version := "3.3.0",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -123,7 +123,7 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
-    version := "3.0.1",
+    version := "3.3.0",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -283,7 +283,9 @@ lazy val depDeepCheckModel = Seq(
 
 lazy val depElasticsearchClientBinary = Seq(
   elasticSearch,
+  elasticSearchTransport,
   elasticsearchXPack,
+  luceneCore,
   ubirchUtilConfig,
   ubirchUtilDeepCheckModel,
   ubirchUtilJson,
@@ -293,6 +295,9 @@ lazy val depElasticsearchClientBinary = Seq(
 
 lazy val depElasticsearchUtil = Seq(
   elasticSearch,
+  elasticSearchTransport,
+  elasticsearchXPack,
+  luceneCore,
   scalaLoggingSlf4j
 )
 
@@ -386,7 +391,7 @@ lazy val depUuid = Seq(
 val json4sV = "3.6.0"
 val akkaV = "2.5.11"
 val akkaHttpV = "10.1.3"
-val elasticsearchV = "6.4.0"
+val elasticsearchV = "6.7.1"
 val log4jV = "2.8.2"
 val scalaTestV = "3.0.5"
 val mockitoV = "2.23.4"
@@ -431,7 +436,9 @@ val jodaConvert = "org.joda" % "joda-convert" % "2.1.1"
 val joda = Seq(jodaTime, jodaConvert)
 
 val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
+val elasticSearchTransport = "org.elasticsearch.client" % "transport" % elasticsearchV
 val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
+val luceneCore = "org.apache.lucene" % "lucene-core" % "7.7.1"
 
 lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.16.1" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
