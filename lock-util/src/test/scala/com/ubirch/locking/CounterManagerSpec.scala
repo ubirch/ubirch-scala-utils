@@ -70,7 +70,6 @@ class CounterManagerSpec extends FeatureSpec
       }
     }
 
-
     scenario("inc/get/dec counters 2") {
       val counterNames = List(
         s"myLock-${UUIDUtil.uuidStr}",
