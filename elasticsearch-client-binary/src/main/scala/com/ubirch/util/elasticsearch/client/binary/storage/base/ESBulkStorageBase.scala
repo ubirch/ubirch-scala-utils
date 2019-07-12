@@ -37,7 +37,7 @@ trait ESBulkStorageBase extends StrictLogging {
 
     @Override
     def beforeBulk(executionId: Long, request: BulkRequest): Unit = {
-      logger.debug(s"beforeBulk($executionId, #${request.numberOfActions()})")
+      logger.debug(s"beforeBulk($executionId, #${request.numberOfActions()}, ${request.estimatedSizeInBytes()})")
     }
 
     @Override
