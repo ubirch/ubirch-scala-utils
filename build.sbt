@@ -4,7 +4,18 @@ concurrentRestrictions in Global := Seq(
   Tags.limit(Tags.Test, 1)
 )
 
+
+/*
+ * RESOLVER
+ ********************************************************/
+
+val sonatypeReleases = Resolver.sonatypeRepo("releases")
+val sonatypeSnapshots = Resolver.sonatypeRepo("snapshots")
+val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
+val resolverElasticsearch = "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
+
 val ubirchUtilGroup = "com.ubirch.util"
+
 val commonSettings = Seq(
 
   scalaVersion := "2.11.12",
@@ -182,7 +193,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.8.3",
+    version := "0.8.4",
     libraryDependencies ++= depOidcUtils
   )
 
@@ -328,7 +339,7 @@ lazy val depOidcUtils = Seq(
   akkaHttp,
   akkaStream,
   json4sNative,
-  ubirchKeyClientRest,
+  ubirchKeyClientRestCache,
   ubirchUserRest,
   ubirchUtilCrypto,
   ubirchUtilJson,
@@ -389,10 +400,12 @@ val elasticsearchV = "6.4.0"
 val log4jV = "2.8.2"
 val scalaTestV = "3.0.5"
 val mockitoV = "2.23.4"
+val ubirchKeyV = "0.11.2"
 
 // Groups
 val akkaG = "com.typesafe.akka"
 val log4jG = "org.apache.logging.log4j"
+lazy val ubirchKeyG = "com.ubirch.key"
 
 lazy val json4sBase = Seq(
   json4sCore,
@@ -472,16 +485,9 @@ lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
 
 val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "1.0.1"
 
-val ubirchKeyClientRest = "com.ubirch.key" %% "client-rest" % "0.11.1"
+
+val ubirchKeyClientRestCache = ubirchKeyG %% "client-rest-cache-redis" % ubirchKeyV
+
 
 val mockito = "org.mockito" % "mockito-core" % mockitoV
 
-
-/*
- * RESOLVER
- ********************************************************/
-
-val sonatypeReleases = Resolver.sonatypeRepo("releases")
-val sonatypeSnapshots = Resolver.sonatypeRepo("snapshots")
-val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
-val resolverElasticsearch = "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
