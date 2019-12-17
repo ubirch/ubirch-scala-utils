@@ -111,7 +111,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "3.3.0",
+    version := "3.3.1",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -146,7 +146,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.9.1",
+    version := "0.9.2",
     libraryDependencies ++= depMongoTestUtils
   ).dependsOn(mongoUtils)
 
@@ -155,7 +155,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.9.1",
+    version := "0.9.2",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -440,7 +440,7 @@ val elasticSearchTransport = "org.elasticsearch.client" % "transport" % elastics
 val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
 val luceneCore = "org.apache.lucene" % "lucene-core" % "7.7.1"
 
-lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.16.1" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
+lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.17.1" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 val neo4jJavaDriver = "org.neo4j.driver" % "neo4j-java-driver" % "1.6.2"
 
@@ -472,7 +472,7 @@ lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.3"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.4.11"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3.1"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.1"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.9.1"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.9.2"
 lazy val ubirchUtilNeo4jConfig = ubirchUtilGroup %% "neo4j-config" % "0.1.0"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.2"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.5.2"

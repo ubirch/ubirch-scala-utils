@@ -1,4 +1,4 @@
 #!/bin/bash
 
-#sbt elasticsearchUtil/clean elasticsearchUtil/compile elasticsearchUtil/publishSigned sonatypeRelease
+sbt elasticsearchUtil/clean elasticsearchUtil/compile elasticsearchUtil/publishSigned sonatypeRelease
 sbt elasticsearchClientBinary/clean elasticsearchClientBinary/compile elasticsearchClientBinary/publishSigned sonatypeRelease
