@@ -125,7 +125,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
             case Some(user) if user.id.isDefined && user.activeUser =>
 
               //Todo: Use checkSignature return value as validationResult
-              checkSignature(extUserId, token, signature, tsStr)
+              checkSignature(extUserId, token, signature, tsStr, ubToken)
               val validationResult = true
 
               if (skipSignatureChecking || validationResult) {
@@ -171,7 +171,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
     * @param tsStr     the timestamp that can be used to check the expiration of the auth token.
     * @return validation success
     */
-  private def checkSignature(extUserId: String, token: String, signature: String, tsStr: Option[String]): Future[Boolean] = {
+  private def checkSignature(extUserId: String, token: String, signature: String, tsStr: Option[String], ubToken: String): Future[Boolean] = {
 
     KeyServiceClientRestCacheRedis.currentlyValidPubKeysCached(extUserId)
       .map {
@@ -179,24 +179,39 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
         case Some(pubKeys) =>
           logger.debug(s"received number of pubKeys ${pubKeys.size}")
 
-          val valid: Set[Boolean] = pubKeys.map { pubkey: PublicKey =>
-            EccUtil.validateSignature(pubkey.pubKeyInfo.pubKey, signature, token.getBytes())
-          }
+          val valid = validateSignature(pubKeys, signature, token.getBytes())
 
           if (valid.contains(true)) {
             logger.debug(s"successfully validated signature of auth token for user $extUserId")
             validateAuthTokenTimeLimit(tsStr)
           } else {
-            logger.error(s"failed validating signature of auth token for user $extUserId")
+            if (pubKeys.isEmpty)
+              logger.warn(s"no public key was found for auth token: $ubToken")
+            else
+              logger.warn(s"failed validating signature of auth token: with token $ubToken")
             false
           }
 
         case None =>
-          logger.error(s"no public key was found for auth token")
+          logger.error(s"something went wrong retrieving public key for auth token: $ubToken")
           false
       }
   }
 
+
+  /**
+    * Method to encapsulate validation call with error handling.
+    */
+  private def validateSignature(pubKeys: Set[PublicKey], signature: String, payload: Array[Byte]) = {
+    try {
+      pubKeys.map { pubkey: PublicKey =>
+        EccUtil.validateSignature(pubkey.pubKeyInfo.pubKey, signature, payload)
+      }
+    } catch {
+      case ex: Throwable => logger.error("something went wrong validating the signature of a userInput: ", ex)
+        Set(false)
+    }
+  }
 
   /**
     * This method parses the timestamp string and checks if the timestamp used in the
