@@ -12,7 +12,7 @@ import org.apache.commons.codec.binary.Hex
 /**
   * Created by derMicha on 19/05/17.
   */
-object EccUtil {
+class EccUtil {
 
   final private lazy val DEFAULTHASHALGORITHM = "SHA-512"
 
@@ -27,10 +27,7 @@ object EccUtil {
   final private val edDsaEng: EdDSAEngine = new EdDSAEngine(MessageDigest.getInstance(DEFAULTHASHALGORITHM))
 
   /**
-    *
     * @param publicKey Base64 encoded ECC public key
-    * @param signature
-    * @param payload
     */
   def validateSignature(publicKey: String, signature: String, payload: String): Boolean = {
     validateSignature(publicKey, signature, payload.getBytes)
@@ -52,12 +49,7 @@ object EccUtil {
 
     edDsaEng.initVerify(edsaPubKey)
     edDsaEng.update(payload)
-    edDsaEng.verify(signatureBytes) match {
-      case true =>
-        true
-      case _ =>
-        false
-    }
+    edDsaEng.verify(signatureBytes)
   }
 
   /**
