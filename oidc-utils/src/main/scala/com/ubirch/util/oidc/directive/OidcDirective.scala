@@ -40,6 +40,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
   private val skipEnvChecking = OidcUtilsConfig.skipEnvChecking()
   private val skipSignatureChecking = OidcUtilsConfig.skipSignatureChecking()
   private val maxTokenAge = OidcUtilsConfig.maxTokenAge()
+  private val eccUtil = new EccUtil()
 
   val bearerToken: Directive1[Option[String]] = optionalHeaderValueByType(classOf[Authorization]).map(extractBearerToken)
 
@@ -205,7 +206,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
   private def validateSignature(pubKeys: Set[PublicKey], signature: String, payload: Array[Byte]) = {
     try {
       pubKeys.map { pubkey: PublicKey =>
-        EccUtil.validateSignature(pubkey.pubKeyInfo.pubKey, signature, payload)
+        eccUtil.validateSignature(pubkey.pubKeyInfo.pubKey, signature, payload)
       }
     } catch {
       case ex: Throwable => logger.error("something went wrong validating the signature of a userInput: ", ex)
