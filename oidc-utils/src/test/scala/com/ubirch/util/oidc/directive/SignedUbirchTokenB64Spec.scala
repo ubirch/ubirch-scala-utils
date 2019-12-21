@@ -17,13 +17,14 @@ class SignedUbirchTokenB64Spec extends FeatureSpec
   feature("basic test") {
 
     scenario("simple check token 0") {
-      val (pubKeyB64, privKeyB64) = EccUtil.generateEccKeyPairEncoded
+      val eccUtil = new EccUtil()
+      val (pubKeyB64, privKeyB64) = eccUtil.generateEccKeyPairEncoded
 
       val euid = "f570898ab0ebcd7011a48c1ea4921e5e7827662b440ccd8cd0972ebd586b544ffef2f7f4fdd4cde49874d0b7f6b7348771a9eae2fd54af47c13dc7ee258234dd"
       val eid = "trackle-demo"
       val ts = "1532541202109"
       val payload = s"$euid##$ts"
-      val signature = EccUtil.signPayload(privKeyB64, payload)
+      val signature = eccUtil.signPayload(privKeyB64, payload)
 
       val aToken = s"$eid::$payload::$signature"
 
@@ -51,7 +52,7 @@ class SignedUbirchTokenB64Spec extends FeatureSpec
 
       val tsDT = new DateTime(timestampLong * 1000l, DateTimeZone.UTC)
 
-      EccUtil.validateSignature(pubKeyB64, signatureB64, payload) shouldBe true
+      eccUtil.validateSignature(pubKeyB64, signatureB64, payload) shouldBe true
 
     }
 

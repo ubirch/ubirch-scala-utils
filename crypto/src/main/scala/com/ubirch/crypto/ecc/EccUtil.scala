@@ -6,7 +6,7 @@ import java.util.Base64
 
 import com.ubirch.crypto.codec.CodecUtil
 import com.ubirch.crypto.hash.HashUtil
-import net.i2p.crypto.eddsa.spec._
+import net.i2p.crypto.eddsa.spec.{EdDSANamedCurveTable, EdDSAParameterSpec, EdDSAPrivateKeySpec, EdDSAPublicKeySpec}
 import net.i2p.crypto.eddsa.{EdDSAEngine, EdDSAPrivateKey, EdDSAPublicKey, KeyPairGenerator}
 import org.apache.commons.codec.binary.Hex
 
@@ -16,13 +16,11 @@ import org.apache.commons.codec.binary.Hex
 class EccUtil {
 
   final private lazy val DEFAULTHASHALGORITHM = "SHA-512"
-
   final private lazy val DEFAULTECCCURVE = EdDSANamedCurveTable.ED_25519
-
   final private lazy val EDDSASPEC: EdDSAParameterSpec = EdDSANamedCurveTable.getByName(DEFAULTECCCURVE)
+  final private lazy val DEFAULTDIGEST: MessageDigest = MessageDigest.getInstance(DEFAULTHASHALGORITHM)
 
   final val encHex = "hex"
-
   final val encB64 = "b64"
 
   final private val edDsaEng: EdDSAEngine = new EdDSAEngine(MessageDigest.getInstance(DEFAULTHASHALGORITHM))
@@ -50,7 +48,12 @@ class EccUtil {
 
     edDsaEng.initVerify(edsaPubKey)
     edDsaEng.update(payload)
-    edDsaEng.verify(signatureBytes)
+    edDsaEng.verify(signatureBytes) match {
+      case true =>
+        true
+      case _ =>
+        false
+    }
   }
 
   /**
@@ -139,10 +142,9 @@ class EccUtil {
   }
 
   def generateEccKeyPair: (PublicKey, PrivateKey) = {
-    val spec: EdDSAParameterSpec = EdDSANamedCurveTable.getByName(DEFAULTECCCURVE)
     val kpg: KeyPairGenerator = new KeyPairGenerator
 
-    kpg.initialize(spec, new SecureRandom(java.util.UUID.randomUUID.toString.getBytes))
+    kpg.initialize(EDDSASPEC, new SecureRandom(java.util.UUID.randomUUID.toString.getBytes))
 
     val kp: KeyPair = kpg.generateKeyPair
 
@@ -181,7 +183,6 @@ class EccUtil {
     * @return EdDSA PublicKey
     */
   def decodePublicKey(publicKey: String): EdDSAPublicKey = {
-    //    val spec: EdDSAParameterSpec = EdDSANamedCurveTable.getByName("ed25519-sha-512")
 
     CodecUtil.multiDecoder(publicKey) match {
       case Some(decoded) =>
@@ -192,8 +193,9 @@ class EccUtil {
   }
 
   def decodePublicKey(publicKey: Array[Byte]): EdDSAPublicKey = {
-    //val spec: EdDSAParameterSpec = EdDSANamedCurveTable.ED_25519_CURVE_SPEC
-    val encoded = new X509EncodedKeySpec(publicKey)
+
+    //val encoded = new X509EncodedKeySpec(publicKey)
+    val encoded = new EdDSAPublicKeySpec(publicKey, EDDSASPEC)
     new EdDSAPublicKey(encoded)
   }
 
@@ -223,10 +225,8 @@ class EccUtil {
   }
 
   def decodePrivateKey(privateKey: Array[Byte]): EdDSAPrivateKey = {
-    val spec: EdDSANamedCurveSpec = EdDSANamedCurveTable.getByName(EdDSANamedCurveTable.ED_25519)
-    val digest: MessageDigest = MessageDigest.getInstance("SHA-512")
-    val signEngine = new EdDSAEngine(digest)
-    new EdDSAPrivateKey(new EdDSAPrivateKeySpec(privateKey, spec))
+    val encoded = new EdDSAPrivateKeySpec(privateKey, EDDSASPEC)
+    new EdDSAPrivateKey(encoded)
   }
 
 }
