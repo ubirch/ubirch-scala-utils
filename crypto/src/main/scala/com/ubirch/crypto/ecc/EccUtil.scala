@@ -16,9 +16,7 @@ import org.apache.commons.codec.binary.Hex
 class EccUtil {
 
   final private lazy val DEFAULTHASHALGORITHM = "SHA-512"
-  final private lazy val DEFAULTECCCURVE = EdDSANamedCurveTable.ED_25519
-  final private lazy val EDDSASPEC: EdDSAParameterSpec = EdDSANamedCurveTable.getByName(DEFAULTECCCURVE)
-  final private lazy val DEFAULTDIGEST: MessageDigest = MessageDigest.getInstance(DEFAULTHASHALGORITHM)
+  final private lazy val EDDSASPEC: EdDSAParameterSpec = EdDSANamedCurveTable.ED_25519_CURVE_SPEC
 
   final val encHex = "hex"
   final val encB64 = "b64"
@@ -193,8 +191,6 @@ class EccUtil {
   }
 
   def decodePublicKey(publicKey: Array[Byte]): EdDSAPublicKey = {
-
-    //val encoded = new X509EncodedKeySpec(publicKey)
     val encoded = new EdDSAPublicKeySpec(publicKey, EDDSASPEC)
     new EdDSAPublicKey(encoded)
   }
