@@ -60,7 +60,7 @@ class UbirchTokenUtilSpec extends FeatureSpec with Matchers {
 
       // prepare
       val context = "ubirch-local"
-      val (_, privateKey) = EccUtil.generateEccKeyPairEncoded
+      val (_, privateKey) = new EccUtil().generateEccKeyPairEncoded
       val email = "test@ubirch.com"
 
       // test
