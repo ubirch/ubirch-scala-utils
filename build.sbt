@@ -202,7 +202,7 @@ lazy val redisTestUtil = (project in file("redis-test-util"))
   .settings(
     name := "redis-test-util",
     description := "Redis related test utils",
-    version := "0.5.2",
+    version := "0.6.0",
     libraryDependencies ++= depRedisTestUtils
   )
 
@@ -211,7 +211,7 @@ lazy val redisUtil = (project in file("redis-util"))
   .settings(
     name := "redis-util",
     description := "Redis related utils",
-    version := "0.5.2",
+    version := "0.6.0",
     libraryDependencies ++= depRedisUtil
   )
 
@@ -478,7 +478,7 @@ lazy val depLog4jToSlf4j = Seq(
   log4jToSlf4j
 )
 
-lazy val redisson = "org.redisson" % "redisson" % "3.7.5"
+lazy val redisson = "org.redisson" % "redisson" % "3.12.0"
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.3"
@@ -488,7 +488,7 @@ lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.1"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.9.2"
 lazy val ubirchUtilNeo4jConfig = ubirchUtilGroup %% "neo4j-config" % "0.1.0"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.2"
-lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.5.2"
+lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.6.0"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
 
 val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "1.0.1"
