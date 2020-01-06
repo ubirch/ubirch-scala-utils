@@ -10,6 +10,7 @@ class EccUtilSpec
   extends FeatureSpec
     with StrictLogging
     with Matchers {
+  private val eccUtil = new EccUtil()
 
   private val eccUtil = new EccUtil()
 

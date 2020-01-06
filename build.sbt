@@ -96,7 +96,7 @@ lazy val crypto = project
   .settings(commonSettings)
   .settings(
     description := "ubirch util with crypto related code",
-    version := "0.5.1",
+    version := "0.5.2",
     libraryDependencies ++= depCrypto
   )
 
@@ -193,7 +193,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.8.6",
+    version := "0.8.7",
     libraryDependencies ++= depOidcUtils
   )
 
@@ -482,7 +482,7 @@ lazy val redisson = "org.redisson" % "redisson" % "3.12.0"
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.3"
-lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.5.1"
+lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.5.2"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3.1"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.1"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.9.2"
