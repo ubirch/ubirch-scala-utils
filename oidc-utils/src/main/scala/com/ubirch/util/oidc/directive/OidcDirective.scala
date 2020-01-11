@@ -11,6 +11,7 @@ import com.ubirch.crypto.ecc.EccUtil
 import com.ubirch.key.model.rest.PublicKey
 import com.ubirch.keyservice.client.rest.cache.redis.KeyServiceClientRestCacheRedis
 import com.ubirch.user.client.rest.UserServiceClientRest
+import com.ubirch.user.model.rest.User
 import com.ubirch.util.config.ConfigBase
 import com.ubirch.util.json.{Json4sUtil, JsonFormats}
 import com.ubirch.util.oidc.config.OidcUtilsConfig
@@ -121,34 +122,17 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
             None
           val signature = split(2)
 
-          UserServiceClientRest.userGET(providerId = UbirchTokenUtil.providerId, externalUserId = extUserId).map {
+          UserServiceClientRest.userGET(providerId = UbirchTokenUtil.providerId, externalUserId = extUserId).flatMap {
 
             case Some(user) if user.id.isDefined && user.activeUser =>
 
-              //Todo: Use checkSignature return value as validationResult
+              //Todo: Handle skipSignatureChecking (config) or result of checkSignature properly
               checkSignature(extUserId, token, signature, tsStr, ubToken)
-              val validationResult = true
-
-              if (skipSignatureChecking || validationResult) {
-
-                val uc = UserContext(
-                  context = context,
-                  providerId = UbirchTokenUtil.providerId,
-                  externalUserId = extUserId,
-                  userName = user.displayName,
-                  locale = user.locale
-                )
-
-                redis.append[String](hashedRedisKey(ubToken), Json4sUtil.any2String(uc).get)
-                uc
-              } else {
-                logger.error(s"Unable to log in with provided token, signature is invalid: >>$ubToken<<")
-                throw new VerificationException()
-              }
+                .map(createUserContext(context, extUserId, user, _, ubToken, redis))
 
             case _ =>
               logger.error(s"ubToken contains invalid userId: $extUserId")
-              throw new VerificationException()
+              Future.successful(throw new VerificationException())
           }
         } else {
           logger.error(s"invalid ubToken: >>$ubToken<<")
@@ -163,6 +147,20 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
     }
   }
 
+  private def createUserContext(context: String, extUserId: String, user: User, hasKey: Int, ubToken: String, redis: RedisClient) = {
+    val uc = UserContext(
+      context = context,
+      providerId = UbirchTokenUtil.providerId,
+      externalUserId = extUserId,
+      userId = user.id.get.toString,
+      userName = user.displayName,
+      locale = user.locale,
+      hasPubKey = hasKey
+    )
+    redis.append[String](hashedRedisKey(ubToken), Json4sUtil.any2String(uc).get)
+    uc
+  }
+
   /**
     * This method validates the signature added to the authentication token.
     *
@@ -172,7 +170,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
     * @param tsStr     the timestamp that can be used to check the expiration of the auth token.
     * @return validation success
     */
-  private def checkSignature(extUserId: String, token: String, signature: String, tsStr: Option[String], ubToken: String): Future[Boolean] = {
+  private def checkSignature(extUserId: String, token: String, signature: String, tsStr: Option[String], ubToken: String): Future[Int] = {
 
     KeyServiceClientRestCacheRedis.currentlyValidPubKeysCached(extUserId)
       .map {
@@ -185,17 +183,20 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
           if (valid.contains(true)) {
             logger.debug(s"successfully validated signature of auth token for user $extUserId")
             validateAuthTokenTimeLimit(tsStr)
+            1
           } else {
-            if (pubKeys.isEmpty)
+            if (pubKeys.isEmpty) {
               logger.warn(s"no public key was found for auth token: $ubToken")
-            else
+              0
+            } else {
               logger.warn(s"failed validating signature of auth token: with token $ubToken")
-            false
+              -1
+            }
           }
 
         case None =>
           logger.error(s"something went wrong retrieving public key for auth token: $ubToken")
-          false
+          -2
       }
   }
 
