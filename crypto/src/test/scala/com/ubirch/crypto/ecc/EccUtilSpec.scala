@@ -12,6 +12,8 @@ class EccUtilSpec
     with Matchers {
   private val eccUtil = new EccUtil()
 
+  private val eccUtil = new EccUtil()
+
   private val emptyPayload = ""
   private val payload = "Hello World!"
   private val binPayload = payload.getBytes

@@ -55,13 +55,13 @@ object Connection extends LazyLogging {
           connection
 
         case Failure(e) =>
-          val errorMessage = "Something went wrong when getting Connection"
+          val errorMessage = "(1) Something went wrong when getting Connection: " + e.getMessage
           logger.error(errorMessage)
-          throw GettingConnectionException(errorMessage + ": " + e.getMessage)
+          throw GettingConnectionException(errorMessage)
       }
 
     }.getOrElse {
-      val errorMessage = "Something went wrong when getting Connection"
+      val errorMessage = "(2) Something went wrong when getting Connection."
       logger.error(errorMessage)
       throw GettingConnectionException(errorMessage)
     }
@@ -109,8 +109,8 @@ class DB(val connection: Connection, val failoverStrategy: FailoverStrategy)
 
     _db.recover {
       case e: Exception =>
-        val errorMessage = s"Something went wrong when getting Database Connection (db($name))"
-        logger.error(errorMessage)
+        val errorMessage = s"Something went wrong when getting Database Connection (db($name)) {}"
+        logger.error(errorMessage, e.getMessage)
         throw DatabaseConnectionException(e.getMessage)
     }
   }
@@ -121,8 +121,8 @@ class DB(val connection: Connection, val failoverStrategy: FailoverStrategy)
       .flatMap(db)
       .recover {
         case e: Exception =>
-          val errorMessage = "Something went wrong when getting Database Connection (db)"
-          logger.error(errorMessage)
+          val errorMessage = "Something went wrong when getting Database Connection (db) {}"
+          logger.error(errorMessage, e.getMessage)
           throw DatabaseConnectionException(e.getMessage)
       }
 
@@ -135,8 +135,8 @@ class DB(val connection: Connection, val failoverStrategy: FailoverStrategy)
       db.collection[BSONCollection](name)
     }.recover {
       case e: Exception =>
-        val errorMessage = "Something went wrong when running Collection"
-        logger.error(errorMessage)
+        val errorMessage = "Something went wrong when running Collection. Got this: {}"
+        logger.error(errorMessage, e.getMessage)
         throw CollectionException(e.getMessage)
     }
 

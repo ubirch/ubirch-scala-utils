@@ -71,7 +71,7 @@ lazy val lockUtil = (project in file("lock-util"))
   .settings(
     name := "lock-util",
     description := "Simple Redis based locking utils",
-    version := "0.2.2",
+    version := "0.3.0",
     libraryDependencies ++= depLockUtil
   )
 
@@ -122,7 +122,7 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
   .settings(
     name := "elasticsearch-client-binary",
     description := "Elasticsearch client using the binary TransportClient",
-    version := "3.0.1",
+    version := "3.3.1",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -134,7 +134,7 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(
     name := "elasticsearch-util",
     description := "Elasticsearch related utils",
-    version := "3.0.1",
+    version := "3.3.0",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -157,7 +157,7 @@ lazy val mongoTestUtils = (project in file("mongo-test-utils"))
   .settings(
     name := "mongo-test-utils",
     description := "MongoDB related test utils",
-    version := "0.9.0",
+    version := "0.9.2",
     libraryDependencies ++= depMongoTestUtils
   ).dependsOn(mongoUtils)
 
@@ -166,7 +166,7 @@ lazy val mongoUtils = (project in file("mongo-utils"))
   .settings(
     name := "mongo-utils",
     description := "MongoDB related utils",
-    version := "0.9.0",
+    version := "0.9.2",
     libraryDependencies ++= depMongoUtils
   )
 
@@ -193,7 +193,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.8.8",
+    version := "0.8.9",
     libraryDependencies ++= depOidcUtils
   )
 
@@ -202,7 +202,7 @@ lazy val redisTestUtil = (project in file("redis-test-util"))
   .settings(
     name := "redis-test-util",
     description := "Redis related test utils",
-    version := "0.5.2",
+    version := "0.6.0",
     libraryDependencies ++= depRedisTestUtils
   )
 
@@ -211,7 +211,7 @@ lazy val redisUtil = (project in file("redis-util"))
   .settings(
     name := "redis-util",
     description := "Redis related utils",
-    version := "0.5.2",
+    version := "0.6.0",
     libraryDependencies ++= depRedisUtil
   )
 
@@ -277,6 +277,7 @@ lazy val depCrypto = Seq(
   roundeightsHasher,
   apacheCommonsCodec,
   ubirchUtilConfig,
+  eddsa,
   scalaTest % "test",
   jodaTime % "test",
   jodaConvert % "test"
@@ -293,7 +294,9 @@ lazy val depDeepCheckModel = Seq(
 
 lazy val depElasticsearchClientBinary = Seq(
   elasticSearch,
+  elasticSearchTransport,
   elasticsearchXPack,
+  luceneCore,
   ubirchUtilConfig,
   ubirchUtilDeepCheckModel,
   ubirchUtilJson,
@@ -303,6 +306,9 @@ lazy val depElasticsearchClientBinary = Seq(
 
 lazy val depElasticsearchUtil = Seq(
   elasticSearch,
+  elasticSearchTransport,
+  elasticsearchXPack,
+  luceneCore,
   scalaLoggingSlf4j
 )
 
@@ -344,6 +350,7 @@ lazy val depOidcUtils = Seq(
   ubirchUtilCrypto,
   ubirchUtilJson,
   ubirchUtilRedisUtil,
+  ubirchUtilResponseUtil,
   scalaTest % "test",
   akkaHttpTestkit % "test",
   ubirchUtilRedisTestUtil % "test"
@@ -396,7 +403,7 @@ lazy val depUuid = Seq(
 val json4sV = "3.6.0"
 val akkaV = "2.5.11"
 val akkaHttpV = "10.1.3"
-val elasticsearchV = "6.4.0"
+val elasticsearchV = "6.7.1"
 val log4jV = "2.8.2"
 val scalaTestV = "3.0.5"
 val mockitoV = "2.23.4"
@@ -443,9 +450,11 @@ val jodaConvert = "org.joda" % "joda-convert" % "2.1.1"
 val joda = Seq(jodaTime, jodaConvert)
 
 val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
+val elasticSearchTransport = "org.elasticsearch.client" % "transport" % elasticsearchV
 val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
+val luceneCore = "org.apache.lucene" % "lucene-core" % "7.7.1"
 
-lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.16.1" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
+lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.17.1" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 val neo4jJavaDriver = "org.neo4j.driver" % "neo4j-java-driver" % "1.6.2"
 
@@ -470,17 +479,19 @@ lazy val depLog4jToSlf4j = Seq(
   log4jToSlf4j
 )
 
-lazy val redisson = "org.redisson" % "redisson" % "3.7.5"
+lazy val redisson = "org.redisson" % "redisson" % "3.12.0"
+//Todo: upgrade to 1.9.0?
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.3"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.5.2"
+lazy val ubirchUtilResponseUtil = ubirchUtilGroup %% "response-util" % "0.5.0"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3.1"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.1"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.9.0"
+lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.9.2"
 lazy val ubirchUtilNeo4jConfig = ubirchUtilGroup %% "neo4j-config" % "0.1.0"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.2"
-lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.5.2"
+lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.6.0"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
 
 val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "1.0.1"
@@ -488,6 +499,8 @@ val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "1.0.1"
 
 val ubirchKeyClientRestCache = ubirchKeyG %% "client-rest-cache-redis" % ubirchKeyV
 
+// https://mvnrepository.com/artifact/net.i2p.crypto/eddsa
+val eddsa = "net.i2p.crypto" % "eddsa" % "0.3.0"
 
 val mockito = "org.mockito" % "mockito-core" % mockitoV
 

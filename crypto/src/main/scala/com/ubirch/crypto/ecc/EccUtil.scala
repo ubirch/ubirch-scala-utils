@@ -1,6 +1,7 @@
 package com.ubirch.crypto.ecc
 
 import java.security._
+import java.security.spec.X509EncodedKeySpec
 import java.util.Base64
 
 import com.ubirch.crypto.codec.CodecUtil
@@ -15,13 +16,9 @@ import org.apache.commons.codec.binary.Hex
 class EccUtil {
 
   final private lazy val DEFAULTHASHALGORITHM = "SHA-512"
-
-  final private lazy val DEFAULTECCCURVE = EdDSANamedCurveTable.CURVE_ED25519_SHA512
-
-  final private lazy val EDDSASPEC: EdDSAParameterSpec = EdDSANamedCurveTable.getByName(DEFAULTECCCURVE)
+  final private lazy val EDDSASPEC: EdDSAParameterSpec = EdDSANamedCurveTable.ED_25519_CURVE_SPEC
 
   final val encHex = "hex"
-
   final val encB64 = "b64"
 
   final private val edDsaEng: EdDSAEngine = new EdDSAEngine(MessageDigest.getInstance(DEFAULTHASHALGORITHM))
@@ -49,7 +46,12 @@ class EccUtil {
 
     edDsaEng.initVerify(edsaPubKey)
     edDsaEng.update(payload)
-    edDsaEng.verify(signatureBytes)
+    edDsaEng.verify(signatureBytes) match {
+      case true =>
+        true
+      case _ =>
+        false
+    }
   }
 
   /**
@@ -138,10 +140,9 @@ class EccUtil {
   }
 
   def generateEccKeyPair: (PublicKey, PrivateKey) = {
-    val spec: EdDSAParameterSpec = EdDSANamedCurveTable.getByName(DEFAULTECCCURVE)
     val kpg: KeyPairGenerator = new KeyPairGenerator
 
-    kpg.initialize(spec, new SecureRandom(java.util.UUID.randomUUID.toString.getBytes))
+    kpg.initialize(EDDSASPEC, new SecureRandom(java.util.UUID.randomUUID.toString.getBytes))
 
     val kp: KeyPair = kpg.generateKeyPair
 
@@ -180,7 +181,6 @@ class EccUtil {
     * @return EdDSA PublicKey
     */
   def decodePublicKey(publicKey: String): EdDSAPublicKey = {
-    //    val spec: EdDSAParameterSpec = EdDSANamedCurveTable.getByName("ed25519-sha-512")
 
     CodecUtil.multiDecoder(publicKey) match {
       case Some(decoded) =>
@@ -191,14 +191,8 @@ class EccUtil {
   }
 
   def decodePublicKey(publicKey: Array[Byte]): EdDSAPublicKey = {
-    //    val spec: EdDSAParameterSpec = EdDSANamedCurveTable.getByName("ed25519-sha-512")
-
-    val pubKeyBytes: Array[Byte] = publicKey.length match {
-      case 32 => publicKey
-      case _ => EdDSAPublicKey.decode(publicKey)
-    }
-    val pubKey: EdDSAPublicKeySpec = new EdDSAPublicKeySpec(pubKeyBytes, EDDSASPEC)
-    new EdDSAPublicKey(pubKey)
+    val encoded = new EdDSAPublicKeySpec(publicKey, EDDSASPEC)
+    new EdDSAPublicKey(encoded)
   }
 
   /**
@@ -227,13 +221,8 @@ class EccUtil {
   }
 
   def decodePrivateKey(privateKey: Array[Byte]): EdDSAPrivateKey = {
-    val privKeyBytes: Array[Byte] = privateKey.length match {
-      case 32 => privateKey
-      case 64 => privateKey.take(32)
-      case _ => EdDSAPrivateKey.decode(privateKey)
-    }
-    val pubKey: EdDSAPrivateKeySpec = new EdDSAPrivateKeySpec(privKeyBytes, EDDSASPEC)
-    new EdDSAPrivateKey(pubKey)
+    val encoded = new EdDSAPrivateKeySpec(privateKey, EDDSASPEC)
+    new EdDSAPrivateKey(encoded)
   }
 
 }

@@ -58,7 +58,7 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
 
     if (checkConnection()) {
 
-      logger.debug("db connection exists")
+      logger.debug("DB Connection exists.")
 
       collection(collectionName)
         .flatMap {
@@ -76,21 +76,20 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
       }
     } else {
 
-      logger.debug("db connection does not exists")
+      logger.debug("DB Connection does not exist.")
 
       Future.successful(
         DeepCheckResponse(
           status = false,
-          messages = Seq("no mongo connection")
-        ))
+          messages = Seq("No Mongo Connection")
+        )
+      )
 
     }
 
   }
 
-  def checkConnection(): Boolean = {
-
-    val atMost = 2 seconds
+  def checkConnection(atMost: FiniteDuration = 2 seconds): Boolean = {
 
     val futureIsConnectionActive: Future[Boolean] = db.map { db =>
       db.connection.active
@@ -109,8 +108,11 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
       }
 
       checks.recover {
+        case _: NoSuchElementException =>
+          logger.error("Check Predicates are not Satisfied")
+          false
         case e: Exception =>
-          logger.error("No DB Connection: " + e.getMessage)
+          logger.error("No DB Connection: {} ", e.getMessage)
           false
       }
 
@@ -118,17 +120,20 @@ class MongoUtil(configPrefix: String = MongoConfigKeys.PREFIX) extends StrictLog
 
     val checks = Try(Await.result(futureChecks, atMost)).recover {
       case e: TimeoutException =>
-        logger.error("It is taking more than {} to retrieve checks.", atMost.toString())
-        logger.error("This happened: ", e)
+
+        logger.error("(1) It is taking more than {} to retrieve checks. Got this error {} ", atMost.toString(), e.getMessage)
 
         false
 
       case e =>
-        logger.error("It is taking more than {} to retrieve checks.", atMost.toString())
-        logger.error("This happened: ", e)
+
+        logger.error("Something went wrong when running checks. Got this: {} ", e.getMessage)
 
         false
-    }.getOrElse(false)
+
+    }.getOrElse {
+      false
+    }
 
     checks
 

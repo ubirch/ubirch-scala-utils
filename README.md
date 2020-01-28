@@ -395,6 +395,10 @@ Example Config (simple localhost cluster without Shield/X-Pack):
 
 ### Release History
 
+#### Version 3.3.0 (2019-04-23)
+
+* update to Elasticsearch 6.7.1
+
 #### Version 3.0.1 (2018-10-16)
 
 * update to `com.ubirch.util:deep-check-model:0.3.1`
@@ -693,6 +697,10 @@ Example Config:
     )
 
 ### Release History
+
+#### Version 3.3.0 (2019-04-23)
+
+* update to Elasticsearch 6.7.1
 
 #### Version 3.0.1 (2018-10-16)
 

@@ -13,7 +13,7 @@ import org.elasticsearch.common.xcontent.XContentType
 import org.json4s.JsonAST.JValue
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{Future, blocking}
 
 /**
   * Using the Elasticsearch TransportClient to access the database: https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html
@@ -37,17 +37,17 @@ trait ESBulkStorageBase extends StrictLogging {
 
     @Override
     def beforeBulk(executionId: Long, request: BulkRequest): Unit = {
-      logger.debug("beforeBulk")
+      logger.debug(s"beforeBulk($executionId, #${request.numberOfActions()}, ${request.estimatedSizeInBytes()})")
     }
 
     @Override
     def afterBulk(executionId: Long, request: BulkRequest, response: BulkResponse): Unit = {
-      logger.debug("afterBulk")
+      logger.debug(s"afterBulk($executionId, #${request.numberOfActions()}, ${request.estimatedSizeInBytes()}) => ${response.getTook}")
     }
 
     @Override
     def afterBulk(executionId: Long, request: BulkRequest, failure: Throwable): Unit = {
-      logger.error("afterBulk", failure)
+      logger.error(s"afterBulk($executionId, #${request.numberOfActions()}, ${request.estimatedSizeInBytes()})", failure)
     }
   }
   )
@@ -64,15 +64,16 @@ trait ESBulkStorageBase extends StrictLogging {
                    docId: String,
                    doc: JValue
                   ): Future[JValue] = {
+    Future {
+      blocking {
+        bulkProcessor.add(
+          new IndexRequest(docIndex, docType, docId)
+            .source(Json4sUtil.jvalue2String(doc), XContentType.JSON)
+        )
+      }
 
-
-    bulkProcessor.add(
-      new IndexRequest(docIndex, docType, docId)
-        .source(Json4sUtil.jvalue2String(doc), XContentType.JSON)
-    )
-
-    Future(doc)
-
+      doc
+    }
   }
 
   def closeConnection(): Unit = {

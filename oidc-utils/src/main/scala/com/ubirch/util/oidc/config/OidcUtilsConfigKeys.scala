@@ -10,11 +10,11 @@ object OidcUtilsConfigKeys {
 
   private final val redis = "redis"
 
-  final val updateExpiry = s"$PREFIX.$redis.updateExpiry"
+  final val updateExpirySeconds = s"$PREFIX.$redis.updateExpirySeconds"
 
   final val skipEnvChecking = s"$PREFIX.skipEnvChecking"
 
-  final val skipSignatureChecking = s"$PREFIX.skipSignatureChecking"
+  final val allowInvalidSignature = s"$PREFIX.allowInvalidSignature"
 
   final val maxTokenAge = s"$PREFIX.maxTokenAge"
 

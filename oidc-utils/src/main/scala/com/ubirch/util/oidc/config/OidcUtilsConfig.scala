@@ -8,11 +8,11 @@ import com.ubirch.util.config.ConfigBase
   */
 object OidcUtilsConfig extends ConfigBase {
 
-  final val redisUpdateExpiry = config.getLong(OidcUtilsConfigKeys.updateExpiry)
+  final def redisUpdateExpirySeconds(): Long = config.getLong(OidcUtilsConfigKeys.updateExpirySeconds)
 
   final def skipEnvChecking(): Boolean = config.getBoolean(OidcUtilsConfigKeys.skipEnvChecking)
 
-  final def skipSignatureChecking(): Boolean = config.getBoolean(OidcUtilsConfigKeys.skipSignatureChecking)
+  final def allowInvalidSignature(): Boolean = config.getBoolean(OidcUtilsConfigKeys.allowInvalidSignature)
 
   final def maxTokenAge(): Int = config.getInt(OidcUtilsConfigKeys.maxTokenAge)
 
