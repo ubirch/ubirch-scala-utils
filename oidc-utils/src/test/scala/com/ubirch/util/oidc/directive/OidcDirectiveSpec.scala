@@ -84,17 +84,20 @@ class OidcDirectiveSpec extends FeatureSpec
       val userId = "some-user-id"
       val userName = "Jane Doe"
       val locale = "en"
+      val externalId = "some-external-id"
 
       val initialTtl = 10L
-      val refreshTtl = OidcUtilsConfig.redisUpdateExpiry
+      val refreshTtl = OidcUtilsConfig.redisUpdateExpirySeconds()
 
       val redisKey = OidcUtil.tokenToHashedKey(token)
       val redisValue = write(UserContext(
         context = context,
         providerId = providerId,
-        externalUserId = userId,
+        externalUserId = externalId,
         userName = userName,
-        locale = locale
+        locale = locale,
+        userId = userId,
+        hasPubKey = 1
       ))
       Await.result(redis.set(redisKey, redisValue, exSeconds = Some(initialTtl)), 2 seconds) shouldBe true
 
