@@ -193,7 +193,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.8.8",
+    version := "0.8.9",
     libraryDependencies ++= depOidcUtils
   )
 
@@ -350,6 +350,7 @@ lazy val depOidcUtils = Seq(
   ubirchUtilCrypto,
   ubirchUtilJson,
   ubirchUtilRedisUtil,
+  ubirchUtilResponseUtil,
   scalaTest % "test",
   akkaHttpTestkit % "test",
   ubirchUtilRedisTestUtil % "test"
@@ -479,10 +480,12 @@ lazy val depLog4jToSlf4j = Seq(
 )
 
 lazy val redisson = "org.redisson" % "redisson" % "3.12.0"
+//Todo: upgrade to 1.9.0?
 lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.3"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.5.2"
+lazy val ubirchUtilResponseUtil = ubirchUtilGroup %% "response-util" % "0.5.0"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3.1"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.1"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.9.2"
