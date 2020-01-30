@@ -71,7 +71,7 @@ lazy val lockUtil = (project in file("lock-util"))
   .settings(
     name := "lock-util",
     description := "Simple Redis based locking utils",
-    version := "0.3.0",
+    version := "0.3.1",
     libraryDependencies ++= depLockUtil
   )
 
