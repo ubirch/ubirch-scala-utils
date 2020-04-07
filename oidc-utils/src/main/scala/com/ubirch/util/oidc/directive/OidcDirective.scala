@@ -356,7 +356,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
         .map(result => if (result) 1 else 0)
     } catch {
       case ex: Throwable =>
-        logger.error(s"something unexpected went wrong validating the signature of a userInput: $ex")
+        logger.error(s"something unexpected went wrong validating the signature of a authorization token: $ex")
         Set(-2)
     }
   }
