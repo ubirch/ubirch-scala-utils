@@ -335,7 +335,6 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
 
             case invalid if invalid.contains(-2) =>
               val msg = s"something unexpected went wrong when validating the signature of authToken $ubToken"
-              logger.warn(msg)
               if (allowInvalidSignature) -2 else throw new UnknownValidationException(msg)
 
             case _ =>
@@ -356,7 +355,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
         .map(result => if (result) 1 else 0)
     } catch {
       case ex: Throwable =>
-        logger.error(s"something unexpected went wrong validating the signature of a authorization token: $ex")
+        if (!allowInvalidSignature) logger.error(s"something unexpected went wrong validating the signature of a authorization token: $ex")
         Set(-2)
     }
   }
