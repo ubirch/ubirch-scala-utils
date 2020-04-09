@@ -66,46 +66,18 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
 
           case Some(ubToken: String) =>
 
-            //Todo: Metriken und Vereinfachung der Exception Struktur/ des Exceptionhandlings
             onComplete(ubTokenToUserContext(ubToken = ubToken)) flatMap { u =>
 
               u.map(provide).recover {
 
-                case ex: AuthTokenFormatError =>
-                  val errorRsp = JsonErrorResponse(errorType = "02", errorMessage = s"auth token format error: ${ex.getMessage}")
+                case ex: ValidationException =>
+                  val errorRsp = JsonErrorResponse(errorType = ex.name, errorMessage = ex.msg)
                   complete(requestErrorResponse(errorRsp, StatusCodes.Unauthorized)).toDirective[Tuple1[UserContext]]
 
-                case ex: AuthTokenContextError =>
-                  val errorRsp = JsonErrorResponse(errorType = "03", errorMessage = s"auth token context error: ${ex.getMessage}")
-                  complete(requestErrorResponse(errorRsp, StatusCodes.Unauthorized)).toDirective[Tuple1[UserContext]]
+                case ex =>
+                  logger.error(s"unknown error found in oidc-utils: $ex")
+                  complete(requestErrorResponse(JsonErrorResponse(errorType = "00", errorMessage = s"unknown exception found ${ex.getMessage}"), StatusCodes.Unauthorized)).toDirective[Tuple1[UserContext]]
 
-                case ex: TokenTimeoutError =>
-                  val errorRsp = JsonErrorResponse(errorType = "04", errorMessage = s"token timeout error: ${ex.getMessage}")
-                  complete(requestErrorResponse(errorRsp, StatusCodes.Unauthorized)).toDirective[Tuple1[UserContext]]
-
-                case ex: ParsingError =>
-                  val errorRsp = JsonErrorResponse(errorType = "05", errorMessage = s"parsing error: ${ex.getMessage}")
-                  complete(requestErrorResponse(errorRsp, StatusCodes.Unauthorized)).toDirective[Tuple1[UserContext]]
-
-                case ex: UserNotFoundError =>
-                  val errorRsp = JsonErrorResponse(errorType = "06", errorMessage = s"user not found error: ${ex.getMessage}")
-                  complete(requestErrorResponse(errorRsp, StatusCodes.Unauthorized)).toDirective[Tuple1[UserContext]]
-
-                case ex: SignatureInvalidError =>
-                  val errorRsp = JsonErrorResponse(errorType = "07", errorMessage = s"signature invalid error: ${ex.getMessage}")
-                  complete(requestErrorResponse(errorRsp, StatusCodes.Unauthorized)).toDirective[Tuple1[UserContext]]
-
-                case ex: PublicKeyMissingError =>
-                  val errorRsp = JsonErrorResponse(errorType = "08", errorMessage = s"public key missing error: ${ex.getMessage}")
-                  complete(requestErrorResponse(errorRsp, StatusCodes.Unauthorized)).toDirective[Tuple1[UserContext]]
-
-                case ex: KeyServiceError =>
-                  val errorRsp = JsonErrorResponse(errorType = "09", errorMessage = s"key service error: ${ex.getMessage}")
-                  complete(requestErrorResponse(errorRsp, StatusCodes.Unauthorized)).toDirective[Tuple1[UserContext]]
-
-                case ex: UnknownValidationException =>
-                  val errorRsp = JsonErrorResponse(errorType = "10", errorMessage = s"validation error: ${ex.getMessage}")
-                  complete(requestErrorResponse(errorRsp, StatusCodes.Unauthorized)).toDirective[Tuple1[UserContext]]
 
               }.get
 
@@ -131,8 +103,6 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
   }
 
   private def getRedisKey(externalId: String): String = {
-    // TODO ??? redis keys may be hashed but since ubirch tokens are typically stored long-term this would have to include a migration of existing keys (consider adding hash iterations, too)
-    //OidcUtil.tokenToHashedKey(s"$envid--$ubToken")
     s"$envid--$externalId"
   }
 
@@ -157,7 +127,6 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
     } catch {
       case ex: Exception => return Future.failed(ex)
     }
-
 
     checkSignature(externalId, token, signature, ubToken).flatMap { valid =>
 
@@ -214,12 +183,13 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
   @throws(classOf[AuthTokenFormatError])
   private def splitToken(token: String) = {
     val split = token.split("::")
-    if (split.size != 3) {
+    if (split.size == 3) {
+      split
+    } else {
       val msg = s"auth token validation has wrong format - wrong number of separators like '::' : $token"
       logger.info(msg)
       throw new AuthTokenFormatError(msg)
     }
-    split
   }
 
   /**
@@ -229,13 +199,13 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
   @throws(classOf[AuthTokenFormatError])
   private def splitSubToken(token: String) = {
     val tokenParts = token.split("##")
-    if (tokenParts.size != 2) {
+    if (tokenParts.size == 2 || allowInvalidSignature) {
+      (tokenParts(0).toLowerCase.trim, tokenParts.last)
+    } else {
       val msg = s"auth token validation has wrong format - wrong number of separators like '##': >>$token<<"
       logger.info(msg)
       throw new AuthTokenFormatError(msg)
     }
-    val externalId = tokenParts(0).toLowerCase.trim
-    (externalId, tokenParts.last)
   }
 
   /**
@@ -260,19 +230,25 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
   @throws(classOf[ParsingError])
   private def verifyAuthTimeLimit(tsStr: String, externalId: String) = {
 
-    val now = new DateTime(DateTimeZone.UTC)
+    if (allowInvalidSignature) true
+    else {
 
-    val timestamp = try {
-      new DateTime(tsStr.toLong, DateTimeZone.UTC)
-    } catch {
-      case ex: Throwable =>
-        val msg = s"the timestamp $tsStr of the auth token of externalId $externalId couldn't become parsed: $ex"
-        logger.error(msg)
-        throw new ParsingError(msg)
+      val now = new DateTime(DateTimeZone.UTC)
+
+      val timestamp = try {
+        new DateTime(tsStr.toLong, DateTimeZone.UTC)
+      } catch {
+        case ex: Throwable =>
+          val msg = s"the timestamp $tsStr of the auth token of externalId $externalId couldn't become parsed: $ex"
+          logger.error(msg)
+          throw new ParsingError(msg)
+      }
+
+      val (lower, upper) = (now.minusMinutes(maxTokenAge), now.plusMinutes(maxTokenAge))
+
+      if (lower.isBefore(timestamp) && upper.isAfter(timestamp)) true
+      else throw new TokenTimeoutError(s" the timestamp $timestamp of the auth token for $externalId was outside of boundaries: $lower and $upper")
     }
-
-    if (now.minusMinutes(maxTokenAge).isBefore(timestamp)) true
-    else throw new TokenTimeoutError(s" the timestamp of the auth token for $externalId was timed out")
   }
 
   private def createAndCacheUserContext(context: String, externalId: String, user: User, hasKey: Int, ubToken: String, redis: RedisClient) = {
@@ -280,7 +256,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
       context = context,
       providerId = UbirchTokenUtil.providerId,
       externalUserId = externalId,
-      userId = user.id.get.toString,
+      userId = user.id.get,
       userName = user.displayName,
       locale = user.locale,
       hasPubKey = hasKey
@@ -335,7 +311,6 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
 
             case invalid if invalid.contains(-2) =>
               val msg = s"something unexpected went wrong when validating the signature of authToken $ubToken"
-              logger.warn(msg)
               if (allowInvalidSignature) -2 else throw new UnknownValidationException(msg)
 
             case _ =>
@@ -356,7 +331,7 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
         .map(result => if (result) 1 else 0)
     } catch {
       case ex: Throwable =>
-        logger.error(s"something unexpected went wrong validating the signature of a userInput: $ex")
+        if (!allowInvalidSignature) logger.error(s"something unexpected went wrong validating the signature of a authorization token: $ex")
         Set(-2)
     }
   }
@@ -397,24 +372,24 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
 
 class VerificationException() extends Exception
 
-sealed class ValidationException(msg: String) extends Exception(msg)
+sealed case class ValidationException(msg: String, name: String, errorType: String) extends Exception(msg)
 
-class AuthTokenFormatError(msg: String) extends ValidationException(msg)
+class PublicKeyMissingError(msg: String, name: String = "public key missing error", errorType: String = "01") extends ValidationException(msg, name, errorType)
 
-class AuthTokenContextError(msg: String) extends ValidationException(msg)
+class AuthTokenFormatError(msg: String, name: String = "auth token format error", errorType: String = "02") extends ValidationException(msg, name, errorType)
 
-class TokenTimeoutError(msg: String) extends ValidationException(msg)
+class AuthTokenContextError(msg: String, name: String = "auth token context error", errorType: String = "03") extends ValidationException(msg, name, errorType)
 
-class ParsingError(msg: String) extends ValidationException(msg)
+class TokenTimeoutError(msg: String, name: String = "token timeout error", errorType: String = "04") extends ValidationException(msg, name, errorType)
 
-class UserNotFoundError(msg: String) extends ValidationException(msg)
+class ParsingError(msg: String, name: String = "parsing error", errorType: String = "05") extends ValidationException(msg, name, errorType)
 
-class SignatureInvalidError(msg: String) extends ValidationException(msg)
+class UserNotFoundError(msg: String, name: String = "user not found error", errorType: String = "06") extends ValidationException(msg, name, errorType)
 
-class PublicKeyMissingError(msg: String) extends ValidationException(msg)
+class SignatureInvalidError(msg: String, name: String = "signature invalid error", errorType: String = "07") extends ValidationException(msg, name, errorType)
 
-class KeyServiceError(msg: String) extends ValidationException(msg)
+class KeyServiceError(msg: String, name: String = "key service error", errorType: String = "08") extends ValidationException(msg, name, errorType)
 
-class UnknownValidationException(msg: String) extends ValidationException(msg)
+class UnknownValidationException(msg: String, name: String = "validation error", errorType: String = "09") extends ValidationException(msg, name, errorType)
 
-class ParsingException(msg: String) extends ValidationException(msg)
+
