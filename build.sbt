@@ -193,7 +193,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.8.11-SNAPSHOT",
+    version := "0.8.12-SNAPSHOT",
     libraryDependencies ++= depOidcUtils
   )
 
@@ -407,7 +407,7 @@ val elasticsearchV = "6.7.1"
 val log4jV = "2.8.2"
 val scalaTestV = "3.0.5"
 val mockitoV = "2.23.4"
-val ubirchKeyV = "0.11.2"
+val ubirchKeyV = "0.11.5-SNAPSHOT"
 
 // Groups
 val akkaG = "com.typesafe.akka"
