@@ -13,16 +13,14 @@ val sonatypeReleases = Resolver.sonatypeRepo("releases")
 val sonatypeSnapshots = Resolver.sonatypeRepo("snapshots")
 val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
 val resolverElasticsearch = "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
+val cloudRepoReleases = "ubirch.mycloudrepo.io" at "https://ubirch.mycloudrepo.io/repositories/ubirch-elasticsearch-util"
 
 val ubirchUtilGroup = "com.ubirch.util"
 
 val commonSettings = Seq(
 
   scalaVersion := "2.11.12",
-  scalacOptions ++= Seq(
-    "-feature"
-  ),
-
+  scalacOptions ++= Seq("-feature"),
   organization := ubirchUtilGroup,
 
   homepage := Some(url("http://ubirch.com")),
@@ -30,11 +28,19 @@ val commonSettings = Seq(
     url("https://github.com/ubirch/ubirch-scala-utils"),
     "https://github.com/ubirch/ubirch-scala-utils.git"
   )),
-
+  (sys.env.get("CLOUDREPO_USER"), sys.env.get("CLOUDREPO_PW")) match {
+    case (Some(username), Some(password)) =>
+      println("USERNAME and/or PASSWORD found.")
+      credentials += Credentials("ubirch.mycloudrepo.io", "ubirch.mycloudrepo.io", username, password)
+    case _ =>
+      println("USERNAME and/or PASSWORD is taken from /.sbt/.credentials.")
+      credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
+  },
   resolvers ++= Seq(
+    cloudRepoReleases,
     sonatypeReleases,
-    sonatypeSnapshots
-  )
+    sonatypeSnapshots),
+  publishMavenStyle := true
 )
 
 /*
@@ -50,6 +56,7 @@ lazy val scalaUtils = project
     date,
     deepCheckModel,
     elasticsearchClientBinary,
+    esHighLevelClient,
     elasticsearchUtil,
     json,
     lockUtil,
@@ -128,6 +135,20 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
     ),
     libraryDependencies ++= depElasticsearchClientBinary
   )
+
+lazy val esHighLevelClient = (project in file("elasticsearch-high-level-client"))
+  .settings(commonSettings)
+  .settings(
+    name := "elasticsearch-high-level-client",
+    description := "Elasticsearch client using the High Level Java Client",
+    version := "0.0.3-SNAPSHOT",
+    resolvers ++= Seq(
+      resolverElasticsearch
+    ),
+    publishTo := Some("io.cloudrepo" at "https://ubirch.mycloudrepo.io/repositories/ubirch-elasticsearch-util"),
+    libraryDependencies ++= depElasticsearchHighLevelClient
+  )
+
 
 lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(commonSettings)
@@ -304,6 +325,17 @@ lazy val depElasticsearchClientBinary = Seq(
   scalaTest % "test"
 ) ++ json4sBase ++ depSlf4jLogging ++ depLog4jToSlf4j
 
+lazy val depElasticsearchHighLevelClient = Seq(
+  elasticSearch,
+  elasticSearchClient,
+  elasticSearchHighLevelClient,
+  ubirchUtilJson,
+  ubirchUtilUuid,
+  ubirchUtilDeepCheckModel,
+  ubirchUtilConfig,
+  luceneCore
+) ++ json4sBase ++ depSlf4jLogging ++ depLog4jToSlf4j
+
 lazy val depElasticsearchUtil = Seq(
   elasticSearch,
   elasticSearchTransport,
@@ -403,7 +435,7 @@ lazy val depUuid = Seq(
 val json4sV = "3.6.0"
 val akkaV = "2.5.11"
 val akkaHttpV = "10.1.3"
-val elasticsearchV = "6.7.1"
+val elasticsearchV = "6.8.10"
 val log4jV = "2.8.2"
 val scalaTestV = "3.0.5"
 val mockitoV = "2.23.4"
@@ -451,6 +483,9 @@ val joda = Seq(jodaTime, jodaConvert)
 
 val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
 val elasticSearchTransport = "org.elasticsearch.client" % "transport" % elasticsearchV
+val elasticSearchHighLevelClient = "org.elasticsearch.client" % "elasticsearch-rest-high-level-client" % elasticsearchV
+val elasticSearchClient = "org.elasticsearch.client" % "elasticsearch-rest-client" % elasticsearchV
+
 val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
 val luceneCore = "org.apache.lucene" % "lucene-core" % "7.7.1"
 
