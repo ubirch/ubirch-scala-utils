@@ -136,20 +136,6 @@ lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-bina
     libraryDependencies ++= depElasticsearchClientBinary
   )
 
-lazy val esHighLevelClient = (project in file("elasticsearch-high-level-client"))
-  .settings(commonSettings)
-  .settings(
-    name := "elasticsearch-high-level-client",
-    description := "Elasticsearch client using the High Level Java Client",
-    version := "0.0.3-SNAPSHOT",
-    resolvers ++= Seq(
-      resolverElasticsearch
-    ),
-    publishTo := Some("io.cloudrepo" at "https://ubirch.mycloudrepo.io/repositories/ubirch-elasticsearch-util"),
-    libraryDependencies ++= depElasticsearchHighLevelClient
-  )
-
-
 lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
   .settings(commonSettings)
   .settings(
@@ -160,6 +146,19 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
       resolverElasticsearch
     ),
     libraryDependencies ++= depElasticsearchUtil
+  )
+
+lazy val esHighLevelClient = (project in file("elasticsearch-high-level-client"))
+  .settings(commonSettings)
+  .settings(
+    name := "elasticsearch-high-level-client",
+    description := "Elasticsearch client using the High Level Java Client",
+    version := "0.0.9-SNAPSHOT",
+    resolvers ++= Seq(
+      resolverElasticsearch
+    ),
+    publishTo := Some("io.cloudrepo" at "https://ubirch.mycloudrepo.io/repositories/trackle-mvn"),
+    libraryDependencies ++= depElasticsearchHighLevelClient
   )
 
 lazy val json = project
@@ -318,10 +317,10 @@ lazy val depElasticsearchClientBinary = Seq(
   elasticSearchTransport,
   elasticsearchXPack,
   luceneCore,
-  ubirchUtilConfig,
-  ubirchUtilDeepCheckModel,
   ubirchUtilJson,
   ubirchUtilUuid,
+  ubirchUtilDeepCheckModel,
+  ubirchUtilConfig,
   scalaTest % "test"
 ) ++ json4sBase ++ depSlf4jLogging ++ depLog4jToSlf4j
 
@@ -333,7 +332,7 @@ lazy val depElasticsearchHighLevelClient = Seq(
   ubirchUtilUuid,
   ubirchUtilDeepCheckModel,
   ubirchUtilConfig,
-  luceneCore
+  scalaTest % "test"
 ) ++ json4sBase ++ depSlf4jLogging ++ depLog4jToSlf4j
 
 lazy val depElasticsearchUtil = Seq(
@@ -436,7 +435,7 @@ val json4sV = "3.6.0"
 val akkaV = "2.5.11"
 val akkaHttpV = "10.1.3"
 val elasticsearchV = "6.8.10"
-val log4jV = "2.8.2"
+val log4jV = "2.11.1"
 val scalaTestV = "3.0.5"
 val mockitoV = "2.23.4"
 val ubirchKeyV = "0.11.5-SNAPSHOT"
@@ -487,8 +486,9 @@ val elasticSearchHighLevelClient = "org.elasticsearch.client" % "elasticsearch-r
 val elasticSearchClient = "org.elasticsearch.client" % "elasticsearch-rest-client" % elasticsearchV
 
 val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
-val luceneCore = "org.apache.lucene" % "lucene-core" % "7.7.1"
+val luceneCore = "org.apache.lucene" % "lucene-core" % "7.7.3"
 
+//Todo: update to 0.20.10
 lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.18.8" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
 
 val neo4jJavaDriver = "org.neo4j.driver" % "neo4j-java-driver" % "1.6.2"
@@ -502,7 +502,7 @@ lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.7"
 lazy val log4jApi = log4jG % "log4j-api" % log4jV
-lazy val log4jToSlf4j = "org.apache.logging.log4j" % "log4j-to-slf4j" % "2.7"
+lazy val log4jToSlf4j = "org.apache.logging.log4j" % "log4j-to-slf4j" % "2.11.0"
 
 lazy val depSlf4jLogging = Seq(
   scalaLoggingSlf4j,
@@ -521,7 +521,7 @@ lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll Excl
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.3"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.5.2"
 lazy val ubirchUtilResponseUtil = ubirchUtilGroup %% "response-util" % "0.5.0"
-lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3.1"
+lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.4.0"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.1"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.9.3"
 lazy val ubirchUtilNeo4jConfig = ubirchUtilGroup %% "neo4j-config" % "0.1.0"

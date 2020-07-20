@@ -14,9 +14,6 @@ import org.elasticsearch.common.unit.{ByteSizeUnit, ByteSizeValue, TimeValue}
 import org.elasticsearch.common.xcontent.XContentType
 import org.json4s.JValue
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{Future, blocking}
-
 object EsBulkClient extends StrictLogging {
 
   private val esClient: RestHighLevelClient = EsHighLevelClient.client
@@ -36,17 +33,17 @@ object EsBulkClient extends StrictLogging {
 
     @Override
     def beforeBulk(executionId: Long, request: BulkRequest): Unit = {
-      logger.debug(s"beforeBulk($executionId, #${request.numberOfActions()}, ${request.estimatedSizeInBytes()})")
+      logger.debug(s"beforeBulk($executionId, number of actions: #${request.numberOfActions()}, ${request.estimatedSizeInBytes()})")
     }
 
     @Override
     def afterBulk(executionId: Long, request: BulkRequest, response: BulkResponse): Unit = {
-      logger.debug(s"afterBulk($executionId, #${request.numberOfActions()}, ${request.estimatedSizeInBytes()}) => ${response.getTook}")
+      logger.debug(s"afterBulk($executionId, number of actions: #${request.numberOfActions()}, ${request.estimatedSizeInBytes()}) => ${response.getTook}")
     }
 
     @Override
     def afterBulk(executionId: Long, request: BulkRequest, failure: Throwable): Unit = {
-      logger.error(s"afterBulk($executionId, #${request.numberOfActions()}, ${request.estimatedSizeInBytes()})", failure)
+      logger.error(s"afterBulk($executionId, number of actions: #${request.numberOfActions()}, ${request.estimatedSizeInBytes()})", failure)
     }
 
   }
@@ -81,16 +78,15 @@ object EsBulkClient extends StrictLogging {
   def storeDocBulk(docIndex: String,
                    docId: String,
                    doc: JValue
-                  ): Future[JValue] = {
-    Future {
-      blocking {
-        bulkProcessor.add(
-          new IndexRequest(docIndex).id(docId)
-            .source(Json4sUtil.jvalue2String(doc), XContentType.JSON)
-        )
-      }
-
-      doc
+                  ): Unit = {
+    try {
+      bulkProcessor.add(
+        new IndexRequest(docIndex, "_doc", docId)
+          .source(Json4sUtil.jvalue2String(doc), XContentType.JSON)
+      )
+    } catch {
+      case ex: Throwable =>
+        logger.debug(s"storing document in elasticsearch bulkProcessor failed for $doc with id $docId ", ex)
     }
   }
 

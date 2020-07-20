@@ -7,6 +7,7 @@ import com.typesafe.scalalogging.slf4j.StrictLogging
 import com.ubirch.util.deepCheck.model.DeepCheckResponse
 import com.ubirch.util.json.{Json4sUtil, JsonFormats}
 import com.ubirch.util.uuid.UUIDUtil
+import org.elasticsearch.action.DocWriteResponse.Result
 import org.elasticsearch.action.delete.{DeleteRequest, DeleteResponse}
 import org.elasticsearch.action.index.{IndexRequest, IndexResponse}
 import org.elasticsearch.action.search.{SearchRequest, SearchResponse}
@@ -14,7 +15,6 @@ import org.elasticsearch.action.{ActionListener, DocWriteResponse}
 import org.elasticsearch.client.{RequestOptions, RestHighLevelClient}
 import org.elasticsearch.common.xcontent.XContentType
 import org.elasticsearch.index.query.{QueryBuilder, QueryBuilders}
-import org.elasticsearch.rest.RestStatus
 import org.elasticsearch.search.aggregations.metrics.avg.{Avg, AvgAggregationBuilder}
 import org.elasticsearch.search.builder.SearchSourceBuilder
 import org.elasticsearch.search.sort.SortBuilder
@@ -58,13 +58,17 @@ object EsSimpleClient extends StrictLogging {
 
       case docStr if docStr.nonEmpty =>
 
-        val request = new IndexRequest(docIndex).id(docId).source(XContentType.JSON, docStr)
+        val request = new IndexRequest(docIndex).id(docId).`type`("_doc").source(docStr, XContentType.JSON)
 
         val promise = Promise[IndexResponse]()
         esClient.indexAsync(request, RequestOptions.DEFAULT, createActionListener[IndexResponse](promise))
-        promise.future.map {
-          case response: IndexResponse if response.status() == RestStatus.CREATED => true
-          case _ => throw new Exception(s"storing of document $doc failed")
+        promise.future.map { response: IndexResponse =>
+          val result = response.getResult
+          if (result == Result.CREATED || result == Result.UPDATED) {
+            logger.debug(s"the document should have been created successfully with id $docId $doc")
+            true
+          }
+          else throw new Exception(s"storing of document $doc failed $response")
         }
 
       case _ => throw new Exception(s"JValue parsing to string of ($doc) failed ")
@@ -87,7 +91,7 @@ object EsSimpleClient extends StrictLogging {
              docId: String): Future[Option[JValue]] = {
 
 
-    val search = new SearchSourceBuilder().query(QueryBuilders.idsQuery(docId))
+    val search = new SearchSourceBuilder().query(QueryBuilders.idsQuery.addIds(docId))
     val request = new SearchRequest(docIndex).source(search)
 
     val promise = Promise[SearchResponse]()
@@ -104,7 +108,8 @@ object EsSimpleClient extends StrictLogging {
         logger.error(s"ES confusion, found more than one document for the id: $docId")
         None
 
-      case _ =>
+      case response =>
+        logger.error(s"no document was found for the id: $docId with response $response")
         None
 
     }
@@ -119,7 +124,7 @@ object EsSimpleClient extends StrictLogging {
     * This method returns all documents queried and sorted if wished for.
     *
     * @param docIndex name of the ElasticSearch index
-    * @param query    search query as created with [[org.elasticsearch.index.query.QueryBuilders]]
+    * @param query    search query
     * @param from     pagination from (may be 0 or larger)
     * @param size     maximum number of results (may be 0 or larger)
     * @param sort     optional result sort
@@ -166,7 +171,7 @@ object EsSimpleClient extends StrictLogging {
     * This method queries an average aggregation and returns a double.
     *
     * @param docIndex name of the ElasticSearch index
-    * @param query    search query as created with [[QueryBuilder]]
+    * @param query    search query
     * @param avgAgg   average function
     * @return Option[Double]
     */
@@ -189,11 +194,12 @@ object EsSimpleClient extends StrictLogging {
         val avg: Avg = agg.get(avgAgg.getName)
         avg.getValue match {
 
+          case avgValue if avgValue.isInfinity =>
+            None
           case avgValue if !avgValue.equals(Double.NaN) =>
             Some(avgValue)
           case _ =>
             None
-
         }
       case _ =>
         None
@@ -214,7 +220,7 @@ object EsSimpleClient extends StrictLogging {
     */
   def deleteDoc(docIndex: String, docId: String): Future[Boolean] = {
 
-    val request = new DeleteRequest(docIndex).id(docId)
+    val request = new DeleteRequest(docIndex, "_doc", docId)
 
     val promise = Promise[DeleteResponse]()
     esClient.deleteAsync(request, RequestOptions.DEFAULT, createActionListener[DeleteResponse](promise))
@@ -272,4 +278,6 @@ object EsSimpleClient extends StrictLogging {
   def closeConnection(): Unit = {
     esClient.close()
   }
+
+
 }
