@@ -153,7 +153,7 @@ lazy val esHighLevelClient = (project in file("elasticsearch-high-level-client")
   .settings(
     name := "elasticsearch-high-level-client",
     description := "Elasticsearch client using the High Level Java Client",
-    version := "0.0.9-SNAPSHOT",
+    version := "0.1.0-SNAPSHOT",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -434,7 +434,7 @@ lazy val depUuid = Seq(
 val json4sV = "3.6.0"
 val akkaV = "2.5.11"
 val akkaHttpV = "10.1.3"
-val elasticsearchV = "6.8.10"
+val elasticsearchV = "7.8.0"
 val log4jV = "2.11.1"
 val scalaTestV = "3.0.5"
 val mockitoV = "2.23.4"

@@ -4,7 +4,7 @@ package com.ubirch.util.elasticsearch
 import java.io.IOException
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
-import com.ubirch.util.deepCheck.model.DeepCheckResponse
+import com.ubirch.util.deepCheck.model.ServiceCheckResponse
 import com.ubirch.util.json.{Json4sUtil, JsonFormats}
 import com.ubirch.util.uuid.UUIDUtil
 import org.elasticsearch.action.DocWriteResponse.Result
@@ -15,7 +15,7 @@ import org.elasticsearch.action.{ActionListener, DocWriteResponse}
 import org.elasticsearch.client.{RequestOptions, RestHighLevelClient}
 import org.elasticsearch.common.xcontent.XContentType
 import org.elasticsearch.index.query.{QueryBuilder, QueryBuilders}
-import org.elasticsearch.search.aggregations.metrics.avg.{Avg, AvgAggregationBuilder}
+import org.elasticsearch.search.aggregations.metrics.{Avg, AvgAggregationBuilder}
 import org.elasticsearch.search.builder.SearchSourceBuilder
 import org.elasticsearch.search.sort.SortBuilder
 import org.json4s.{Formats, JValue}
@@ -58,7 +58,7 @@ object EsSimpleClient extends StrictLogging {
 
       case docStr if docStr.nonEmpty =>
 
-        val request = new IndexRequest(docIndex).id(docId).`type`("_doc").source(docStr, XContentType.JSON)
+        val request = new IndexRequest(docIndex).id(docId).source(docStr, XContentType.JSON)
 
         val promise = Promise[IndexResponse]()
         esClient.indexAsync(request, RequestOptions.DEFAULT, createActionListener[IndexResponse](promise))
@@ -99,12 +99,12 @@ object EsSimpleClient extends StrictLogging {
 
     promise.future.map {
 
-      case response if response.getHits.getTotalHits == 1 =>
+      case response if response.getHits.getTotalHits.value == 1 =>
         response.getHits.getHits.map { hit =>
           Json4sUtil.string2JValue(hit.getSourceAsString)
         }.filter(_.isDefined).map(_.get.extract[JValue]).headOption
 
-      case response if response.getHits.getTotalHits > 0 =>
+      case response if response.getHits.getTotalHits.value > 0 =>
         logger.error(s"ES confusion, found more than one document for the id: $docId")
         None
 
@@ -151,7 +151,7 @@ object EsSimpleClient extends StrictLogging {
 
     promise.future.map {
 
-      case response if response.getHits.getTotalHits > 0 =>
+      case response if response.getHits.getTotalHits.value > 0 =>
         response.getHits.getHits.map { hit =>
           Json4sUtil.string2JValue(hit.getSourceAsString)
         }.filter(_.isDefined).map(_.get.extract[JValue]).toList
@@ -189,7 +189,7 @@ object EsSimpleClient extends StrictLogging {
 
     promise.future.map {
 
-      case response if response.getHits.getTotalHits > 0 =>
+      case response if response.getHits.getTotalHits.value > 0 =>
         val agg = response.getAggregations
         val avg: Avg = agg.get(avgAgg.getName)
         avg.getValue match {
@@ -220,7 +220,7 @@ object EsSimpleClient extends StrictLogging {
     */
   def deleteDoc(docIndex: String, docId: String): Future[Boolean] = {
 
-    val request = new DeleteRequest(docIndex, "_doc", docId)
+    val request = new DeleteRequest(docIndex, docId)
 
     val promise = Promise[DeleteResponse]()
     esClient.deleteAsync(request, RequestOptions.DEFAULT, createActionListener[DeleteResponse](promise))
@@ -245,15 +245,15 @@ object EsSimpleClient extends StrictLogging {
     * @param docIndex index to query
     * @return result of connectivity check
     */
-  def connectivityCheck(docIndex: String = "foo"): Future[DeepCheckResponse] = {
+  def connectivityCheck(docIndex: String = "foo"): Future[ServiceCheckResponse] = {
 
     getDocs(docIndex = docIndex, size = Some(1))
-      .map(_ => DeepCheckResponse())
+      .map(_ => ServiceCheckResponse())
       .recover {
 
         case t: Throwable =>
           logger.error("ES error, deepcheck failing", t)
-          DeepCheckResponse(
+          ServiceCheckResponse(
             status = false,
             messages = Seq(t.getMessage)
           )

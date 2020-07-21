@@ -60,12 +60,17 @@ trait EsMappingTrait extends StrictLogging {
     } else {
 
       logger.info(s"creating index $index with mapping : $mapping")
-      val createRequest = new CreateIndexRequest(index).mapping(mapping, XContentType.JSON)
-      val indexResponse = esClient.indices.create(createRequest, RequestOptions.DEFAULT)
-      if (indexResponse.isAcknowledged) {
-        logger.info(s"created index: '$index' and it's mapping: '$mapping'")
-      } else {
-        logger.error(s"failed to create index: '$index' and it's mapping: '$mapping'")
+      try {
+        val createRequest = new CreateIndexRequest(index).mapping(mapping, XContentType.JSON)
+        val indexResponse = esClient.indices.create(createRequest, RequestOptions.DEFAULT)
+        if (indexResponse.isAcknowledged) {
+          logger.info(s"created index: '$index' and it's mapping: '$mapping'")
+        } else {
+          logger.error(s"failed to create index: '$index' and it's mapping: '$mapping'")
+        }
+      } catch {
+        case ex: Throwable =>
+          logger.error(s"es error: failed to create index $index", ex)
       }
     }
 

@@ -81,7 +81,7 @@ object EsBulkClient extends StrictLogging {
                   ): Unit = {
     try {
       bulkProcessor.add(
-        new IndexRequest(docIndex, "_doc", docId)
+        new IndexRequest(docIndex).id(docId)
           .source(Json4sUtil.jvalue2String(doc), XContentType.JSON)
       )
     } catch {

@@ -4,7 +4,7 @@ import com.typesafe.scalalogging.slf4j.StrictLogging
 import com.ubirch.util.json.Json4sUtil
 import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.search.aggregations.AggregationBuilders
-import org.elasticsearch.search.aggregations.metrics.avg.AvgAggregationBuilder
+import org.elasticsearch.search.aggregations.metrics.AvgAggregationBuilder
 import org.scalatest.{AsyncFeatureSpec, BeforeAndAfterAll, Matchers}
 
 class EsBulkClientSpec extends AsyncFeatureSpec with EsMappingTrait

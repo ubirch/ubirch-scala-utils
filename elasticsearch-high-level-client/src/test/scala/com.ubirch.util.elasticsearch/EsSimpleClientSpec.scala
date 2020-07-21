@@ -5,7 +5,7 @@ import com.ubirch.util.json.{Json4sUtil, JsonFormats}
 import com.ubirch.util.uuid.UUIDUtil
 import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.search.aggregations.AggregationBuilders
-import org.elasticsearch.search.aggregations.metrics.avg.AvgAggregationBuilder
+import org.elasticsearch.search.aggregations.metrics.AvgAggregationBuilder
 import org.json4s._
 import org.scalatest.{AsyncFeatureSpec, BeforeAndAfterAll, Matchers}
 

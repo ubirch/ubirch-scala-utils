@@ -31,17 +31,17 @@ class EsMappingSpec extends AsyncFeatureSpec with EsMappingTrait
   override val indexesAndMappings: Map[String, String] =
     Map(testIndex ->
       s"""{
-         |    "properties" : {
-         |      "id" : {
-         |        "type" : "keyword"
-         |      },
-         |      "hello" : {
-         |        "type" : "keyword"
-         |      },
-         |      "value" : {
-         |        "type" : "integer"
-         |      }
-         |    }
+         |  "properties" : {
+         |    "id" : {
+         |       "type" : "keyword"
+         |    },
+         |    "hello" : {
+         |      "type" : "keyword"
+         |    },
+         |    "value" : {
+         |      "type" : "integer"
+         |     }
+         |  }
          |}""".stripMargin
     )
 
