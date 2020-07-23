@@ -13,7 +13,7 @@ val sonatypeReleases = Resolver.sonatypeRepo("releases")
 val sonatypeSnapshots = Resolver.sonatypeRepo("snapshots")
 val resolverSeebergerJson = Resolver.bintrayRepo("hseeberger", "maven")
 val resolverElasticsearch = "elasticsearch-releases" at "https://artifacts.elastic.co/maven"
-val cloudRepoReleases = "ubirch.mycloudrepo.io" at "https://ubirch.mycloudrepo.io/repositories/ubirch-elasticsearch-util"
+val cloudRepoReleases = "ubirch.mycloudrepo.io" at "https://ubirch.mycloudrepo.io/repositories/trackle-mvn"
 
 val ubirchUtilGroup = "com.ubirch.util"
 
@@ -153,7 +153,7 @@ lazy val esHighLevelClient = (project in file("elasticsearch-high-level-client")
   .settings(
     name := "elasticsearch-high-level-client",
     description := "Elasticsearch client using the High Level Java Client",
-    version := "0.1.0-SNAPSHOT",
+    version := "0.1.3-SNAPSHOT",
     resolvers ++= Seq(
       resolverElasticsearch
     ),
@@ -165,10 +165,11 @@ lazy val json = project
   .settings(commonSettings)
   .settings(
     description := "collection of JSON utils",
-    version := "0.5.1",
+    version := "0.5.2",
     resolvers ++= Seq(
       resolverSeebergerJson
     ),
+    publishTo := Some("io.cloudrepo" at "https://ubirch.mycloudrepo.io/repositories/trackle-mvn"),
     libraryDependencies ++= depJson
   )
 
@@ -522,7 +523,7 @@ lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.3"
 lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.5.2"
 lazy val ubirchUtilResponseUtil = ubirchUtilGroup %% "response-util" % "0.5.0"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.4.0"
-lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.1"
+lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.2"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.9.3"
 lazy val ubirchUtilNeo4jConfig = ubirchUtilGroup %% "neo4j-config" % "0.1.0"
 lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.2"

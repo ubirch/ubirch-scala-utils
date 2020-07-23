@@ -78,15 +78,17 @@ object EsBulkClient extends StrictLogging {
   def storeDocBulk(docIndex: String,
                    docId: String,
                    doc: JValue
-                  ): Unit = {
+                  ): Boolean = {
     try {
       bulkProcessor.add(
         new IndexRequest(docIndex).id(docId)
           .source(Json4sUtil.jvalue2String(doc), XContentType.JSON)
       )
+      true
     } catch {
       case ex: Throwable =>
         logger.debug(s"storing document in elasticsearch bulkProcessor failed for $doc with id $docId ", ex)
+        false
     }
   }
 

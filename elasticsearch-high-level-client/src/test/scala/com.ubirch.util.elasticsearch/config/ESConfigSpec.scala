@@ -25,7 +25,6 @@ class ESConfigSpec extends FeatureSpec with Matchers {
 
       // verify
       settings("cluster.name") shouldBe "my-test-cluster"
-      settings("xpack.security.user") shouldBe "transport_client_user:changeme"
 
     }
 

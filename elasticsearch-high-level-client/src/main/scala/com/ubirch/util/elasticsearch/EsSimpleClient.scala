@@ -4,7 +4,7 @@ package com.ubirch.util.elasticsearch
 import java.io.IOException
 
 import com.typesafe.scalalogging.slf4j.StrictLogging
-import com.ubirch.util.deepCheck.model.ServiceCheckResponse
+import com.ubirch.util.deepCheck.model.DeepCheckResponse
 import com.ubirch.util.json.{Json4sUtil, JsonFormats}
 import com.ubirch.util.uuid.UUIDUtil
 import org.elasticsearch.action.DocWriteResponse.Result
@@ -245,15 +245,15 @@ object EsSimpleClient extends StrictLogging {
     * @param docIndex index to query
     * @return result of connectivity check
     */
-  def connectivityCheck(docIndex: String = "foo"): Future[ServiceCheckResponse] = {
+  def connectivityCheck(docIndex: String = "foo"): Future[DeepCheckResponse] = {
 
     getDocs(docIndex = docIndex, size = Some(1))
-      .map(_ => ServiceCheckResponse())
+      .map(_ => DeepCheckResponse())
       .recover {
 
         case t: Throwable =>
           logger.error("ES error, deepcheck failing", t)
-          ServiceCheckResponse(
+          DeepCheckResponse(
             status = false,
             messages = Seq(t.getMessage)
           )

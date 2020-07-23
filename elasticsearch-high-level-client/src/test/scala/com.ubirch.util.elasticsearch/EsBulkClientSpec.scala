@@ -35,7 +35,7 @@ class EsBulkClientSpec extends AsyncFeatureSpec with EsMappingTrait
           docId = testDoc.id,
           doc = jval)
       }
-      Thread.sleep(1500)
+      Thread.sleep(3000)
 
       val aggregation: AvgAggregationBuilder =
         AggregationBuilders
