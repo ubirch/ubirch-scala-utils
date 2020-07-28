@@ -501,7 +501,9 @@ lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.1"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.9.3"
 lazy val ubirchUtilNeo4jConfig = ubirchUtilGroup %% "neo4j-config" % "0.1.0"
-lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.2"
+lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.6.0"
+//lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.6.1"
+//lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.6.1"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.6.0"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
 
