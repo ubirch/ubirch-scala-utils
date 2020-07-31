@@ -77,12 +77,8 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
                 case ex =>
                   logger.error(s"unknown error found in oidc-utils: $ex")
                   complete(requestErrorResponse(JsonErrorResponse(errorType = "00", errorMessage = s"unknown exception found ${ex.getMessage}"), StatusCodes.Unauthorized)).toDirective[Tuple1[UserContext]]
-
-
               }.get
-
             }
-
         }
 
       case Some(token: String) =>
@@ -339,7 +335,6 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
 
   private def tokenToUserContext(token: String): Future[UserContext] = {
 
-    val redis = RedisClientUtil.getRedisClient
     val tokenKey = OidcUtil.tokenToHashedKey(token)
     redis.get[String](tokenKey) map {
 
@@ -361,6 +356,10 @@ class OidcDirective()(implicit system: ActorSystem, httpClient: HttpExt, materia
       case true => logger.debug(s"refreshed token expiry ($refreshIntervalSeconds seconds): tokenKey: $redisKey")
       case _ => logger.info(s"failed to refresh token expiry ($refreshIntervalSeconds seconds): tokenKey: $redisKey")
     }
+  }
+
+  def deleteUserContext(externalId: String): Future[Long] = {
+    redis.del(getRedisKey(externalId))
   }
 
   private def extractBearerToken(authHeader: Option[Authorization]): Option[String] =

@@ -30,11 +30,22 @@ val commonSettings = Seq(
     url("https://github.com/ubirch/ubirch-scala-utils"),
     "https://github.com/ubirch/ubirch-scala-utils.git"
   )),
-
+  (sys.env.get("CLOUDREPO_USER"), sys.env.get("CLOUDREPO_PW")) match {
+    case (Some(username), Some(password)) =>
+      println("USERNAME and/or PASSWORD found.")
+      credentials += Credentials("ubirch.mycloudrepo.io", "ubirch.mycloudrepo.io", username, password)
+    case _ =>
+      println("USERNAME and/or PASSWORD is taken from /.sbt/.credentials.")
+      credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
+  },
   resolvers ++= Seq(
     sonatypeReleases,
-    sonatypeSnapshots
-  )
+    sonatypeSnapshots),
+  publishTo := Some("io.cloudrepo" at "https://ubirch.mycloudrepo.io/repositories/trackle-mvn"),
+  publishMavenStyle := true
+  //  https://www.scala-lang.org/2019/10/17/dependency-management.html
+  //  , conflictManager := ConflictManager.strict
+
 )
 
 /*
@@ -193,7 +204,7 @@ lazy val oidcUtils = (project in file("oidc-utils"))
   .settings(
     name := "oidc-utils",
     description := "OpenID Connect related authorization utils",
-    version := "0.8.12-SNAPSHOT",
+    version := "0.8.13-SNAPSHOT",
     libraryDependencies ++= depOidcUtils
   )
 
@@ -490,7 +501,9 @@ lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.1"
 lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.9.3"
 lazy val ubirchUtilNeo4jConfig = ubirchUtilGroup %% "neo4j-config" % "0.1.0"
-lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.5.2"
+lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.6.0"
+//lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.6.1"
+//lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.6.1"
 lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.6.0"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
 
