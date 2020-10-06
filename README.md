@@ -1,26 +1,28 @@
 # ubirch Utils
 
-## List of Modules in this Repository
+### Deprecated - all the modules that still are used, have become extracted from this big project into small sub-projects.
 
-* camel-utils
-* config
-* crypto
-* date
-* deep-check-model
-* elasticsearch-client-binary
-* elasticsearch-util
-* json
-* mongo-test-utils
-* mongo-utils
-* neo4-config
-* neo4-utils
-* oidc-utils
-* redis-test-util
-* redis-util
-* response-util
-* rest-akka-http
-* rest-akka-http-test
-* uuid
+## List of Modules in this Repository -> moved to new repositories
+
+* camel-utils -> https://github.com/ubirch/ubirch-camel-utils
+* config -> https://github.com/ubirch/ubirch-config-utils
+* crypto -> https://github.com/ubirch/ubirch-crypto-utils
+* date -> https://github.com/ubirch/ubirch-date-utils
+* deep-check-model -> https://github.com/ubirch/ubirch-deep-check-utils
+* elasticsearch-client-binary -> deprecated
+* elasticsearch-util -> (now incl. high-level-client) https://github.com/ubirch/ubirch-elasticsearch-utils
+* json -> https://github.com/ubirch/ubirch-json-utils
+* mongo-test-utils -> see next
+* mongo-utils -> (now incl. test) https://github.com/ubirch/ubirch-mongo-utils
+* neo4-config -> deprecated
+* neo4-utils -> deprecated
+* oidc-utils -> https://github.com/ubirch/ubirch-oidc-utils
+* redis-test-util -> see next
+* redis-util -> (now incl. test) https://github.com/ubirch/ubirch-redis-utils
+* response-util -> https://github.com/ubirch/ubirch-response-utils
+* rest-akka-http -> (now incl. test) https://github.com/ubirch/ubirch-rest-akka-http-utils
+* rest-akka-http-test -> see previous
+* uuid -> https://github.com/ubirch/ubirch-uuid-utils
 
 ## `camel-utils`
 
