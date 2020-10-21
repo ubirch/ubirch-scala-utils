@@ -1,5 +1,3 @@
-import sbt.Keys.libraryDependencies
-
 concurrentRestrictions in Global := Seq(
   Tags.limit(Tags.Test, 1)
 )
@@ -43,9 +41,6 @@ val commonSettings = Seq(
     sonatypeSnapshots),
   publishTo := Some("io.cloudrepo" at "https://ubirch.mycloudrepo.io/repositories/trackle-mvn"),
   publishMavenStyle := true
-  //  https://www.scala-lang.org/2019/10/17/dependency-management.html
-  //  , conflictManager := ConflictManager.strict
-
 )
 
 /*
@@ -55,78 +50,12 @@ val commonSettings = Seq(
 lazy val scalaUtils = project
   .settings(commonSettings ++ Seq(packagedArtifacts := Map.empty): _*)
   .aggregate(
-    camelUtils,
-    config,
-    crypto,
-    date,
-    deepCheckModel,
     elasticsearchClientBinary,
     elasticsearchUtil,
-    json,
-    lockUtil,
-    mongoTestUtils,
-    mongoUtils,
     neo4jConfig,
-    neo4jUtils,
-    oidcUtils,
-    redisTestUtil,
-    redisUtil,
-    responseUtil,
-    restAkkaHttp,
-    restAkkaHttpTest,
-    uuid
+    neo4jUtils
   )
 
-lazy val lockUtil = (project in file("lock-util"))
-  .settings(commonSettings)
-  .settings(
-    name := "lock-util",
-    description := "Simple Redis based locking utils",
-    version := "0.3.1",
-    libraryDependencies ++= depLockUtil
-  )
-
-lazy val camelUtils = (project in file("camel-utils"))
-  .settings(commonSettings)
-  .settings(
-    name := "camel-utils",
-    description := "Camel related utils",
-    version := "1.0.0",
-    libraryDependencies ++= depCamelUtils
-  )
-
-lazy val config = project
-  .settings(commonSettings)
-  .settings(
-    description := "common config related code",
-    version := "0.2.3",
-    libraryDependencies ++= depConfig
-  )
-
-lazy val crypto = project
-  .settings(commonSettings)
-  .settings(
-    description := "ubirch util with crypto related code",
-    version := "0.5.2",
-    libraryDependencies ++= depCrypto
-  )
-
-lazy val date = project
-  .settings(commonSettings)
-  .settings(
-    description := "a collection of date related utils",
-    version := "0.5.3",
-    libraryDependencies ++= depDate
-  )
-
-lazy val deepCheckModel = (project in file("deep-check-model"))
-  .settings(commonSettings)
-  .settings(
-    name := "deep-check-model",
-    description := "actor and JSON models for the /deepCheck endpoints",
-    version := "0.3.1",
-    libraryDependencies ++= depDeepCheckModel
-  )
 
 lazy val elasticsearchClientBinary = (project in file("elasticsearch-client-binary"))
   .settings(commonSettings)
@@ -152,35 +81,6 @@ lazy val elasticsearchUtil = (project in file("elasticsearch-util"))
     libraryDependencies ++= depElasticsearchUtil
   )
 
-lazy val json = project
-  .settings(commonSettings)
-  .settings(
-    description := "collection of JSON utils",
-    version := "0.5.1",
-    resolvers ++= Seq(
-      resolverSeebergerJson
-    ),
-    libraryDependencies ++= depJson
-  )
-
-lazy val mongoTestUtils = (project in file("mongo-test-utils"))
-  .settings(commonSettings)
-  .settings(
-    name := "mongo-test-utils",
-    description := "MongoDB related test utils",
-    version := "0.9.4",
-    libraryDependencies ++= depMongoTestUtils
-  ).dependsOn(mongoUtils)
-
-lazy val mongoUtils = (project in file("mongo-utils"))
-  .settings(commonSettings)
-  .settings(
-    name := "mongo-utils",
-    description := "MongoDB related utils",
-    version := "0.9.4",
-    libraryDependencies ++= depMongoUtils
-  )
-
 lazy val neo4jConfig = (project in file("neo4j-config"))
   .settings(commonSettings)
   .settings(
@@ -199,109 +99,9 @@ lazy val neo4jUtils = (project in file("neo4j-utils"))
     libraryDependencies ++= depNeo4jUtils
   )
 
-lazy val oidcUtils = (project in file("oidc-utils"))
-  .settings(commonSettings)
-  .settings(
-    name := "oidc-utils",
-    description := "OpenID Connect related authorization utils",
-    version := "0.8.13-SNAPSHOT",
-    libraryDependencies ++= depOidcUtils
-  )
-
-lazy val redisTestUtil = (project in file("redis-test-util"))
-  .settings(commonSettings)
-  .settings(
-    name := "redis-test-util",
-    description := "Redis related test utils",
-    version := "0.6.0",
-    libraryDependencies ++= depRedisTestUtils
-  )
-
-lazy val redisUtil = (project in file("redis-util"))
-  .settings(commonSettings)
-  .settings(
-    name := "redis-util",
-    description := "Redis related utils",
-    version := "0.6.0",
-    libraryDependencies ++= depRedisUtil
-  )
-
-lazy val responseUtil = (project in file("response-util"))
-  .settings(commonSettings)
-  .settings(
-    name := "response-util",
-    description := "HTTP Response Utils",
-    version := "0.5.0",
-    libraryDependencies ++= depResponseUtil
-  )
-
-lazy val restAkkaHttp = (project in file("rest-akka-http"))
-  .settings(commonSettings)
-  .settings(
-    name := "rest-akka-http",
-    description := "shared custom classes related to akka-http-experimental (for example certain directives)",
-    version := "0.4.0", // NOTE: please keep major.minor version synchronized with restAkkaHttpTest
-    libraryDependencies ++= depRestAkkaHttp
-  )
-
-lazy val restAkkaHttpTest = (project in file("rest-akka-http-test"))
-  .settings(commonSettings)
-  .settings(
-    name := "rest-akka-http-test",
-    description := "akka-http-experimental related test utils",
-    version := "0.4.0", // NOTE: please keep major.minor version synchronized with restAkkaHttp
-    libraryDependencies ++= depRestAkkaHttpTest
-  )
-
-lazy val uuid = project
-  .settings(commonSettings)
-  .settings(
-    name := "uuid",
-    description := "UUID related utils",
-    version := "0.1.3",
-    libraryDependencies ++= depUuid
-  )
-
 /*
  * MODULE DEPENDENCIES
  ********************************************************/
-
-lazy val depLockUtil = Seq(
-  ubirchUtilRedisUtil,
-  redisson,
-  rediscala,
-  ubirchUtilUuid % "test",
-  scalaTest % "test",
-  akkaTestkit % "test"
-) ++ depSlf4jLogging
-
-lazy val depCamelUtils = Seq(
-  scalaTest % "test"
-)
-
-lazy val depConfig = Seq(
-  typesafeConfig,
-  scalaTest % "test"
-)
-
-lazy val depCrypto = Seq(
-  roundeightsHasher,
-  apacheCommonsCodec,
-  ubirchUtilConfig,
-  eddsa,
-  scalaTest % "test",
-  jodaTime % "test",
-  jodaConvert % "test"
-) ++ depSlf4jLogging
-
-lazy val depDate = Seq(
-  scalaTest % "test"
-) ++ joda
-
-lazy val depDeepCheckModel = Seq(
-  ubirchUtilJson,
-  scalaTest % "test"
-) ++ json4sWithNative
 
 lazy val depElasticsearchClientBinary = Seq(
   elasticSearch,
@@ -323,25 +123,6 @@ lazy val depElasticsearchUtil = Seq(
   scalaLoggingSlf4j
 )
 
-lazy val depJson = Seq(
-  seebergerJson4s,
-  scalaTest % "test",
-  jodaTime % "test"
-) ++ json4sWithNative
-
-lazy val depMongoTestUtils = Seq(
-  ubirchUtilMongoUtils
-)
-
-lazy val depMongoUtils = Seq(
-  ubirchUtilConfig,
-  ubirchUtilDeepCheckModel,
-  akkaSlf4j,
-  reactiveMongo,
-  scalaTest % "test",
-  mockito
-) ++ depSlf4jLogging ++ joda
-
 lazy val depNeo4jConfig = Seq(
   ubirchUtilConfig
 )
@@ -352,128 +133,34 @@ lazy val depNeo4jUtils = Seq(
   scalaLoggingSlf4j
 ) ++ joda
 
-lazy val depOidcUtils = Seq(
-  akkaHttp,
-  akkaStream,
-  json4sNative,
-  ubirchKeyClientRestCache,
-  ubirchUserRest,
-  ubirchUtilCrypto,
-  ubirchUtilJson,
-  ubirchUtilRedisUtil,
-  ubirchUtilResponseUtil,
-  scalaTest % "test",
-  akkaHttpTestkit % "test",
-  ubirchUtilRedisTestUtil % "test"
-) ++ depSlf4jLogging
-
-lazy val depRedisTestUtils = Seq(
-  ubirchUtilRedisUtil
-)
-
-lazy val depRedisUtil = Seq(
-  akkaActor,
-  akkaSlf4j,
-  rediscala,
-  scalaLoggingSlf4j,
-  ubirchUtilConfig,
-  ubirchUtilDeepCheckModel
-)
-
-lazy val depRestAkkaHttp = Seq(
-  akkaHttp,
-  akkaStream,
-  akkaHttpCors
-)
-
-lazy val depRestAkkaHttpTest = Seq(
-  akkaHttp,
-  akkaHttpTestkit,
-  scalaTest
-)
-
-lazy val depResponseUtil = Seq(
-  akkaHttp,
-  akkaStream,
-  ubirchUtilJson,
-  akkaHttpTestkit % "test",
-  scalaTest % "test"
-)
-
-lazy val depUuid = Seq(
-  scalaUuid,
-  apacheCommonsCodec % "test",
-  scalaTest % "test"
-)
 
 /*
  * DEPENDENCIES
  ********************************************************/
 
-// Versions
-val json4sV = "3.6.0"
-val akkaV = "2.5.11"
-val akkaHttpV = "10.1.3"
 val elasticsearchV = "6.7.1"
-val log4jV = "2.8.2"
 val scalaTestV = "3.0.5"
-val mockitoV = "2.23.4"
-val ubirchKeyV = "0.11.5-SNAPSHOT"
+val json4sV = "3.6.0"
+val log4jV = "2.8.2"
 
-// Groups
-val akkaG = "com.typesafe.akka"
 val log4jG = "org.apache.logging.log4j"
-lazy val ubirchKeyG = "com.ubirch.key"
-
 lazy val json4sBase = Seq(
   json4sCore,
   json4sJackson,
   json4sExt
 )
-lazy val json4sWithNative = json4sBase :+ json4sNative
-
 lazy val json4sJackson = "org.json4s" %% "json4s-jackson" % json4sV
 lazy val json4sCore = "org.json4s" %% "json4s-core" % json4sV
 lazy val json4sExt = "org.json4s" %% "json4s-ext" % json4sV
-lazy val json4sNative = "org.json4s" %% "json4s-native" % json4sV
-lazy val seebergerJson4s = "de.heikoseeberger" %% "akka-http-json4s" % "1.21.0"
-
-lazy val typesafeConfig = "com.typesafe" % "config" % "1.3.3"
-
-lazy val roundeightsHasher = "com.roundeights" %% "hasher" % "1.2.0"
-
-lazy val apacheCommonsCodec = "commons-codec" % "commons-codec" % "1.11"
-lazy val apacheCommonsLang3 = "org.apache.commons" % "commons-lang3" % "3.7"
-
-lazy val netI2pCryptoEddsa = "net.i2p.crypto" % "eddsa" % "0.1.0"
-
-lazy val akkaActor = akkaG %% "akka-actor" % akkaV
-lazy val akkaStream = akkaG %% "akka-stream" % akkaV
-lazy val akkaSlf4j = akkaG %% "akka-slf4j" % akkaV
-lazy val akkaTestkit = akkaG %% "akka-testkit" % akkaV
-lazy val akkaHttp = akkaG %% "akka-http" % akkaHttpV
-lazy val akkaHttpTestkit = akkaG %% "akka-http-testkit" % akkaHttpV
-
 lazy val scalaTest = "org.scalatest" %% "scalatest" % scalaTestV
-
 val jodaTime = "joda-time" % "joda-time" % "2.10"
 val jodaConvert = "org.joda" % "joda-convert" % "2.1.1"
 val joda = Seq(jodaTime, jodaConvert)
-
 val elasticSearch = "org.elasticsearch" % "elasticsearch" % elasticsearchV
 val elasticSearchTransport = "org.elasticsearch.client" % "transport" % elasticsearchV
 val elasticsearchXPack = "org.elasticsearch.client" % "x-pack-transport" % elasticsearchV
 val luceneCore = "org.apache.lucene" % "lucene-core" % "7.7.1"
-
-lazy val reactiveMongo = "org.reactivemongo" %% "reactivemongo" % "0.18.8" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
-
 val neo4jJavaDriver = "org.neo4j.driver" % "neo4j-java-driver" % "1.6.2"
-
-// https://github.com/lomigmegard/akka-http-cors
-lazy val akkaHttpCors = "ch.megard" %% "akka-http-cors" % "0.3.0"
-
-lazy val scalaUuid = "io.jvm.uuid" %% "scala-uuid" % "0.2.3"
-
 lazy val scalaLoggingSlf4j = "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
 lazy val slf4j = "org.slf4j" % "slf4j-api" % "1.7.21"
 lazy val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.1.7"
@@ -489,30 +176,8 @@ lazy val depLog4jToSlf4j = Seq(
   log4jApi,
   log4jToSlf4j
 )
-
-lazy val redisson = "org.redisson" % "redisson" % "3.12.0"
-//Todo: upgrade to 1.9.0?
-lazy val rediscala = "com.github.etaty" %% "rediscala" % "1.8.0" excludeAll ExclusionRule(organization = s"${akkaActor.organization}", name = s"${akkaActor.name}")
-
 lazy val ubirchUtilConfig = ubirchUtilGroup %% "config" % "0.2.3"
-lazy val ubirchUtilCrypto = ubirchUtilGroup %% "crypto" % "0.5.2"
-lazy val ubirchUtilResponseUtil = ubirchUtilGroup %% "response-util" % "0.5.0"
 lazy val ubirchUtilDeepCheckModel = ubirchUtilGroup %% "deep-check-model" % "0.3.1"
 lazy val ubirchUtilJson = ubirchUtilGroup %% "json" % "0.5.1"
-lazy val ubirchUtilMongoUtils = ubirchUtilGroup %% "mongo-utils" % "0.9.3"
 lazy val ubirchUtilNeo4jConfig = ubirchUtilGroup %% "neo4j-config" % "0.1.0"
-lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.6.0"
-//lazy val ubirchUtilRedisTestUtil = ubirchUtilGroup %% "redis-test-util" % "0.6.1"
-//lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.6.1"
-lazy val ubirchUtilRedisUtil = ubirchUtilGroup %% "redis-util" % "0.6.0"
 lazy val ubirchUtilUuid = ubirchUtilGroup %% "uuid" % "0.1.3"
-
-val ubirchUserRest = "com.ubirch.user" %% "client-rest" % "1.0.1"
-
-val ubirchKeyClientRestCache = ubirchKeyG %% "client-rest-cache-redis" % ubirchKeyV
-
-// https://mvnrepository.com/artifact/net.i2p.crypto/eddsa
-val eddsa = "net.i2p.crypto" % "eddsa" % "0.3.0"
-
-val mockito = "org.mockito" % "mockito-core" % mockitoV
-
